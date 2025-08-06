@@ -67,231 +67,36 @@
 
 
     // Payment Container
-          const paymentContainer = `
-              <div class="payment-container">
-                  <div class="payment-inner">
-                      <div class="payment-content">
-                          <div class="payment-text">
-                                  <h2 class="payment-title">${t.paymentTitle}</h2>
-                                  <p class="payment-subtitle">${t.paymentSubtitle}</p>
-                                  <button class="payment-button" onclick="window.location.href='${langPrefix}/vip?modal=wallet&tab=buy-crypto'">${t.paymentButton}</button>
+          const sliderBottom = `
+              <div class="slider-bottom-container">
+                  <div class="slider-bottom-grid">
+                      <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/casino/group/live-lobby'">
+                          <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/A5mm1VoGRciOn75iKVCg4DI4aivDPabFKkHwA0XQ.png" alt="Live Casino" class="slider-bottom-image">
+                          <div class="slider-bottom-overlay">
+                              <h3 class="slider-bottom-title">Live Casino</h3>
                           </div>
-                          <div class="coin-images">
-                              <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/IZ1pk6W0erj0oOURWGkDUHv5pcUDeqtLKEAcpJaV.png" alt="Bitcoin" class="coin-image" style="transform: translateZ(0px); will-change: transform;">
-                              <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/ofgwLw5mctTUaMdC0CNkENQnyrmPYTACBbHEOBCo.png" alt="DOGE" class="coin-image" style="transform: translateZ(0px); will-change: transform;">
-                              <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/EZCXRpqO3Bj30fbet70E09mK7kNj00egy5wPOxnq.png" alt="ETH" class="coin-image" style="transform: translateZ(0px); will-change: transform;">
-                              <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/EM4eekJYeTQxOskwShEkDfAriBmUnZQBbOojzCek.png" alt="USDT" class="coin-image" style="transform: translateZ(0px); will-change: transform;">
+                      </div>
+                      <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/vip'">
+                          <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/5DPopoH61Dj5fqZ5lmMM0gWZsXekd3EopM4KP6QO.png" alt="VIP Club" class="slider-bottom-image">
+                          <div class="slider-bottom-overlay">
+                              <h3 class="slider-bottom-title">VIP Club</h3>
+                          </div>
+                      </div>
+                      <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/sportsbook'">
+                          <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/AoqGK76s6ZWSyg0H70D3meqrXIZdwYcNtSAmKsom.png" alt="Spor" class="slider-bottom-image">
+                          <div class="slider-bottom-overlay">
+                              <h3 class="slider-bottom-title">Spor</h3>
+                          </div>
+                      </div>
+                      <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/casino/'">
+                          <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/EIpBfslRNFy6SBmrupvVsBFX2gdFHFaVBC8T3fAR.png" alt="Slot" class="slider-bottom-image">
+                          <div class="slider-bottom-overlay">
+                              <h3 class="slider-bottom-title">Slot</h3>
                           </div>
                       </div>
                   </div>
               </div>
-              <style>
-                  .payment-container {
-                      position: relative;
-                      overflow: hidden;
-                      border-radius: 10px;
-                      margin-top: 20px;
-                      border: 1px solid #F9C636;
-                  }
-                  .payment-container:before {
-                      content: '';
-                      position: absolute;
-                      top: 0;
-                      left: 0;
-                      right: 0;
-                      bottom: 0;
-                      background: linear-gradient(45deg, rgba(255,165,0,0.1), rgba(0,0,0,0), rgba(255,165,0,0.1));
-                      z-index: 1;
-                      animation: gradientMove 8s infinite linear;
-                  }
-                  @keyframes gradientMove {
-                      0% { background-position: 0% 0%; }
-                      50% { background-position: 100% 100%; }
-                      100% { background-position: 0% 0%; }
-                  }
-                  .payment-inner {
-                      position: relative;
-                      z-index: 2;
-                      padding: 10px 0 5px;
-                  }
-                  .payment-title {
-                      font-size: 3rem;
-                      margin-bottom: 0.5rem;
-                      text-shadow: 0 0 10px rgba(255,165,0,0.3);
-                      font-weight: 700;
-                  }
-                  .payment-subtitle {
-                      font-size: 2.5rem;
-                      margin-bottom: 1rem;
-                      color: #fac025;
-                      font-weight: 700;
-                  }
-                  .coin-images {
-                      display: flex;
-                      align-items: center;
-                      position: relative;
-                      height: 200px;
-                      margin-top: 10px;
-                      margin-bottom: -20px;
-                      width: 570px;
-                  }
-                  
-                  .coin-image {
-                      width: 200px;
-                      height: 200px;
-                      object-fit: contain;
-                      position: absolute;
-                      transition: transform 0.3s ease-in-out;
-                      will-change: transform;
-                      backface-visibility: hidden;
-                      transform: translateZ(0);
-                      -webkit-transform: translateZ(0);
-                  }
-                  
-                  .coin-image:nth-child(1) {
-                      z-index: 4;
-                      right: 0;
-                      animation: coinFloat 3s ease-in-out infinite;
-                  }
-                  
-                  .coin-image:nth-child(2) {
-                      z-index: 3;
-                      right: 120px;
-                      animation: coinFloat 3s ease-in-out infinite;
-                      animation-delay: 0.75s;
-                  }
-                  
-                  .coin-image:nth-child(3) {
-                      z-index: 2;
-                      right: 240px;
-                      animation: coinFloat 3s ease-in-out infinite;
-                      animation-delay: 1.5s;
-                  }
-                  
-                  .coin-image:nth-child(4) {
-                      z-index: 1;
-                      right: 360px;
-                      animation: coinFloat 3s ease-in-out infinite;
-                      animation-delay: 2.25s;
-                  }
-                  
-                  @keyframes coinFloat {
-                      0%, 100% { transform: translateY(0) translateZ(0); }
-                      50% { transform: translateY(-15px) translateZ(0); }
-                  }
-                  
-                  /* Mobil için düzenlemeler */
-                  @media (max-width: 767px) {
-                      /* Mobil için welcome-title parlaklık düzenlemesi */
-                      @keyframes mobileWelcomeGlow {
-                          0% { text-shadow: 0 0 2px rgba(255, 255, 255, 0.15); }
-                          50% { text-shadow: 0 0 3px rgba(255, 255, 255, 0.2); }
-                          100% { text-shadow: 0 0 2px rgba(255, 255, 255, 0.15); }
-                      }
 
-                      .welcome-title-white, .welcome-title-orange, .d-md-none {
-                          animation: mobileWelcomeGlow 3s ease-in-out infinite;
-                          text-shadow: 0 0 2px rgba(255, 255, 255, 0.15);
-                      }
-
-                      .payment-title {
-                          font-size: 1.8rem;
-                          white-space: normal;
-                          line-height: 1;
-                          margin-bottom: 5px;
-                          overflow: visible;
-                          text-overflow: clip;
-                      }
-                      .payment-subtitle {
-                          font-size: 1.7rem;
-                          white-space: normal;
-                          line-height: calc(0.9em + 2px);
-                          overflow: visible;
-                          text-overflow: clip;
-                          margin-bottom: 3px;
-                          text-shadow: 0 0 3px rgba(249, 198, 54, 0.2);
-                      }
-
-                      .coin-images {
-                          height: auto;
-                          width: 100%;
-                          display: flex;
-                          justify-content: center;
-                          margin-top: 5px;
-                          margin-bottom: 5px;
-                          position: relative;
-                          gap: -25px;
-                      }
-                      .coin-image {
-                          width: 120px;
-                          height: 120px;
-                          position: relative;
-                          right: auto !important;
-                      }
-                      .coin-image:nth-child(1) {
-                          margin-right: -40px;
-                      }
-                      .coin-image:nth-child(2) {
-                          margin-right: -40px;
-                      }
-                      .coin-image:nth-child(3) {
-                          margin-right: -40px;
-                      }
-                      .coin-image:nth-child(4) {
-                          margin-right: 0;
-                      }
-                  }
-                  
-                  /* Çok küçük ekranlar için düzenlemeler */
-                  @media (max-width: 375px) {
-                      .payment-content {
-                          flex-direction: column;
-                          text-align: center;
-                          align-items: center;
-                          padding: 0;
-                          width: 100%;
-                      }
-                      .payment-text {
-                          text-align: center;
-                          display: flex;
-                          flex-direction: column;
-                          align-items: center;
-                          margin-bottom: 0.5rem;
-                          width: 100%;
-                          padding: 0 10px;
-                          box-sizing: border-box;
-                      }
-                      .payment-subtitle {
-                          text-shadow: 0 0 2px rgba(249, 198, 54, 0.2);
-                          animation: none !important;
-                      }
-                      .welcome-title-white, .welcome-title-orange, .d-md-none {
-                          animation: none !important;
-                          text-shadow: 0 0 1px rgba(255, 255, 255, 0.1);
-                      }
-                      .coin-images {
-                          height: auto;
-                          width: 100%;
-                          margin-top: 5px;
-                      }
-                      .coin-image {
-                          width: 80px;
-                          height: 80px;
-                      }
-                      .coin-image:nth-child(1) {
-                          margin-right: -30px;
-                      }
-                      .coin-image:nth-child(2) {
-                          margin-right: -30px;
-                      }
-                      .coin-image:nth-child(3) {
-                          margin-right: -30px;
-                      }
-                      .coin-image:nth-child(4) {
-                          margin-right: 0;
-                      }
-                  }
-              </style>
           `;
 
            // Features Container
@@ -481,7 +286,7 @@
       }
       
       // İçeriği targetDiv'e ekle - jackpots container olmadan
-      targetDiv.innerHTML = '<div class="container">' + welcomeContainer + paymentContainer + featuresContainer + sportBannerContainer + popularSportsContainer + '</div>';
+      targetDiv.innerHTML = '<div class="container">' + welcomeContainer + sliderBottom + featuresContainer + sportBannerContainer + popularSportsContainer + '</div>';
       
       // Jackpots container'ı popularSportsContainer'dan ÖNCE taşı - daha uzun gecikme ile
       setTimeout(function() {
