@@ -1,0 +1,1025 @@
+.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    top: 80px;
+    left: 0;
+    bottom: 60px;
+    background-color: var(--tf-bg2);
+    border-right: 1px solid var(--tf-border);
+    z-index: 99;
+    width: 100vw;
+    padding: 0;
+    transform: translate3d(-100vw, 0, 0);
+    transition: transform .4s ease
+}
+
+.sidebar.active {
+    transform: translate3d(0, 0, 0)
+}
+
+.sidebar__head {
+    display: none
+}
+
+.sidebar__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    height: 100%
+}
+
+.sidebar__links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.sidebar__link {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: calc(50% - 8px);
+    height: 46px;
+    border-radius: 8px;
+    background-color: rgba(37, 165, 106, 0.1);
+    border: 1px solid rgba(37, 165, 106, 0.1)
+}
+
+.sidebar__link span {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--tf-tc);
+    margin-left: 8px
+}
+
+.sidebar__link svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--tf-active)
+}
+
+.sidebar__link--purple {
+    background-color: rgba(154, 38, 173, 0.15);
+    border-color: rgba(154, 38, 173, 0.12)
+}
+
+.sidebar__link--purple svg {
+    stroke: #9a26ad
+}
+
+.sidebar__link--purple:hover {
+    background-color: rgba(154, 38, 173, 0.2);
+    border-color: rgba(154, 38, 173, 0.22)
+}
+
+.sidebar__link--orange {
+    background-color: rgba(224, 117, 69, 0.15);
+    border-color: rgba(224, 117, 69, 0.12)
+}
+
+.sidebar__link--orange svg {
+    stroke: #e07545
+}
+
+.sidebar__link--orange:hover {
+    background-color: rgba(224, 117, 69, 0.2);
+    border-color: rgba(224, 117, 69, 0.22)
+}
+
+.sidebar__link--casino {
+    border: none;
+    overflow: hidden;
+    position: relative;
+    background: url("../img/btns/casino.png") no-repeat left center/cover
+}
+
+.sidebar__link--casino:before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: .4s ease
+}
+
+.sidebar__link--casino span {
+    position: relative;
+    z-index: 2
+}
+
+.sidebar__link--casino:hover:before {
+    opacity: 1
+}
+
+.sidebar__link--sport {
+    border: none;
+    overflow: hidden;
+    position: relative;
+    background: url("../img/btns/sportsbook.png") no-repeat left center/cover
+}
+
+.sidebar__link--sport:before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transition: .4s ease
+}
+
+.sidebar__link--sport span {
+    position: relative;
+    z-index: 2
+}
+
+.sidebar__link--sport:hover:before {
+    opacity: 1
+}
+
+.sidebar__link--casino svg, .sidebar__link--sport svg {
+    display: none
+}
+
+.sidebar__link--casino span, .sidebar__link--sport span {
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px #000;
+    color: #fff
+}
+
+.sidebar__link--casino span:first-child, .sidebar__link--sport span:first-child {
+    margin-left: 0
+}
+
+.sidebar__big {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 8px 12px
+}
+
+.sidebar__big::-webkit-scrollbar {
+    width: 4px;
+    height: 4px
+}
+
+.sidebar__big::-webkit-scrollbar-button {
+    display: none
+}
+
+.sidebar__big::-webkit-scrollbar-thumb {
+    background: rgba(37, 165, 106, 0.3);
+    outline: 0 solid #fff;
+    border-radius: 4px
+}
+
+.sidebar__big::-webkit-scrollbar-thumb:hover {
+    background: var(--tf-active)
+}
+
+.sidebar__big::-webkit-scrollbar-track {
+    background: var(--tf-border);
+    border-radius: 0
+}
+
+.sidebar__menu, .sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%
+}
+
+.sidebar__menu--collapse, .sidebar__nav--collapse {
+    border-radius: 8px;
+    padding: 5px 0;
+    background: var(--tf-bg);
+    border: 1px solid var(--tf-border)
+}
+
+.sidebar__menu {
+    margin-bottom: 20px
+}
+
+.sidebar__nav--border {
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--tf-border)
+}
+
+.sidebar__nav li {
+    position: relative;
+    margin-bottom: 0;
+    width: 100%
+}
+
+.sidebar__nav li:last-child {
+    margin-bottom: 0
+}
+
+.sidebar__nav li.active a {
+    background: var(--tf-btn);
+    border-color: var(--tf-border)
+}
+
+.sidebar__nav li.active a svg {
+    stroke: var(--tf-active)
+}
+
+.sidebar__nav a, .sidebar__nav button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+    height: 46px;
+    border-radius: 8px;
+    color: var(--tf-tc);
+    background: transparent;
+    border: 1px solid transparent;
+    font-weight: 500;
+    font-size: 14px
+}
+
+.sidebar__nav a span, .sidebar__nav button span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #eb5757;
+    width: auto;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-left: 8px
+}
+
+.sidebar__nav a svg, .sidebar__nav button svg {
+    width: 24px;
+    height: 24px;
+    /*stroke: var(--tf-tc2);*/
+    margin-right: 8px
+}
+
+/*.sidebar__nav a:hover svg, .sidebar__nav button:hover svg {*/
+/*    stroke: var(--tf-active)*/
+/*}*/
+
+.sidebar__nav button.sidebar__collapsed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    padding: 0;
+    height: auto;
+    border: none
+}
+
+.sidebar__nav button.sidebar__collapsed svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--tf-tc2);
+    margin-right: 0;
+    transform: rotate(-90deg);
+    transition: .4s ease;
+    transition-property: transform, stroke
+}
+
+.sidebar__nav button.sidebar__collapsed[aria-expanded="true"] svg {
+    stroke: var(--tf-active);
+    transform: rotate(0deg)
+}
+
+.sidebar__nav button.sidebar__collapsed:hover svg {
+    stroke: var(--tf-active)
+}
+
+.sidebar__title {
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--tf-tc2);
+    margin-bottom: 10px;
+    padding-left: 15px
+}
+
+.sidebar__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+    padding: 0 15px
+}
+
+.sidebar__scheme {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: auto;
+    border: 1px solid var(--tf-border);
+    background-color: var(--tf-bg);
+    padding: 4px;
+    border-radius: 8px
+}
+
+.sidebar__scheme button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    margin-right: 4px
+}
+
+.sidebar__scheme button svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--tf-tc2)
+}
+
+.sidebar__scheme button:last-child {
+    margin-right: 0
+}
+
+.sidebar__scheme button:hover svg {
+    stroke: var(--tf-active)
+}
+
+.sidebar__scheme button.active {
+    background: var(--tf-btn);
+    border-color: var(--tf-border)
+}
+
+.sidebar__scheme button.active svg {
+    stroke: var(--tf-active)
+}
+
+.sidebar__lang {
+    position: relative
+}
+
+.sidebar__lang-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 80px;
+    height: 38px;
+    padding-left: 10px;
+    border-radius: 8px;
+    background: var(--tf-bg);
+    border: 1px solid var(--tf-border)
+}
+
+.sidebar__lang-btn img {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px
+}
+
+.sidebar__lang-btn span {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--tf-tc);
+    margin-right: 4px
+}
+
+.sidebar__lang-btn svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--tf-tc2);
+    transition: .2s ease
+}
+
+.sidebar__lang-btn:hover svg {
+    stroke: var(--tf-tc)
+}
+
+.sidebar__lang-btn.show svg {
+    transform: rotate(180deg);
+    stroke: var(--tf-tc)
+}
+
+.sidebar__lang-menu {
+    max-width: 80px;
+    min-width: 80px;
+    background: var(--tf-bg);
+    border: 1px solid var(--tf-border);
+    padding: 15px 10px
+}
+
+.sidebar__lang-menu li {
+    margin-bottom: 15px
+}
+
+.sidebar__lang-menu li:last-child {
+    margin-bottom: 0
+}
+
+.sidebar__lang-menu a {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--tf-tc)
+}
+
+
+.sidebar__lang-menu a:hover {
+    color: var(--tf-active)
+}
+
+.sidebar__small {
+    display: none
+}
+
+@media (min-width: 360px) and (orientation: landscape) {
+    .sidebar--game {
+        display: none
+    }
+}
+
+@media (min-width: 768px) {
+    .sidebar {
+        position: relative;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        width: 80px;
+        transform: translate3d(0, 0, 0);
+        height: 100%;
+        flex-shrink: 0
+    }
+
+    .sidebar__head {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid var(--tf-border)
+    }
+
+    .sidebar__logo {
+        display: none
+    }
+
+    .sidebar__btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+        background-color: var(--tf-bg2);
+        border: 1px solid var(--tf-border)
+    }
+
+    .sidebar__btn svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-tc)
+    }
+
+    .sidebar__content {
+        height: calc(100% - 80px);
+        width: 80px
+    }
+
+    .sidebar__big {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 260px;
+        background-color: var(--tf-bg2);
+        border-right: 1px solid var(--tf-border);
+        padding: 40px 16px;
+        transform: translate3d(-100%, 0, 0);
+        transition: transform .4s ease;
+        transition-delay: 0s
+    }
+
+    .sidebar__small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        position: relative;
+        z-index: 1;
+        padding: 40px 0 40px 17px;
+        width: 80px;
+        height: 100%;
+        overflow-y: auto;
+        transition: transform .4s ease;
+        transition-delay: .2s
+    }
+
+    .sidebar__small::-webkit-scrollbar {
+        width: 4px;
+        height: 4px
+    }
+
+    .sidebar__small::-webkit-scrollbar-button {
+        display: none
+    }
+
+    .sidebar__small::-webkit-scrollbar-thumb {
+        background: rgba(37, 165, 106, 0.3);
+        outline: 0 solid #fff;
+        border-radius: 4px
+    }
+
+    .sidebar__small::-webkit-scrollbar-thumb:hover {
+        background: var(--tf-active)
+    }
+
+    .sidebar__small::-webkit-scrollbar-track {
+        background: var(--tf-border);
+        border-radius: 0
+    }
+
+    .sidebar__links-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--tf-border)
+    }
+
+    .sidebar__link-small {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+        background-color: rgba(37, 165, 106, 0.1);
+        border: 1px solid rgba(37, 165, 106, 0.1);
+        margin-bottom: 10px
+    }
+
+    .sidebar__link-small svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-active)
+    }
+
+    .sidebar__link-small:last-child {
+        margin-bottom: 0
+    }
+
+    .sidebar__link-small--purple {
+        background-color: rgba(154, 38, 173, 0.15);
+        border-color: rgba(154, 38, 173, 0.12)
+    }
+
+    .sidebar__link-small--purple svg {
+        stroke: #9a26ad
+    }
+
+    .sidebar__link-small--purple:hover {
+        background-color: rgba(154, 38, 173, 0.2);
+        border-color: rgba(154, 38, 173, 0.22)
+    }
+
+    .sidebar__link-small--orange {
+        background-color: rgba(224, 117, 69, 0.15);
+        border-color: rgba(224, 117, 69, 0.12)
+    }
+
+    .sidebar__link-small--orange svg {
+        stroke: #e07545
+    }
+
+    .sidebar__link-small--orange:hover {
+        background-color: rgba(224, 117, 69, 0.2);
+        border-color: rgba(224, 117, 69, 0.22)
+    }
+
+    .sidebar__link-small--casino {
+        border: none;
+        overflow: hidden;
+        position: relative;
+        background: url("../img/btns/casino.png") no-repeat left center/cover
+    }
+
+    .sidebar__link-small--casino:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        display: block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: .4s ease
+    }
+
+    .sidebar__link-small--casino:hover:before {
+        opacity: 1
+    }
+
+    .sidebar__link-small--sport {
+        border: none;
+        overflow: hidden;
+        position: relative;
+        background: url("../img/btns/sportsbook.png") no-repeat left center/cover
+    }
+
+    .sidebar__link-small--sport:before {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        display: block;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        transition: .4s ease
+    }
+
+    .sidebar__link-small--sport:hover:before {
+        opacity: 1
+    }
+
+    .sidebar__menu-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 16px
+    }
+
+    .sidebar__nav-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center
+    }
+
+    .sidebar__nav-small--collapse li:first-child {
+        margin-top: 10px !important
+    }
+
+    .sidebar__nav-small--border {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid var(--tf-border)
+    }
+
+    .sidebar__nav-small li {
+        margin-top: 10px
+    }
+
+    .sidebar__nav-small li:first-child {
+        margin-top: 0
+    }
+
+    .sidebar__nav-small li.active a {
+        background: var(--tf-btn)
+    }
+
+    .sidebar__nav-small li.active a svg {
+        stroke: var(--tf-active)
+    }
+
+    .sidebar__nav-small a, .sidebar__nav-small button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        width: 46px;
+        border-radius: 8px;
+        background: var(--tf-bg);
+        border: 1px solid var(--tf-border)
+    }
+
+    .sidebar__nav-small a svg, .sidebar__nav-small button svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-tc2)
+    }
+
+    .sidebar__nav-small a:hover svg, .sidebar__nav-small button:hover svg, .sidebar__nav-small a[aria-expanded="true"] svg, .sidebar__nav-small button[aria-expanded="true"] svg {
+        stroke: var(--tf-active)
+    }
+
+    .sidebar__actions-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: auto
+    }
+
+    .sidebar__lang-small {
+        position: relative
+    }
+
+    .sidebar__lang-small-btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        width: 46px;
+        border-radius: 8px;
+        color: var(--tf-tc);
+        background: var(--tf-bg);
+        border: 1px solid var(--tf-border)
+    }
+
+    .sidebar__lang-small-btn img {
+        width: 20px;
+        height: 20px
+    }
+
+    .sidebar__lang-small-menu {
+        max-width: 46px;
+        min-width: 46px;
+        background: var(--tf-bg);
+        border: 1px solid var(--tf-border);
+        padding: 15px 0
+    }
+
+    .sidebar__lang-small-menu li {
+        margin-bottom: 15px
+    }
+
+    .sidebar__lang-small-menu li:last-child {
+        margin-bottom: 0
+    }
+
+    .sidebar__lang-small-menu a {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 24px
+    }
+
+    .sidebar__lang-small-menu a img {
+        width: 20px;
+        height: 20px
+    }
+
+    .sidebar__scheme-small {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        width: 46px;
+        border-radius: 8px;
+        color: var(--tf-tc);
+        background: var(--tf-bg);
+        border: 1px solid var(--tf-border);
+        transition: .4s ease;
+        margin-top: 10px
+    }
+
+    .sidebar__scheme-small button {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 8px;
+        background: transparent;
+        opacity: 1;
+        z-index: 1
+    }
+
+    .sidebar__scheme-small button svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-tc2)
+    }
+
+    .sidebar__scheme-small button.active {
+        opacity: 0;
+        z-index: 0
+    }
+
+    .sidebar__scheme-small button:hover svg {
+        stroke: var(--tf-active)
+    }
+
+    .sidebar.active .sidebar__big {
+        transform: translate3d(0, 0, 0);
+        transition-delay: .2s
+    }
+
+    .sidebar.active .sidebar__small {
+        transform: translate3d(-80px, 0, 0);
+        transition-delay: 0s
+    }
+
+    /*.sidebar--sport {*/
+    /*    position: absolute;*/
+    /*    left: -80px;*/
+    /*    z-index: 100*/
+    /*}*/
+    /*.sidebar--sport .sidebar__head {*/
+    /*    transform: translate3d(80px, 0, 0)*/
+    /*}*/
+    .sidebar--sport .sidebar__big {
+        display: none
+    }
+
+    .sidebar--sport .sidebar__small {
+        background-color: var(--tf-bg2);
+        border-right: 1px solid var(--tf-border)
+    }
+
+    .sidebar--sport.active .sidebar__small {
+        transform: translate3d(80px, 0, 0)
+    }
+}
+
+@media (min-width: 1200px) {
+    .sidebar {
+        width: 260px;
+        transition: width .4s ease;
+        transition-delay: .2s
+    }
+
+    .sidebar__head {
+        width: 260px;
+        justify-content: flex-start;
+        padding-left: 17px;
+        border-right: 1px solid var(--tf-bg2);
+        transition: width .4s ease;
+        overflow: visible;
+        transition-delay: .2s
+    }
+
+    .sidebar__logo {
+        position: fixed;
+        z-index: 100;
+        left: 85px;
+        display: block;
+        width: 132px;
+        height: 40px;
+        background: var(--tf-logo) no-repeat left center;
+        background-size: auto 40px;
+        transition: all .2s;
+    }
+
+    .sidebar__actions {
+        padding: 0
+    }
+
+    .sidebar__big {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition: .4s ease;
+        transition-property: opacity, transform;
+        transition-delay: .2s
+    }
+
+    .sidebar__small {
+        transform: translate3d(-80px, 0, 0);
+        opacity: 0;
+        transition-property: opacity, transform;
+        transition-delay: 0s
+    }
+
+    .sidebar.active {
+        width: 80px;
+        transition-delay: 0s
+    }
+
+    .sidebar.active .sidebar__head {
+        width: 80px;
+        transition-delay: 0s
+    }
+
+    .sidebar.active .sidebar__big {
+        transform: translate3d(-260px, 0, 0);
+        opacity: 0;
+        transition-delay: 0s
+    }
+
+    .sidebar.active .sidebar__small {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition-delay: .2s
+    }
+
+    /*.sidebar--sport {*/
+    /*    position: relative;*/
+    /*    left: auto;*/
+    /*    width: 0;*/
+    /*    transition-delay: 0s*/
+    /*}*/
+    /*.sidebar--sport .sidebar__head {*/
+    /*    width: 80px;*/
+    /*    transform: translate3d(0, 0, 0);*/
+    /*    border-right: none;*/
+    /*    border-bottom: 1px solid var(--tf-border);*/
+    /*    background-color: var(--tf-bg2);*/
+    /*    z-index: 2*/
+    /*}*/
+    /*.sidebar--sport .sidebar__logo {*/
+    /*    display: none*/
+    /*}*/
+    /*.sidebar--sport .sidebar__small {*/
+    /*    background-color: transparent;*/
+    /*    border-right: none;*/
+    /*    transition-delay: 0s*/
+    /*}*/
+    /*.sidebar--sport.active .sidebar__head {*/
+    /*    transition-delay: 0s*/
+    /*}*/
+    /*.sidebar--sport.active .sidebar__small {*/
+    /*    transition-delay: 0s*/
+    /*}*/
+    .sidebar--game {
+        display: flex
+    }
+
+    .sidebar--game .sidebar__head {
+        border-right: none
+    }
+
+    .sidebar--game .sidebar__logo {
+        transition-delay: .2s
+    }
+
+    .sidebar--game.active .sidebar__logo {
+        opacity: 0;
+        transition-delay: 0s
+    }
+}

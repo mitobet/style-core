@@ -1,0 +1,62 @@
+/* Sidebar Hareket Animasyonu */
+.sidebar {
+    animation: slideInFromLeft 0.8s ease-out;
+}
+
+.sidebar.active {
+    animation: slideInComplete 0.4s ease;
+}
+
+/* Animasyon tanımları */
+@keyframes slideInFromLeft {
+    0% {
+        transform: translate3d(-100vw, 0, 0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate3d(-100vw, 0, 0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInComplete {
+    0% {
+        transform: translate3d(-100vw, 0, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+/* Hover efekti */
+.sidebar:hover {
+    animation: sidebarPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes sidebarPulse {
+    0% {
+        box-shadow: 0 0 5px rgba(37, 165, 106, 0.3);
+    }
+    100% {
+        box-shadow: 0 0 20px rgba(37, 165, 106, 0.6);
+    }
+}
+
+/* Mobil için ek animasyon */
+@media (max-width: 767px) {
+    .sidebar {
+        animation: mobileSlideIn 0.6s ease-out;
+    }
+    
+    @keyframes mobileSlideIn {
+        0% {
+            transform: translate3d(-100vw, 0, 0) scale(0.9);
+        }
+        100% {
+            transform: translate3d(-100vw, 0, 0) scale(1);
+        }
+    }
+} 

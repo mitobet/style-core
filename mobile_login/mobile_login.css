@@ -1,0 +1,45 @@
+/* Mobil görünümde giriş butonu stilleri */
+
+/* Mobil cihazlar için */
+@media (max-width: 767px) {
+  .header__signin {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px;
+    margin-left: 15px;
+    border: 1px solid var(--tf-active);
+    border-radius: 8px;
+    padding: 0 10px;
+  }
+
+  .header__signin svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--tf-tc);
+    margin-right: 6px;
+  }
+
+  .header__signin span {
+    display: inline-block !important; /* Görünür hale getir */
+    color: var(--tf-tc);
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: color 0.4s ease;
+  }
+
+  .header__signin:hover {
+    background-color: rgba(var(--tf-active-rgb), 0.1);
+  }
+
+  .header__signin:hover span {
+    color: var(--tf-active);
+  }
+}
+
+/* Tablet ve daha büyük cihazlar için (isteğe bağlı) */
+@media (min-width: 768px) {
+  /* Burada varsayılan stiller geçerli olacak */
+} 

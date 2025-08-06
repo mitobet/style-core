@@ -1,0 +1,281 @@
+/* Form Note Error - Jojova Güncelleme */
+#wallet-modal .form__note.error {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    height: 40px !important;
+    margin-top: 20px !important;
+    border: 1px solid var(--tf-active) !important;
+    border-radius: 8px !important;
+    padding: 0 12px !important;
+    background-color: transparent !important;
+    color: var(--tf-tc) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    text-align: left !important;
+    cursor: pointer !important;
+}
+
+#wallet-modal .form__note.error::before {
+    content: "!" !important;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 8px !important;
+    background-color: var(--tf-active) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 20px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+    animation: pulse 2s infinite !important;
+}
+
+#wallet-modal .form__note.error:hover {
+    background-color: rgba(var(--tf-active-rgb), 0.1) !important;
+    color: var(--tf-active) !important;
+}
+
+/* Yeni Sabit Uyarı Kutusu - AGRESIF */
+.jojova-warning-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    min-height: 40px !important;
+    margin: 15px 0 !important;
+    border: 2px solid var(--tf-active) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    background-color: rgba(var(--tf-active-rgb), 0.05) !important;
+    color: var(--tf-tc) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 15px rgba(var(--tf-active-rgb), 0.4) !important;
+    animation: borderBlink 2s infinite, initialShake 0.8s ease-out !important;
+}
+
+.jojova-warning-container::before {
+    content: "⚠" !important;
+    display: inline-block !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 10px !important;
+    margin-top: 1px !important;
+    background-color: var(--tf-active) !important;
+    color: white !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 24px !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    flex-shrink: 0 !important;
+    animation: iconPulse 1.5s infinite, iconGlow 2s infinite !important;
+    box-shadow: 0 0 10px rgba(var(--tf-active-rgb), 0.6) !important;
+}
+
+/* AGRESIF ANIMASYONLAR */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes borderBlink {
+    0%, 50% {
+        border-color: var(--tf-active);
+        box-shadow: 0 0 15px rgba(var(--tf-active-rgb), 0.4);
+    }
+    25%, 75% {
+        border-color: #ff4757;
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.6);
+    }
+}
+
+@keyframes initialShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+    20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+@keyframes iconPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        background-color: var(--tf-active);
+    }
+    50% { 
+        transform: scale(1.2); 
+        background-color: #ff4757;
+    }
+}
+
+@keyframes iconGlow {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(var(--tf-active-rgb), 0.6);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
+    }
+}
+
+.jojova-warning-container:hover {
+    background-color: rgba(var(--tf-active-rgb), 0.15) !important;
+    color: var(--tf-active) !important;
+    box-shadow: 0 0 25px rgba(var(--tf-active-rgb), 0.7) !important;
+    transform: scale(1.02) !important;
+}
+
+.jojova-warning-text {
+    display: block;
+    line-height: 1.5;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    font-style: normal !important;
+    flex: 1;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.jojova-warning-text strong {
+    color: var(--tf-active);
+    font-weight: 600;
+    font-style: normal !important;
+}
+
+/* İkinci sabit uyarı kutusu */
+.jojova-info-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    min-height: 40px !important;
+    margin: 10px 0 !important;
+    border: 1px solid var(--tf-active) !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    background-color: transparent !important;
+    color: var(--tf-tc) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: default !important;
+}
+
+.jojova-info-container::before {
+    content: "i" !important;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 10px !important;
+    margin-top: 2px !important;
+    background-color: #007bff !important;
+    color: white !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 20px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+}
+
+.jojova-info-container:hover {
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    border-color: #007bff !important;
+}
+
+.jojova-info-text {
+    display: block;
+    line-height: 1.5;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    font-style: normal !important;
+    flex: 1;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.jojova-info-text strong {
+    color: #007bff;
+    font-weight: 600;
+    font-style: normal !important;
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    #wallet-modal .form__note.error,
+    .jojova-warning-container,
+    .jojova-info-container {
+        padding: 12px !important;
+        font-size: 12px;
+        margin: 12px 0;
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        align-items: flex-start !important;
+        flex-wrap: nowrap !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    .jojova-warning-text,
+    .jojova-info-text {
+        line-height: 1.5;
+        font-style: normal !important;
+        padding-top: 0px;
+        flex: 1 !important;
+        width: auto !important;
+        max-width: none !important;
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        display: block !important;
+    }
+    
+    #wallet-modal .form__note.error::before,
+    .jojova-warning-container::before,
+    .jojova-info-container::before {
+        width: 16px !important;
+        height: 16px !important;
+        line-height: 16px !important;
+        font-size: 9px !important;
+        margin-right: 10px !important;
+        margin-top: 1px !important;
+        flex-shrink: 0 !important;
+        min-width: 16px !important;
+    }
+} 
