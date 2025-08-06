@@ -126,36 +126,13 @@ html {
 /* Font Tanımları */
 @import url('https://fonts.googleapis.com/css2?family=Gilroy:wght@300;400;500;600;700;800&display=swap');
 
-@font-face {
-    font-family: 'Rajdhani-Medium';
-    src: url('../webfont/fonts/Rajdhani-Medium.ttf');
-}
-
-@font-face {
-    font-family: 'Rajdhani-Bold';
-    src: url('../webfont/fonts/Rajdhani-Bold.ttf');
-}
-
-@font-face {
-    font-family: 'Rajdhani-SemiBold';
-    src: url('../webfont/fonts/Rajdhani-SemiBold.ttf');
-}
-
-@font-face {
-    font-family: 'Rajdhani-Light';
-    src: url('../webfont/fonts/Rajdhani-Light.ttf');
-}
-
-@font-face {
-    font-family: 'Rajdhani-Regular';
-    src: url('../webfont/fonts/Rajdhani-Regular.ttf');
-}
 
 /* Genel Stiller */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Gilroy', sans-serif;
 }
 
 
@@ -166,7 +143,7 @@ html {
 
 
 body {
-    font-family: 'Gilroy', 'Rajdhani-SemiBold', sans-serif;
+    font-family: 'Gilroy', sans-serif;
     background-color: #323232;
     background-color: var(--tf-bg);
     color: var(--tf-tc);

@@ -72,31 +72,18 @@
                   <div class="slider-bottom-grid">
                       <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/casino/group/live-lobby'">
                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/A5mm1VoGRciOn75iKVCg4DI4aivDPabFKkHwA0XQ.png" alt="Live Casino" class="slider-bottom-image">
-                          <div class="slider-bottom-overlay">
-                              <h3 class="slider-bottom-title">Live Casino</h3>
-                          </div>
                       </div>
                       <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/vip'">
                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/5DPopoH61Dj5fqZ5lmMM0gWZsXekd3EopM4KP6QO.png" alt="VIP Club" class="slider-bottom-image">
-                          <div class="slider-bottom-overlay">
-                              <h3 class="slider-bottom-title">VIP Club</h3>
-                          </div>
                       </div>
                       <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/sportsbook'">
                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/AoqGK76s6ZWSyg0H70D3meqrXIZdwYcNtSAmKsom.png" alt="Spor" class="slider-bottom-image">
-                          <div class="slider-bottom-overlay">
-                              <h3 class="slider-bottom-title">Spor</h3>
-                          </div>
                       </div>
                       <div class="slider-bottom-item" onclick="window.location.href='https://jojova350.com/tr/casino/'">
                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/EIpBfslRNFy6SBmrupvVsBFX2gdFHFaVBC8T3fAR.png" alt="Slot" class="slider-bottom-image">
-                          <div class="slider-bottom-overlay">
-                              <h3 class="slider-bottom-title">Slot</h3>
-                          </div>
                       </div>
                   </div>
               </div>
-
           `;
 
            // Features Container
