@@ -145,7 +145,6 @@
             collapseButtons.forEach(button => {
                 // Önceki event'leri temizle
                 button.onclick = null;
-                button.removeEventListener('click', arguments.callee);
                 
                 button.addEventListener('click', function(e) {
                     e.preventDefault();
