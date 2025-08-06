@@ -578,6 +578,14 @@ svg {
     border: 0.5px solid rgba(255, 215, 0, 0.6);
 }
 
+.sidebar__link--casino:first-child {
+    background: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/styles/kKuifkYMDDSyVvVGBVkV51YmyZUoO1Qv1ecX8b11.jpg") left center / cover no-repeat !important;
+}
+
+.sidebar__link--casino:nth-child(2) {
+    background: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/styles/Jmq4wR9D0Soz35pDspztsca2uUS1bclUSknFVQAj.jpg") left center / cover no-repeat !important;
+}
+
 .sidebar__link--casino:hover {
     background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
     transform: translateY(-2px);
