@@ -931,6 +931,15 @@ svg {
     transition: all 0.3s ease;
 }
 
+
+.test-deneme {
+    background: #323232; 
+    border: 1px solid rgba(255, 215, 0, 0.15) !important; 
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}   
+
 /* Light mode için no-bg stilleri */
 [data-bs-theme="light"] .sidebar__nav a.no-bg {
     background: #f8f9fa;
