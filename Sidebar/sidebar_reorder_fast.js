@@ -45,7 +45,7 @@
             <div class="sidebar__menu">
                 <span class="sidebar__title">MENÜ</span>
                 <ul class="sidebar__nav sidebar__nav--border">
-                    <li class="active"><a href="/tr/"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#homepage"></use></svg>Ana Sayfa</a></li>
+                    <li><a href="/tr/"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#homepage"></use></svg>Ana Sayfa</a></li>
                     <li><a href="/tr/vip"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#vip"></use></svg>VIP Kulübü</a></li>
                     <li><a href="/tr/casino"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#casino2"></use></svg>Casino</a></li>
                     <li><a href="/tr/sportsbook"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#sportsbook-basketball"></use></svg>Spor Bahisleri</a></li>
