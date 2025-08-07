@@ -2,13 +2,13 @@
 .slider-bottom-container {
     max-width: 1440px !important;
     margin: 0 auto;
-    padding: 20px;
+  
 }
 
 .slider-bottom-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 10px;
     width: 100%;
 }
 
