@@ -664,6 +664,106 @@ svg {
     margin-left: 0;
 }
 
+/* Bonus Talep Butonu Stilleri */
+.sidebar__link--bonus {
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    border: 1px solid rgba(255, 215, 0, 0.6);
+    transition: all 0.3s ease;
+}
+
+.sidebar__link--bonus:hover {
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
+    border-color: rgba(255, 215, 0, 0.8);
+}
+
+/* Bonus buton arka plan görseli efekti - şimdilik gizli */
+.sidebar__link--bonus::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/request-bonus.png") left center / cover no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar__link--bonus:hover::before {
+    opacity: 0;
+}
+
+.sidebar__link--bonus span {
+    position: relative;
+    z-index: 2;
+    color: #1d2735 !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+/* Bonus buton ok işareti */
+.sidebar__link--bonus:after {
+    content: '🎁' !important;
+    font-size: 20px !important;
+    color: #1d2735 !important;
+    background: rgba(255, 215, 0, 0.2) !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 8px !important;
+    transition: all 0.3s ease !important;
+}
+
+.sidebar__link--bonus:hover:after {
+    transform: rotate(10deg) scale(1.1);
+    background: rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Light mode için bonus buton stilleri */
+[data-bs-theme="light"] .sidebar__link--bonus {
+    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%) !important;
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%) !important;
+    border-color: rgba(255, 215, 0, 0.7);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus span {
+    color: #1d2735 !important;
+    text-shadow: none;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:after {
+    background: rgba(255, 215, 0, 0.2) !important;
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 768px) {
+    .sidebar__link--bonus span {
+        font-size: 14px;
+    }
+    
+    .sidebar__link--bonus:after {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 18px !important;
+    }
+}
+
 .sidebar__big {
     display: flex;
     flex-direction: column;
@@ -826,13 +926,13 @@ svg {
     width: 100%;
 }
 
-/* Floating icon animation */
-.menu-item-wrapper img,
+/* Floating icon animation - disabled */
+/* .menu-item-wrapper img,
 .menu-item-wrapper svg,
 .crypto-link__icon svg,
 .svg-icon {
-    /* animation: float 4s ease-in-out infinite; */
-}
+    animation: float 4s ease-in-out infinite;
+} */
 
 /* Farklı animasyon süreleri ekleyerek daha doğal görünüm sağlıyoruz */
 .sidebar__nav li:nth-child(odd) .svg-icon {

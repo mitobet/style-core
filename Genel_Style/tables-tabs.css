@@ -1,0 +1,88 @@
+.table-wrap {
+    background-color: transparent;
+}
+
+.tabs-nav {
+    background-color: transparent;
+}
+
+.tabs-nav__btn.active {
+    background: linear-gradient(to right,
+            rgba(249, 198, 54, 0.6) 0%,
+            rgba(255, 215, 0, 0.7) 26%,
+            rgba(255, 184, 0, 0.6) 68%,
+            rgba(249, 198, 54, 0.6) 100%);
+    border-radius: 10px;
+}
+
+.last-bets-wrapper .table-wrap {
+    background-color: transparent;
+}
+
+.xtable thead th {
+    padding: 20px !important;
+}
+
+.xtable thead {
+    background: linear-gradient(to right,
+            rgba(249, 198, 54, 0.2) 0%,
+            rgba(255, 215, 0, 0.3) 47%,
+            rgba(249, 198, 54, 0.2) 100%);
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.xtable tbody tr {
+    background-color: rgba(249, 198, 54, 0.1) !important;
+    margin-bottom: 6px;
+    border-radius: 6px;
+    display: table-row;
+}
+
+.xtable tr:nth-child(even),
+.xtable tr:nth-child(odd) {
+    background-color: rgba(249, 198, 54, 0.1) !important;
+}
+
+.xtable tr {
+    background-color: rgba(249, 198, 54, 0.1) !important;
+}
+
+.xtable tbody td {
+    padding: 12px !important;
+}
+
+.xtable tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.tabs-nav__btn:hover {
+    color: white !important;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.table-wrap__head {
+    background: transparent !important;
+}
+
+.ss-main {
+    background-color: #1F0907 !important;
+    border-radius: 10px;
+}
+
+.table-wrap__head {
+    padding-left: 0px;
+    margin-bottom: 20px;
+}
+
+#last-bets-wrapper .section .container {
+    padding-left: 10px;
+}
+
+.xtable thead th {
+    padding: 20px !important;
+}
+
+.tabs-nav__btn:hover {
+    color: white !important;
+}

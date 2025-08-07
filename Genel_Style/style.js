@@ -25,46 +25,68 @@
     // Eğer div bulunduysa içine metin ekle
     if (targetDiv) {
       
-       // Welcome Container
-       const welcomeContainer = `
-       <div class="welcome-container" id="welcome-id-new">
-           <div class="welcome-inner container" >
-               <!-- Sol Taraf -->
-               <div class="welcome-left">
-                   <h1 class="welcome-title">
-                       <span class="welcome-title-white d-none d-md-inline-block">${t.welcomeTitle1}</span>
-                       <span class="welcome-title-orange d-none d-md-inline-block">${t.welcomeTitle2}</span>
-                       <span class="d-md-none">${t.welcomeTitleMobile}</span>
-                   </h1>
-                   <div class="welcome-buttons">
-                       <button class="register-button" id="register-button-custom" onclick="window.location.href='${langPrefix}/?modal=register'">${t.joinButton}</button>
+       // Slider Container - En üstte olacak
+       const sliderContainer = `
+           <!-- Desktop Swiper Slider -->
+           <div class="main-slider-container mb-4">
+               <div class="swiper main-slider">
+                   <div class="swiper-wrapper">
                        
-                       <div class="social-buttons">
-                           <button class="social-button" onclick="window.location.href='https://t.me/+Ulf7jOKPbHxkZDU0'">
-                               <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/5dem3a87LDfc2yxrqLSIrAtwkXxsSFVeTQoIuaN0.png" alt="Telegram" class="social-icon">
-                           </button>
-                           <button class="social-button" onclick="window.location.href='https://wa.me/447443980505'">
-                               <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/M8VMfTguoljw6JoZgIhnnzbzX7y4WNFNDEgL8JiT.png" alt="WhatsApp" class="social-icon">
-                           </button>
+                       <!-- Slide 1 -->
+                       <div class="swiper-slide">
+                           <div class="slider-image-container">
+                               <a href="${langPrefix}/promotions">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/YF1hLY0iqMYnsqn0LBKPUcqIFppaqZ3SaYpsG5Oe.png" alt="Slide 1" class="slider-image">
+                               </a>
+                           </div>
                        </div>
-                   </div>
-               </div>
-               <!-- Sağ Taraf -->
-               <div class="welcome-right">
-                   <div class="game-box" onclick="window.location.href='${langPrefix}/casino'">
-                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/CNoJNMFXM3Cx8DIlZfWp8k4tivm7kyNurPhF39UX.jpg" alt="${t.casinoTitle}" class="game-image">
-                       <div class="game-title">${t.casinoTitle}</div>
+
+                       <!-- Slide 2 -->
+                       <div class="swiper-slide">
+                           <div class="slider-image-container">
+                               <a href="${langPrefix}/vip">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/yH8LvKWVwo1OqVkKKJJN5tajjemFYjCjCSHqeGA3.png" alt="Slide 2" class="slider-image">
+                               </a>
+                           </div>
+                       </div>
+
                    </div>
                    
-                   <div class="game-box sports" onclick="window.location.href='${langPrefix}/sportsbook'">
-                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/VL9ihEJwiO6ndMzTUnbmWvLQKXk4iCSWeeCi0rU0.jpg" alt="${t.sportsTitle}" class="game-image">
-                       <div class="game-title">${t.sportsTitle}</div>
-                   </div>
+                   <!-- Pagination - Sol alt köşe -->
+                   <div class="swiper-pagination"></div>
                </div>
            </div>
-       </div>
-   `;
 
+           <!-- Mobile Swiper Slider -->
+           <div class="mobile-slider-container mb-4">
+               <div class="swiper mobile-slider">
+                   <div class="swiper-wrapper">
+                       
+                       <!-- Mobile Slide 1 -->
+                       <div class="swiper-slide">
+                           <div class="mobile-slider-image-container">
+                               <a href="${langPrefix}/promotions">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/w6F9TyMumIoDuGzb5irkEwslVPFyhNIbncXLIgr8.png" alt="Mobile Slide 1" class="mobile-slider-image">
+                               </a>
+                           </div>
+                       </div>
+
+                       <!-- Mobile Slide 2 -->
+                       <div class="swiper-slide">
+                           <div class="mobile-slider-image-container">
+                               <a href="${langPrefix}/promotions">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/w6F9TyMumIoDuGzb5irkEwslVPFyhNIbncXLIgr8.png" alt="Mobile Slide 2" class="mobile-slider-image">
+                               </a>
+                           </div>
+                       </div>
+
+                   </div>
+                   
+                   <!-- Mobile Pagination -->
+                   <div class="swiper-pagination"></div>
+               </div>
+           </div>
+       `;
 
     // Payment Container
           const sliderBottom = `
@@ -203,43 +225,7 @@
 
 
 
-       // Popular Sports Container
-       const popularSportsContainer = `
-           <div class="popular-sports-container">
-               <div class="popular-sports-title-wrap">
-                   <div class="popular-sports-title">
-                       <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/lLBBAW7MKZbS0CcvPUpChhfne7MRjerqH8Z4oAcY.png" alt="Sports" style="width: 22px; height: 22px; margin-right: 2px; object-fit: contain;">
-                       ${t.sportsTitle2}
-                   </div>
-                   <a href="${langPrefix}/sportsbook" class="popular-sports-link">${t.sportsAll}</a>
-               </div>
-               <div class="popular-sports-grid">
-                   <a href="${langPrefix}/sportsbook/football" class="sport-box">
-                       <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/dFD9U9Xbek8H290IHa4MGsE00iRU0ynCmtwHt7su.png" alt="${t.football}" class="sport-icon">
-                       <div class="sport-name">${t.football}</div>
-                   </a>
-                   <a href="${langPrefix}/sportsbook/basketball" class="sport-box">
-                       <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/nJogSTgWIl5y7TrYZVyBFYysfCe7HDziO1reLRQd.png" alt="${t.basketball}" class="sport-icon">
-                       <div class="sport-name">${t.basketball}</div>
-                   </a>
-                   <a href="${langPrefix}/sportsbook/volleyball" class="sport-box">
-                       <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/vlLTs3pmkIxkpmpAPKKaW1tWuiXux5tnmVNeKVDr.png" alt="${t.volleyball}" class="sport-icon">
-                       <div class="sport-name">${t.volleyball}</div>
-                   </a>
-                   <a href="${langPrefix}/sportsbook/tennis" class="sport-box">
-                       <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/ChO25ZvOKBZaJZiaYIwBvZHjqoteb9KXDAsiCdlu.png" alt="${t.tennis}" class="sport-icon">
-                       <div class="sport-name">${t.tennis}</div>
-                   </a>
-                  
-                   <a href="${langPrefix}/e-sport" class="sport-box">
-                       <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/DNIIzoYr1VBTn7ssEz7dT5rMPccGSzWRusre04EK.png" alt="${t.esports}" class="sport-icon">
-                       <div class="sport-name">${t.esports}</div>
-                   </a>
-               </div>
-           </div>
-           
 
-       `;
 
       // Jackpot container'ı tamamen gizle - sayfa yüklenir yüklenmez
       const styleElement = document.createElement('style');
@@ -272,107 +258,92 @@
         jackpotsContainer.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important; position: absolute !important; left: -9999px !important;';
       }
       
-      // İçeriği targetDiv'e ekle - jackpots container olmadan
-      targetDiv.innerHTML = '<div class="container">' + welcomeContainer + sliderBottom + featuresContainer + sportBannerContainer + popularSportsContainer + '</div>';
+      // İçeriği targetDiv'e ekle - slider en üstte, welcome container kaldırıldı
+      targetDiv.innerHTML = '<div class="container">' + sliderContainer + sliderBottom + featuresContainer + sportBannerContainer + '</div>';
       
-      // Jackpots container'ı popularSportsContainer'dan ÖNCE taşı - daha uzun gecikme ile
-      setTimeout(function() {
-        // jackpotsContainer değişkeni zaten tanımlandı
-        const popularSportsContainerElement = document.querySelector('.popular-sports-container');
-        
-        // Jackpots container'ı popularSportsContainer'dan ÖNCE ekle
-        if (jackpotsContainer && popularSportsContainerElement && popularSportsContainerElement.parentNode) {
-          // Jackpot container'ı popularSportsContainer'dan ÖNCE taşı
-          popularSportsContainerElement.parentNode.insertBefore(jackpotsContainer, popularSportsContainerElement);
-          
-          // Jackpot container'ı görünür yap (sonra)
-          setTimeout(function() {
-            try {
-              // CSS kuralını değiştir (kaldırmak yerine)
-              const newStyle = document.createElement('style');
-              newStyle.textContent = `
-                #jackpots-container { 
-                  display: block !important; 
-                  opacity: 1 !important;
-                  visibility: visible !important;
-                  position: relative !important;
-                  left: auto !important;
-                }
-                @media (max-width: 768px) {
-                  #jackpots-container {
-                    order: 4 !important;
-                  }
-                  .popular-sports-container {
-                    order: 5 !important;
-                  }
-                  .container {
-                    display: flex !important;
-                    flex-direction: column !important;
-                  }
-                }
-              `;
-              
-              // Eski stil elementini kaldır ve yenisini ekle
-              if (styleElement && styleElement.parentNode) {
-                document.head.removeChild(styleElement);
-              }
-              document.head.appendChild(newStyle);
-              
-              // Doğrudan display özelliğini ayarla
-              if (jackpotsContainer) {
-                jackpotsContainer.style.cssText = 'display: block !important; visibility: visible !important; opacity: 1 !important; position: relative !important; left: auto !important;';
-                console.log('Jackpot container görünür yapıldı:', jackpotsContainer);
-              }
-            } catch (e) {
-              console.error('Jackpot görünür yapma hatası:', e);
-            }
-          }, 500);
-        }
-      }, 1500);
+
 
       // İçerik eklendikten sonra DOM'dan elementleri al
       const topGamesWrapper = document.getElementById('top-games-wrapper');
       const bannerswrapper = document.getElementById('banners-wrapper');
 
-      // Elementler varsa topGamesWrapper'ı welcome-id-new'den sonra ekle
+      // Elementler varsa topGamesWrapper'ı banners-wrapper'dan sonra ekle
       if (topGamesWrapper && bannerswrapper && bannerswrapper.parentNode) {
         bannerswrapper.parentNode.insertBefore(topGamesWrapper, bannerswrapper.nextSibling);
       } else {
-        console.warn('topGamesWrapper veya welcome-id-new bulunamadı.');
+        console.warn('topGamesWrapper veya banners-wrapper bulunamadı.');
       }
 
-      // Game box'ların tıklanabilir linklerini ayarla
-      setupGameBoxes();
+      // Slider'ları başlat
+      initializeSliders();
     } else {
       console.warn('banners-wrapper bulunamadı.');
     }
   }
 
-  // Game box'ların tıklanabilir linklerini ayarla
-  function setupGameBoxes() {
-    const currentLang = getCurrentLanguage();
-    const langPrefix = currentLang === 'en' ? '/en' : '/tr';
-    
-    // Casino ve Sports kutularını seç
-    const casinoBox = document.querySelector('.welcome-right .game-box:first-child');
-    const sportsBox = document.querySelector('.welcome-right .game-box.sports');
-    
-    // Casino kutusu için tıklama olayını ayarla
-    if (casinoBox) {
-      casinoBox.style.cursor = 'pointer';
-      casinoBox.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = langPrefix + '/casino';
-      });
+  // Slider initialization fonksiyonu
+  function initializeSliders() {
+    // Swiper CSS ve JS dosyalarını yükle
+    if (!document.querySelector('link[href*="swiper"]')) {
+      const swiperCSS = document.createElement('link');
+      swiperCSS.rel = 'stylesheet';
+      swiperCSS.href = 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css';
+      document.head.appendChild(swiperCSS);
     }
     
-    // Sports kutusu için tıklama olayını ayarla
-    if (sportsBox) {
-      sportsBox.style.cursor = 'pointer';
-      sportsBox.addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = langPrefix + '/sportsbook';
-      });
+    if (!document.querySelector('script[src*="swiper"]')) {
+      const swiperJS = document.createElement('script');
+      swiperJS.src = 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js';
+      swiperJS.onload = function() {
+        // Desktop Slider
+        if (typeof Swiper !== 'undefined' && document.querySelector('.main-slider')) {
+          const swiper = new Swiper('.main-slider', {
+            loop: true,
+            autoplay: {
+              delay: 4000,
+              disableOnInteraction: false,
+            },
+            speed: 800,
+            pagination: {
+              el: '.main-slider .swiper-pagination',
+              clickable: true,
+              dynamicBullets: false,
+            },
+            navigation: false,
+            touchRatio: 1,
+            touchAngle: 45,
+            grabCursor: true,
+            effect: 'slide',
+            slidesPerView: 1,
+            spaceBetween: 0,
+          });
+        }
+
+        // Mobile Slider
+        if (typeof Swiper !== 'undefined' && document.querySelector('.mobile-slider')) {
+          const mobileSwiper = new Swiper('.mobile-slider', {
+            loop: true,
+            autoplay: {
+              delay: 4000,
+              disableOnInteraction: false,
+            },
+            speed: 800,
+            pagination: {
+              el: '.mobile-slider .swiper-pagination',
+              clickable: true,
+              dynamicBullets: false,
+            },
+            navigation: false,
+            touchRatio: 1,
+            touchAngle: 45,
+            grabCursor: true,
+            effect: 'slide',
+            slidesPerView: 1,
+            spaceBetween: 0,
+          });
+        }
+      };
+      document.head.appendChild(swiperJS);
     }
   }
 
@@ -493,16 +464,16 @@
     }
   }
 
-  // Sürekli kontrol eden interval - hiç durma
+  // Daha uyumlu kontrol sistemi
   function startContinuousCheck() {
-    // Ana kontrol döngüsü - hiç durmasın
+    // Ana kontrol döngüsü - daha az agresif
     const mainIntervalId = setInterval(function() {
       if (isHomePage()) {
         const targetDiv = document.getElementById("banners-wrapper");
-        const welcomeContainer = document.getElementById("welcome-id-new");
+        const sliderContainer = document.querySelector('.main-slider-container');
         
-        // Eğer banners-wrapper var ama welcome-container yoksa güncelle
-        if (targetDiv && !welcomeContainer) {
+        // Eğer banners-wrapper var ama slider-container yoksa güncelle
+        if (targetDiv && !sliderContainer) {
           updatePageContent();
         }
         
@@ -513,27 +484,27 @@
           mainSlider.innerHTML = '';
         }
       }
-    }, 300); // Her 300ms kontrol et
+    }, 2000); // Her 2 saniyede kontrol et
     
-    // Hızlı kontrol döngüsü - ilk 10 saniye için
+    // İlk yükleme için hızlı kontrol - sadece 5 saniye
     let quickCheckCount = 0;
     const quickIntervalId = setInterval(function() {
       quickCheckCount++;
       
-      if (quickCheckCount > 100) { // 10 saniye sonra durdur
+      if (quickCheckCount > 25) { // 5 saniye sonra durdur
         clearInterval(quickIntervalId);
         return;
       }
       
       if (isHomePage()) {
         const targetDiv = document.getElementById("banners-wrapper");
-        const welcomeContainer = document.getElementById("welcome-id-new");
+        const sliderContainer = document.querySelector('.main-slider-container');
         
-        if (targetDiv && !welcomeContainer) {
+        if (targetDiv && !sliderContainer) {
           updatePageContent();
         }
       }
-    }, 100); // Her 100ms kontrol et
+    }, 200); // Her 200ms kontrol et
   }
 
   // Sayfa yüklendiğinde ve URL değiştiğinde içeriği güncelle
@@ -547,49 +518,53 @@
     // URL değişikliklerini izle
     let lastUrl = location.href; 
     
-    // MutationObserver ile DOM değişikliklerini izle - çok agresif
+    // MutationObserver ile DOM değişikliklerini izle - daha az agresif
+    let mutationTimeout;
     const observer = new MutationObserver(function(mutations) {
       // URL değişti mi kontrol et
       if (location.href !== lastUrl) {
         lastUrl = location.href;
         superForceUpdate();
+        return;
       }
       
-      // Her DOM değişikliğinde kontrol et
-      if (isHomePage()) {
-        const welcomeContainer = document.getElementById("welcome-id-new");
-        if (!welcomeContainer) {
-          updatePageContent();
+      // Çok fazla mutation varsa throttle et
+      if (mutationTimeout) return;
+      
+      mutationTimeout = setTimeout(() => {
+        mutationTimeout = null;
+        
+        if (isHomePage()) {
+          const sliderContainer = document.querySelector('.main-slider-container');
+          if (!sliderContainer) {
+            updatePageContent();
+          }
         }
-      }
+      }, 500); // 500ms gecikme
     });
     
-    // Tüm document'i izle
-    observer.observe(document, {
+    // Sadece body'yi izle, daha az agresif
+    observer.observe(document.body, {
       childList: true,
-      subtree: true,
-      attributes: true,
-      attributeOldValue: true
+      subtree: false // Alt elemanları izleme
     });
     
-    // Her olası event'i dinle - hiçbirini kaçırma
+    // Sadece önemli event'leri dinle
     const allEvents = [
-      'popstate', 'hashchange', 'load', 'pageshow', 'pagehide',
-      'focus', 'blur', 'visibilitychange', 'storage',
-      'beforeunload', 'unload', 'resize', 'scroll'
+      'popstate', 'hashchange', 'pageshow'
     ];
     
     allEvents.forEach(function(eventName) {
       window.addEventListener(eventName, function(e) {
         setTimeout(() => {
           if (isHomePage()) {
-            const welcomeContainer = document.getElementById("welcome-id-new");
-            if (!welcomeContainer) {
+            const sliderContainer = document.querySelector('.main-slider-container');
+            if (!sliderContainer) {
               updatePageContent();
             }
           }
-        }, 10);
-      }, true); // Capture phase'de yakala
+        }, 100);
+      }, true);
     });
 
     // Document event'leri
@@ -600,35 +575,33 @@
       });
     });
 
-    // Mobil için ek event'ler - çok agresif
+    // Mobil için ek event'ler - sadece önemli olanlar
     if (isMobile()) {
       const mobileEvents = [
-        'touchstart', 'touchend', 'touchmove', 'touchcancel',
-        'gesturestart', 'gesturechange', 'gestureend',
-        'orientationchange', 'deviceorientation', 'devicemotion'
+        'orientationchange' // Sadece ekran döndürme için
       ];
       
       mobileEvents.forEach(function(eventName) {
         document.addEventListener(eventName, function() {
           if (isHomePage()) {
-            const welcomeContainer = document.getElementById("welcome-id-new");
-            if (!welcomeContainer) {
-              setTimeout(updatePageContent, 10);
+            const sliderContainer = document.querySelector('.main-slider-container');
+            if (!sliderContainer) {
+              setTimeout(updatePageContent, 500); // Daha uzun gecikme
             }
           }
         }, { passive: true });
       });
     }
 
-    // Her saniye kontrol et - backup sistem
+    // 5 saniyede bir kontrol et - backup sistem
     setInterval(function() {
       if (isHomePage()) {
-        const welcomeContainer = document.getElementById("welcome-id-new");
-        if (!welcomeContainer) {
+        const sliderContainer = document.querySelector('.main-slider-container');
+        if (!sliderContainer) {
           updatePageContent();
         }
       }
-    }, 1000);
+    }, 5000);
   }
 
   // DOM yüklendikten sonra veya hemen çalıştır

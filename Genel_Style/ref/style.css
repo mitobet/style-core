@@ -2098,17 +2098,21 @@ body {
 @media (max-width: 768px) {
     .slider-bottom-container {
         max-width: 100% !important;
+        padding: 10px;
     }
     
     .slider-bottom-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
+        grid-template-columns: 1fr;
+        gap: 0;
+        width: 100%;
     }
     
     .slider-bottom-item {
         aspect-ratio: 587/251;
         width: 100%;
         height: auto;
+        border-radius: 8px;
+        overflow: hidden;
     }
     
     .slider-bottom-image {
@@ -2116,5 +2120,228 @@ body {
         height: 100%;
         object-fit: cover;
         display: block;
+    }
+}
+
+/* Swiper Slider Styles - Desktop & Mobile */
+.main-slider-container {
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Desktop Slider */
+.main-slider {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 100%;
+    height: 400px;
+}
+
+.main-slider .swiper-slide {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.main-slider .swiper-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+/* Slider görsel container'ı */
+.slider-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #000;
+}
+
+.slider-image-container a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Slider görselleri */
+.slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 15px;
+    display: block;
+}
+
+/* Desktop Slider Pagination - Sol Alt Köşe */
+.main-slider .swiper-pagination {
+    bottom: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    text-align: left !important;
+    width: auto !important;
+}
+
+.main-slider .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 193, 7, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.main-slider .swiper-pagination-bullet-active {
+    background-color: #ffc107;
+    border: 1px solid #fff;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.5);
+    transform: scale(1.2);
+}
+
+/* Mobile Slider Styles */
+.mobile-slider-container {
+    margin-bottom: 2rem;
+    margin-top: 15px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    display: none; /* Varsayılan olarak gizli */
+}
+
+.mobile-slider {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 100%;
+    height: 400px; /* 2 görsel için yükseklik artırıldı */
+}
+
+.mobile-slider .swiper-slide {
+    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.mobile-slider .swiper-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+/* Mobile Slider görsel container'ı */
+.mobile-slider-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #000;
+}
+
+.mobile-slider-image-container a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Mobile Slider görselleri */
+.mobile-slider-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 15px;
+    display: block;
+}
+
+/* Mobile Slider Pagination */
+.mobile-slider .swiper-pagination {
+    bottom: 15px !important;
+    left: 15px !important;
+    right: auto !important;
+    text-align: left !important;
+    width: auto !important;
+}
+
+.mobile-slider .swiper-pagination-bullet {
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.4);
+    opacity: 1;
+    margin: 0 3px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 193, 7, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.mobile-slider .swiper-pagination-bullet-active {
+    background-color: #ffc107;
+    border: 1px solid #fff;
+    box-shadow: 0 2px 8px rgba(255, 193, 7, 0.5);
+    transform: scale(1.2);
+}
+
+/* Responsive - Tablet için */
+@media (max-width: 768px) {
+    .main-slider {
+        height: 300px;
+    }
+    
+    .main-slider .swiper-pagination {
+        bottom: 15px !important;
+        left: 15px !important;
+    }
+    
+    .main-slider .swiper-pagination-bullet {
+        width: 6px;
+        height: 6px;
+        margin: 0 3px;
+    }
+}
+
+/* Responsive - Mobil için */
+@media (max-width: 640px) {
+    .main-slider-container {
+        display: none; /* Desktop slider mobilde gizli */
+    }
+    
+    .mobile-slider-container {
+        display: block; /* Mobil slider göster */
+        padding: 10px; /* Slider-bottom-container ile aynı padding */
+        width: 100%;
+        max-width: 100% !important; /* Slider-bottom-container ile aynı */
+    }
+    
+    .mobile-slider {
+        width: 100%; /* Ekran genişliğine uyum */
+        max-width: 100%; /* Slider-bottom ile aynı genişlik */
+        height: auto; /* Otomatik yükseklik */
+        aspect-ratio: 300/386; /* Orijinal oran korunuyor */
+        border-radius: 15px; /* Genel boşluk kurallarına uygun */
+        margin: 0 auto; /* Ortalama */
+    }
+    
+    .mobile-slider-image {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px; /* Genel kurallara uygun */
+    }
+    
+    .mobile-slider .swiper-slide {
+        border-radius: 15px; /* Genel kurallara uygun */
+    }
+    
+    .mobile-slider-image-container {
+        border-radius: 15px; /* Genel kurallara uygun */
     }
 }
