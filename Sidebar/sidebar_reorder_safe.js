@@ -127,7 +127,7 @@
                 console.log('Telegram ekleniyor...');
                 const telegramLi = document.createElement('li');
                 telegramLi.className = '';
-                telegramLi.innerHTML = '<a href="https://t.me/jojova_resmi"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#telegram" xlink:href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#telegram"></use></svg>Telegram</a>';
+                telegramLi.innerHTML = '<a href="https://t.me/+2qnwpVnMbs1hYTQ0"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#telegram" xlink:href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#telegram"></use></svg>Telegram</a>';
                 promosyonlarUL.insertBefore(telegramLi, promosyonlarUL.children[1]); // Promosyonlar'dan sonra
             }
             
