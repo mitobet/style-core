@@ -1476,6 +1476,40 @@ svg {
     display: none;
 }
 
+/* Mobil için sidebar genişlik sınırlaması */
+@media (max-width: 767px) {
+    .sidebar {
+        width: 75vw !important; /* Ekranın %75'i */
+        max-width: 280px !important; /* Maksimum 280px */
+        min-width: 250px !important; /* Minimum 250px */
+    }
+    
+    .sidebar__big {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    /* Büyük ekranlarda çok yer kaplamaması için */
+    .sidebar__links {
+        margin-bottom: 15px;
+    }
+    
+    .sidebar__link {
+        height: 48px; /* Biraz daha küçük */
+        font-size: 14px;
+    }
+    
+    .sidebar__nav a, .sidebar__nav button {
+        height: 45px; /* Biraz daha küçük */
+        font-size: 13px;
+    }
+    
+    .sidebar__title {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+}
+
 /* Tablet ve Desktop için Responsive Stiller */
 @media (min-width: 768px) {
     .sidebar {
