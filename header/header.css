@@ -1,0 +1,17 @@
+/* Header CSS - Login Olmayan Kullanıcılar İçin */
+
+/* Login olmayan kullanıcılar için logo stili */
+.header:not(.header--logged) .header__logo {
+    background: var(--mini-logo) no-repeat left center;
+    width: 124px;
+    height: 65px;
+    padding: 35px;
+}
+
+/* Login olan kullanıcılar için normal logo stili (override) */
+.header--logged .header__logo {
+    background: var(--mini-logo) no-repeat left center;
+    width: 72px;
+    height: 65px;
+    padding: 35px;
+}

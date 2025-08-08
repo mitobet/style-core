@@ -149,82 +149,7 @@
               </div>
           `;
 
-           // Features Container
-           const featuresContainer = `
-           <div class="features-container">
-               <div class="features-inner">
-                   <div class="features-content">
-                       <div class="feature-item" onclick="window.location.href='${langPrefix}/promotions'">
-                           <div class="feature-icon-wrapper">
-                               <div class="feature-icon-bg">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/kQtnFOpFVn2THJuoLKypLdzx2dLJbz2ZDEMRRrSC.png" alt="${t.feature1}" class="feature-icon">
-                               </div>
-                           </div>
-                           <div class="feature-text">
-                               <h3 class="feature-title" id="feature-title-1">${t.feature1}</h3>
-                           </div>
-                       </div>
-                       <div class="feature-item" onclick="window.location.href='${langPrefix}/vip'">
-                           <div class="feature-icon-wrapper">
-                               <div class="feature-icon-bg">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/pj4PiDqSurqAABqy9IhsgtJJeAtCNVE1gLiGDhto.png" alt="${t.feature2}" class="feature-icon">
-                               </div>
-                           </div>
-                           <div class="feature-text">
-                               <h3 class="feature-title" id="feature-title-2">${t.feature2}</h3>
-                           </div>
-                       </div>
-                       <div class="feature-item" onclick="window.location.href='${langPrefix}/trade'">
-                           <div class="feature-icon-wrapper">
-                               <div class="feature-icon-bg">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/vNB9a6IBHJXmH5l7iuSUj2MIkzbwkedNx2ugtaQk.png" alt="${t.feature3}" class="feature-icon">
-                               </div>
-                           </div>
-                           <div class="feature-text">
-                               <h3 class="feature-title" id="feature-title-3">${t.feature3}</h3>
-                           </div>
-                       </div>
-                       <div class="feature-item" onclick="window.location.href='${langPrefix}/tournaments'">
-                           <div class="feature-icon-wrapper">
-                               <div class="feature-icon-bg">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/Ghn2hhdBAi6EBtTw9npYAGrLUHKoWFbHnNN035tD.png" alt="${t.feature4}" class="feature-icon">
-                               </div>
-                           </div>
-                           <div class="feature-text">
-                               <h3 class="feature-title" id="feature-title-4">${t.feature4}</h3>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-           <style>
-               .features-content {
-                   position: relative;
-                   display: flex;
-                   justify-content: space-between;
-               }
-               .feature-item {
-                   cursor: pointer;
-                   transition: all 0.3s ease;
-                   position: relative;
-                   z-index: 1;
-               }
-               .feature-item:hover {
-                   transform: scale(1.05);
-                   z-index: 2;
-               }
-               .features-content:hover .feature-item:not(:hover) {
-                   opacity: 0.7;
-                   filter: brightness(0.8);
-               }
-               .feature-icon-bg {
-                   transition: all 0.3s ease;
-               }
-               .feature-item:hover .feature-icon-bg {
-                   box-shadow: 0 0 15px rgba(255, 165, 0, 0.5);
-               }
-           </style>
-       `;
+
 
        // Sport Banner Container
        const sportBannerContainer = `
@@ -328,7 +253,7 @@
       `;
 
       // İçeriği targetDiv'e ekle - slider en üstte, futbol sekmesi eklendi
-      targetDiv.innerHTML = '<div class="container">' + sliderContainer + sliderBottom + futbolSekmesiContainer + featuresContainer + sportBannerContainer + '</div>';
+      targetDiv.innerHTML = '<div class="container">' + sliderContainer + sliderBottom + futbolSekmesiContainer + sportBannerContainer + '</div>';
       
 
 
@@ -517,10 +442,7 @@
       paymentTitle: "Güvenli Kripto İşlemleri",
       paymentSubtitle: "10'dan fazla para birimi ile bahis yap!",
       paymentButton: "Kripto Satın Al",
-      feature1: "Promosyonlar",
-      feature2: "VIP Kulübü", 
-      feature3: "Kripto Trade",
-      feature4: "Turnuvalar",
+
 
       sportsTitle2: "Popüler Sporlar",
       sportsAll: "Tümü",
@@ -542,10 +464,7 @@
       paymentTitle: "Secure Crypto Transactions",
       paymentSubtitle: "Bet with more than 10 currencies!",
       paymentButton: "Buy Crypto",
-      feature1: "Promotions",
-      feature2: "VIP Club",
-      feature3: "Crypto Trade", 
-      feature4: "Tournaments",
+
 
       sportsTitle2: "Popular Sports",
       sportsAll: "All",
@@ -598,18 +517,15 @@
       // Anında güncelle
       updatePageContent();
       
-      // Çoklu güncelleme - her durumu yakala
-      const delays = [5, 10, 25, 50, 100, 200, 400, 800];
-      delays.forEach(delay => {
-        setTimeout(() => {
-          if (isHomePage()) {
-            const welcomeContainer = document.getElementById("welcome-id-new");
-            if (!welcomeContainer) {
-              updatePageContent();
-            }
+      // Tek güncelleme ile yeterli
+      setTimeout(() => {
+        if (isHomePage()) {
+          const welcomeContainer = document.getElementById("welcome-id-new");
+          if (!welcomeContainer) {
+            updatePageContent();
           }
-        }, delay);
-      });
+        }
+      }, 100);
     }
   }
 
@@ -633,14 +549,14 @@
           mainSlider.innerHTML = '';
         }
       }
-    }, 2000); // Her 2 saniyede kontrol et
+    }, 3000); // Her 3 saniyede kontrol et
     
-    // İlk yükleme için hızlı kontrol - sadece 5 saniye
+    // İlk yükleme için hızlı kontrol - sadece 2 saniye
     let quickCheckCount = 0;
     const quickIntervalId = setInterval(function() {
       quickCheckCount++;
       
-      if (quickCheckCount > 25) { // 5 saniye sonra durdur
+      if (quickCheckCount > 10) { // 2 saniye sonra durdur
         clearInterval(quickIntervalId);
         return;
       }
@@ -716,12 +632,11 @@
       }, true);
     });
 
-    // Document event'leri
-    const docEvents = ['DOMContentLoaded', 'readystatechange'];
-    docEvents.forEach(function(eventName) {
-      document.addEventListener(eventName, function() {
+    // Document event'leri - sadece readystatechange yeterli
+    document.addEventListener('readystatechange', function() {
+      if (document.readyState === 'complete') {
         superForceUpdate();
-      });
+      }
     });
 
     // Mobil için ek event'ler - sadece önemli olanlar
@@ -765,29 +680,7 @@
     superForceUpdate();
   });
 
-  // Sayfa tamamen hazır olduğunda
-  document.addEventListener('DOMContentLoaded', function() {
-    superForceUpdate();
-  });
-
-  // Ready state değişikliklerinde
-  document.addEventListener('readystatechange', function() {
-    if (document.readyState === 'interactive' || document.readyState === 'complete') {
-      superForceUpdate();
-    }
-  });
-
-  // Hemen çalıştır - hiç beklemeden
-  superForceUpdate();
-
-  // 50ms sonra tekrar dene
-  setTimeout(superForceUpdate, 50);
-
-  // 200ms sonra tekrar dene  
-  setTimeout(superForceUpdate, 200);
-
-  // 1 saniye sonra tekrar dene
-  setTimeout(superForceUpdate, 1000);
+  // Gereksiz çoklu call'ları kaldır - sadece bir kere yeterli
 
 })(); 
 </script>

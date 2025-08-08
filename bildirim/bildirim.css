@@ -5,7 +5,9 @@
     padding: 4px;
     position: fixed;
     -webkit-transform: translateZ(9999);
+    transform: translateZ(9999);
     -webkit-transform: translateZ(var(--toastify-z-index));
+    transform: translateZ(var(--toastify-z-index));
     width: 320px;
     width: var(--toastify-toast-width);
     z-index: 9999;
@@ -315,6 +317,8 @@
     min-width: 300px !important;
     z-index: 99999 !important;
     padding: 0 15px !important;
+    /* Ensure container allows pointer events */
+    pointer-events: none !important;
 }
 
 /* Toast styling */
@@ -330,15 +334,19 @@
     font-weight: 500 !important;
     padding: 15px 45px 15px 15px !important;
     margin: 0 !important;
-    min-height: auto !important;
+    min-height: 60px !important;
     max-width: 100% !important;
     animation: slideInFromTop 0.3s ease-out !important;
     position: relative !important;
     pointer-events: auto !important;
-    user-select: none !important;
     -webkit-user-select: none !important;
+    user-select: none !important;
     word-wrap: break-word !important;
     overflow-wrap: break-word !important;
+    /* Ensure proper stacking context */
+    isolation: isolate !important;
+    /* Allow interaction with child elements */
+    touch-action: pan-y !important;
 }
 
 @keyframes slideInFromTop {
@@ -418,6 +426,14 @@
     z-index: 999999 !important;
     outline: none !important;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    /* Ensure button is clickable and not blocked */
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    /* Make sure it's above other elements */
+    isolation: isolate !important;
 }
 
 .Toastify__close-button:hover {
@@ -433,11 +449,39 @@
     background: rgba(255, 189, 0, 0.3) !important;
 }
 
+.Toastify__close-button:focus-visible {
+    outline: 2px solid #ffbd00 !important;
+    outline-offset: 2px !important;
+}
+
+/* Ensure close button is clickable on all devices */
+.Toastify__close-button,
+.Toastify__close-button * {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+}
+
+/* Make sure close button has highest z-index in toast */
+.Toastify__toast .Toastify__close-button {
+    z-index: 1000000 !important;
+    position: relative !important;
+}
+
 .Toastify__close-button svg {
     fill: #ffbd00 !important;
     width: 10px !important;
     height: 10px !important;
     pointer-events: none !important;
+    /* Ensure SVG doesn't block clicks */
+    display: block !important;
+    flex-shrink: 0 !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
 }
 
 /* Progress bar */
@@ -494,6 +538,9 @@
         right: 6px !important;
         width: 20px !important;
         height: 20px !important;
+        /* Ensure mobile touch events work */
+        touch-action: manipulation !important;
+        -webkit-tap-highlight-color: rgba(255, 189, 0, 0.3) !important;
     }
     
     .Toastify__close-button svg {
