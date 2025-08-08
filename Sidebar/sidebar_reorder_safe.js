@@ -224,6 +224,12 @@
             orderedMenu.forEach(item => {
                 menuUL.appendChild(item);
             });
+
+            // Casino linkini Live Lobby'ye yönlendir (dil algılı, domain bağımsız)
+            const currentLang = window.location.pathname.startsWith('/en') ? 'en' : 'tr';
+            const liveLobbyPath = `/${currentLang}/casino/group/live-lobby`;
+            const casinoAnchors = menuUL.querySelectorAll('a[href="/tr/casino"], a[href="/tr/casino/"], a[href="/en/casino"], a[href="/en/casino/"]');
+            casinoAnchors.forEach(a => a.setAttribute('href', liveLobbyPath));
             
             // Sadece accordion toggle - basit ve etkili
             setTimeout(function() {
@@ -293,7 +299,12 @@
                         e.preventDefault();
                         
                         // Özel yönlendirmeler
-                        if (href.includes('/casino/slots')) {
+                        if (/^\/(tr|en)\/casino\/?$/.test(href)) {
+                            const lang = window.location.pathname.startsWith('/en') ? 'en' : 'tr';
+                            const target = `/${lang}/casino/group/live-lobby`;
+                            navigateWithoutReload(target);
+                            console.log('Casino -> Live Lobby');
+                        } else if (href.includes('/casino/slots')) {
                             navigateWithoutReload('/tr/casino/group/lobby');
                             console.log('Slotlar -> Lobby');
                         } else if (href.includes('/live-casino')) {
