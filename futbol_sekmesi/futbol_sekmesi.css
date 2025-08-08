@@ -1,0 +1,207 @@
+/* Futbol Sekmesi CSS - Slider ile aynı hizalama */
+/* Ana Container - Slider ile aynı genişlik */
+.pb-component-wrapper {
+    width: 100%;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 0;
+    box-sizing: border-box;
+}
+
+.futbol-banner-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Banner Info Stilləri - Sarı border ve 3D efekt */
+.futbol-banner-info {
+    display: block;
+    padding: 8px;
+    background: transparent;
+    border: 2px solid #F9C636;
+    border-radius: 12px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(249, 198, 54, 0.2);
+    opacity: 1;
+    transform: scale(1);
+}
+
+.futbol-banner-info::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+}
+
+.futbol-banner-info:hover {
+    transform: translateY(-3px) scale(1.05);
+    border-color: #FFD700;
+    box-shadow: 
+        0 8px 25px rgba(249, 198, 54, 0.4),
+        0 0 20px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.futbol-banner-info:hover::before {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+/* 3D Focus Efekti - Hover'da diğerleri solsun */
+.futbol-banner-container:hover .futbol-banner-info:not(:hover) {
+    opacity: 0.25;
+    transform: scale(0.9) translateY(5px);
+    filter: grayscale(70%) blur(2px) brightness(0.6);
+    border-color: rgba(249, 198, 54, 0.2);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover edilen eleman daha da parlak olsun */
+.futbol-banner-container:hover .futbol-banner-info:hover {
+    z-index: 10;
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 
+        0 12px 35px rgba(249, 198, 54, 0.5),
+        0 0 30px rgba(255, 215, 0, 0.4),
+        inset 0 2px 0 rgba(255, 255, 255, 0.2);
+    border-color: #FFD700;
+}
+
+/* Banner Resim Stilləri - 3D efekt için optimize */
+.futbol-banner-img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    transition: all 0.4s ease;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.futbol-banner-info:hover .futbol-banner-img {
+    transform: scale(1.1);
+    filter: brightness(1.1) contrast(1.05);
+}
+
+.futbol-banner-icon {
+    font-size: 50px;
+    color: rgba(var(--b-sc, 0, 123, 255), 1);
+}
+
+/* Banner Başlık Stilləri - Gizli */
+.futbol-banner-title {
+    display: none;
+}
+
+/* Responsive Dizayn - Border ve efektler korunarak */
+@media (max-width: 768px) {
+    .pb-component-wrapper {
+        padding: 10px;
+    }
+
+    .futbol-banner-container {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+    }
+    
+    .futbol-banner-info {
+        padding: 5px;
+        border-width: 1.5px;
+    }
+    
+    .futbol-banner-info:hover {
+        transform: translateY(-2px) scale(1.03);
+    }
+    
+    /* Mobile 3D efekt */
+    .futbol-banner-container:hover .futbol-banner-info:not(:hover) {
+        opacity: 0.4;
+        transform: scale(0.95);
+        filter: grayscale(50%) blur(1px);
+    }
+}
+
+@media (max-width: 480px) {
+    .futbol-banner-container {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 4px;
+    }
+    
+    .futbol-banner-info {
+        padding: 3px;
+        border-width: 1px;
+        border-radius: 8px;
+    }
+    
+    .futbol-banner-info:hover {
+        transform: translateY(-1px) scale(1.02);
+        box-shadow: 0 4px 15px rgba(249, 198, 54, 0.3);
+    }
+    
+    /* Mobile minimal 3D efekt */
+    .futbol-banner-container:hover .futbol-banner-info:not(:hover) {
+        opacity: 0.5;
+        transform: scale(0.98);
+        filter: grayscale(30%);
+    }
+}
+
+/* Tema renkleri kaldırıldı - Sadece görsel */
+
+/* Animasyon Efektləri */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.futbol-banner-info {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.futbol-banner-info:nth-child(1) { animation-delay: 0.1s; }
+.futbol-banner-info:nth-child(2) { animation-delay: 0.2s; }
+.futbol-banner-info:nth-child(3) { animation-delay: 0.3s; }
+.futbol-banner-info:nth-child(4) { animation-delay: 0.4s; }
+.futbol-banner-info:nth-child(5) { animation-delay: 0.5s; }
+
+/* Dark Mode ve extra wrapper kaldırıldı */
+
+/* Loading Animation */
+.futbol-banner-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.futbol-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
