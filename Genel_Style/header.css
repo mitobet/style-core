@@ -1,0 +1,43 @@
+
+.header__signin , .header__signup, .live-tv-button {
+    background-image: none !important;
+    background:none !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 40px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-left: 15px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    color: white;
+    border: 1px solid #433710;
+    border-radius: 15px;
+    text-align: center;
+    justify-content: center !important;
+    box-shadow: none !important;
+}
+
+.header__signin svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--tf-active);
+    fill: var(--tf-active);
+    display: block !important;
+}
+
+.header__signup {
+    position: relative;
+}
+
+.header__signup::before {
+    content: "😌";
+    padding-right:10px;
+}
