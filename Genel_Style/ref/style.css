@@ -2125,7 +2125,6 @@ body {
 
 /* Swiper Slider Styles - Desktop & Mobile */
 .main-slider-container {
-    margin-bottom: 2rem;
     width: 100%;
     max-width: 100%;
     overflow: hidden;
@@ -2208,8 +2207,6 @@ body {
 
 /* Mobile Slider Styles */
 .mobile-slider-container {
-    margin-bottom: 2rem;
-    margin-top: 15px;
     width: 100%;
     max-width: 100%;
     overflow: hidden;

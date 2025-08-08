@@ -29,7 +29,7 @@
        // Slider Container - En üstte olacak
        const sliderContainer = `
            <!-- Desktop Swiper Slider -->
-           <div class="main-slider-container mb-4">
+           <div class="main-slider-container">
                <div class="swiper main-slider">
                    <div class="swiper-wrapper">
                        
@@ -77,7 +77,7 @@
            </div>
 
            <!-- Mobile Swiper Slider -->
-           <div class="mobile-slider-container mb-4">
+           <div class="mobile-slider-container">
                <div class="swiper mobile-slider">
                    <div class="swiper-wrapper">
                        

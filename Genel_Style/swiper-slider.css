@@ -1,7 +1,5 @@
 /* Swiper Slider Styles - Desktop & Mobile */
 .main-slider-container {
-    margin-bottom: 5px;
-    margin-top: 5px;
     width: 100%;
     max-width: 1440px;
     margin-left: auto;
@@ -87,8 +85,6 @@
 
 /* Mobile Slider Styles */
 .mobile-slider-container {
-    margin-bottom: 5px;
-    margin-top: 5px;
     width: 100%;
     max-width: 600px;
     margin-left: auto;
