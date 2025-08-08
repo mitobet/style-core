@@ -18,7 +18,8 @@
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
-    height: 251px;
+    aspect-ratio: 640/251;
+    height: auto;
     z-index: 1;
 }
 
@@ -33,6 +34,20 @@
     height: 100%;
     object-fit: cover;
     transition: all 0.3s ease;
+    object-position: center;
+}
+
+/* Geniş ekranlar için limitler */
+@media (min-width: 1200px) {
+    .slider-bottom-item {
+        max-height: 280px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .slider-bottom-item {
+        max-height: 320px;
+    }
 }
 
 @media (max-width: 768px) {
