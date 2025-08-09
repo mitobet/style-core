@@ -1080,23 +1080,6 @@ svg {
     pointer-events: auto !important;
 }
 
-/* Hover'da konum değiştirme → click iptalini engelle (mousedown ve mouseup aynı elemana düşsün) */
-.sidebar__link:hover,
-.sidebar__link:active,
-.sidebar__nav a:hover,
-.sidebar__nav a:active,
-/* Genel butonlarda hover hareketini kapat ama collapsed butonu hariç tut */
-.sidebar__nav button:hover:not(.sidebar__collapsed),
-.sidebar__nav button:active:not(.sidebar__collapsed),
-.sidebar__nav-small a:hover,
-.sidebar__nav-small a:active,
-.sidebar__nav-small button:hover,
-.sidebar__nav-small button:active,
-.sidebar__link-small:hover,
-.sidebar__link-small:active {
-    transform: none !important;
-}
-
 /* Collapsed (ok) butonunun konumu her durumda sabit kalsın */
 .sidebar__nav button.sidebar__collapsed,
 .sidebar__nav button.sidebar__collapsed:hover,
@@ -1146,8 +1129,8 @@ svg {
     width: 100%;
 }
 
-/* Tüm sidebar linkleri için border animation */
-.sidebar__nav a:after {
+/* Tüm sidebar linkleri için border animation - sadece büyük menüde */
+.sidebar .sidebar__big .sidebar__nav a:after {
     content: '';
     position: absolute;
     bottom: 0;
@@ -1158,16 +1141,16 @@ svg {
     transition: width 0.3s ease;
 }
 
-.sidebar__nav a:hover:after {
+.sidebar .sidebar__big .sidebar__nav a:hover:after {
     width: 100%;
 }
 
-/* Light mode için border animation */
-[data-bs-theme="light"] .sidebar__nav a:after {
+/* Light mode için border animation - sadece büyük menüde */
+[data-bs-theme="light"] .sidebar .sidebar__big .sidebar__nav a:after {
     background: #1d2735;
 }
 
-[data-bs-theme="light"] .sidebar__nav a:hover:after {
+[data-bs-theme="light"] .sidebar .sidebar__big .sidebar__nav a:hover:after {
     background: #1d2735;
 }
 
@@ -2288,178 +2271,153 @@ svg {
     color: #1d2735 !important;
 }
 
-/* ——— Minimal Sidebar Effects: Glow Kaldırma + Sade Hover ——— */
-/* Tüm ana elemanlarda glow/animasyonları kapat */
-.sidebar .sidebar__nav a,
-.sidebar .sidebar__nav button,
-.sidebar .sidebar__link,
-.sidebar .sidebar__link-small,
-.sidebar .sidebar__nav-small a,
-.sidebar .sidebar__nav-small button,
-.sidebar .crypto-link,
-.sidebar .crypto-link-small,
-.sidebar .sidebar__lang-btn,
-.sidebar .sidebar__lang-small-btn,
-.sidebar .menu-item-wrapper .sidebar__collapsed {
+/* —— Ok butonu sabit kalsın (hover'da milim oynamasın) —— */
+.menu-item-wrapper { position: relative; }
+.menu-item-wrapper .sidebar__collapsed,
+.sidebar .sidebar__nav button.sidebar__collapsed {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  transition: none !important; /* konum/ölçek animasyonu yok */
+}
+
+/* Hover'da da sabit kal */
+.menu-item-wrapper:hover .sidebar__collapsed,
+.sidebar .sidebar__nav li:hover .sidebar__collapsed,
+.sidebar .sidebar__nav a:hover + .sidebar__collapsed {
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Ok butonunda ölçek/atlama etkilerini kapat */
+.sidebar .sidebar__nav button.sidebar__collapsed:hover,
+.sidebar .sidebar__nav button.sidebar__collapsed:active,
+.sidebar .sidebar__nav button.sidebar__collapsed:focus {
+  transform: translateY(-50%) !important;
   box-shadow: none !important;
-  text-shadow: none !important;
-  filter: none !important;
   animation: none !important;
 }
 
-/* Basit ve kaliteli hover: hafif arkaplan + ince border */
-.sidebar .sidebar__nav a:hover,
-.sidebar .sidebar__nav button:hover,
-.sidebar .sidebar__link:hover,
-.sidebar .sidebar__link-small:hover,
-.sidebar .sidebar__nav-small a:hover,
-.sidebar .sidebar__nav-small button:hover,
-.sidebar .crypto-link:hover,
-.sidebar .crypto-link-small:hover,
-.sidebar .sidebar__lang-btn:hover,
-.sidebar .sidebar__lang-small-btn:hover,
-.sidebar .menu-item-wrapper .sidebar__collapsed:hover {
+/* —— Büyük menüde (sidebar__big) alt çizgi hover efektini geri getir —— */
+.sidebar .sidebar__big .sidebar__nav a {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar .sidebar__big .sidebar__nav a::after {
+  display: block !important;
+  content: '' !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--tf-active) !important;
+  transition: width 0.3s ease !important;
+}
+
+.sidebar .sidebar__big .sidebar__nav a:hover::after {
+  width: 100% !important;
+}
+
+/* Normal öğelerde hover efekti - aktif olmayanlarda */
+.sidebar .sidebar__big .sidebar__nav li:not(.active) a:hover::after {
+  width: 100% !important;
+  height: 2px !important;
+  bottom: 0 !important;
+  top: auto !important;
   transform: none !important;
-  background: rgba(255, 255, 255, 0.06) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
-  box-shadow: none !important;
+  border-radius: 0 !important;
 }
 
-/* Light theme için sade hover varyasyonu */
-[data-bs-theme="light"] .sidebar .sidebar__nav a:hover,
-[data-bs-theme="light"] .sidebar .sidebar__nav button:hover,
-[data-bs-theme="light"] .sidebar .sidebar__link:hover,
-[data-bs-theme="light"] .sidebar .sidebar__link-small:hover,
-[data-bs-theme="light"] .sidebar .sidebar__nav-small a:hover,
-[data-bs-theme="light"] .sidebar .sidebar__nav-small button:hover,
-[data-bs-theme="light"] .sidebar .crypto-link:hover,
-[data-bs-theme="light"] .sidebar .crypto-link-small:hover,
-[data-bs-theme="light"] .sidebar .sidebar__lang-btn:hover,
-[data-bs-theme="light"] .sidebar .sidebar__lang-small-btn:hover,
-[data-bs-theme="light"] .sidebar .menu-item-wrapper .sidebar__collapsed:hover {
-  background: rgba(0, 0, 0, 0.04) !important;
-  border-color: rgba(0, 0, 0, 0.15) !important;
+/* Aktif öğede sol kenar çizgisi kalsın, alt çizgi görünmesin */
+.sidebar .sidebar__big .sidebar__nav li.active a::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 60% !important;
+  background: linear-gradient(180deg, #FFD700, rgba(255, 215, 0, 0.5)) !important;
+  border-radius: 0 3px 3px 0 !important;
 }
 
-/* Dekoratif katman/parlama efektlerini kapat */
-.sidebar .sidebar__nav a::before,
-.sidebar .sidebar__nav a::after,
-.sidebar .sidebar__nav button::before,
-.sidebar .sidebar__nav button::after,
-.sidebar .crypto-link__bg,
-.sidebar .crypto-link__icon::before,
-.sidebar .crypto-link-small__glow {
-  display: none !important;
-  content: none !important;
-  box-shadow: none !important;
+/* Aktif öğede hover efekti - güzel sweeper */
+.sidebar .sidebar__big .sidebar__nav li.active a:hover::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.15), transparent) !important;
+  animation: sweepEffect 0.6s ease-out !important;
+  pointer-events: none !important;
 }
 
-/* Küçük menü ikonlarındaki animasyonları kapat */
-.sidebar .sidebar__nav-small a svg,
-.sidebar .sidebar__nav-small button svg,
-.sidebar .crypto-link-small svg,
-.sidebar .sidebar__nav a svg,
-.sidebar .sidebar__nav button svg {
-  animation: none !important;
-  filter: none !important;
+@keyframes sweepEffect {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-/* ——— Less Gold: Küçük menü ve ikonlarda nötr görünüm ——— */
-/* Küçük linkler ve butonlar için nötr arkaplan/border */
-.sidebar .sidebar__link-small,
-.sidebar .sidebar__nav-small a,
-.sidebar .sidebar__nav-small button {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+[data-bs-theme="light"] .sidebar .sidebar__big .sidebar__nav a::after {
+  background: #1d2735 !important;
 }
 
-/* Küçük crypto kartları nötrle */
-.sidebar .crypto-link-small {
-  background: rgba(255, 255, 255, 0.04) !important;
-  border-color: rgba(255, 255, 255, 0.08) !important;
+/* ——— Swipe Light Hover Effects ——— */
+/* Ana container'lara swipe light efekti */
+.sidebar__nav a,
+.sidebar__nav button,
+.sidebar__link,
+.sidebar__link-small,
+.sidebar__nav-small a,
+.sidebar__nav-small button {
+    position: relative;
+    overflow: hidden;
 }
 
-/* Light tema için nötr değerler */
-[data-bs-theme="light"] .sidebar .sidebar__link-small,
-[data-bs-theme="light"] .sidebar .sidebar__nav-small a,
-[data-bs-theme="light"] .sidebar .sidebar__nav-small button,
-[data-bs-theme="light"] .sidebar .crypto-link-small {
-  background: rgba(0, 0, 0, 0.03) !important;
-  border-color: rgba(0, 0, 0, 0.12) !important;
+/* Swipe light for nav (underline ::after ile çakışmaması için ::before kullan) */
+.sidebar__nav a::before,
+.sidebar__nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
 }
 
-/* İkon renklerini varsayılan metin rengine çek (sarıyı azalt) */
-.sidebar .sidebar__nav-small a svg,
-.sidebar .sidebar__nav-small button svg,
-.sidebar .sidebar__link-small svg,
-.sidebar .sidebar__nav a svg,
-.sidebar .sidebar__nav button svg,
-.sidebar .svg-icon {
-  stroke: var(--tf-tc2) !important;
-  fill: var(--tf-tc2) !important;
+.sidebar__nav a:hover::before,
+.sidebar__nav button:hover::before {
+    left: 100%;
 }
 
-/* Hover/active'da abartısız vurgu: metin rengi */
-.sidebar .sidebar__nav-small a:hover svg,
-.sidebar .sidebar__nav-small button:hover svg,
-.sidebar .sidebar__link-small:hover svg,
-.sidebar .sidebar__nav a:hover svg,
-.sidebar .sidebar__nav button:hover svg {
-  stroke: var(--tf-tc) !important;
-  fill: var(--tf-tc) !important;
+/* Swipe light for link & mini items (mini icon ::before ile çakışmaması için ::after kullan) */
+.sidebar__link::after,
+.sidebar__link-small::after,
+.sidebar__nav-small a::after,
+.sidebar__nav-small button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
 }
 
-/* Aktif ikonlarda sarıyı kapat, metin rengi kullan */
-.sidebar .active .svg-icon {
-  fill: var(--tf-tc) !important;
-  color: var(--tf-tc) !important;
+.sidebar__link:hover::after,
+.sidebar__link-small:hover::after,
+.sidebar__nav-small a:hover::after,
+.sidebar__nav-small button:hover::after {
+    left: 100%;
 }
 
-[data-bs-theme="light"] .sidebar .active .svg-icon {
-  fill: #1d2735 !important;
-  color: #1d2735 !important;
-}
-
-/* ——— Mini menüde sadece aktif olan sarı ——— */
-/* Mini menü ikonlarını nötr yap */
-.sidebar .sidebar__small .sidebar__nav-small a svg,
-.sidebar .sidebar__small .sidebar__nav-small button svg,
-.sidebar .sidebar__small .sidebar__link-small svg,
-.sidebar .sidebar__small .svg-icon {
-  stroke: var(--tf-tc2) !important;
-  fill: var(--tf-tc2) !important;
-  color: var(--tf-tc2) !important;
-}
-
-/* Mini menü hover nötr vurgusu */
-.sidebar .sidebar__small .sidebar__nav-small a:hover svg,
-.sidebar .sidebar__small .sidebar__nav-small button:hover svg,
-.sidebar .sidebar__small .sidebar__link-small:hover svg {
-  stroke: var(--tf-tc) !important;
-  fill: var(--tf-tc) !important;
-  color: var(--tf-tc) !important;
-}
-
-/* Mini menü aktifte sarı (yalnızca aktif) */
-.sidebar .sidebar__small .sidebar__nav-small li.active a svg,
-.sidebar .sidebar__small .sidebar__link-small.active svg,
-.sidebar .sidebar__small .active .svg-icon {
-  stroke: var(--tf-active) !important;
-  fill: var(--tf-active) !important;
-  color: var(--tf-active) !important;
-}
-
-/* ——— Büyük menü davranışını koru ——— */
-.sidebar .sidebar__big .sidebar__nav a svg,
-.sidebar .sidebar__big .sidebar__nav button svg {
-  stroke: var(--tf-tc2) !important;
-  fill: var(--tf-tc2) !important;
-}
-
-.sidebar .sidebar__big .sidebar__nav a:hover svg,
-.sidebar .sidebar__big .sidebar__nav button:hover svg,
-.sidebar .sidebar__big .active .svg-icon {
-  stroke: var(--tf-active) !important;
-  fill: var(--tf-active) !important;
-  color: var(--tf-active) !important;
-}

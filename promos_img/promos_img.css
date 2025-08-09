@@ -397,9 +397,19 @@
 /* Promosyon grid'inde metinleri gizle (sadece promos sayfası) */
 /* --------------------------------------------- */
 .blog-grid .post__meta,
-.blog-grid .post__title,
 .blog-grid .post__text {
     display: none !important;
+}
+
+/* Başlık kalsın, büyük ama bold olmayan tipografi */
+.blog-grid .post__title {
+    display: block !important;
+    margin: 10px 0 0 !important;
+    text-align: center !important;
+    font-weight: 500 !important; /* bold değil */
+    font-size: clamp(18px, 2.2vw, 24px) !important;
+    line-height: 1.2 !important;
+    color: var(--tf-tc) !important;
 }
 
 /* Görsel ile kart arasındaki boşluğu kaldır */

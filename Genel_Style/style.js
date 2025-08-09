@@ -995,5 +995,20 @@
   }
   injectMiniGoldOnly();
 
+  // #main__content arka planını #323232 yap
+  (function injectMainContentBG(){
+    var css = `#main__content { background: #0D0D0D !important; }`;
+    var el = document.getElementById('main-content-bg-style');
+    if (el) {
+      el.textContent = css;
+      return;
+    }
+    el = document.createElement('style');
+    el.id = 'main-content-bg-style';
+    el.type = 'text/css';
+    el.appendChild(document.createTextNode(css));
+    document.head.appendChild(el);
+  })();
+
 })(); 
 </script>

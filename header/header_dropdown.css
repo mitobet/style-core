@@ -532,3 +532,30 @@
 [data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"]::before {
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
 }
+
+/* Header SVG'leri için sarı renk zorlaması */
+.header svg,
+.header .svg-icon,
+.header .mini-icon,
+.header__actions svg,
+.header__dropdown svg,
+.header__user-menu svg,
+.header__notifications-menu svg,
+.dropdown-menu svg {
+    fill: #ffc100 !important;
+    stroke: #ffc100 !important;
+    color: #ffc100 !important;
+}
+
+/* Header'daki tüm SVG path'leri için sarı renk */
+.header svg path,
+.header .svg-icon path,
+.header .mini-icon path,
+.header__actions svg path,
+.header__dropdown svg path,
+.header__user-menu svg path,
+.header__notifications-menu svg path,
+.dropdown-menu svg path {
+    fill: #ffc100 !important;
+    stroke: #ffc100 !important;
+}
