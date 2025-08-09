@@ -682,5 +682,318 @@
 
   // Gereksiz çoklu call'ları kaldır - sadece bir kere yeterli
 
+  // Toastify close button fix - drag yutmasını engelle ve tıklamada kapat
+  function initToastifyCloseFix() {
+    function bindButtons(root) {
+      var ctx = root && root.querySelectorAll ? root : document;
+      var buttons = ctx.querySelectorAll('.Toastify__close-button');
+      buttons.forEach(function(btn){
+        if (btn.dataset.jojovaToastifyFix === '1') return;
+        btn.dataset.jojovaToastifyFix = '1';
+        // Drag/sürükleme olaylarını üst seviyeye çıkmadan durdur
+        ['pointerdown','mousedown','touchstart'].forEach(function(ev){
+          btn.addEventListener(ev, function(e){
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+          }, true);
+        });
+        // Click'te güvenli kapat (Toastify handler çalışsa da sorun olmaz)
+        btn.addEventListener('click', function(e){
+          e.stopPropagation();
+          var toast = btn.closest('.Toastify__toast');
+          if (toast) {
+            toast.style.transition = 'opacity 160ms ease, transform 160ms ease';
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(-8px)';
+            setTimeout(function(){
+              if (toast && toast.parentNode) {
+                toast.parentNode.removeChild(toast);
+              }
+            }, 170);
+          }
+        }, true);
+      });
+    }
+    // İlk bağlama
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function(){ bindButtons(document); });
+    } else {
+      bindButtons(document);
+    }
+    // Yeni toastlar için gözlemci
+    var obs = new MutationObserver(function(mutations){
+      mutations.forEach(function(m){
+        m.addedNodes && m.addedNodes.forEach(function(node){
+          if (node.nodeType !== 1) return;
+          if (node.classList && node.classList.contains('Toastify__toast')) {
+            bindButtons(node);
+          } else if (node.querySelectorAll) {
+            var any = node.querySelectorAll('.Toastify__toast');
+            if (any && any.length) bindButtons(node);
+          }
+        });
+      });
+    });
+    try { obs.observe(document.body, { childList: true, subtree: true }); } catch(_){}
+  }
+  // Anında başlat
+  initToastifyCloseFix();
+
+  // Sidebar collapsed (ok) butonu tek tık düzeltmesi
+  function initSidebarCollapsedFix() {
+    function findCollapseContainer(btn) {
+      try {
+        var id = btn.getAttribute('data-bs-target') || btn.getAttribute('aria-controls');
+        if (id) {
+          var sel = id.charAt(0) === '#' ? id : ('#' + id);
+          var target = document.querySelector(sel);
+          if (target) return target;
+        }
+        var wrapper = btn.closest('.menu-item-wrapper') || btn.closest('li') || btn.parentElement;
+        if (wrapper) {
+          var collapse = wrapper.querySelector('.collapse');
+          if (collapse) return collapse;
+        }
+        // Yakın kardeşlerde ara
+        var n = btn.nextElementSibling;
+        for (var i = 0; i < 4 && n; i++, n = n.nextElementSibling) {
+          if (n.classList && n.classList.contains('collapse')) return n;
+        }
+        // Parent kardeşlerinde ara
+        var p = btn.parentElement ? btn.parentElement.nextElementSibling : null;
+        for (var j = 0; j < 4 && p; j++, p = p.nextElementSibling) {
+          if (p.classList && p.classList.contains('collapse')) return p;
+        }
+      } catch(_){}
+      return null;
+    }
+
+    // Drag/hover etkilerini kes ve tek tık garantile
+    document.addEventListener('pointerdown', function(e){
+      var btn = e.target.closest && e.target.closest('.sidebar__collapsed');
+      if (!btn) return;
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+    }, true);
+
+    document.addEventListener('click', function(e){
+      var btn = e.target.closest && e.target.closest('.sidebar__collapsed');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      var collapse = findCollapseContainer(btn);
+      if (!collapse) return;
+      var isOpen = collapse.classList.contains('show') || collapse.style.display === 'block';
+      if (isOpen) {
+        collapse.classList.remove('show');
+        collapse.style.display = 'none';
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        collapse.classList.add('show');
+        collapse.style.display = 'block';
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    }, true);
+  }
+  initSidebarCollapsedFix();
+
+  // Auth modal CSS kaldırıldı (temizlik)
+  try {
+    var oldAuthLink = document.querySelector('link[href$="/Genel_Style/auth_modal.css"], link[href$="Genel_Style/auth_modal.css"]');
+    if (oldAuthLink && oldAuthLink.parentNode) {
+      oldAuthLink.parentNode.removeChild(oldAuthLink);
+    }
+  } catch(_){}
+
+  // Minimal Sidebar Effects CSS'i enjekte et (glow kapalı, sade hover)
+  function injectMinimalSidebarEffects() {
+    if (document.getElementById('sidebar-minimal-effects')) return;
+    var css = `
+/* ——— Minimal Sidebar Effects: Glow Kaldırma + Sade Hover ——— */
+/* Tüm ana elemanlarda glow/animasyonları kapat */
+.sidebar .sidebar__nav a,
+.sidebar .sidebar__nav button,
+.sidebar .sidebar__link,
+.sidebar .sidebar__link-small,
+.sidebar .sidebar__nav-small a,
+.sidebar .sidebar__nav-small button,
+.sidebar .crypto-link,
+.sidebar .crypto-link-small,
+.sidebar .sidebar__lang-btn,
+.sidebar .sidebar__lang-small-btn,
+.sidebar .menu-item-wrapper .sidebar__collapsed {
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  animation: none !important;
+}
+
+/* Basit ve kaliteli hover: hafif arkaplan + ince border */
+.sidebar .sidebar__nav a:hover,
+.sidebar .sidebar__nav button:hover,
+.sidebar .sidebar__link:hover,
+.sidebar .sidebar__link-small:hover,
+.sidebar .sidebar__nav-small a:hover,
+.sidebar .sidebar__nav-small button:hover,
+.sidebar .crypto-link:hover,
+.sidebar .crypto-link-small:hover,
+.sidebar .sidebar__lang-btn:hover,
+.sidebar .sidebar__lang-small-btn:hover,
+.sidebar .menu-item-wrapper .sidebar__collapsed:hover {
+  transform: none !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
+}
+
+/* Light theme için sade hover varyasyonu */
+[data-bs-theme=\"light\"] .sidebar .sidebar__nav a:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__nav button:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__link:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__link-small:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__nav-small a:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__nav-small button:hover,
+[data-bs-theme=\"light\"] .sidebar .crypto-link:hover,
+[data-bs-theme=\"light\"] .sidebar .crypto-link-small:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__lang-btn:hover,
+[data-bs-theme=\"light\"] .sidebar .sidebar__lang-small-btn:hover,
+[data-bs-theme=\"light\"] .sidebar .menu-item-wrapper .sidebar__collapsed:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Dekoratif katman/parlama efektlerini kapat */
+.sidebar .sidebar__nav a::before,
+.sidebar .sidebar__nav a::after,
+.sidebar .sidebar__nav button::before,
+.sidebar .sidebar__nav button::after,
+.sidebar .crypto-link__bg,
+.sidebar .crypto-link__icon::before,
+.sidebar .crypto-link-small__glow {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+/* Küçük menü ikonlarındaki animasyonları kapat */
+.sidebar .sidebar__nav-small a svg,
+.sidebar .sidebar__nav-small button svg,
+.sidebar .crypto-link-small svg,
+.sidebar .sidebar__nav a svg,
+.sidebar .sidebar__nav button svg {
+  animation: none !important;
+  filter: none !important;
+}
+
+/* ——— Less Gold: Küçük menü ve ikonlarda nötr görünüm ——— */
+.sidebar .sidebar__link-small,
+.sidebar .sidebar__nav-small a,
+.sidebar .sidebar__nav-small button {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.sidebar .crypto-link-small {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-bs-theme=\"light\"] .sidebar .sidebar__link-small,
+[data-bs-theme=\"light\"] .sidebar .sidebar__nav-small a,
+[data-bs-theme=\"light\"] .sidebar .sidebar__nav-small button,
+[data-bs-theme=\"light\"] .sidebar .crypto-link-small {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.sidebar .sidebar__nav-small a svg,
+.sidebar .sidebar__nav-small button svg,
+.sidebar .sidebar__link-small svg,
+.sidebar .sidebar__nav a svg,
+.sidebar .sidebar__nav button svg,
+.sidebar .svg-icon {
+  stroke: var(--tf-tc2) !important;
+  fill: var(--tf-tc2) !important;
+}
+
+.sidebar .sidebar__nav-small a:hover svg,
+.sidebar .sidebar__nav-small button:hover svg,
+.sidebar .sidebar__link-small:hover svg,
+.sidebar .sidebar__nav a:hover svg,
+.sidebar .sidebar__nav button:hover svg {
+  stroke: var(--tf-tc) !important;
+  fill: var(--tf-tc) !important;
+}
+
+.sidebar .active .svg-icon {
+  fill: var(--tf-tc) !important;
+  color: var(--tf-tc) !important;
+}
+
+[data-bs-theme=\"light\"] .sidebar .active .svg-icon {
+  fill: #1d2735 !important;
+  color: #1d2735 !important;
+}`;
+    var styleEl = document.createElement('style');
+    styleEl.id = 'sidebar-minimal-effects';
+    styleEl.type = 'text/css';
+    styleEl.appendChild(document.createTextNode(css));
+    document.head.appendChild(styleEl);
+  }
+  injectMinimalSidebarEffects();
+
+  // Mini menüde yalnızca aktif sarı kalsın, büyük menüye dokunma
+  function injectMiniGoldOnly() {
+    if (document.getElementById('sidebar-mini-gold-only')) return;
+    var css = `
+/* ——— Mini menüde sadece aktif olan sarı ——— */
+.sidebar .sidebar__small .sidebar__nav-small a svg,
+.sidebar .sidebar__small .sidebar__nav-small button svg,
+.sidebar .sidebar__small .sidebar__link-small svg,
+.sidebar .sidebar__small .svg-icon {
+  stroke: var(--tf-tc2) !important;
+  fill: var(--tf-tc2) !important;
+  color: var(--tf-tc2) !important;
+}
+
+.sidebar .sidebar__small .sidebar__nav-small a:hover svg,
+.sidebar .sidebar__small .sidebar__nav-small button:hover svg,
+.sidebar .sidebar__small .sidebar__link-small:hover svg {
+  stroke: var(--tf-tc) !important;
+  fill: var(--tf-tc) !important;
+  color: var(--tf-tc) !important;
+}
+
+.sidebar .sidebar__small .sidebar__nav-small li.active a svg,
+.sidebar .sidebar__small .sidebar__link-small.active svg,
+.sidebar .sidebar__small .active .svg-icon {
+  stroke: var(--tf-active) !important;
+  fill: var(--tf-active) !important;
+  color: var(--tf-active) !important;
+}
+
+/* ——— Büyük menü davranışını koru ——— */
+.sidebar .sidebar__big .sidebar__nav a svg,
+.sidebar .sidebar__big .sidebar__nav button svg {
+  stroke: var(--tf-tc2) !important;
+  fill: var(--tf-tc2) !important;
+}
+
+.sidebar .sidebar__big .sidebar__nav a:hover svg,
+.sidebar .sidebar__big .sidebar__nav button:hover svg,
+.sidebar .sidebar__big .active .svg-icon {
+  stroke: var(--tf-active) !important;
+  fill: var(--tf-active) !important;
+  color: var(--tf-active) !important;
+}`;
+    var styleEl = document.createElement('style');
+    styleEl.id = 'sidebar-mini-gold-only';
+    styleEl.type = 'text/css';
+    styleEl.appendChild(document.createTextNode(css));
+    document.head.appendChild(styleEl);
+  }
+  injectMiniGoldOnly();
+
 })(); 
 </script>
