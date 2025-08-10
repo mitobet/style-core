@@ -33,38 +33,47 @@
                <div class="swiper main-slider">
                    <div class="swiper-wrapper">
                        
-                       <!-- Slide 1 -->
+                       <!-- Slide 1 - NEW -->
                        <div class="swiper-slide">
                            <div class="slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/YF1hLY0iqMYnsqn0LBKPUcqIFppaqZ3SaYpsG5Oe.png" alt="Slide 1" class="slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/nkjhwknL7ZnSGXYoXgnlFmvscjG2lK23kyjZJVv3.png" alt="Slide 1" class="slider-image">
+                               </a>
+                           </div>
+                       </div>
+                       
+                       <!-- Slide 2 -->
+                       <div class="swiper-slide">
+                           <div class="slider-image-container">
+                               <a href="${langPrefix}/promotions">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/xUtxcqoOqbRRVD78QCeHT3lVW0SJ1aHsPGwPZuSc.png" alt="Slide 2" class="slider-image">
                                </a>
                            </div>
                        </div>
 
-                       <!-- Slide 2 - Aynı görsel -->
+                       <!-- Slide 2 -->
                        <div class="swiper-slide">
                            <div class="slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/YF1hLY0iqMYnsqn0LBKPUcqIFppaqZ3SaYpsG5Oe.png" alt="Slide 2" class="slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/mL48sxRFfepgwtymuxLDoFF8fUlNtFlh01p0ymHH.png" alt="Slide 2" class="slider-image">
                                </a>
                            </div>
                        </div>
 
-                       <!-- Slide 3 - Aynı görsel -->
+                       <!-- Slide 3 -->
                        <div class="swiper-slide">
                            <div class="slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/YF1hLY0iqMYnsqn0LBKPUcqIFppaqZ3SaYpsG5Oe.png" alt="Slide 3" class="slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/crsIJYbRFcbVhKmBAZo4mTpDJiP3omWQzl237hy1.png" alt="Slide 3" class="slider-image">
                                </a>
                            </div>
                        </div>
 
-                       <!-- Slide 4 - Aynı görsel -->
+                       <!-- Slide 4 -->
                        <div class="swiper-slide">
                            <div class="slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/YF1hLY0iqMYnsqn0LBKPUcqIFppaqZ3SaYpsG5Oe.png" alt="Slide 4" class="slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/t14v7zHjn9tx7Ariu8EzH26TdGjsYFqUiTUBcDD0.png" alt="Slide 4" class="slider-image">
                                </a>
                            </div>
                        </div>
@@ -81,38 +90,47 @@
                <div class="swiper mobile-slider">
                    <div class="swiper-wrapper">
                        
-                       <!-- Mobile Slide 1 -->
+                       <!-- Mobile Slide 1 - NEW -->
                        <div class="swiper-slide">
                            <div class="mobile-slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/w6F9TyMumIoDuGzb5irkEwslVPFyhNIbncXLIgr8.png" alt="Mobile Slide 1" class="mobile-slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/tpyqqXGM30U76KkzGakP69Y0QK85MytTBQBDYpCn.png" alt="Mobile Slide 1" class="mobile-slider-image">
+                               </a>
+                           </div>
+                       </div>
+                       
+                       <!-- Mobile Slide 2 -->
+                       <div class="swiper-slide">
+                           <div class="mobile-slider-image-container">
+                               <a href="${langPrefix}/promotions">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/EPi3vBUjoxUN0S9gl8FA1faHYOkAHNrcb94yn9yy.png" alt="Mobile Slide 2" class="mobile-slider-image">
                                </a>
                            </div>
                        </div>
 
-                       <!-- Mobile Slide 2 - Aynı görsel -->
+                       <!-- Mobile Slide 2 -->
                        <div class="swiper-slide">
                            <div class="mobile-slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/w6F9TyMumIoDuGzb5irkEwslVPFyhNIbncXLIgr8.png" alt="Mobile Slide 2" class="mobile-slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/Hb26YDg01wsXMza4zJE5ky7nRRtONUVwyca6nlMx.png" alt="Mobile Slide 2" class="mobile-slider-image">
                                </a>
                            </div>
                        </div>
 
-                       <!-- Mobile Slide 3 - Aynı görsel -->
+                       <!-- Mobile Slide 3 -->
                        <div class="swiper-slide">
                            <div class="mobile-slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/w6F9TyMumIoDuGzb5irkEwslVPFyhNIbncXLIgr8.png" alt="Mobile Slide 3" class="mobile-slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/Mv8x7iVqQ3aScDlxsIbKXAroPF8gFpuQe2E29PqT.png" alt="Mobile Slide 3" class="mobile-slider-image">
                                </a>
                            </div>
                        </div>
 
-                       <!-- Mobile Slide 4 - Aynı görsel -->
+                       <!-- Mobile Slide 4 -->
                        <div class="swiper-slide">
                            <div class="mobile-slider-image-container">
                                <a href="${langPrefix}/promotions">
-                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/w6F9TyMumIoDuGzb5irkEwslVPFyhNIbncXLIgr8.png" alt="Mobile Slide 4" class="mobile-slider-image">
+                                   <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/Bapj61C3FNBMLXIxih5rTgNqmRHt2lc6NyiCS7Ve.png" alt="Mobile Slide 4" class="mobile-slider-image">
                                </a>
                            </div>
                        </div>
@@ -130,7 +148,7 @@
               <div class="slider-bottom-container">
                   <div class="slider-bottom-grid">
                       <!-- Üst Sol: Slot Oyunları -->
-                      <div class="slider-bottom-item" onclick="window.location.href='${langPrefix}/casino/'">
+                      <div class="slider-bottom-item" onclick="window.location.href='${langPrefix}/casino/group/lobby'">
                           <img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/EIpBfslRNFy6SBmrupvVsBFX2gdFHFaVBC8T3fAR.png" alt="Slot Oyunları" class="slider-bottom-image">
                       </div>
                       <!-- Üst Sağ: Canlı Casino -->
