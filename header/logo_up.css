@@ -1,0 +1,602 @@
+/* ——— Header Logo Update - Büyük Logo Stilleri ——— */
+
+/* Logo CSS değişkenleri */
+:root {
+    --header-logo: var(--tf-logo);
+    --header-logo2: var(--tf-logo2);
+}
+
+/* ——— Header Logo Ana Stiller ——— */
+
+/* Ana header logo stili - genel */
+.header__logo {
+    background: var(--header-logo) no-repeat left center !important;
+    width: 140px !important;  /* Büyütüldü */
+    height: 70px !important;  /* Büyütüldü */
+    padding: 35px !important;
+    background-size: auto 45px !important;  /* Büyütüldü */
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    position: relative !important;
+    z-index: 50 !important;
+}
+
+/* Login olmayan kullanıcılar için logo stili - %15 büyük */
+.header:not(.header--logged) .header__logo {
+    background: var(--header-logo) no-repeat left center !important;
+    width: 230px !important;  /* 200px * 1.15 = 230px */
+    height: 109px !important;  /* 95px * 1.15 = 109px */
+    padding: 35px !important;
+    background-size: auto 66px !important;  /* 57px * 1.15 = 66px */
+    transition: all 0.3s ease !important;
+    transform: scale(1) !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* Login olan kullanıcılar için normal logo stili */
+.header--logged .header__logo {
+    background: var(--header-logo) no-repeat left center !important;
+    width: 120px !important;  /* Biraz küçük */
+    height: 65px !important;
+    padding: 35px !important;
+    background-size: auto 35px !important;
+    transition: all 0.3s ease !important;
+    transform: scale(0.95) !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+/* ——— Hover Efektleri ——— */
+
+/* Ana hover efekti */
+.header__logo:hover {
+    transform: scale(1.08);  /* Büyük hover */
+    opacity: 0.9;
+    filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.3));
+}
+
+/* Login olmayan kullanıcılar hover */
+.header:not(.header--logged) .header__logo:hover {
+    transform: scale(1.08);  /* %50 büyük logo için uygun hover */
+    filter: drop-shadow(0 6px 15px rgba(255, 215, 0, 0.4));
+}
+
+/* Login olan kullanıcılar hover */
+.header--logged .header__logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 3px 10px rgba(255, 215, 0, 0.25));
+}
+
+/* ——— Responsive Design ——— */
+
+/* Tablet boyutu */
+@media (max-width: 1024px) {
+    /* Login olmayan kullanıcılar - %50 büyük */
+    .header:not(.header--logged) .header__logo {
+        width: 195px;  /* %50 büyük: 130px * 1.5 = 195px */
+        height: 98px;  /* %50 büyük: 65px * 1.5 = 98px */
+        background-size: auto 60px; /* %50 büyük: 40px * 1.5 = 60px */
+    }
+    
+    /* Genel header logo (fallback) */
+    .header__logo {
+        width: 130px;
+        height: 65px;
+        background-size: auto 40px;
+    }
+    
+    /* Login olan kullanıcılar - kompakt ama görünür boyut */
+    .header--logged .header__logo {
+        width: 110px !important;  /* Genişlik artırıldı */
+        height: 60px !important; /* Yükseklik artırıldı */
+        background-size: auto 44px !important; /* Logo görünür boyut */
+        padding: 25px !important; /* Padding artırıldı */
+    }
+}
+
+/* Mobil boyutu */
+@media (max-width: 768px) {
+    /* Login olmayan kullanıcılar - %15 büyük mobilde */
+    .header:not(.header--logged) .header__logo {
+        width: 173px;  /* 150px * 1.15 = 173px */
+        height: 95px;  /* 83px * 1.15 = 95px */
+        padding: 37px; /* 31px + %20 = 37px */
+        background-size: auto 53px; /* 46px * 1.15 = 53px */
+    }
+    
+    /* Genel header logo (fallback) */
+    .header__logo {
+        width: 100px;
+        height: 55px;
+        padding: 25px;
+        background-size: auto 30px;
+    }
+    
+    /* Login olan kullanıcılar - mobil dengeli büyük */
+    .header--logged .header__logo {
+        width: 110px !important;  /* Jojova logosu daha büyük */
+        height: 55px !important; /* Büyütüldü */
+        padding: 20px !important; /* Dengeli padding */
+        background-size: auto 45px !important; /* Logo boyutu büyütüldü */
+    }
+    
+    /* Hover efektleri */
+    .header:not(.header--logged) .header__logo:hover {
+        transform: scale(1.05); /* Login olmayan için biraz daha büyük hover */
+    }
+    
+    .header--logged .header__logo:hover {
+        transform: scale(1.03);
+    }
+    
+    .header__logo:hover {
+        transform: scale(1.03);
+    }
+}
+
+/* Küçük mobil */
+@media (max-width: 480px) {
+    /* Login olmayan kullanıcılar - %15 büyük küçük mobilde */
+    .header:not(.header--logged) .header__logo {
+        width: 146px;  /* 127px * 1.15 = 146px */
+        height: 77px;  /* 67px * 1.15 = 77px */
+        padding: 30px; /* 25px + %20 = 30px */
+        background-size: auto 43px; /* 37px * 1.15 = 43px */
+    }
+    
+    /* Genel header logo (fallback) */
+    .header__logo {
+        width: 85px;
+        height: 100px;
+        padding: 20px;
+        background-size: auto 25px;
+    }
+    
+    /* Login olan kullanıcılar - küçük mobil dengeli */
+    .header--logged .header__logo {
+        width: 95px !important;  /* Jojova logosu daha büyük */
+        height: 50px !important; /* Büyütüldü */
+        padding: 18px !important;  /* Dengeli padding */
+        background-size: auto 40px !important; /* Logo boyutu büyütüldü */
+    }
+}
+
+/* ——— Sidebar ile Header Logo Etkileşimi ——— */
+
+/* Desktop - Sidebar açıkken header logo gizle */
+@media (min-width: 1200px) {
+    /* Sidebar açıkken (genişletilmişken) header logo gizle */
+    .sidebar:not(.active) + * .header__logo,
+    .sidebar:not(.active) ~ * .header__logo,
+    body:not(.sidebar-closed) .header__logo {
+        display: none !important;
+    }
+    
+    /* Sidebar kapalıyken logo sola dayalı göster */
+    .sidebar.active + * .header__logo,
+    .sidebar.active ~ * .header__logo,
+    body.sidebar-closed .header__logo {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        z-index: 1060 !important;
+        display: flex !important;
+        margin: 0 !important;
+        width: 200px !important; /* 10px küçültüldü */
+        height: 95px !important; /* 10px küçültüldü */
+        background-size: auto 57px !important; /* 10px küçültüldü */
+    }
+    
+    /* Header content düzenlemesi - sidebar kapalıyken */
+    .sidebar.active ~ * .header__content,
+    body.sidebar-closed .header__content {
+        display: flex !important;
+        justify-content: flex-start !important; /* Logo sola dayalı */
+        align-items: center !important;
+        width: 100% !important;
+        padding-left: 90px !important; /* Sidebar boşluğu */
+        padding-right: 20px !important; /* Sağ boşluk */
+        margin-left: 0 !important;
+        position: relative !important;
+    }
+    
+    /* Logo'yu sola dayalı tut */
+    .sidebar.active ~ * .header__content .header__logo,
+    body.sidebar-closed .header__content .header__logo {
+        position: relative !important;
+        left: auto !important;
+        transform: none !important;
+        margin: 0 !important;
+        margin-right: 0 !important; /* Sola tam dayalı */
+    }
+    
+    /* Search button'u ortala - butonları etkilemeden */
+    .sidebar.active ~ * .header__search,
+    body.sidebar-closed .header__search {
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 300px !important; /* Daha geniş search */
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+        z-index: 10 !important; /* Butonların altında */
+    }
+    
+    /* Header actions'ı normal pozisyonunda tut */
+    .sidebar.active ~ * .header__actions,
+    body.sidebar-closed .header__actions {
+        position: relative !important;
+        margin-left: auto !important;
+        z-index: 20 !important; /* Search'ün üstünde */
+        display: flex !important;
+    }
+}
+
+/* Tablet - Sidebar açıkken header logo gizle */
+@media (min-width: 768px) and (max-width: 1199px) {
+    .sidebar:not(.active) + * .header__logo,
+    .sidebar:not(.active) ~ * .header__logo,
+    body:not(.sidebar-closed) .header__logo {
+        display: none !important;
+    }
+    
+    /* Sidebar kapalıyken logo ortalı - tablet */
+    .sidebar.active + * .header__logo,
+    .sidebar.active ~ * .header__logo,
+    body.sidebar-closed .header__logo {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        z-index: 60;
+        display: flex !important;
+        margin: 0 auto !important; /* Ortalama için */
+    }
+    
+    /* Header content düzenlemesi - tablet */
+    .sidebar.active ~ * .header__content,
+    body.sidebar-closed .header__content {
+        display: flex !important;
+        justify-content: flex-start !important; /* Logo sola dayalı */
+        align-items: center !important;
+        width: 100% !important;
+        padding-left: 90px !important; /* Sidebar boşluğu */
+        padding-right: 20px !important; /* Sağ boşluk */
+        margin-left: 0 !important;
+        position: relative !important;
+    }
+    
+    /* Logo'yu sola dayalı tut - tablet */
+    .sidebar.active ~ * .header__content .header__logo,
+    body.sidebar-closed .header__content .header__logo {
+        position: relative !important;
+        left: auto !important;
+        transform: none !important;
+        margin: 0 !important;
+        margin-right: 0 !important; /* Sola tam dayalı */
+    }
+    
+    /* Search button'u ortala - tablet */
+    .sidebar.active ~ * .header__search,
+    body.sidebar-closed .header__search {
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 250px !important; /* Tablet için uygun genişlik */
+        margin: 0 !important;
+        flex-shrink: 0 !important;
+        z-index: 10 !important;
+    }
+    
+    /* Header actions'ı normal pozisyonunda tut - tablet */
+    .sidebar.active ~ * .header__actions,
+    body.sidebar-closed .header__actions {
+        position: relative !important;
+        margin-left: auto !important;
+        z-index: 20 !important;
+        display: flex !important;
+    }
+}
+
+/* Mobil - Header logo her zaman görünür, sidebar ile çakışmaz */
+@media (max-width: 767px) {
+    .header__logo {
+        position: relative !important;
+        left: auto !important;
+        top: auto !important;
+        z-index: 70 !important;
+        margin: 0 !important;
+    }
+    
+    /* Mobilde header content normal akışta */
+    .header__content {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 15px !important;
+    }
+    
+    /* Mobilde search button normal akışta */
+    .header__search {
+        position: relative !important;
+        margin-left: auto !important;
+        margin-right: 0 !important;
+        width: auto !important;
+        flex-shrink: 0 !important;
+        transform: none !important;
+    }
+    
+    /* Header actions mobilde normal akışta */
+    .header__actions {
+        display: flex !important;
+        margin-left: 10px !important;
+        flex-shrink: 0 !important;
+    }
+}
+
+/* ——— Tema Desteği ——— */
+
+/* Light theme için logo */
+[data-bs-theme="light"] .header__logo {
+    background: var(--header-logo) no-repeat left center;
+}
+
+/* Dark theme için logo */
+[data-bs-theme="dark"] .header__logo {
+    background: var(--header-logo) no-repeat left center;
+}
+
+/* ——— Sidebar Logo Boyut Düzenlemesi ——— */
+
+/* Sidebar logo boyutunu düzenle - %20 daha küçük */
+.sidebar__logo {
+    width: 176px !important;  /* 220px - %20 = 176px */
+    height: 52px !important;  /* 65px - %20 = 52px */
+    background-size: auto 52px !important;  /* Logo boyutu %20 küçültüldü */
+    transition: all 0.3s ease !important;
+}
+
+.sidebar__logo:hover {
+    transform: scale(1.05) !important;
+    filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.3)) !important;
+}
+
+/* ——— Wallet Menü Mobil Optimizasyonu ——— */
+
+/* Mobilde wallet menüsünü dengeli büyüt - login olan kullanıcılar için */
+@media (max-width: 767px) {
+    .header--logged .header__wallet {
+        width: 160px !important; /* Büyütüldü dengeli */
+        margin-left: 15px !important; /* Logo'dan ayırıldı */
+    }
+    
+    .header--logged .header__wallet-dropdown-btn {
+        width: 115px !important; /* Büyütüldü dengeli */
+        height: 55px !important; /* Logo ile uyumlu */
+        padding: 0 12px !important; /* Büyük padding */
+        font-size: 13px !important; /* Okunabilir font */
+    }
+    
+    .header--logged .header__wallet-dropdown-btn img {
+        width: 18px !important; /* Büyütüldü */
+        margin-right: 8px !important; /* Dengeli boşluk */
+    }
+    
+    .header--logged .header__wallet-dropdown-btn svg {
+        width: 14px !important; /* Büyütüldü */
+        height: 14px !important;
+    }
+    
+    .header--logged .header__wallet-btn {
+        width: 55px !important; /* Logo yüksekliği ile uyumlu */
+        height: 55px !important; /* Logo yüksekliği ile uyumlu */
+    }
+    
+    .header--logged .header__wallet-btn svg {
+        width: 20px !important; /* Büyütüldü */
+        height: 20px !important;
+    }
+    
+    /* Header actions da büyüsün */
+    .header--logged .header__actions {
+        height: 55px !important; /* Logo ile uyumlu */
+    }
+    
+    .header--logged .header__signin,
+    .header--logged .header__signup {
+        height: 55px !important; /* Eşitlik için */
+        padding: 0 18px !important; /* Büyük padding */
+        font-size: 14px !important; /* Okunabilir font */
+    }
+    
+    /* Profil ve bildirim iconları da eşit boyutta */
+    .header--logged .header__action {
+        width: 55px !important;
+        height: 55px !important;
+    }
+    
+    .header--logged .header__dropdown {
+        height: 55px !important;
+    }
+    
+    .header--logged .header__dropdown .header__dropdown-btn {
+        width: 55px !important;
+        height: 55px !important;
+    }
+    
+    /* gap-2 class'ını korumak için daha spesifik */
+    .header--logged .header__dropdown-btn.gap-2 {
+        gap: 0.5rem !important; /* Tailwind gap-2 değeri */
+    }
+}
+
+/* Küçük mobilde dengeli - login olan kullanıcılar için */
+@media (max-width: 480px) {
+    .header--logged .header__wallet {
+        width: 140px !important; /* Dengeli büyüklük */
+        margin-left: 12px !important; /* Logo'dan ayırıldı */
+    }
+    
+    .header--logged .header__wallet-dropdown-btn {
+        width: 100px !important; /* Dengeli büyüklük */
+        height: 50px !important; /* Logo ile uyumlu */
+        padding: 0 10px !important; /* Büyük padding */
+        font-size: 12px !important; /* Okunabilir font */
+    }
+    
+    .header--logged .header__wallet-dropdown-btn img {
+        width: 16px !important; /* Büyütüldü */
+        margin-right: 6px !important; /* Dengeli boşluk */
+    }
+    
+    .header--logged .header__wallet-dropdown-btn svg {
+        width: 12px !important; /* Büyütüldü */
+        height: 12px !important;
+    }
+    
+    .header--logged .header__wallet-btn {
+        width: 50px !important; /* Logo yüksekliği ile uyumlu */
+        height: 50px !important; /* Logo yüksekliği ile uyumlu */
+    }
+    
+    .header--logged .header__wallet-btn svg {
+        width: 18px !important; /* Büyütüldü */
+        height: 18px !important;
+    }
+    
+    /* Header actions küçük mobilde de büyüsün */
+    .header--logged .header__actions {
+        height: 50px !important; /* Logo ile uyumlu */
+    }
+    
+    .header--logged .header__signin,
+    .header--logged .header__signup {
+        height: 50px !important; /* Eşitlik için */
+        padding: 0 16px !important; /* Büyük padding */
+        font-size: 13px !important; /* Okunabilir font */
+    }
+    
+    /* Profil ve bildirim iconları da eşit boyutta - küçük mobil */
+    .header--logged .header__action {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    .header--logged .header__dropdown {
+        height: 50px !important;
+    }
+    
+    .header--logged .header__dropdown .header__dropdown-btn {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    /* gap-2 class'ını korumak için daha spesifik */
+    .header--logged .header__dropdown-btn.gap-2 {
+        gap: 0.5rem !important; /* Tailwind gap-2 değeri */
+    }
+}
+
+/* ——— Mobil Header Genel Dengeli Düzenlemesi ——— */
+
+/* Mobilde login olan kullanıcılar için header dengeli */
+@media (max-width: 767px) {
+    .header--logged {
+        height: 70px !important; /* Daha büyük header */
+        padding: 10px 0 !important; /* Dikey padding */
+    }
+    
+    .header--logged .header__content {
+        height: 55px !important; /* Logo ile uyumlu */
+        align-items: center !important; /* Ortalanmış */
+    }
+}
+
+/* Küçük mobilde header dengeli */
+@media (max-width: 480px) {
+    .header--logged {
+        height: 65px !important; /* Biraz daha küçük */
+        padding: 10px 0 !important; /* Dikey padding */
+    }
+    
+    .header--logged .header__content {
+        height: 50px !important; /* Logo ile uyumlu */
+        align-items: center !important; /* Ortalanmış */
+    }
+}
+
+/* ——— Animasyon Efektleri ——— */
+
+/* Logo giriş animasyonu */
+@keyframes logoFadeIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Sakin loop animasyon - sürekli çalışan */
+@keyframes logoBreath {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.2));
+    }
+    50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.3));
+    }
+}
+
+/* Glow animasyon - arka planda parıldama */
+@keyframes logoGlow {
+    0%, 100% {
+        filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.2)) brightness(1);
+    }
+    33% {
+        filter: drop-shadow(0 3px 10px rgba(255, 215, 0, 0.3)) brightness(1.05);
+    }
+    66% {
+        filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.25)) brightness(1.02);
+    }
+}
+
+/* Tüm logolar için giriş animasyonu */
+.header__logo {
+    animation: logoFadeIn 0.6s ease-out;
+}
+
+/* Mobilde login olmayan kullanıcılar için sakin loop animasyon */
+@media (max-width: 768px) {
+    .header:not(.header--logged) .header__logo {
+        animation: logoFadeIn 0.6s ease-out, logoBreath 4s infinite ease-in-out 1s;
+        animation-fill-mode: forwards;
+    }
+    
+    .header:not(.header--logged) .header__logo:hover {
+        animation: logoFadeIn 0.6s ease-out, logoGlow 2s infinite ease-in-out;
+        transform: scale(1.05);
+    }
+}
+
+/* Sidebar logo için de sakin animasyon */
+.sidebar__logo {
+    animation: logoGlow 6s infinite ease-in-out;
+}
+
+.sidebar__logo:hover {
+    animation: logoBreath 1.5s infinite ease-in-out;
+}
+
+/* Aktif sayfa için pulse - istersek açarız */
+.header__logo.active {
+    animation: logoBreath 3s infinite ease-in-out;
+}

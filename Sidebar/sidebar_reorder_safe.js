@@ -58,6 +58,11 @@
         
         console.log('Sidebar tam sıralama başlıyor...');
         
+        // Dinamik dil tespiti - EN/TR desteği
+        const currentLang = window.location.pathname.startsWith('/en') ? 'en' : 'tr';
+        const langPrefix = `/${currentLang}`;
+        console.log('Tespit edilen dil:', currentLang, 'Prefix:', langPrefix);
+        
         // Hem web hem mobil sidebar'ı kontrol et
         let sidebar = document.querySelector('.sidebar__big');
         
@@ -139,7 +144,7 @@
                     console.log('Bonus Talep Ek Bilgi\'ye ekleniyor (giriş yapılmamış)...');
                     const bonusLi = document.createElement('li');
                     bonusLi.className = '';
-                    bonusLi.innerHTML = '<a href="/tr?modal=bonus-request"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#gift" xlink:href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#gift"></use></svg>Bonus Talep</a>';
+                    bonusLi.innerHTML = `<a href="${langPrefix}?modal=bonus-request"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#gift" xlink:href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#gift"></use></svg>Bonus Talep</a>`;
                     ekBilgiUL.appendChild(bonusLi);
                 }
             } else {
@@ -147,7 +152,7 @@
             }
             
             // Turnuvalar Promosyonlar'dan kaldırılacak, sonra Menü'ye eklenecek
-            const turnuvalar = promosyonlarUL.querySelector('a[href="/tr/tournaments"]');
+            const turnuvalar = promosyonlarUL.querySelector(`a[href="${langPrefix}/tournaments"]`);
             if (turnuvalar) {
                 const turnuvalarLi = turnuvalar.closest('li');
                 console.log('Turnuvalar Promosyonlar\'dan kaldırılıyor...');
@@ -159,7 +164,7 @@
             const menuUL = menuDiv.querySelector('ul'); // İlk UL (Menü)
             
             // E-Sport'u Menü'den çıkar, Oyunlar'a taşı
-            const eSportMenuItem = menuUL.querySelector('a[href="/tr/e-sport"]');
+            const eSportMenuItem = menuUL.querySelector(`a[href="${langPrefix}/e-sport"]`);
             if (eSportMenuItem) {
                 const eSportLi = eSportMenuItem.closest('li');
                 console.log('E-Sport Oyunlar bölümüne taşınıyor...');
@@ -167,7 +172,7 @@
             }
            
            // Poker'i Menü'den çıkar, Oyunlar'a taşı
-            const pokerMenuItem = menuUL.querySelector('a[href="/tr/poker"]');
+            const pokerMenuItem = menuUL.querySelector(`a[href="${langPrefix}/poker"]`);
             if (pokerMenuItem) {
                 const pokerLi = pokerMenuItem.closest('li');
                 console.log('Poker Oyunlar bölümüne taşınıyor...');
@@ -175,12 +180,12 @@
             }
             
             // Turnuvaları Menü'ye yeni element olarak ekle
-            const turnuvalarExists = menuUL.querySelector('a[href="/tr/tournaments"]');
+            const turnuvalarExists = menuUL.querySelector(`a[href="${langPrefix}/tournaments"]`);
             if (!turnuvalarExists) {
                 console.log('Turnuvalar Menü\'ye ekleniyor...');
                 const turnuvalarLi = document.createElement('li');
                 turnuvalarLi.className = '';
-                turnuvalarLi.innerHTML = '<a href="/tr/tournaments"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#tournaments" xlink:href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#tournaments"></use></svg>Turnuvalar</a>';
+                turnuvalarLi.innerHTML = `<a href="${langPrefix}/tournaments"><svg class="svg-icon"><use href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#tournaments" xlink:href="/static/media/sprite.bce01d9c40dd918c38bcbf36110f6884.svg#tournaments"></use></svg>Turnuvalar</a>`;
                 menuUL.appendChild(turnuvalarLi);
             }
             
@@ -189,16 +194,16 @@
             const menuItems = Array.from(menuUL.children);
             const orderedMenu = [];
             
-            // İstenen sıralama
+            // İstenen sıralama - Dinamik dil desteği
             const menuOrder = [
-                '/tr/sportsbook', // Spor bahisleri
-                '/tr/casino', // Casino
-                '/tr/favorites', // Favoriler
-                '/tr/vip', // VIP Club
-                '/tr/trade', // Trade
-                '/tr/tournaments', // Turnuva
-                '/tr/challenges', // Meydan okumalar
-                '/tr/blog' // Blog
+                `${langPrefix}/sportsbook`, // Spor bahisleri
+                `${langPrefix}/casino`, // Casino
+                `${langPrefix}/favorites`, // Favoriler
+                `${langPrefix}/vip`, // VIP Club
+                `${langPrefix}/trade`, // Trade
+                `${langPrefix}/tournaments`, // Turnuva
+                `${langPrefix}/challenges`, // Meydan okumalar
+                `${langPrefix}/blog` // Blog
             ];
             
             // Sıraya göre elementleri düzenle
@@ -225,11 +230,10 @@
                 menuUL.appendChild(item);
             });
 
-            // Casino linkini Live Lobby'ye yönlendir (dil algılı, domain bağımsız)
-            const currentLang = window.location.pathname.startsWith('/en') ? 'en' : 'tr';
-            const liveLobbyPath = `/${currentLang}/casino/group/live-lobby`;
-            const casinoAnchors = menuUL.querySelectorAll('a[href="/tr/casino"], a[href="/tr/casino/"], a[href="/en/casino"], a[href="/en/casino/"]');
-            casinoAnchors.forEach(a => a.setAttribute('href', liveLobbyPath));
+            // Casino linkini Lobby'ye yönlendir (dil algılı, domain bağımsız)
+            const lobbyPath = `${langPrefix}/casino/group/lobby`;
+            const casinoAnchors = menuUL.querySelectorAll(`a[href="${langPrefix}/casino"], a[href="${langPrefix}/casino/"]`);
+            casinoAnchors.forEach(a => a.setAttribute('href', lobbyPath));
             
             // Sadece accordion toggle - basit ve etkili
             setTimeout(function() {
@@ -300,15 +304,14 @@
                         
                         // Özel yönlendirmeler
                         if (/^\/(tr|en)\/casino\/?$/.test(href)) {
-                            const lang = window.location.pathname.startsWith('/en') ? 'en' : 'tr';
-                            const target = `/${lang}/casino/group/live-lobby`;
+                            const target = `${langPrefix}/casino/group/lobby`;
                             navigateWithoutReload(target);
-                            console.log('Casino -> Live Lobby');
+                            console.log('Casino -> Lobby');
                         } else if (href.includes('/casino/slots')) {
-                            navigateWithoutReload('/tr/casino/group/lobby');
+                            navigateWithoutReload(`${langPrefix}/casino/group/lobby`);
                             console.log('Slotlar -> Lobby');
                         } else if (href.includes('/live-casino')) {
-                            navigateWithoutReload('/tr/casino/group/live-lobby');
+                            navigateWithoutReload(`${langPrefix}/casino/group/live-lobby`);
                             console.log('Canlı Casino -> Live Lobby');
                         } else {
                             navigateWithoutReload(href);

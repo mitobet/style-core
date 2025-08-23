@@ -169,7 +169,8 @@
 
 
 
-       // Sport Banner Container
+       // Sport Banner Container - Geçici olarak pasife alındı (ilerde tekrar eklenebilir)
+       /*
        const sportBannerContainer = `
            <div class="banner-container" style="">
                <div class="banner-inner">
@@ -206,12 +207,13 @@
                </div>
            </div>
        `;
+       */
 
 
 
 
 
-      // Jackpot container'ı tamamen gizle - sayfa yüklenir yüklenmez
+      // Jackpot container'ı ve VIP bölümünü tamamen gizle - sayfa yüklenir yüklenmez
       const styleElement = document.createElement('style');
       styleElement.textContent = `
         #jackpots-container { 
@@ -220,6 +222,33 @@
           visibility: hidden !important;
           position: absolute !important;
           left: -9999px !important;
+        }
+        .vip, .vip__title, .vip__text, .vip__btn {
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          position: absolute !important;
+          left: -9999px !important;
+        }
+        div.row:has(.vip) {
+          display: none !important;
+        }
+        /* Daha spesifik VIP seçiciler */
+        div[class*="vip"], 
+        [class*="vip__"],
+        .container .vip,
+        .row .vip,
+        .col .vip,
+        div.vip,
+        section.vip,
+        article.vip {
+          display: none !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          position: absolute !important;
+          left: -9999px !important;
+          pointer-events: none !important;
+          z-index: -9999 !important;
         }
         @media (max-width: 768px) {
           #jackpots-container {
@@ -236,42 +265,51 @@
       `;
       document.head.appendChild(styleElement);
       
-      // Jackpot container'ı hemen gizle - daha sonra tekrar görünür yapacağız
+      // Jackpot container'ı ve VIP elementlerini hemen gizle
       const jackpotsContainer = document.getElementById('jackpots-container');
       if (jackpotsContainer) {
         jackpotsContainer.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important; position: absolute !important; left: -9999px !important;';
       }
       
+      // VIP elementlerini gizle - global fonksiyonu kullan
+      hideAllVIP();
+      
+      // Biraz bekleyip tekrar çalıştır
+      setTimeout(hideAllVIP, 100);
+      setTimeout(hideAllVIP, 500);
+      setTimeout(hideAllVIP, 1000);
+      setTimeout(hideAllVIP, 2000);
+      
       // Futbol Sekmesi Container - SADECE GÖRSEL, YÖNLENDİRME YOK
       const futbolSekmesiContainer = `
-          <div class="pb-component-wrapper">
+          <div class="pb-component-wrapper" style="margin-top: 10px;">
               <div class="futbol-banner-container col-4 futbol-banner-without-titles" data-scroll-lock-scrollable="">
                   <div class="futbol-banner-info futbol-banner bundesliga" aria-label="Bundesliga">
-                      <img alt="Bundesliga" loading="lazy" src="https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_ef1d904558bdfeecc738a677b62ca9d8.webp" class="futbol-banner-img">
+                      <img alt="Bundesliga" loading="lazy" src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/aIbhaWSGcJcneCnwIXAnsWFLYnF6bvyvNVOUiFMZ.webp" class="futbol-banner-img">
                       <div class="futbol-banner-title">Bundesliga</div>
                   </div>
                   <div class="futbol-banner-info futbol-banner laliga" aria-label="La Liga">
-                      <img alt="La Liga" loading="lazy" src="https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_729dc9467655d82218501bd18f6a6b55.webp" class="futbol-banner-img">
+                      <img alt="La Liga" loading="lazy" src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/HeuC8ictUKIrSTxeXuGySfo2FvUxmY40MnnlGgeG.webp" class="futbol-banner-img">
                       <div class="futbol-banner-title">La Liga</div>
                   </div>
                   <div class="futbol-banner-info futbol-banner premier-league" aria-label="Premier League">
-                      <img alt="Premier League" loading="lazy" src="https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_30b592a9f7d2674edada836e7bd668d2.webp" class="futbol-banner-img">
+                      <img alt="Premier League" loading="lazy" src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/o1q4JAyJc20PBfujBi0DtJHtRjhCxRYjxzteEt5I.webp" class="futbol-banner-img">
                       <div class="futbol-banner-title">Premier League</div>
                   </div>
                   <div class="futbol-banner-info futbol-banner serie-a" aria-label="Serie A">
-                      <img alt="Serie A" loading="lazy" src="https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_ba687803505f8029c6347bfdb0d67266.webp" class="futbol-banner-img">
+                      <img alt="Serie A" loading="lazy" src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/nMaflwuXV12Dd5DFW1sRBcKmyev0a3E5XhJPYYk5.webp" class="futbol-banner-img">
                       <div class="futbol-banner-title">Serie A</div>
                   </div>
                   <div class="futbol-banner-info futbol-banner super-lig" aria-label="Süper Lig">
-                      <img alt="Süper Lig" loading="lazy" src="https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_7cfc4eb4d566dc0b626a9078e0526b56.webp" class="futbol-banner-img">
+                      <img alt="Süper Lig" loading="lazy" src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/yONpfInMNDkU8hNochP0gmn0aZ2xjSe8unyItHaa.webp" class="futbol-banner-img">
                       <div class="futbol-banner-title">Süper Lig</div>
                   </div>
               </div>
           </div>
       `;
 
-      // İçeriği targetDiv'e ekle - slider en üstte, futbol sekmesi eklendi
-      targetDiv.innerHTML = '<div class="container">' + sliderContainer + sliderBottom + futbolSekmesiContainer + sportBannerContainer + '</div>';
+      // İçeriği targetDiv'e ekle - slider en üstte, futbol sekmesi eklendi (sport banner kaldırıldı)
+      targetDiv.innerHTML = '<div class="container">' + sliderContainer + sliderBottom + futbolSekmesiContainer + '</div>';
       
 
 
@@ -317,6 +355,18 @@
       swiperCSS.href = 'https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css';
       document.head.appendChild(swiperCSS);
       console.log('✅ Swiper CSS yüklendi');
+      
+      // Local CSS'imizi CDN'den sonra yükle ki bizim stiller öncelikli olsun
+      setTimeout(() => {
+        if (!document.querySelector('#custom-swiper-css')) {
+          const customCSS = document.createElement('link');
+          customCSS.id = 'custom-swiper-css';
+          customCSS.rel = 'stylesheet';
+          customCSS.href = './Genel_Style/swiper-slider.css';
+          document.head.appendChild(customCSS);
+          console.log('✅ Custom Swiper CSS yüklendi');
+        }
+      }, 100);
     }
     
     // Swiper JS yükle veya varsa direkt kullan
@@ -332,15 +382,18 @@
           const swiper = new Swiper('.main-slider', {
             loop: true,
             autoplay: {
-              delay: 3000,
+              delay: 5000,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             },
-            speed: 1000,
+            speed: 600,
             pagination: {
               el: '.main-slider .swiper-pagination',
               clickable: true,
               dynamicBullets: false,
+              renderBullet: function (index, className) {
+                return '<span class="' + className + '"></span>';
+              },
             },
             navigation: false,
             touchRatio: 1,
@@ -351,8 +404,26 @@
             spaceBetween: 0,
             allowTouchMove: true,
             simulateTouch: true,
+            resistance: true,
+            resistanceRatio: 0.85,
+            followFinger: true,
             watchSlidesProgress: true,
             watchSlidesVisibility: true,
+            updateOnWindowResize: true,
+            observer: true,
+            observeParents: true,
+            on: {
+              slideChange: function () {
+                // Pagination güncellenmesini zorla
+                this.pagination.render();
+                this.pagination.update();
+              },
+              touchEnd: function () {
+                // Manuel slide sonrası autoplay'i yeniden başlat
+                this.autoplay.stop();
+                this.autoplay.start();
+              }
+            }
           });
           console.log('✅ Desktop slider oluşturuldu:', swiper);
         } else {
@@ -371,15 +442,18 @@
           const mobileSwiper = new Swiper('.mobile-slider', {
             loop: true,
             autoplay: {
-              delay: 3000,
+              delay: 5000,
               disableOnInteraction: false,
               pauseOnMouseEnter: true,
             },
-            speed: 1000,
+            speed: 600,
             pagination: {
               el: '.mobile-slider .swiper-pagination',
               clickable: true,
               dynamicBullets: false,
+              renderBullet: function (index, className) {
+                return '<span class="' + className + '"></span>';
+              },
             },
             navigation: false,
             touchRatio: 1,
@@ -390,8 +464,26 @@
             spaceBetween: 0,
             allowTouchMove: true,
             simulateTouch: true,
+            resistance: true,
+            resistanceRatio: 0.85,
+            followFinger: true,
             watchSlidesProgress: true,
             watchSlidesVisibility: true,
+            updateOnWindowResize: true,
+            observer: true,
+            observeParents: true,
+            on: {
+              slideChange: function () {
+                // Pagination güncellenmesini zorla
+                this.pagination.render();
+                this.pagination.update();
+              },
+              touchEnd: function () {
+                // Manuel slide sonrası autoplay'i yeniden başlat
+                this.autoplay.stop();
+                this.autoplay.start();
+              }
+            }
           });
           console.log('✅ Mobile slider oluşturuldu:', mobileSwiper);
         } else {
@@ -437,6 +529,46 @@
         }, 100);
       }
     }
+  }
+
+  // VIP elementlerini agresif şekilde gizleyen global fonksiyon
+  function hideAllVIP() {
+    // Tüm VIP elementlerini bul ve gizle
+    const vipSelectors = [
+      '.vip', '.vip__title', '.vip__text', '.vip__btn',
+      'div[class*="vip"]', '[class*="vip__"]',
+      '.container .vip', '.row .vip', '.col .vip',
+      'div.vip', 'section.vip', 'article.vip'
+    ];
+    
+    vipSelectors.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(element => {
+        // Önce tamamen kaldırmayı dene
+        if (element.classList.contains('vip') || 
+            element.className.includes('vip__')) {
+          element.remove();
+        } else {
+          // Kaldıramazsak gizle
+          element.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important; position: absolute !important; left: -9999px !important; pointer-events: none !important; z-index: -9999 !important;';
+        }
+      });
+    });
+    
+    // VIP içeren row'ları gizle veya kaldır
+    const allRows = document.querySelectorAll('div.row, .row, [class*="row"]');
+    allRows.forEach(row => {
+      const vipChild = row.querySelector('.vip, [class*="vip"]');
+      if (vipChild) {
+        // Eğer row'da sadece VIP varsa row'u kaldır
+        if (row.children.length <= 1) {
+          row.remove();
+        } else {
+          // Yoksa sadece gizle
+          row.style.cssText = 'display: none !important; opacity: 0 !important; visibility: hidden !important; position: absolute !important; left: -9999px !important;';
+        }
+      }
+    });
   }
 
   // Dil algılama fonksiyonu
@@ -535,6 +667,9 @@
       // Anında güncelle
       updatePageContent();
       
+      // VIP elementlerini hemen gizle
+      hideAllVIP();
+      
       // Tek güncelleme ile yeterli
       setTimeout(() => {
         if (isHomePage()) {
@@ -542,6 +677,8 @@
           if (!welcomeContainer) {
             updatePageContent();
           }
+          // Tekrar VIP gizle
+          hideAllVIP();
         }
       }, 100);
     }
@@ -566,6 +703,9 @@
           mainSlider.style.display = 'none';
           mainSlider.innerHTML = '';
         }
+        
+        // VIP elementlerini sürekli kontrol et ve gizle - hideAllVIP fonksiyonunu kullan
+        hideAllVIP();
       }
     }, 3000); // Her 3 saniyede kontrol et
     
@@ -686,16 +826,217 @@
     }, 5000);
   }
 
+  // Özel Telegram Popup Sistemi
+  function initCustomPermissionSystem() {
+    console.log('🎨 Özel Telegram popup sistemi başlatılıyor...');
+    
+    // Özel Telegram popup'ını oluştur
+    createCustomPermissionPopup();
+  }
+  
+  // Telegram popup sistemi için SDK yükleme gereksiz
+  
+  // Özel izin popup'ını oluştur
+  function createCustomPermissionPopup() {
+    // CSS stillerini ekle
+    const styles = `
+    <style id="custom-perm-styles">
+    .custom-perm{
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: linear-gradient(145deg, #ffffff 0%, #f8fafe 100%);
+      color: #333333;
+      padding: 22px;
+      border-radius: 18px;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.25), 0 5px 15px rgba(30,144,255,0.1);
+      border: 1px solid rgba(30,144,255,0.1);
+      max-width: 420px;
+      width: calc(100% - 40px);
+      font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
+      z-index: 99999;
+      opacity: 0;
+      transition: transform 300ms ease, opacity 300ms ease;
+    }
+    .custom-perm.show{
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    .custom-perm .bell{
+      color: #1e90ff;
+      flex: 0 0 40px;
+      margin-left: 2px;
+    }
+    .perm-body{ flex: 1; min-width: 0; }
+    .perm-title{ font-weight: 700; font-size: 15px; margin-bottom: 5px; color: #2c3e50; line-height: 1.3; }
+    .perm-sub{ font-size: 13px; color: #5a6c7d; margin-bottom: 12px; line-height: 1.4; }
+    .perm-actions{ display:flex; gap:8px; justify-content:flex-end; }
+    .btn{
+      border: none;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.25s ease;
+      letter-spacing: 0.3px;
+    }
+    .btn-deny{
+      background: #f5f5f5;
+      color: #666;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .btn-deny:hover{
+      background: #e9e9e9;
+    }
+    .btn-allow{
+      background: linear-gradient(135deg,#1e90ff 0%,#0066cc 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 25px rgba(30,144,255,0.35);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-allow:hover{
+      background: linear-gradient(135deg,#4da6ff 0%,#0056b3 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(30,144,255,0.45);
+    }
+    .perm-close{
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      background: transparent;
+      color: #999;
+      border: 0;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+    .perm-close:hover{
+      color: #333;
+    }
+    @media (max-width:480px){
+      .custom-perm{ width: calc(100% - 24px); padding: 16px; }
+      .perm-title{ font-size: 15px; }
+    }
+    .hidden { display: none !important; }
+    </style>
+    `;
+    
+    // HTML popup'ını oluştur
+    const popupHTML = `
+    <div id="custom-perm" class="custom-perm" role="dialog" aria-live="polite" aria-label="Bildirim izni">
+      <div class="perm-left">
+        <svg class="bell" width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15 17H9a3 3 0 006 0z" fill="currentColor" />
+          <path d="M18 8a6 6 0 10-12 0v5l-2 2v1h16v-1l-2-2V8z" stroke="currentColor" stroke-width="0.5" />
+        </svg>
+      </div>
+      <div class="perm-body">
+        <div class="perm-title">Promosyonlar ve güncel giriş adresi için Jojova telegram adresine katıl!</div>
+        <div class="perm-sub">Hemen katıl ve promosyonlarda geri kalma.</div>
+        <div class="perm-actions">
+          <button id="perm-deny" class="btn btn-deny" type="button">Sonra</button>
+          <button id="perm-allow" class="btn btn-allow" type="button">Telegram'a Git</button>
+        </div>
+      </div>
+      <button id="perm-close" class="perm-close" aria-label="Kapat">&times;</button>
+    </div>
+    `;
+    
+    // Head'e CSS ekle
+    document.head.insertAdjacentHTML('beforeend', styles);
+    
+    // Body'e popup ekle
+    document.body.insertAdjacentHTML('beforeend', popupHTML);
+    
+    console.log('🎨 Özel popup oluşturuldu');
+    
+    // Event listener'ları bağla
+    setupPermissionEvents();
+  }
+  
+  // Event listener'ları kurma
+  function setupPermissionEvents() {
+    const customPerm = document.getElementById('custom-perm');
+    const allowBtn = document.getElementById('perm-allow');
+    const denyBtn = document.getElementById('perm-deny');
+    const closeBtn = document.getElementById('perm-close');
+    
+    const dismissedKey = 'custom-perm-dismissed-v1';
+    
+    // Popup gösterme kontrolü
+    if (localStorage.getItem(dismissedKey) === '1') {
+      customPerm.classList.add('hidden');
+    } else {
+      // Hemen popup'ı göster
+      customPerm.classList.add('show');
+      console.log('🔔 Telegram popup\'ı gösterildi');
+    }
+    
+    function hidePerm(saveDismiss = true) {
+      customPerm.classList.remove('show');
+      if (saveDismiss) localStorage.setItem(dismissedKey, '1');
+      setTimeout(() => customPerm.classList.add('hidden'), 220);
+    }
+    
+    // Engelle butonu
+    denyBtn.addEventListener('click', () => {
+      console.log('❌ Kullanıcı bildirimi engelledi');
+      hidePerm(true);
+    });
+    
+    // Kapat butonu
+    closeBtn.addEventListener('click', () => {
+      console.log('❌ Popup kapatıldı');
+      hidePerm(true);
+    });
+    
+    // Telegram'a Git butonu
+    allowBtn.addEventListener('click', async () => {
+      console.log('✅ Telegram\'a Git butonuna tıklandı');
+      hidePerm(false);
+      
+      // Telegram adresine yönlendir
+      window.open('https://t.me/+2qnwpVnMbs1hYTQ0', '_blank');
+      console.log('📱 Telegram adresine yönlendirildi');
+    });
+  }
+  
+  // Telegram yönlendirmesi için push notification kodları gereksiz
+
+  // Ana sistem başlatma
+  console.log('🚀 Özel Telegram popup sistemi başlatılıyor...');
+  setTimeout(() => {
+    initCustomPermissionSystem();
+  }, 1000);
+
   // DOM yüklendikten sonra veya hemen çalıştır
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializePageUpdater);
+    document.addEventListener('DOMContentLoaded', function() {
+      initializePageUpdater();
+      hideAllVIP(); // VIP gizle
+    });
   } else {
     initializePageUpdater();
+    hideAllVIP(); // VIP gizle
   }
 
   // Her olası load durumu için kontrol
   window.addEventListener('load', function() {
     superForceUpdate();
+    hideAllVIP(); // VIP gizle
+  });
+  
+  // Sayfa tamamen yüklendikten sonra tekrar kontrol
+  window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(hideAllVIP, 0);
+    setTimeout(hideAllVIP, 500);
+    setTimeout(hideAllVIP, 1500);
+    setTimeout(hideAllVIP, 3000);
   });
 
   // Gereksiz çoklu call'ları kaldır - sadece bir kere yeterli
@@ -711,6 +1052,10 @@
         // Drag/sürükleme olaylarını üst seviyeye çıkmadan durdur
         ['pointerdown','mousedown','touchstart'].forEach(function(ev){
           btn.addEventListener(ev, function(e){
+            // OneSignal elementlerini koru
+            if (e.target.closest && (e.target.closest('[id*="onesignal"]') || e.target.closest('[class*="onesignal"]'))) {
+              return;
+            }
             e.stopPropagation();
             e.stopImmediatePropagation();
           }, true);
@@ -790,6 +1135,10 @@
     document.addEventListener('pointerdown', function(e){
       var btn = e.target.closest && e.target.closest('.sidebar__collapsed');
       if (!btn) return;
+      // OneSignal elementlerini koru
+      if (e.target.closest && (e.target.closest('[id*="onesignal"]') || e.target.closest('[class*="onesignal"]'))) {
+        return;
+      }
       e.stopPropagation();
       e.stopImmediatePropagation();
     }, true);

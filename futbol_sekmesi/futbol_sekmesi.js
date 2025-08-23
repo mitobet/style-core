@@ -31,35 +31,35 @@ class FutbolSekmesi {
                 id: 'bundesliga',
                 title: 'Bundesliga',
                 url: 'https://t2m.io/tambundesliga',
-                image: 'https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_ef1d904558bdfeecc738a677b62ca9d8.webp',
+                image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/aIbhaWSGcJcneCnwIXAnsWFLYnF6bvyvNVOUiFMZ.webp',
                 className: 'bundesliga'
             },
             {
                 id: 'laliga',
                 title: 'La Liga',
                 url: 'https://t2m.io/tamlaliga',
-                image: 'https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_729dc9467655d82218501bd18f6a6b55.webp',
+                image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/HeuC8ictUKIrSTxeXuGySfo2FvUxmY40MnnlGgeG.webp',
                 className: 'laliga'
             },
             {
                 id: 'premier-league',
                 title: 'Premier League',
                 url: 'https://t2m.io/tampremierlig',
-                image: 'https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_30b592a9f7d2674edada836e7bd668d2.webp',
+                image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/o1q4JAyJc20PBfujBi0DtJHtRjhCxRYjxzteEt5I.webp',
                 className: 'premier-league'
             },
             {
                 id: 'serie-a',
                 title: 'Serie A',
                 url: 'https://t2m.io/tamseriea',
-                image: 'https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_ba687803505f8029c6347bfdb0d67266.webp',
+                image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/nMaflwuXV12Dd5DFW1sRBcKmyev0a3E5XhJPYYk5.webp',
                 className: 'serie-a'
             },
             {
                 id: 'super-lig',
                 title: 'Süper Lig',
                 url: 'https://t2m.io/tamsuperlig',
-                image: 'https://cms.tambet367.com/storage/medias/tambet-18755717/content_18755717_7cfc4eb4d566dc0b626a9078e0526b56.webp',
+                image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/yONpfInMNDkU8hNochP0gmn0aZ2xjSe8unyItHaa.webp',
                 className: 'super-lig'
             }
         ];

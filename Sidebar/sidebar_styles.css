@@ -488,8 +488,8 @@ svg {
 
 
 
-/* Arrow için flex element */
-.sidebar__link:after {
+/* Arrow için flex element - SADECE normal linkler */
+.sidebar__link:not(.sidebar__link--bonus):after {
     content: '→' !important;
     font-size: 20px !important;
     font-weight: bold !important;
@@ -671,103 +671,199 @@ svg {
     margin-left: 0;
 }
 
-/* Bonus Talep Butonu Stilleri */
+/* ——— FORCE VISIBLE Bonus Talep Butonu ——— */
+.sidebar a.sidebar__link--bonus,
+a.sidebar__link--bonus,
 .sidebar__link--bonus {
-    overflow: hidden;
-    position: relative;
-    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.6);
-    transition: all 0.3s ease;
-}
-
-.sidebar__link--bonus:hover {
-    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.6);
-    border-color: rgba(255, 215, 0, 0.8);
-}
-
-/* Bonus buton arka plan görseli efekti - şimdilik gizli */
-.sidebar__link--bonus::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/request-bonus.png") left center / cover no-repeat;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.sidebar__link--bonus:hover::before {
-    opacity: 0;
-}
-
-.sidebar__link--bonus span {
-    position: relative;
-    z-index: 2;
-    color: #1d2735 !important;
-    font-weight: 800;
-    text-transform: uppercase;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
-    font-size: 16px;
-    letter-spacing: 1px;
-}
-
-/* Bonus buton ok işareti */
-.sidebar__link--bonus:after {
-    content: '🎁' !important;
-    font-size: 20px !important;
-    color: #1d2735 !important;
-    background: rgba(255, 215, 0, 0.2) !important;
-    width: 32px !important;
-    height: 32px !important;
+    position: relative !important;
     display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    padding: 14px 16px !important;
+    margin: 8px 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 48px !important;
+    background: linear-gradient(135deg, #FFD700 0%, #FFC107 50%, #FFB300 100%) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 
+        0 4px 12px rgba(255, 215, 0, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+    overflow: visible !important;
+    cursor: pointer !important;
+    gap: 12px !important;
+    z-index: 1000 !important;
+    transform: none !important;
+}
+
+.sidebar a.sidebar__link--bonus:hover,
+a.sidebar__link--bonus:hover,
+.sidebar__link--bonus:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    background: linear-gradient(135deg, #FFC107 0%, #FFB300 50%, #FF9800 100%) !important;
+    box-shadow: 
+        0 6px 20px rgba(255, 215, 0, 0.4),
+        0 3px 10px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* FORCE VISIBLE icon - sol tarafta */
+.sidebar a.sidebar__link--bonus::before,
+a.sidebar__link--bonus::before,
+.sidebar__link--bonus::before {
+    content: '🎁' !important;
+    font-size: 22px !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     align-items: center !important;
     justify-content: center !important;
-    border-radius: 8px !important;
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    border-radius: 10px !important;
     transition: all 0.3s ease !important;
+    flex-shrink: 0 !important;
+    z-index: 100 !important;
 }
 
-.sidebar__link--bonus:hover:after {
-    transform: rotate(10deg) scale(1.1);
-    background: rgba(255, 215, 0, 0.3) !important;
+.sidebar a.sidebar__link--bonus:hover::before,
+a.sidebar__link--bonus:hover::before,
+.sidebar__link--bonus:hover::before {
+    transform: rotate(-10deg) scale(1.1) !important;
+    background: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
-/* Light mode için bonus buton stilleri */
+/* FORCE TEXT STYLING - Zıt renkler */
+.sidebar a.sidebar__link--bonus span,
+a.sidebar__link--bonus span,
+.sidebar__link--bonus span {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #1a1a1a !important; /* Normal: Koyu text (sarı arka plan) */
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+    transition: all 0.3s ease !important;
+    flex: 1 !important;
+    z-index: 50 !important;
+}
+
+/* HOVER - ZIT RENKLER */
+.sidebar a.sidebar__link--bonus:hover span,
+a.sidebar__link--bonus:hover span,
+.sidebar__link--bonus:hover span {
+    color: #ffffff !important; /* Hover: Beyaz text (turuncu arka plan) */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important; /* Güçlü gölge */
+}
+
+/* BONUS BUTTON'DA OK YOK */
+.sidebar a.sidebar__link--bonus::after,
+a.sidebar__link--bonus::after,
+.sidebar__link--bonus::after {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+
+
+/* ——— Light Mode Premium Bonus Button ——— */
 [data-bs-theme="light"] .sidebar__link--bonus {
-    background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%) !important;
-    border: 1px solid rgba(255, 215, 0, 0.5);
-    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+    background: linear-gradient(135deg, #FFF8DC 0%, #FFE135 50%, #FFCC02 100%) !important;
+    box-shadow: 
+        0 4px 12px rgba(255, 204, 2, 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
 }
 
 [data-bs-theme="light"] .sidebar__link--bonus:hover {
-    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%) !important;
-    border-color: rgba(255, 215, 0, 0.7);
-    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, #FFE135 0%, #FFCC02 50%, #FF9800 100%) !important;
+    box-shadow: 
+        0 6px 20px rgba(255, 204, 2, 0.3),
+        0 3px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
 }
 
 [data-bs-theme="light"] .sidebar__link--bonus span {
-    color: #1d2735 !important;
-    text-shadow: none;
+    color: #1a1a1a !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
-[data-bs-theme="light"] .sidebar__link--bonus:after {
-    background: rgba(255, 215, 0, 0.2) !important;
+[data-bs-theme="light"] .sidebar__link--bonus:hover span {
+    color: #000000 !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
 }
 
-/* Responsive düzenlemeler */
+[data-bs-theme="light"] .sidebar__link--bonus::before {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover::before {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover span {
+    color: #000000 !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ——— Premium Responsive Bonus Button ——— */
 @media (max-width: 768px) {
-    .sidebar__link--bonus span {
-        font-size: 14px;
+    .sidebar__link--bonus {
+        padding: 12px 14px !important;
+        margin: 6px 0 !important;
+        border-radius: 10px !important;
+        gap: 10px !important;
     }
     
-    .sidebar__link--bonus:after {
+    .sidebar__link--bonus span {
+        font-size: 14px !important;
+        letter-spacing: 0.5px;
+    }
+    
+    .sidebar__link--bonus::before {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 20px !important;
+        border-radius: 8px !important;
+    }
+    
+    .sidebar__link--bonus:hover {
+        transform: translateY(-1px) scale(1.01) !important;
+    }
+}
+
+/* ——— Extra küçük ekranlar ——— */
+@media (max-width: 480px) {
+    .sidebar__link--bonus {
+        padding: 10px 12px !important;
+        margin: 4px 0 !important;
+        gap: 8px !important;
+    }
+    
+    .sidebar__link--bonus span {
+        font-size: 13px !important;
+    }
+    
+    .sidebar__link--bonus::before {
         width: 28px !important;
         height: 28px !important;
         font-size: 18px !important;
+        border-radius: 6px !important;
     }
 }
 
@@ -2077,11 +2173,17 @@ svg {
         z-index: 100;
         left: 85px;
         display: block;
-        width: 132px;
-        height: 40px;
+        width: 264px;  /* %100 büyük: 132px * 2 = 264px */
+        height: 80px;  /* %100 büyük: 40px * 2 = 80px */
         background: var(--tf-logo) no-repeat left center;
-        background-size: auto 40px;
-        transition: all .2s;
+        background-size: auto 80px;  /* %100 büyük: 40px * 2 = 80px */
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .sidebar__logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.3));
     }
 
     .sidebar__actions {

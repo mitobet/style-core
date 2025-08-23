@@ -197,20 +197,20 @@
             /* Mobil - yazılı butonlar */
             @media (max-width: 767px) {
                 .header__actions { 
-                    gap: 8px !important; 
+                    gap: 6px !important; 
                 }
 
                 .header__signin, .header__signup {
                     display: flex !important;
                     align-items: center !important;
                     justify-content: center !important;
-                    height: 46px !important;
+                    height: 50px !important;
                     padding: 0 14px !important;
-                    font-size: 14px !important;
+                    font-size: 15px !important;
                     font-weight: 700 !important;
                     text-transform: uppercase !important;
                     border-radius: 8px !important;
-                    gap: 8px !important;
+                    gap: 6px !important;
                     min-width: 110px !important;
                     width: auto !important;
                     white-space: nowrap !important;
@@ -221,10 +221,10 @@
                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
                     border: 1px solid rgba(255, 215, 0, 0.1) !important;
                     color: var(--tf-tc) !important;
-                    width: 46px !important;
-                    min-width: 46px !important;
-                    max-width: 46px !important;
-                    height: 46px !important;
+                    width: 50px !important;
+                    min-width: 50px !important;
+                    max-width: 50px !important;
+                    height: 50px !important;
                     padding: 0 !important;
                     gap: 0 !important;
                     justify-content: center !important;
