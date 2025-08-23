@@ -1,0 +1,146 @@
+/* Desktop styles for contact_button_new */
+.contact_button_new {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    height: 46px !important;
+    padding: 0 18px !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+    color: #000000 !important;
+    text-decoration: none !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    min-width: auto !important;
+    width: auto !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%) !important;
+    border: 1px solid rgba(255, 215, 0, 0.3) !important;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    animation: pulseGlow 2s infinite ease-in-out !important;
+}
+
+/* Phone icon for contact_button_new */
+.contact_button_new::before {
+    content: '📞' !important; /* Direct Unicode phone icon */
+    margin-right: 8px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 22px !important;
+}
+
+/* Glow effect */
+.contact_button_new::after {
+    content: '' !important;
+    position: absolute !important;
+    top: -2px !important;
+    left: -2px !important;
+    right: -2px !important;
+    bottom: -2px !important;
+    background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700) !important;
+    border-radius: 14px !important;
+    z-index: -1 !important;
+    filter: blur(8px) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+}
+
+/* Hover effect */
+.contact_button_new:hover {
+    background: linear-gradient(135deg, #FFED4A 0%, #FFB84D 100%) !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+    border-color: rgba(255, 215, 0, 0.5) !important;
+}
+
+.contact_button_new:hover::after {
+    opacity: 1 !important;
+}
+
+/* Pulse animation */
+@keyframes pulseGlow {
+    0% { 
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+    50% { 
+        box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    100% { 
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+    .contact_button_new {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 50px !important;
+        padding: 0 14px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        border-radius: 8px !important;
+        gap: 6px !important;
+        min-width: 110px !important;
+        width: auto !important;
+        white-space: nowrap !important;
+        background: linear-gradient(135deg, #ffc100 0%, #e6ad00 100%) !important;
+        border: 2px solid #ffc100 !important;
+        color: #000000 !important;
+        box-shadow: 
+            0 4px 12px rgba(255, 193, 0, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        position: relative !important;
+        overflow: hidden !important;
+        animation: none !important;
+    }
+
+    .contact_button_new::before {
+        content: '📞' !important;
+        margin-right: 8px !important;
+        display: inline-block !important;
+        vertical-align: middle !important;
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 20px !important;
+    }
+
+    .contact_button_new::after {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+        animation: mobileShine 3s infinite !important;
+        z-index: 1 !important;
+    }
+
+    .contact_button_new:hover {
+        background: linear-gradient(135deg, #FFED4A 0%, #FFB84D 100%) !important;
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    .contact_button_new:hover::after {
+        display: none !important;
+    }
+
+    @keyframes mobileShine {
+        0% { left: -100%; }
+        50% { left: 100%; }
+        100% { left: 100%; }
+    }
+}
