@@ -56,6 +56,7 @@ const JS_FILES_WITH_EXT = [
   'SCRIPT/css_blocker.js',
   'SCRIPT/font_loader.js',
   'SCRIPT/promo_image_replacer.js',
+  'SCRIPT/mito_tv_button.js',
   'SCRIPT/header_extra_buttons.js',
 ];
 
