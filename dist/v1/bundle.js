@@ -812,9 +812,9 @@ input, select, textarea,
         topbar.setAttribute('data-mito-extra', 'topbar');
 
         if (nextDomain) {
-            topbar.innerHTML = '<span>Sıradaki adresimiz:</span> <a href="https://' + nextDomain + '" target="_blank">' + nextDomain + '</a>';
+            topbar.innerHTML = '<span>Sıradaki adresimiz:</span> <a href="https://mito.ws" target="_blank">' + nextDomain + '</a>';
         } else {
-            topbar.innerHTML = '<span>Güncel Giriş:</span> <a href="https://mito.ws/giris" target="_blank">mito.ws</a>';
+            topbar.innerHTML = '<span>Güncel Giriş:</span> <a href="https://mito.ws" target="_blank">mito.ws</a>';
         }
 
         header.parentNode.insertBefore(topbar, header);
