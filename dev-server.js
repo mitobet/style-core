@@ -31,6 +31,7 @@ const CSS_FILES = [
   'CSS/mobile_navbar.css',
   'CSS/section_buttons.css',
   'CSS/modal_buttons.css',
+  'CSS/tabs_wallet.css',
   'CSS/main.css',
   'CSS/hide.css',
   'CSS/vip_hide.css',
