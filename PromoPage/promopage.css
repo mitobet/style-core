@@ -1,9 +1,18 @@
 /* Promo Page Mobile Fixes & Redesign */
 
-/* Promosyonlar Başlık ve Filtreleri Gizle (Web & Mobil) */
-.section__title.section__title--head,
-.nav.nav-tabs.tabs-nav {
+/* Promosyonlar Başlık ve Filtreleri Gizle (Web & Mobil) - Yatır/Çek tablarına dokunma */
+.section__title.section__title--head {
     display: none !important;
+}
+/* Sadece promosyon sayfasındaki filtre tablarını gizle; #tabs-nav (Para Yatır/Çek) ve wallet-modal içindekiler görünsün */
+.ection:has(.section__title--head) .nav.nav-tabs.tabs-nav,
+.section:has(.section__title--head) .nav.nav-tabs.tabs-nav {
+    display: none !important;
+}
+#tabs-nav,
+#wallet-modal .nav.nav-tabs.tabs-nav,
+#wallet-modal .tabs-nav {
+    display: flex !important;
 }
 
 @media (max-width: 768px) {
