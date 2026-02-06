@@ -1,61 +1,98 @@
 /* =====================================================
    MITOBET - CSS Blocker
    CMS'deki hatalı CSS dosyalarını engeller.
-   Dosya yüklenmeden veya yüklendikten sonra devre dışı bırakır.
    ===================================================== */
 
 (function() {
     'use strict';
 
-    // Engellenecek CSS URL parçaları
     var BLOCKED = [
-        'btT2zvLncVttPgLh7UhpfCCihTtMYy5y.css'
+        'btT2zvLncVttPgLh7UhpfCCihTtMYy5y',
+        'search-gold',
+        'multisearch'
     ];
 
-    function shouldBlock(href) {
-        if (!href) return false;
-        for (var i = 0; i < BLOCKED.length; i++) {
-            if (href.indexOf(BLOCKED[i]) > -1) return true;
+    function shouldBlock(el) {
+        // Link href kontrolü
+        var href = el.getAttribute('href') || '';
+        if (href.indexOf('btT2zvLncVttPgLh7UhpfCCihTtMYy5y') > -1) return true;
+
+        // Style içerik kontrolü (inline CSS)
+        if (el.tagName === 'STYLE' && el.textContent) {
+            var txt = el.textContent;
+            if (txt.indexOf('--search-gold') > -1 && txt.indexOf('multisearch') > -1) return true;
         }
+
         return false;
     }
 
-    // 1. Zaten yüklenmiş olanları kaldır
-    function removeExisting() {
-        var links = document.querySelectorAll('link[rel="stylesheet"], style');
-        links.forEach(function(el) {
-            var href = el.getAttribute('href') || '';
-            if (shouldBlock(href)) {
+    function killCSS() {
+        // Tüm stylesheet ve style etiketlerini tara
+        var els = document.querySelectorAll('link[rel="stylesheet"], style');
+        els.forEach(function(el) {
+            if (shouldBlock(el)) {
                 el.disabled = true;
-                el.remove();
-                console.log('[MITO BLOCKER] Kaldırıldı: ' + href);
+                el.parentNode && el.parentNode.removeChild(el);
+                console.log('[MITO BLOCKER] Kaldırıldı:', el.tagName, el.getAttribute('href') || '(inline)');
             }
         });
+
+        // document.styleSheets üzerinden de kontrol
+        try {
+            for (var i = document.styleSheets.length - 1; i >= 0; i--) {
+                var sheet = document.styleSheets[i];
+                var href = sheet.href || '';
+                if (href.indexOf('btT2zvLncVttPgLh7UhpfCCihTtMYy5y') > -1) {
+                    sheet.disabled = true;
+                    if (sheet.ownerNode) {
+                        sheet.ownerNode.parentNode && sheet.ownerNode.parentNode.removeChild(sheet.ownerNode);
+                    }
+                    console.log('[MITO BLOCKER] StyleSheet devre dışı:', href);
+                }
+            }
+        } catch(e) {}
     }
 
-    // 2. Yeni eklenenleri yakala ve engelle
-    var observer = new MutationObserver(function(mutations) {
-        mutations.forEach(function(m) {
-            m.addedNodes.forEach(function(node) {
-                if (node.tagName === 'LINK' && node.rel === 'stylesheet') {
-                    var href = node.getAttribute('href') || '';
-                    if (shouldBlock(href)) {
-                        node.disabled = true;
-                        node.remove();
-                        console.log('[MITO BLOCKER] Engellendi: ' + href);
+    // MutationObserver - eklenen her node'u kontrol et
+    var obs = new MutationObserver(function(mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+            var nodes = mutations[i].addedNodes;
+            for (var j = 0; j < nodes.length; j++) {
+                var n = nodes[j];
+                if (!n.tagName) continue;
+                var tag = n.tagName.toUpperCase();
+                if (tag === 'LINK' || tag === 'STYLE') {
+                    if (shouldBlock(n)) {
+                        n.disabled = true;
+                        n.parentNode && n.parentNode.removeChild(n);
+                        console.log('[MITO BLOCKER] Engellendi:', tag, n.getAttribute('href') || '(inline)');
                     }
                 }
-            });
-        });
+                // İçindeki link/style'ları da kontrol et
+                if (n.querySelectorAll) {
+                    var inner = n.querySelectorAll('link[rel="stylesheet"], style');
+                    inner.forEach(function(el) {
+                        if (shouldBlock(el)) {
+                            el.disabled = true;
+                            el.parentNode && el.parentNode.removeChild(el);
+                            console.log('[MITO BLOCKER] İç eleman engellendi');
+                        }
+                    });
+                }
+            }
+        }
     });
 
-    observer.observe(document.documentElement, { childList: true, subtree: true });
+    obs.observe(document.documentElement, { childList: true, subtree: true });
 
-    // İlk temizlik
-    removeExisting();
+    // Hemen çalıştır
+    killCSS();
+    // DOM hazır olunca tekrar
+    document.addEventListener('DOMContentLoaded', killCSS);
+    // Sayfa yüklenince tekrar
+    window.addEventListener('load', killCSS);
+    // Periyodik kontrol
+    setInterval(killCSS, 1000);
 
-    // SPA geçişlerinde tekrar kontrol
-    setInterval(removeExisting, 2000);
-
-    console.log('[MITO BLOCKER] CSS blocker aktif - ' + BLOCKED.length + ' dosya engelleniyor');
+    console.log('[MITO BLOCKER] Aktif - btT2zvLncVttPgLh7UhpfCCihTtMYy5y.css engelleniyor');
 })();
