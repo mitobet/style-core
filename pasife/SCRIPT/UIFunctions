@@ -1,0 +1,488 @@
+<script type="text/javascript">
+// UIFunctions.js - UI Yardımcı Fonksiyonları
+
+// Transform signin button functionality
+function transformSigninButton(AppState) {
+  const signinButtons = document.querySelectorAll('.header__signin');
+  
+  signinButtons.forEach(button => {
+    if (!button.dataset.mitoSigninTransformed) {
+      button.dataset.mitoSigninTransformed = '1'; 
+      
+      // Mobil cihazlarda giriş yap butonunu değiştir
+      if (window.innerWidth <= 768) {
+        button.className = button.className + ' header__signup';
+        // Dil İngilizce ise LOGIN, değilse GİRİŞ YAP
+        button.textContent = (AppState && AppState.currentLanguage === 'en') ? 'LOGIN' : 'GİRİŞ YAP';
+      }
+    }
+  });
+  
+  // Mobil logo değişikliği
+  changeMobileLogo();
+}
+
+// Sidebar menüsünü yeniden düzenle - Oyunlar kısmını en üste taşı
+function reorderSidebarMenu(AppState) {
+  // Dil kontrolü - İngilizce ise "Games" ve "Menu", Türkçe ise "Oyunlar" ve "Menü"
+  const isEnglish = AppState && AppState.currentLanguage === 'en';
+  const gamesText = isEnglish ? 'Games' : 'Oyunlar';
+  const menuText = isEnglish ? 'Menu' : 'Menü';
+  
+  // Ana menüyü bul (Menü, Oyunlar, Hesap bölümlerini içeren)
+  const sidebarMenus = document.querySelectorAll('.sidebar__menu');
+  let targetSidebarMenu = null;
+  
+  // Oyunlar/Games başlığını içeren menüyü bul
+  for (const menu of sidebarMenus) {
+    const gamesTitle = Array.from(menu.querySelectorAll('.sidebar__title')).find(title => 
+      title.textContent.trim() === gamesText
+    );
+    if (gamesTitle) {
+      targetSidebarMenu = menu;
+      break;
+    }
+  }
+  
+  if (!targetSidebarMenu) {
+    console.log('Target sidebar menu bulunamadı');
+    return;
+  }
+  
+  // Çoklu çalışma kontrolü - daha güçlü kontrol
+  if (targetSidebarMenu.dataset.mitoReordered === '1') {
+    console.log('Sidebar zaten düzenlenmiş, işlem atlanıyor');
+    return;
+  }
+  
+  console.log('Sidebar menu bulundu, analiz ediliyor...');
+  
+  // DOM yapısını analiz et - span'lar UL içinde!
+  let gamesUlSection = null;
+  let menuTitleSpan = null;
+  let menuUlSection = null;
+  
+  const children = Array.from(targetSidebarMenu.children);
+  console.log('Toplam children:', children.length);
+  
+  // İlk olarak tüm children'ları logla
+  children.forEach((child, index) => {
+    console.log(`Child ${index}: ${child.tagName} - Classes: ${child.className} - Text: "${child.textContent?.trim().substring(0, 30)}"`);
+  });
+  
+  // UL elementlerini bul ve içlerindeki span'ları kontrol et
+  children.forEach((child, index) => {
+    if (child.tagName === 'UL' && child.classList.contains('sidebar__nav')) {
+      const titleSpan = child.querySelector('.sidebar__title');
+      if (titleSpan) {
+        const titleText = titleSpan.textContent.trim();
+        console.log(`UL içinde title bulundu: "${titleText}"`);
+        
+        if (titleText === gamesText) {
+          gamesUlSection = child;
+          console.log(`${gamesText} UL bölümü bulundu!`);
+        } else if (titleText === menuText) {
+          menuTitleSpan = titleSpan;
+          menuUlSection = child;
+          console.log(`${menuText} UL bölümü bulundu!`);
+        }
+      }
+    }
+    
+    // Alternatif olarak span elementlerini de kontrol et
+    if (child.tagName === 'SPAN' && child.classList.contains('sidebar__title')) {
+      const titleText = child.textContent.trim();
+      console.log(`Standalone SPAN bulundu: "${titleText}"`);
+      
+      if (titleText === menuText) {
+        menuTitleSpan = child;
+        // Menü/Menu UL'ini bul (bir sonraki UL elementi)
+        for (let j = index + 1; j < children.length; j++) {
+          if (children[j].tagName === 'UL' && children[j].classList.contains('sidebar__nav')) {
+            menuUlSection = children[j];
+            console.log(`${menuText} UL'i standalone span sonrası bulundu!`);
+            break;
+          }
+        }
+      }
+    }
+  });
+  
+  console.log('Arama sonuçları:', {
+    gamesUlSection: !!gamesUlSection,
+    menuTitleSpan: !!menuTitleSpan,
+    menuUlSection: !!menuUlSection
+  });
+  
+  // Mevcut sırayı kontrol et
+  if (gamesUlSection && menuUlSection) {
+    const gamesIndex = Array.from(targetSidebarMenu.children).indexOf(gamesUlSection);
+    const menuIndex = Array.from(targetSidebarMenu.children).indexOf(menuUlSection);
+    
+    console.log(`Index'ler - ${gamesText} UL: ${gamesIndex}, ${menuText} UL: ${menuIndex}`);
+    
+    if (gamesIndex < menuIndex && gamesIndex !== -1) {
+      console.log(`${gamesText} zaten ${menuText}'den önce, işlem atlanıyor`);
+      targetSidebarMenu.dataset.mitoReordered = '1';
+      return;
+    }
+  }
+  
+  // Oyunlar/Games UL'ini Menü/Menu bölümünün önüne taşı
+  if (gamesUlSection && (menuTitleSpan || menuUlSection)) {
+    console.log('Taşıma işlemi başlatılıyor...');
+    
+    // Menü başlığı standalone span ise onun önüne, değilse UL'in önüne
+    const insertBefore = menuTitleSpan || menuUlSection;
+    targetSidebarMenu.insertBefore(gamesUlSection, insertBefore);
+    
+    // İşlem yapıldığını işaretle
+    targetSidebarMenu.dataset.mitoReordered = '1';
+    
+    console.log(`${gamesText} UL bölümü ${menuText}'nün önüne taşındı`);
+  } else {
+    console.log('Taşıma işlemi yapılamadı - eksik elementler:', {
+      gamesUlSection: !!gamesUlSection,
+      menuTitleSpan: !!menuTitleSpan,
+      menuUlSection: !!menuUlSection
+    });
+  }
+}
+
+// Mobil cihazlarda logo değiştir
+function changeMobileLogo() {
+  if (window.innerWidth <= 768) {
+    const logoElement = document.querySelector('.header__logo');
+    if (logoElement && !logoElement.dataset.mitoLogoChanged) {
+      logoElement.dataset.mitoLogoChanged = '1';
+      // Mobil logo background'unu değiştir
+      const mobileLogo = 'url(https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/logos/KK6pQ8eDKSiJY8tuN7kv1CT8lzXvwFbuzPcfjmh3.png)';
+      logoElement.style.backgroundImage = mobileLogo;
+      logoElement.style.backgroundSize = 'contain';
+      logoElement.style.backgroundRepeat = 'no-repeat';
+      logoElement.style.backgroundPosition = 'center';
+      logoElement.style.setProperty('width', '140px', 'important');
+      logoElement.style.setProperty('min-width', '118', 'important');
+    }
+  }
+}
+
+// Sport sayfası için popup başlatıcı
+// NOT: initSportPopup() fonksiyonu SportPopupFunction.html dosyasına taşınmıştır
+
+// Kullanıcı giriş yapmamışsa dice icon'u GIF ile değiştir
+function replaceDiceIconWithGif() {
+
+  // Mobil cihaz kontrolü
+  if (window.innerWidth > 768) {
+    console.log('Desktop device detected, skipping dice icon replacement');
+    return;
+  }
+
+  try {
+  
+    
+    // Tüm dice icon'ları bul - use elementinin href'ine bak
+    const diceIcons = document.querySelectorAll('use[href*="dice"]');
+  
+    // Her dice icon'u işle
+    diceIcons.forEach((diceIcon, index) => {
+      console.log(`Processing dice icon ${index + 1}`);
+      
+      // Parent icon div'i bul
+      const iconDiv = diceIcon.closest('.icon.plus');
+      if (iconDiv) {
+        // SVG'yi kaldır ve GIF ekle
+        iconDiv.innerHTML = `<img src="https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/AFAqG450qQOt3uW3AkN2S7XCAYoeglvsyrtSoo0m.gif" alt="banner" loading="lazy" style="height: 100% !important; width: 100% !important; object-fit: contain !important; margin: 0px !important;">`;
+        console.log(`Dice icon ${index + 1} replaced with GIF`);
+      } else {
+        console.log(`Could not find parent .icon.plus for dice icon ${index + 1}`);
+      }
+    });
+
+    console.log('All dice icons processed');
+  } catch (error) {
+    console.error('Error replacing dice icon:', error);
+  }
+}
+
+// Mobil cihazlarda mevcut menüdeki SVG'yi GIF ile değiştir
+function replaceMainIconWithGif() {
+  // Mobil cihaz kontrolü
+  if (window.innerWidth > 768) {
+    console.log('Desktop device detected, skipping main-icon replacement');
+    return;
+  }
+
+  // Eğer daha önce değiştirilmişse işlemi tekrarlama
+  if (document.body.dataset.mitoGifAdded === '1') {
+    console.log('GIF already added, skipping');
+    return;
+  }
+
+
+  try {
+    // Mevcut sticky-menu-container'ı bul
+    const existingStickyMenu = document.querySelector('.sticky-menu-container');
+    if (!existingStickyMenu) {
+      console.log('Existing sticky-menu-container not found');
+      return;
+    }
+    
+    // main-icon'u bul (giriş yapmış kullanıcılar için)
+    let mainIcon = existingStickyMenu.querySelector('#main-icon');
+    
+    // Eğer main-icon yoksa, dice icon yapısını kontrol et (giriş yapmamış kullanıcılar)
+    if (!mainIcon) {
+      const diceIcon = existingStickyMenu.querySelector('use[href*="dice"]');
+      if (diceIcon) {
+        mainIcon = diceIcon.closest('.icon.plus');
+        console.log('Found dice icon structure, using it as main icon');
+      }
+    }
+    
+    if (!mainIcon) {
+      console.log('Neither main-icon nor dice icon found');
+      return;
+    }
+    
+    // SVG'yi GIF ile değiştir
+    const gifUrl = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/AFAqG450qQOt3uW3AkN2S7XCAYoeglvsyrtSoo0m.gif';
+    
+    // Mevcut SVG içeriğini temizle ve GIF ekle
+    mainIcon.innerHTML = `<img src="${gifUrl}" alt="banner" loading="lazy">`;
+    
+    // GIF için stil ekle
+    mainIcon.style.cssText = `
+      width: 90px !important;
+            height: 100px !important;
+            min-height: 100px !important;
+            max-height: 100px !important;
+            background-color: transparent !important;
+      display: flex !important;
+            align-items: flex-end !important;
+      justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+    `;
+    
+    // GIF img elementini stil
+    const gifImg = mainIcon.querySelector('img');
+    if (gifImg) {
+      gifImg.style.cssText = `
+            height: 70% !important;
+        width: 70% !important;
+            object-fit: contain !important;
+        margin: 0px !important;
+        padding-bottom: 26px !important;
+      `;
+    }
+    
+    // İşlem yapıldığını işaretle
+    document.body.dataset.mitoGifAdded = '1';
+    
+    console.log('GIF successfully added to existing menu');
+  } catch (error) {
+    console.error('Error adding GIF to existing menu:', error);
+  }
+}
+
+
+// Ticker bölümünü extra-slider4'ten extra-slider1 ile extra-slider2 arasına taşı
+function moveTickerToSliders() {
+  // Eğer daha önce taşındıysa işlemi tekrarlama
+  if (document.body.dataset.tickerMoved === '1') {
+    console.log('Ticker already moved, skipping');
+    return;
+  }
+
+  const extraSlider4 = document.querySelector('#extra-slider4');
+  const extraSlider1 = document.querySelector('#extra-slider1');
+  const extraSlider2 = document.querySelector('#extra-slider2');
+
+  // Tüm gerekli elementlerin var olduğundan emin ol
+  if (!extraSlider4 || !extraSlider1 || !extraSlider2) {
+    console.log('Required sliders not found', {
+      slider4: !!extraSlider4,
+      slider1: !!extraSlider1,
+      slider2: !!extraSlider2
+    });
+    return;
+  }
+
+  // extra-slider4'ün hemen altındaki section.fade-in elementini bul
+  const tickerSection = extraSlider4.nextElementSibling;
+  
+  if (!tickerSection || !tickerSection.classList.contains('section')) {
+    console.log('Ticker section not found after extra-slider4');
+    return;
+  }
+
+  try {
+    // Ticker bölümünü extra-slider1 ve extra-slider2 arasına taşı
+    extraSlider1.parentNode.insertBefore(tickerSection, extraSlider2);
+    
+    // jackpots-container için ayrı kontrol ve taşıma işlemi
+    moveJackpotsContainer();
+    
+    // İşlem yapıldığını işaretle
+    document.body.dataset.tickerMoved = '1';
+    
+    console.log('Ticker section successfully moved between extra-slider1 and extra-slider2');
+  } catch (error) {
+    console.error('Error moving ticker section:', error);
+  }
+}
+
+// jackpots-container'ı extra-slider2'nin altına taşı (ayrı fonksiyon - gecikmeli yüklenebilir)
+function moveJackpotsContainer() {
+  const extraSlider2 = document.querySelector('#extra-slider2');
+  const jackpotsContainer = document.getElementById('jackpots-container');
+  
+  // Eğer zaten taşındıysa işlemi tekrarlama
+  if (document.body.dataset.jackpotsMoved === '1') {
+    return;
+  }
+  
+  if (!extraSlider2) {
+    console.log('extra-slider2 not found for jackpots positioning');
+    return;
+  }
+  
+  if (!jackpotsContainer) {
+    // Element henüz yüklenmemiş, tekrar denemeliyiz
+    console.log('jackpots-container not found yet, will retry');
+    return;
+  }
+  
+  try {
+    // jackpots-container'ı extra-slider2'nin hemen ALTINA taşı
+    console.log('jackpots-container found, moving after extra-slider2');
+    
+    // extra-slider2'nin sonraki kardeşini bul
+    const nextSibling = extraSlider2.nextSibling;
+    
+    if (extraSlider2.parentNode) {
+      if (nextSibling && nextSibling !== jackpotsContainer) {
+        extraSlider2.parentNode.insertBefore(jackpotsContainer, nextSibling);
+      } else if (!nextSibling) {
+        extraSlider2.parentNode.appendChild(jackpotsContainer);
+      }
+      
+      // İşareti koy
+      document.body.dataset.jackpotsMoved = '1';
+      console.log('jackpots-container successfully moved after extra-slider2');
+    }
+  } catch (error) {
+    console.error('Error moving jackpots-container:', error);
+  }
+}
+
+// Mobil menü overlay fonksiyonu
+function addMobileMenuOverlay() {
+  // Mobil cihaz kontrolü
+  if (window.innerWidth > 768) {
+    console.log('Desktop device detected, skipping mobile menu overlay');
+    return;
+  }
+
+  // Eğer daha önce eklenmişse işlemi tekrarlama
+  if (document.body.dataset.mobileMenuOverlayAdded === '1') {
+    console.log('Mobile menu overlay already added, skipping');
+    return;
+  }
+
+  try {
+    // .inner-menu elementini bul
+    const innerMenu = document.querySelector('.inner-menu');
+    if (!innerMenu) {
+      console.log('Inner menu not found, skipping mobile menu overlay');
+      return;
+    }
+
+    // Overlay container oluştur
+    const overlay = document.createElement('div');
+    overlay.className = 'mobile-menu-overlay';
+    overlay.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 9998;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    `;
+
+    // Overlay'e tıklayınca menüyü kapat
+    overlay.addEventListener('click', () => {
+      closeMobileMenu();
+    });
+
+    // Menüyü kapatma fonksiyonu
+    function closeMobileMenu() {
+      overlay.style.opacity = '0';
+      overlay.style.visibility = 'hidden';
+      innerMenu.style.transform = 'translateX(-100%)';
+      document.body.style.overflow = '';
+    }
+
+    // Menüyü açma fonksiyonu
+    function openMobileMenu() {
+      overlay.style.opacity = '1';
+      overlay.style.visibility = 'visible';
+      innerMenu.style.transform = 'translateX(0)';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Menü butonlarını bul ve event listener ekle
+    const menuButtons = document.querySelectorAll('[data-toggle="menu"], .menu-toggle, .hamburger, .menu-btn');
+    menuButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        if (overlay.style.visibility === 'visible') {
+          closeMobileMenu();
+        } else {
+          openMobileMenu();
+        }
+      });
+    });
+
+    // ESC tuşu ile menüyü kapat
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.style.visibility === 'visible') {
+        closeMobileMenu();
+      }
+    });
+
+    // Menü stillerini ayarla
+    innerMenu.style.cssText += `
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 280px;
+      background-color: #1a1a1a;
+      z-index: 9999;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      overflow-y: auto;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    `;
+
+    // Overlay'i body'ye ekle
+    document.body.appendChild(overlay);
+
+    // İşlem yapıldığını işaretle
+    document.body.dataset.mobileMenuOverlayAdded = '1';
+
+    console.log('Mobile menu overlay successfully added');
+  } catch (error) {
+    console.error('Error adding mobile menu overlay:', error);
+  }
+}
+</script>

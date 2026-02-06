@@ -1,0 +1,126 @@
+
+.sidebar__social-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 12px;
+    margin: 0;
+    justify-content: flex-start;
+    # max-width: 240px; 
+    flex-direction: row;
+}
+
+.sidebar__social-container li {
+    width: calc(25% - 6px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sidebar__social-container li a {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-color: var(--tf-bg2);
+    border-radius: 10px;
+    padding: 10px;
+    transition: all 0.2s ease;
+  cursor:pointer;
+}
+
+.sidebar__social-container li a:hover ,
+.instrument-icon-wrapper:hover svg {
+
+    transform: scale(1.05);
+    background-color: #333;
+}
+
+.sidebar__social-container li svg {
+    width: 100%;
+    height: auto;
+    max-width: 28px;
+    margin: auto;
+    display: block;
+}
+.mobile-app-button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff143e;
+  background-color: #06101d;
+  border: 1px solid #ff143e;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 6px rgba(255, 20, 62, 0.2);
+  font-family: monospace !important;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: fadeInMobileApp 0.4s ease-out forwards;
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-app-button:hover {
+  background-color: #ff143e;
+  color: #fff;
+  transform: scale(1.57);
+  box-shadow:
+    0 0 12px rgba(255, 20, 62, 0.6),
+    0 0 20px rgba(255, 20, 62, 0.4),
+    0 0 30px rgba(255, 20, 62, 0.2);
+  z-index: 2;
+}
+
+.mobile-app-icon {
+  width: 22px;
+  height: 22px;
+  color: inherit;
+  transition: transform 0.3s ease;
+  transform: rotate(-10deg);
+}
+
+.mobile-app-button:hover .mobile-app-icon {
+  transform: rotate(20deg);
+}
+
+@keyframes fadeInMobileApp {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Header butonu sadece desktopta görünür */
+#mobile-app-btn {
+  display: block;
+}
+
+@media screen and (max-width: 1024px) {
+  #mobile-app-btn {
+    display: none !important;
+  }
+}
+
+/* Footer butonu sadece mobilde görünür */
+#mobile-app-btn-footer {
+  display: none !important;
+}
+
+@media screen and (max-width: 1024px) {
+  #mobile-app-btn-footer {
+    display: block !important;
+    margin: 12px auto 0 auto !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #mobile-app-btn-footer {
+    width: 162px !important;
+    height: 50px !important;
+  }
+}

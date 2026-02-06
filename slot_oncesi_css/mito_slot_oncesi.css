@@ -1,0 +1,329 @@
+/* ========================================
+   MITOBET - SLOT OYUNU ÖNCESİ KAYIT EKRANI CSS
+   Renk Paleti: #C7A769 (Bronz/Altın)
+   Web ve Mobil Uyumlu
+   ======================================== */
+
+/* Frame container'ı oyunun üstüne sabitlenir */
+.frame {
+    position: relative;
+    z-index: 1000 !important;
+}
+
+/* Oyun ekranını kapat - Frame aktif değilse */
+.frame:not(.active) .frame__cover {
+    position: relative;
+    z-index: 999;
+}
+
+/* Kayıt ekranını (nav + butonlar) öne çıkar ve merkeze al */
+.frame__cover:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85) !important;
+    opacity: 1 !important;
+    z-index: 998 !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* Nav ve butonları TAM ORTAYA al */
+.frame__nav {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    z-index: 1000 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 30px 20px;
+    width: calc(100% - 40px);
+    max-width: 450px;
+}
+
+/* Bakiye dropdown container */
+.frame__balance {
+    position: relative;
+    z-index: 1002 !important;
+    background: rgba(199, 167, 105, 0.05);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(199, 167, 105, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.frame__balance span {
+    color: #fff !important;
+    font-size: 18px !important;
+    font-weight: 600;
+}
+
+/* Dropdown buton stilleri */
+.frame-mob__dropdown-btn {
+    background: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid rgba(199, 167, 105, 0.3) !important;
+    transition: all 0.3s ease;
+}
+
+.frame-mob__dropdown-btn:hover {
+    background: rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(199, 167, 105, 0.5) !important;
+    transform: translateY(-2px);
+}
+
+/* Dropdown menü */
+.frame-mob__menu {
+    position: absolute !important;
+    z-index: 1003 !important;
+    background: rgba(0, 0, 0, 0.95) !important;
+    border: 1px solid rgba(199, 167, 105, 0.3) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Butonlar container */
+.frame__btns {
+    position: relative;
+    z-index: 1001 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+}
+
+/* Kayıt Ol butonu - MITOBET Bronz/Altın */
+.frame__btn {
+    width: 100% !important;
+    height: 56px !important;
+    background: linear-gradient(135deg, #C7A769 0%, #A8894D 100%) !important;
+    border: none !important;
+    color: #1d2735 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(199, 167, 105, 0.4);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.frame__btn:hover {
+    background: linear-gradient(135deg, #D4B87A 0%, #C7A769 100%) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(199, 167, 105, 0.6);
+    color: #000 !important;
+}
+
+/* Demo butonu - Koyu tema uyumlu */
+.frame__play {
+    width: 100% !important;
+    height: 56px !important;
+    background: linear-gradient(135deg, rgba(199, 167, 105, 0.15) 0%, rgba(199, 167, 105, 0.08) 100%) !important;
+    border: 2px solid rgba(199, 167, 105, 0.4) !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.frame__play:hover {
+    background: linear-gradient(135deg, rgba(199, 167, 105, 0.25) 0%, rgba(199, 167, 105, 0.15) 100%) !important;
+    border-color: rgba(199, 167, 105, 0.6) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(199, 167, 105, 0.4);
+}
+
+.frame__play svg {
+    width: 28px !important;
+    height: 28px !important;
+    margin-right: 12px;
+}
+
+/* Oyun aktif olduğunda overlay'i kaldır */
+.frame__cover.active:before {
+    display: none !important;
+}
+
+.frame__cover.active .frame__nav,
+.frame__cover.active .frame__btns {
+    display: none !important;
+}
+
+/* ========================================
+   MOBİL RESPONSIVE (768px ve altı)
+   ======================================== */
+@media (max-width: 768px) {
+    .frame__nav {
+        padding: 25px 20px;
+        gap: 18px;
+        max-width: 85%;
+        width: 85%;
+    }
+    
+    .frame__balance {
+        padding: 12px 15px;
+        width: 100%;
+    }
+    
+    .frame__balance span {
+        font-size: 16px !important;
+    }
+    
+    .frame__btns {
+        max-width: 100%;
+        padding: 0;
+        gap: 12px;
+    }
+    
+    .frame__btn,
+    .frame__play {
+        height: 50px !important;
+        font-size: 14px !important;
+    }
+    
+    .frame__play svg {
+        width: 24px !important;
+        height: 24px !important;
+        margin-right: 10px;
+    }
+}
+
+/* ========================================
+   TABLET (768px - 991px)
+   ======================================== */
+@media (min-width: 768px) and (max-width: 991px) {
+    .frame__nav {
+        padding: 25px 20px;
+        max-width: 480px;
+    }
+    
+    .frame__btns {
+        max-width: 450px;
+    }
+}
+
+/* ========================================
+   DESKTOP (992px ve üstü)
+   ======================================== */
+@media (min-width: 992px) {
+    .frame__nav {
+        padding: 40px 30px;
+        gap: 25px;
+        max-width: 550px;
+    }
+    
+    .frame__btns {
+        flex-direction: row;
+        max-width: 600px;
+        gap: 20px;
+    }
+    
+    .frame__btn,
+    .frame__play {
+        width: calc(50% - 10px) !important;
+    }
+}
+
+/* ========================================
+   HOVER EFFECTS - GLOW (MITOBET Bronz)
+   ======================================== */
+.frame__btn:hover {
+    animation: mitoGoldGlow 1.5s infinite ease-in-out;
+}
+
+.frame__play:hover {
+    animation: mitoBronzeGlow 1.5s infinite ease-in-out;
+}
+
+@keyframes mitoGoldGlow {
+    0%, 100% {
+        box-shadow: 0 6px 20px rgba(199, 167, 105, 0.4);
+    }
+    50% {
+        box-shadow: 0 8px 30px rgba(199, 167, 105, 0.7);
+    }
+}
+
+@keyframes mitoBronzeGlow {
+    0%, 100% {
+        box-shadow: 0 6px 20px rgba(199, 167, 105, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 30px rgba(199, 167, 105, 0.5);
+    }
+}
+
+/* ========================================
+   LOADING STATE (Opsiyonel)
+   ======================================== */
+.frame__btn:active,
+.frame__play:active {
+    transform: translateY(0) !important;
+    transition: transform 0.1s ease;
+}
+
+/* ========================================
+   INSTRUMENT ICON (Para Birimi İkonu)
+   ======================================== */
+.instrument-icon-wrapper {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: rgba(199, 167, 105, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.instrument-icon-wrapper svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================
+   DİSABLED STATE (Eğer gerekirse)
+   ======================================== */
+.frame__btn:disabled,
+.frame__play:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* ========================================
+   DARK/LIGHT THEME SUPPORT
+   ======================================== */
+[data-bs-theme="light"] .frame__cover:before {
+    background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+[data-bs-theme="light"] .frame__balance {
+    background: rgba(199, 167, 105, 0.08);
+    border-color: rgba(199, 167, 105, 0.3);
+}
+
+[data-bs-theme="light"] .frame__balance span {
+    color: #1d2735 !important;
+}
+
+[data-bs-theme="light"] .frame-mob__dropdown-btn {
+    background: rgba(255, 255, 255, 0.8) !important;
+    color: #1d2735 !important;
+}
+
+[data-bs-theme="light"] .frame-mob__menu {
+    background: rgba(255, 255, 255, 0.98) !important;
+}

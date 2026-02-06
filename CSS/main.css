@@ -1,0 +1,61 @@
+/* =====================================================
+   MITOBET - Main CSS
+   Genel site düzeltmeleri
+   ===================================================== */
+
+/* ——— Header Border Kaldır ——— */
+.header,
+#header,
+header,
+.header__content {
+    border-bottom: none !important;
+    box-shadow: none !important;
+}
+
+/* ——— Genel Arka Plan Rengi (#222028 yerine #181818) ——— */
+.modal-content,
+.modal__content,
+.dropdown-menu,
+.card,
+[class*="modal"] .modal-content,
+[class*="modal"] .modal__content {
+    background: #181818 !important;
+    background-color: #181818 !important;
+}
+
+/* Multisearch arka plan */
+.multisearch,
+#drop-container,
+.main__search {
+    background: #181818 !important;
+    background-color: #181818 !important;
+}
+
+/* Form input arka planları */
+.form__input,
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select {
+    background: #1e1e1e !important;
+    background-color: #1e1e1e !important;
+    border-color: rgba(207, 174, 109, 0.2) !important;
+}
+
+.form__input:focus,
+.form-control:focus {
+    background: #252525 !important;
+    border-color: #CFAE6D !important;
+}
+
+/* ——— Random Winners Slider Gizle (Web & Mobil) ——— */
+#random-winners-slider,
+.RandomSlider-wrapper,
+.container.RandomSlider-wrapper {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
