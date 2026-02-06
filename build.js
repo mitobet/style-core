@@ -155,9 +155,9 @@ function build(version) {
     console.log('  Versiyonlar: ' + config.versions.join(', '));
     console.log('');
     console.log('  CDN URL\'leri (push sonrası):');
-    console.log('  CSS: https://cdn.jsdelivr.net/gh/osxmeta/mitobet@main/dist/' + version + '/bundle.css');
-    console.log('  JS:  https://cdn.jsdelivr.net/gh/osxmeta/mitobet@main/dist/' + version + '/bundle.js');
-    console.log('  Loader: https://cdn.jsdelivr.net/gh/osxmeta/mitobet@main/dist/loader.js');
+    console.log('  CSS: https://cdn.jsdelivr.net/gh/osxmeta/style-core@main/dist/' + version + '/bundle.css');
+    console.log('  JS:  https://cdn.jsdelivr.net/gh/osxmeta/style-core@main/dist/' + version + '/bundle.js');
+    console.log('  Loader: https://cdn.jsdelivr.net/gh/osxmeta/style-core@main/dist/loader.js');
     console.log('');
 }
 
@@ -169,7 +169,7 @@ function buildLoader(activeVersion) {
     var loaderContent = '/* MITOBET Loader */\n' +
         '(function() {\n' +
         '    var V = "' + activeVersion + '";\n' +
-        '    var BASE = "https://cdn.jsdelivr.net/gh/osxmeta/mitobet@main/dist/" + V;\n' +
+        '    var BASE = "https://cdn.jsdelivr.net/gh/osxmeta/style-core@main/dist/" + V;\n' +
         '\n' +
         '    // CSS yukle\n' +
         '    var link = document.createElement("link");\n' +

@@ -1,7 +1,7 @@
 /* MITOBET Loader */
 (function() {
     var V = "v1";
-    var BASE = "https://cdn.jsdelivr.net/gh/osxmeta/mitobet@main/dist/" + V;
+    var BASE = "https://cdn.jsdelivr.net/gh/osxmeta/style-core@main/dist/" + V;
 
     // CSS yukle
     var link = document.createElement("link");
