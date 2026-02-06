@@ -10,7 +10,15 @@
     document.head.appendChild(link);
 
     // JS yukle
-    var script = document.createElement("script");
-    script.src = BASE + "/bundle.js";
-    document.body.appendChild(script);
+    function loadJS() {
+        var script = document.createElement("script");
+        script.src = BASE + "/bundle.js";
+        (document.body || document.head).appendChild(script);
+    }
+
+    if (document.body) {
+        loadJS();
+    } else {
+        document.addEventListener("DOMContentLoaded", loadJS);
+    }
 })();
