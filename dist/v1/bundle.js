@@ -100,7 +100,6 @@
 
 
 /* ===== SCRIPT/font_loader.js ===== */
-<script>
 // MITOBET Font Yükleyici ve Style Injector
 (function() {
     'use strict';
@@ -217,11 +216,9 @@ input, select, textarea,
         init();
     }
 })();
-</script>
 
 
 /* ===== SCRIPT/promo_image_replacer.js ===== */
-<script>
 // MITOBET - Promosyonlar Arka Plan Görseli Değiştirici + CSS
 (function() {
     'use strict';
@@ -403,8 +400,6 @@ input, select, textarea,
     });
     
 })();
-</script>
-
 
 
 /* ===== SCRIPT/mito_tv_button.js ===== */

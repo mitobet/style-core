@@ -1,4 +1,3 @@
-<script>
 // MITOBET - Promosyonlar Arka Plan Görseli Değiştirici + CSS
 (function() {
     'use strict';
@@ -180,5 +179,3 @@
     });
     
 })();
-</script>
-

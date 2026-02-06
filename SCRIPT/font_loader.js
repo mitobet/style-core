@@ -1,4 +1,3 @@
-<script>
 // MITOBET Font Yükleyici ve Style Injector
 (function() {
     'use strict';
@@ -115,4 +114,3 @@ input, select, textarea,
         init();
     }
 })();
-</script>
