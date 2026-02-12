@@ -1,0 +1,391 @@
+  <script type="text/javascript">
+    /* MitoBet Visual - SPA güvenli, sade sürüm */
+    (function () {
+      // ---------- APP STATE ----------
+      const AppState = { currentLanguage: 'tr', currentPage: 'home', currentRoute: null };
+    
+      // ---------- ORTAK GÖZETLEYİCİ ----------
+      const DomWatch = { 
+        observer: null, 
+        debounce: null,
+        watchers: new Map(), // Optimize: Tüm watcher'ları tek observer'da topla
+        mainObserver: null
+      };
+    
+      // Seçiciler hazır olana kadar bekle
+      function waitForAll(selectors, timeout = 3000) {
+        return new Promise((resolve, reject) => {
+          const ready = () => selectors.every(s => document.querySelector(s));
+          if (ready()) return resolve();
+    
+          const to = setTimeout(stop, timeout);
+          const tempObserver = new MutationObserver(() => {
+            if (ready()) { stop(); resolve(); }
+          });
+          tempObserver.observe(document.body, { childList: true, subtree: true });
+          
+          function stop(err) {
+            clearTimeout(to);
+            tempObserver.disconnect();
+            err && reject(new Error('selectors timeout'));
+          }
+        });
+      }
+    
+      // DOM değişince verilen işi tetikle (debounce ile) - Optimize: Tek observer kullan
+      function rerunOnDomChange(run, selectors) {
+        const key = selectors.join('|');
+        
+        // Zaten kayıtlıysa güncelle
+        if (DomWatch.watchers.has(key)) {
+          DomWatch.watchers.set(key, { run, selectors });
+          return;
+        }
+        
+        // Yeni watcher ekle
+        DomWatch.watchers.set(key, { run, selectors });
+        
+        // Ana observer yoksa oluştur
+        if (!DomWatch.mainObserver) {
+          DomWatch.mainObserver = new MutationObserver(() => {
+            clearTimeout(DomWatch.debounce);
+            DomWatch.debounce = setTimeout(() => {
+              DomWatch.watchers.forEach(({ run, selectors }) => {
+                const ok = selectors.every(s => document.querySelector(s));
+                if (ok) {
+                  try { run(); } catch(e) { console.warn('Watcher error:', e); }
+                }
+              });
+            }, 200); // Debounce süresini artırdık
+          });
+          DomWatch.mainObserver.observe(document.body, { childList: true, subtree: true });
+        }
+      }
+    
+      // ---------- KULLANICI GİRİŞ KONTROLÜ ----------
+      // IsLoggedinUser fonksiyonu - kullanıcı giriş durumunu kontrol eder
+      function IsLoggedinUser() {
+        return new Promise((resolve) => {
+          try {
+            // Eğer global IsLoggedinUser fonksiyonu varsa onu kullan
+            if (typeof window.IsLoggedinUser === 'function') {
+              const result = window.IsLoggedinUser();
+              if (result && typeof result.then === 'function') {
+                result.then(resolve).catch(() => resolve({isLoggedIn: false}));
+              } else {
+                resolve(result || {isLoggedIn: false});
+              }
+              return;
+            }
+
+            // Manuel kontrol - token var mı?
+            const token = localStorage.getItem('token') || sessionStorage.getItem('token') || 
+                         localStorage.getItem('authToken') || sessionStorage.getItem('authToken');
+            
+            if (token) {
+              // Token varsa basit bir test
+              try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const isExpired = payload.exp && payload.exp * 1000 < Date.now();
+                
+                if (!isExpired) {
+                  resolve({
+                    isLoggedIn: true,
+                    token: token,
+                    username: payload.username || payload.sub || 'user',
+                    id: payload.id || payload.sub
+                  });
+                  return;
+                }
+              } catch(e) {}
+            }
+
+            // Kullanıcı giriş yapmamış
+            resolve({isLoggedIn: false});
+            
+          } catch(e) {
+            console.warn('IsLoggedinUser error:', e);
+            resolve({isLoggedIn: false});
+          }
+        });
+      }
+
+      // ---------- SIRALI ÇALIŞTIRICI ----------
+      function runWhenReadyOnce(name, fn, selectors){
+        return new Promise(resolve => {
+          console.time(`ready:${name}`);
+          waitForAll(selectors)
+            .then(async () => {
+              console.timeEnd(`ready:${name}`);
+              try {
+                const r = fn();
+                if (r && typeof r.then === 'function') await r;
+              } catch(_) {}
+              resolve();
+            })
+            .catch(e => { console.warn(`[${name}] bekleme hatası:`, e.message); resolve(); });
+        });
+      }
+    
+      // İzleyici - Optimize: Interval kaldırıldı, sadece MutationObserver kullanılıyor
+      const stabilizerCache = new Set(); // Tekrar çalıştırmayı önle
+      function attachStabilizer(fn, selectors, retries = 1, intervalMs = 2000){
+        const key = selectors.join('|') + '|' + fn.toString().substring(0, 50);
+        
+        // Zaten eklenmişse tekrar ekleme
+        if (stabilizerCache.has(key)) return;
+        stabilizerCache.add(key);
+        
+        // Sadece bir kez çalıştır, sonra observer'a bırak
+        rerunOnDomChange(fn, selectors);
+        
+        // Sadece bir kez daha dene (gecikmeli yüklenen elementler için)
+        if (retries > 0) {
+          setTimeout(() => {
+            const ok = selectors.every(s => document.querySelector(s));
+            if (ok) {
+              try { fn(); } catch(e) { console.warn('Stabilizer error:', e); }
+            }
+          }, intervalMs);
+        }
+      }
+    
+      // ---------- ORTAK ENTER/EXIT ----------
+      function enterCommon(routeName) {
+        document.body.setAttribute('data-active-page', routeName);
+        clearTimeout(DomWatch.debounce);
+        // Observer'ı durdurma - tek observer kullanıyoruz
+      }
+      function exitCommon() {
+        document.body.removeAttribute('data-active-page');
+        clearTimeout(DomWatch.debounce);
+        // Watcher'ları temizle
+        DomWatch.watchers.clear();
+        if (DomWatch.mainObserver) {
+          DomWatch.mainObserver.disconnect();
+          DomWatch.mainObserver = null;
+        }
+        stabilizerCache.clear();
+      }
+    
+      const FOOTER_SEL = ['.footer__content', '.footer__currencies', '.footer__social'];
+    
+      // ---------- ROTALAR ----------
+      const RouteHandlers = {
+       sport: {
+         enter: async () => {
+           enterCommon('sport');
+           
+           // Önce kullanıcı giriş durumunu kontrol et
+           const userStatus = await IsLoggedinUser();
+           console.log('User login status:', userStatus);
+           
+           // Giriş yapmamış kullanıcılar için özel methodlar
+           if (!userStatus.isLoggedIn) {          
+             
+             runWhenReadyOnce('signinFix', () => transformSigninButton(AppState), ['.header__signin'])
+               .then(() => attachStabilizer(() => transformSigninButton(AppState), ['.header__signin']));
+           }
+           
+           // Tüm kullanıcılar için ortak methodlar
+           runWhenReadyOnce('footerAll', () => updateFooterAll(), FOOTER_SEL)
+             .then(() => attachStabilizer(() => updateFooterAll(), FOOTER_SEL));
+           
+           runWhenReadyOnce('sidebarReorder', () => reorderSidebarMenu(AppState), ['.sidebar__menu'])
+             .then(() => attachStabilizer(() => reorderSidebarMenu(AppState), ['.sidebar__menu']));
+           
+          // runWhenReadyOnce('sportPopup', () => initSportPopup(), ['#main__content'])
+           //  .then(() => attachStabilizer(() => initSportPopup(), ['#main__content']));
+           
+           runWhenReadyOnce('mainIconReplace', () => replaceMainIconWithGif(), ['#main-icon'])
+             .then(() => attachStabilizer(() => replaceMainIconWithGif(), ['#main-icon']));
+           
+           runWhenReadyOnce('menuOverlay', () => addMobileMenuOverlay(), ['.inner-menu'])
+             .then(() => attachStabilizer(() => addMobileMenuOverlay(), ['.inner-menu']));
+         },
+         exit: () => exitCommon()
+       },
+
+       casino: {
+         enter: async () => {
+           enterCommon('casino');
+           
+           // Önce kullanıcı giriş durumunu kontrol et
+           const userStatus = await IsLoggedinUser();
+           console.log('User login status:', userStatus);
+           
+           // Giriş yapmamış kullanıcılar için özel methodlar
+           if (!userStatus.isLoggedIn) {
+             runWhenReadyOnce('signinFix', () => transformSigninButton(AppState), ['.header__signin'])
+               .then(() => attachStabilizer(() => transformSigninButton(AppState), ['.header__signin']));
+           }
+           
+           // Tüm kullanıcılar için ortak methodlar
+         
+           
+           runWhenReadyOnce('sidebarReorder', () => reorderSidebarMenu(AppState), ['.sidebar__menu'])
+             .then(() => attachStabilizer(() => reorderSidebarMenu(AppState), ['.sidebar__menu']));
+           
+           runWhenReadyOnce('mainIconReplace', () => replaceMainIconWithGif(), ['#main-icon'])
+             .then(() => attachStabilizer(() => replaceMainIconWithGif(), ['#main-icon']));
+           
+           runWhenReadyOnce('menuOverlay', () => addMobileMenuOverlay(), ['.inner-menu'])
+             .then(() => attachStabilizer(() => addMobileMenuOverlay(), ['.inner-menu']));
+         },
+         exit: () => exitCommon()
+       },
+
+       'live-casino': {
+         enter: async () => {
+           enterCommon('live-casino');
+           
+           // Önce kullanıcı giriş durumunu kontrol et
+           const userStatus = await IsLoggedinUser();
+           console.log('User login status:', userStatus);
+           
+           // Giriş yapmamış kullanıcılar için özel methodlar
+           if (!userStatus.isLoggedIn) {
+             runWhenReadyOnce('signinFix', () => transformSigninButton(AppState), ['.header__signin'])
+               .then(() => attachStabilizer(() => transformSigninButton(AppState), ['.header__signin']));
+           }
+           
+           // Tüm kullanıcılar için ortak methodlar
+        
+           runWhenReadyOnce('sidebarReorder', () => reorderSidebarMenu(AppState), ['.sidebar__menu'])
+             .then(() => attachStabilizer(() => reorderSidebarMenu(AppState), ['.sidebar__menu']));
+           
+           runWhenReadyOnce('mainIconReplace', () => replaceMainIconWithGif(), ['#main-icon'])
+             .then(() => attachStabilizer(() => replaceMainIconWithGif(), ['#main-icon']));
+           
+           runWhenReadyOnce('menuOverlay', () => addMobileMenuOverlay(), ['.inner-menu'])
+             .then(() => attachStabilizer(() => addMobileMenuOverlay(), ['.inner-menu']));
+         },
+         exit: () => exitCommon()
+       },
+    
+       home: {
+         enter: async () => {
+           enterCommon('home');
+           
+           // Önce kullanıcı giriş durumunu kontrol et
+           const userStatus = await IsLoggedinUser();
+           console.log('User login status:', userStatus);
+     
+           // Giriş yapmamış kullanıcılar için özel methodlar
+           if (!userStatus.isLoggedIn) {
+             runWhenReadyOnce('signinFix', () => transformSigninButton(AppState), ['.header__signin'])
+               .then(() => attachStabilizer(() => transformSigninButton(AppState), ['.header__signin']));
+           }
+           
+           // Tüm kullanıcılar için ortak methodlar (biri elementi bulamazsa diğerleri etkilenmesin)
+           runWhenReadyOnce('footerAll', () => updateFooterAll(), FOOTER_SEL)
+             .then(() => attachStabilizer(() => updateFooterAll(), FOOTER_SEL));
+   
+           // banners-wrapper gizle
+           runWhenReadyOnce('hideBannersWrapper', () => {
+             const bw = document.getElementById('banners-wrapper');
+             if (bw) bw.style.display = 'none';
+           }, ['#banners-wrapper'])
+             .then(() => attachStabilizer(() => {
+               const bw = document.getElementById('banners-wrapper');
+               if (bw) bw.style.display = 'none';
+             }, ['#banners-wrapper']));
+
+           runWhenReadyOnce('banners',  () => addBannerImages(AppState), ['#extra-slider1'])
+             .then(() => attachStabilizer(() => addBannerImages(AppState), ['#extra-slider1']));
+   
+           runWhenReadyOnce('banners2', () => addMiniBannerImages(AppState), ['#extra-slider2'])
+             .then(() => attachStabilizer(() => addMiniBannerImages(AppState), ['#extra-slider2']));
+   
+           runWhenReadyOnce('randomSlider', () => addRandomSlider(AppState), ['#main__content', '#main-slider'])
+             .then(() => attachStabilizer(() => addRandomSlider(AppState), ['#main__content', '#main-slider']));
+     
+           runWhenReadyOnce('sidebarReorder', () => reorderSidebarMenu(AppState), ['.sidebar__menu'])
+             .then(() => attachStabilizer(() => reorderSidebarMenu(AppState), ['.sidebar__menu']));
+
+           runWhenReadyOnce('tickerMove', () => moveTickerToSliders(), ['#extra-slider4', '#extra-slider1', '#extra-slider2'])
+             .then(() => attachStabilizer(() => moveTickerToSliders(), ['#extra-slider4', '#extra-slider1', '#extra-slider2']));
+             
+           runWhenReadyOnce('diceIconReplace', () => replaceDiceIconWithGif(), ['use[href*="dice"]'])
+             .then(() => attachStabilizer(() => replaceDiceIconWithGif(), ['use[href*="dice"]']));
+             
+           runWhenReadyOnce('mainIconReplace', () => replaceMainIconWithGif(), ['#main-icon'])
+             .then(() => attachStabilizer(() => replaceMainIconWithGif(), ['#main-icon']));
+
+           runWhenReadyOnce('sportPopup', () => initSportPopup(), ['#main__content'])
+             .then(() => attachStabilizer(() => initSportPopup(), ['#main__content']));
+
+           // jackpots-container için ayrı watcher (gecikmeli yüklenebilir)
+           attachStabilizer(() => moveJackpotsContainer(), ['#extra-slider2']);
+         },
+         exit: () => exitCommon()
+       }
+      };
+    
+      // ---------- ROUTER ----------
+      const Router = {
+        currentRoute: null,
+        getRouteFromPath(path) {
+          const p = path.toLowerCase();
+          if (p.includes('/spor') || p.includes('/sports')) return 'sport';
+          if (p.includes('/casino') && (p.includes('/canli') || p.includes('/live'))) return 'live-casino';
+          if (p.includes('/casino')) return 'casino';
+          if (p === '/' || /^\/(tr|en|de|fr|es|ru)(\/home)?\/?$/.test(p) || /^\/home\/?$/.test(p)) return 'home';
+          return 'home';
+        },
+        handleRoute(path) {
+          const newRoute = this.getRouteFromPath(path);
+          if (this.currentRoute && RouteHandlers[this.currentRoute]?.exit) RouteHandlers[this.currentRoute].exit();
+    
+          AppState.currentLanguage = path.startsWith('/tr/') ? 'tr' :
+                                    path.startsWith('/en/') ? 'en' : 'tr';
+          this.currentRoute = newRoute;
+          AppState.currentPage = newRoute;
+          RouteHandlers[newRoute]?.enter?.();
+        },
+        initializeObserver() {
+          let lastUrl = location.href;
+          let urlCheckDebounce = null;
+          
+          // Optimize: Debounce ekle, sürekli kontrol etme
+          const checkUrl = () => {
+            const url = location.href;
+            if (url !== lastUrl) { 
+              lastUrl = url; 
+              this.handleRoute(window.location.pathname); 
+            }
+          };
+          
+          new MutationObserver(() => {
+            clearTimeout(urlCheckDebounce);
+            urlCheckDebounce = setTimeout(checkUrl, 300); // Debounce ekle
+          }).observe(document, { subtree: true, childList: true });
+        },
+        init() {
+          this.handleRoute(window.location.pathname);
+          this.initializeObserver();
+        }
+      };
+    
+      // Test yardımcıları
+      window.testMitoVisual = function (testUrl) { history.pushState({}, '', testUrl); };
+      window.getMitoVisualState = function () {
+        return {
+          currentRoute: Router.currentRoute,
+          currentLanguage: AppState.currentLanguage,
+          currentPage: AppState.currentPage,
+          url: location.href,
+          path: location.pathname
+        };
+      };
+    
+      // History API yakalama
+      const _push = history.pushState, _replace = history.replaceState;
+      history.pushState = function (...a) { _push.apply(history, a);   setTimeout(() => Router.handleRoute(window.location.pathname), 0); };
+      history.replaceState = function (...a){ _replace.apply(history, a); setTimeout(() => Router.handleRoute(window.location.pathname), 0); };
+      window.addEventListener('popstate', () => setTimeout(() => Router.handleRoute(window.location.pathname), 0));
+    
+      // Başlat
+      Router.init();
+    })();
+  </script>
