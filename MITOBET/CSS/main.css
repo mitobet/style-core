@@ -187,6 +187,58 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     outline: none !important;
 }
 
+/* ——— Footer: Para Birimleri & Ödeme Yöntemleri Efektleri ——— */
+
+/* Idle pulse animasyonu */
+@keyframes mito-icon-pulse {
+    0%, 100% { opacity: 0.65; }
+    50% { opacity: 0.88; }
+}
+
+/* Logolara idle pulse + hover hazırlık */
+.footer__currencies ul.footer__accepted .instrument-icon-wrapper img,
+#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper img {
+    opacity: 0.65 !important;
+    filter: none !important;
+    animation: mito-icon-pulse 3.5s ease-in-out infinite !important;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease !important;
+    will-change: transform, opacity !important;
+}
+
+/* Hover: scale + brightness + altın glow + lift */
+.footer__currencies ul.footer__accepted .instrument-icon-wrapper:hover img,
+#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper:hover img {
+    opacity: 1 !important;
+    transform: scale(1.08) translateY(-2px) !important;
+    filter: brightness(1.15) drop-shadow(0 2px 8px rgba(207, 174, 109, 0.35)) !important;
+    animation: none !important;
+}
+
+/* Wrapper'a da transition ver (smooth dönüş) */
+.footer__currencies ul.footer__accepted .instrument-icon-wrapper,
+#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper {
+    transition: transform 0.3s ease !important;
+}
+
+.footer__currencies ul.footer__accepted .instrument-icon-wrapper:hover,
+#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper:hover {
+    transform: translateY(-1px) !important;
+}
+
+/* Her logo farklı zamanlama ile pulse (daha organik görünüm) */
+.footer__currencies ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img,
+#footer-payment-methods ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img {
+    animation-delay: -1.2s !important;
+}
+.footer__currencies ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img,
+#footer-payment-methods ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img {
+    animation-delay: -2.4s !important;
+}
+.footer__currencies ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img,
+#footer-payment-methods ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img {
+    animation-delay: -0.6s !important;
+}
+
 /* ——— Footer: CMS "TÜMÜNÜ GÖR" Butonlarını Gizle ——— */
 #footer-providers-section .section__view,
 #footer-providers-section .section__view--carousel,
