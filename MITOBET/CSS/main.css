@@ -195,8 +195,100 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     50% { opacity: 0.88; }
 }
 
-/* Logolara idle pulse + hover hazırlık */
-.footer__currencies ul.footer__accepted .instrument-icon-wrapper img,
+/* ——— KABUL EDİLEN PARA BİRİMLERİ — Tek satır, ikon + isim ——— */
+
+/* Liste: tek satır yatay, taşarsa scroll */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 8px 0 !important;
+    margin: 8px 0 0 0 !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Her li: ikon + isim yan yana, ayraçlı */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li {
+    flex-shrink: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+/* Ayraç (· nokta) */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:not(:last-child)::after {
+    content: '·' !important;
+    display: inline-block !important;
+    color: rgba(255, 255, 255, 0.2) !important;
+    font-size: 18px !important;
+    margin: 0 14px !important;
+    line-height: 1 !important;
+}
+
+/* instrument-icon-wrapper: ikon + isim container */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 4px 0 !important;
+    transition: transform 0.25s ease, opacity 0.25s ease !important;
+}
+
+/* İkon küçült */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
+    width: 22px !important;
+    height: 22px !important;
+    max-height: 22px !important;
+    border-radius: 50% !important;
+    filter: none !important;
+    opacity: 0.85 !important;
+    animation: mito-icon-pulse 3.5s ease-in-out infinite !important;
+    transition: transform 0.25s ease, opacity 0.25s ease, filter 0.25s ease !important;
+}
+
+/* İsim etiketi (JS tarafından eklenir) */
+.footer__currencies:not(#footer-payment-methods) .mito-currency-label {
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.5px !important;
+    transition: color 0.25s ease !important;
+}
+
+/* Hover: ikon parla + isim belirginleş */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover img {
+    opacity: 1 !important;
+    transform: scale(1.12) !important;
+    filter: brightness(1.15) drop-shadow(0 1px 6px rgba(207, 174, 109, 0.3)) !important;
+    animation: none !important;
+}
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover .mito-currency-label {
+    color: #CFAE6D !important;
+}
+
+/* nth-child pulse delay (organik gorunum) */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img {
+    animation-delay: -1.2s !important;
+}
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img {
+    animation-delay: -2.4s !important;
+}
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img {
+    animation-delay: -0.6s !important;
+}
+
+/* ——— ÖDEME YÖNTEMLERİ — Mevcut efektler ——— */
+
+/* Logolara idle pulse + hover */
 #footer-payment-methods ul.footer__accepted .instrument-icon-wrapper img {
     opacity: 0.65 !important;
     filter: none !important;
@@ -205,8 +297,6 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     will-change: transform, opacity !important;
 }
 
-/* Hover: scale + brightness + altın glow + lift */
-.footer__currencies ul.footer__accepted .instrument-icon-wrapper:hover img,
 #footer-payment-methods ul.footer__accepted .instrument-icon-wrapper:hover img {
     opacity: 1 !important;
     transform: scale(1.08) translateY(-2px) !important;
@@ -214,29 +304,40 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     animation: none !important;
 }
 
-/* Wrapper'a da transition ver (smooth dönüş) */
-.footer__currencies ul.footer__accepted .instrument-icon-wrapper,
 #footer-payment-methods ul.footer__accepted .instrument-icon-wrapper {
     transition: transform 0.3s ease !important;
 }
-
-.footer__currencies ul.footer__accepted .instrument-icon-wrapper:hover,
 #footer-payment-methods ul.footer__accepted .instrument-icon-wrapper:hover {
     transform: translateY(-1px) !important;
 }
 
-/* Her logo farklı zamanlama ile pulse (daha organik görünüm) */
-.footer__currencies ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img,
 #footer-payment-methods ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img {
     animation-delay: -1.2s !important;
 }
-.footer__currencies ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img,
 #footer-payment-methods ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img {
     animation-delay: -2.4s !important;
 }
-.footer__currencies ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img,
 #footer-payment-methods ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img {
     animation-delay: -0.6s !important;
+}
+
+/* ——— Mobil: Para Birimleri daha küçük ——— */
+@media (max-width: 767px) {
+    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
+        width: 16px !important;
+        height: 16px !important;
+        max-height: 16px !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) .mito-currency-label {
+        font-size: 10px !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:not(:last-child)::after {
+        margin: 0 8px !important;
+        font-size: 14px !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper {
+        gap: 4px !important;
+    }
 }
 
 /* ——— Footer: CMS "TÜMÜNÜ GÖR" Butonlarını Gizle ——— */
