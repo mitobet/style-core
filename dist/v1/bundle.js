@@ -1197,13 +1197,16 @@ input, select, textarea,
         grid.appendChild(row1);
         grid.appendChild(row2);
 
-        // Sonsuz loop için her satırdaki item'ları bir kez daha klonla
+        // Sonsuz loop için her satırdaki item'ları 3 kez klonla (yeterli içerik)
         [row1, row2].forEach(function(row) {
             var items = Array.prototype.slice.call(row.children || []);
             if (items.length < 2) return;
-            items.forEach(function(it) {
-                row.appendChild(it.cloneNode(true));
-            });
+            // 3x klonla — sonsuz marquee için yeterli genişlik sağlar
+            for (var k = 0; k < 3; k++) {
+                items.forEach(function(it) {
+                    row.appendChild(it.cloneNode(true));
+                });
+            }
         });
 
         grid.setAttribute('data-mito-providers-built', '1');
@@ -1215,17 +1218,22 @@ input, select, textarea,
      */
     function setupAcceptedLists() {
         var lists = document.querySelectorAll('.footer__currencies ul.footer__accepted');
+        if (!lists || lists.length === 0) return;
+
         lists.forEach(function(list) {
             if (list.getAttribute('data-mito-marquee')) return;
             list.setAttribute('data-mito-marquee', '1');
 
             var items = Array.prototype.slice.call(list.querySelectorAll('li'));
-            if (items.length < 2) return;
+            if (items.length < 1) return;
 
-            items.forEach(function(item) {
-                var clone = item.cloneNode(true);
-                list.appendChild(clone);
-            });
+            // 4x klonla — sonsuz marquee için yeterli icerik saglar
+            for (var k = 0; k < 4; k++) {
+                items.forEach(function(item) {
+                    var clone = item.cloneNode(true);
+                    list.appendChild(clone);
+                });
+            }
         });
     }
 
@@ -1238,21 +1246,32 @@ input, select, textarea,
         setupMarquee();
 
         // DOM değişikliklerine karşı (geç yüklenen footer elemanları)
-        var footer = document.querySelector('#footer, footer, .footer__content');
-        if (footer) {
-            var observer = new MutationObserver(function() {
-                setupMarquee();
-            });
-            observer.observe(footer, { childList: true, subtree: true });
-        }
+        var observeTargets = [
+            document.querySelector('#footer'),
+            document.querySelector('footer'),
+            document.querySelector('.footer__content'),
+            document.querySelector('#main__content')
+        ];
 
-        // 3 sn sonra bir kez daha çalıştır (güvenlik)
-        setTimeout(setupMarquee, 3000);
+        observeTargets.forEach(function(target) {
+            if (!target) return;
+            try {
+                var observer = new MutationObserver(function() {
+                    setupMarquee();
+                });
+                observer.observe(target, { childList: true, subtree: true });
+            } catch(e) {}
+        });
+
+        // Kademeli güvenlik tekrarları (footer geç yüklenebilir)
+        setTimeout(setupMarquee, 2000);
+        setTimeout(setupMarquee, 5000);
+        setTimeout(setupMarquee, 8000);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 800); });
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 2000); });
     } else {
-        setTimeout(init, 800);
+        setTimeout(init, 2000);
     }
 })();

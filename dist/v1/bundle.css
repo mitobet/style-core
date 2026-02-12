@@ -1143,21 +1143,36 @@ header,
     animation-play-state: paused !important;
 }
 
-.footer__currencies ul.footer__accepted li {
+.footer__currencies ul.footer__accepted li,
+#footer-payment-methods ul.footer__accepted li,
+div.footer__currencies ul.footer__accepted li {
     margin: 0 !important;
     padding: 0 !important;
     border: none !important;
+    border-width: 0 !important;
     background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
 }
 
-.footer__currencies ul.footer__accepted .instrument-icon-wrapper {
+.footer__currencies ul.footer__accepted .instrument-icon-wrapper,
+#footer-payment-methods ul.footer__accepted li .instrument-icon-wrapper,
+#footer-payment-methods .footer__accepted li .instrument-icon-wrapper,
+div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
+.footer__currencies .footer__accepted .instrument-icon-wrapper {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     padding: 4px 18px !important;
     background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
     border: none !important;
+    border-width: 0 !important;
+    border-radius: 0 !important;
     box-shadow: none !important;
+    outline: none !important;
 }
 
 /* Ortak ikon stilleri (renkli) */
@@ -1230,6 +1245,19 @@ header,
     .footer__currencies ul.footer__accepted .instrument-icon-wrapper img {
         max-height: 22px !important;
     }
+}
+
+/* ——— Footer: "TÜMÜNÜ GÖR" Butonlarını Gizle ——— */
+#footer-providers-section .section__view,
+#footer-providers-section .section__view--carousel,
+#footer-providers-section .section__title-wrap .section__view,
+.footer__currencies .section__view,
+#footer-payment-methods .section__view {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
 }
 
 /* ——— Random Winners Slider Gizle (Web & Mobil) ——— */
