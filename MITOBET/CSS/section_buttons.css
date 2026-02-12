@@ -1,0 +1,49 @@
+/* =====================================================
+   MITOBET - Section "TÜMÜNÜ GÖR" Butonları
+   Renk uyumu - altın outline
+   ===================================================== */
+
+.section__view,
+a.section__view,
+a.section__view.section__view--carousel,
+.section__title-wrap .section__view {
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #CFAE6D !important;
+    border: 1px solid rgba(207, 174, 109, 0.4) !important;
+    transition: all 0.25s ease !important;
+}
+
+.section__view:hover,
+a.section__view:hover,
+a.section__view.section__view--carousel:hover,
+.section__title-wrap .section__view:hover {
+    color: #e9c37a !important;
+    border-color: #CFAE6D !important;
+    background: rgba(207, 174, 109, 0.08) !important;
+    text-decoration: none !important;
+}
+
+/* SVG ok */
+.section__view svg,
+.section__view--carousel svg,
+.section__title-wrap .section__view svg {
+    fill: #CFAE6D !important;
+    color: #CFAE6D !important;
+}
+
+.section__view:hover svg {
+    fill: #e9c37a !important;
+    color: #e9c37a !important;
+}
+
+/* Mobilde küçült */
+@media (max-width: 768px) {
+    .section__view,
+    a.section__view,
+    a.section__view.section__view--carousel {
+        font-size: 10px !important;
+        padding: 5px 10px !important;
+    }
+}

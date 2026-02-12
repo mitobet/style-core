@@ -1,0 +1,555 @@
+<script type="text/javascript">
+// BannerFunctions.js - Banner Modülleri
+// #extra-slider1, #extra-slider2, #extra-slider3 banner fonksiyonları
+
+// #extra-slider2 için mini banner'lar
+function addMiniBannerImages(AppState, targetSelector = '#extra-slider2') {
+  // GEÇİCİ OLARAK GİZLENDİ (KOD SİLİNMEDİ)
+  // İlerde tekrar açmak için aşağıdaki return satırını kaldırın.
+  return;
+
+  const wrapper = document.querySelector(targetSelector);
+  if (!wrapper) return;
+
+  const existed = wrapper.querySelector('.Custom3Banner-wrapper');
+  if (existed) {
+    existed.style.display = '';
+    const gridSafe = existed.querySelector('.Custom3Banner-grid');
+    if (gridSafe && gridSafe.children.length > 0) return;
+    existed.remove();
+  }
+
+  wrapper.classList.add('section');
+  wrapper.style.setProperty('padding-top', '0px', 'important');
+
+  const outer  = document.createElement('div');  outer.className  = 'container Custom3Banner-wrapper';
+  const ticker = document.createElement('div');  ticker.className = 'ticker-swiper-container Custom3Banner-ticker';
+  const grid   = document.createElement('div');  grid.className   = 'custom-banners Custom3Banner-grid';
+
+  if (!document.getElementById('Custom3Banner-styles')) {
+    const css = `
+      /* Mini banner grid */
+      .Custom3Banner-grid{display:flex!important;flex-wrap:wrap!important;gap:6px!important}
+      .Custom3Banner-slide{
+        position:relative!important;flex:0 0 460px!important;width:200px!important;height:255px!important;
+        overflow:hidden!important;border-radius:8px!important;box-sizing:border-box!important;margin-top:10px!important
+      }
+      .Custom3Banner-link,.Custom3Banner-cover,.Custom3Banner-img{
+        display:block!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important
+      }
+      .Custom3Banner-link{cursor:pointer!important}
+      .slot__cover,.slot__img{width:100%!important;height:100%!important}
+      .Custom3Banner-img img{
+        width:100%!important;display:block!important;object-position:center!important
+      }
+      @media(max-width:1700px){
+        .Custom3Banner-grid{
+          flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;
+          scroll-snap-type:x mandatory!important;padding:0 10px!important;gap:12px!important
+        }
+        .Custom3Banner-grid::-webkit-scrollbar{height:6px!important}
+        .Custom3Banner-grid::-webkit-scrollbar-track{background:rgba(255,255,255,0.1)!important;border-radius:3px!important}
+        .Custom3Banner-grid::-webkit-scrollbar-thumb{background:rgba(192,130,9,0.6)!important;border-radius:3px!important}
+        .Custom3Banner-grid::-webkit-scrollbar-thumb:hover{background:rgba(192,130,9,0.8)!important}
+        .Custom3Banner-slide{
+          scroll-snap-align:start!important;flex:0 0 auto!important;
+          width:380px!important;height:250px!important;margin-top:0!important
+        }
+      }
+      @media(max-width:768px){
+        .Custom3Banner-grid{padding:0!important}
+        .Custom3Banner-grid::-webkit-scrollbar{display:none!important}
+        .Custom3Banner-slide{scroll-snap-align:center!important;width:calc(100vw - 24px)!important;height:255px!important;max-width:95vw!important}
+        .Custom3Banner-slide:first-child{margin-left:20px!important}
+      }`;
+    const s = document.createElement('style'); s.id = 'Custom3Banner-styles'; s.textContent = css; document.head.appendChild(s);
+  }
+
+
+  const lang = (AppState && AppState.currentLanguage) ? AppState.currentLanguage.replace(/^\/+/, '') : 'tr';
+
+  // Default mini banner resimleri (Türkçe ve diğer diller için)
+  let imgData;
+
+  if (lang === 'en') {
+    imgData = [
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/9NtRXUf7HdFMvudDbD5BSxR1FNPsAlb46arKyL1Z.jpg', link: '/promotion/100-hosgeldin-bonusun-hazir' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/bMJnopASMhlSCbMKdLWkTCnGXwaikbAjkipFJC8e.jpg', link: '/promotion/25-spor-anlik-discount' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/G9Z3jAkckS5uLAhwHYGhmWoC3N1xgDcqO2CuEMnH.jpg', link: '/promotion/haftasonuna-ozel-cevrimsiz-bonus' }
+    ];
+  } else {
+    imgData = [
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/promotions/LqldSf7adMZqbhMC2Wow5bOQbJYkTLAYpHewQC3z.jpg', link: '/promotion/100-hosgeldin-bonusun-hazir' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/promotions/7TszhPxzHMTBzjPdmFQZ1lPVD07OOsG1vFMy92k5.jpg', link: '/promotion/25-spor-anlik-discount' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/promotions/Q9LlqbOAXvPVmPAIsQEr7f1sdecLNgRqBpaKhTt9.jpg', link: '/promotion/haftasonuna-ozel-cevrimsiz-bonus' }
+    ];
+  }
+
+  imgData.forEach(item => {
+    const slide = document.createElement('div'); slide.className = 'swiper-slide Custom3Banner-slide';
+    const a = document.createElement('a');
+    const clean = String(item.link || '/').replace(/^\//, '');
+    const targetPath = `/${lang}/${clean}`;
+    a.className = 'slot slot--carousel Custom3Banner-link';
+    a.setAttribute('role','link'); a.setAttribute('tabindex','0'); a.setAttribute('aria-label','mini-banner');
+    const onNav = (e) => { e.preventDefault(); e.stopPropagation(); spaNavigate(targetPath); };
+    a.addEventListener('click', onNav);
+    a.addEventListener('keydown', e => { if (e.key === 'Enter' || e.keyCode === 13) onNav(e); });
+
+    const cover = document.createElement('div');  cover.className = 'slot__cover slot__cover--no-layer Custom3Banner-cover';
+    const span  = document.createElement('span'); span.className  = 'slot__img Custom3Banner-img';
+    const img   = document.createElement('img');  img.src = item.src; img.alt = 'mini-banner'; img.loading = 'lazy';
+    span.appendChild(img); cover.appendChild(span); a.appendChild(cover); slide.appendChild(a); grid.appendChild(slide);
+  });
+
+  const wrap = document.createElement('div'); wrap.className = 'Custom3Banner-container';
+  wrap.appendChild(grid); ticker.appendChild(wrap); outer.appendChild(ticker); wrapper.appendChild(outer);
+}
+
+// #extra-slider1 için banner'lar - YENİ MODÜLE TAŞINDI
+// Artık slider_alt_nav/slider_alt_nav.js tarafından yönetiliyor
+// Bu fonksiyon artık kullanılmıyor
+function addBannerImages(AppState) {
+  const wrapper = document.querySelector('#extra-slider1');
+  if (!wrapper) return;
+
+  const existed = wrapper.querySelector('.Custom8Banner-wrapper');
+  if (existed) {
+    existed.style.display = '';
+    const gridSafe = existed.querySelector('.Custom8Banner-grid');
+    if (gridSafe && gridSafe.children.length > 0) return;
+    existed.remove();
+  }
+
+  wrapper.classList.add('section');
+
+  const outer  = document.createElement('div'); outer.className  = 'container Custom8Banner-wrapper';
+  const ticker = document.createElement('div'); ticker.className = 'ticker-swiper-container Custom8Banner-ticker';
+  const grid   = document.createElement('div'); grid.className   = 'custom-banners Custom8Banner-grid';
+
+  if (!document.getElementById('Custom8Banner-styles')) {
+      // CSS dosyadan yükleniyor: MITOBET/CSS/Slider_Alt_CSS.css
+      const link = document.createElement('link');
+      link.id = 'Custom8Banner-styles';
+      link.rel = 'stylesheet';
+      // Not: Canlı ortamda bu path'in erişilebilir olduğundan emin olunmalıdır.
+      // Yerel testte relative path sorun çıkarabilir, absolute path veya CDN gerekebilir.
+      link.href = 'MITOBET/Slider_Alt_CSS/Slider_Alt_CSS.css'; 
+      document.head.appendChild(link);
+  }
+  const lang = (AppState && AppState.currentLanguage) ? AppState.currentLanguage.replace(/^\/+/, '') : 'tr';
+  
+  // Dil bazlı banner resimleri
+  let imgData;
+  if (lang === 'en') {
+    imgData = [
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/EyQQpadvaghoXokZh1jYnfEAY7gu8LOQTPsbGWY9.jpg', link: '/promotions' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/ajJ38pAJcNr9XY81qE6qKhQ2BlGsqHlhldNlYwhH.jpg', link: '/casino/group/live-lobby' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/Hq2SpxFkW4Yo3phOxnFRHLFj9kZIwJj87wI8l6jH.jpg', link: '/sportsbook' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/2Y0OoQeNJKtUMbiw2o7dIpdDWdKrikgYjnuGdVum.jpg', link: '/casino/group/popular' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/QlX2ri05yUAIrRTY2FDMTL5Ye3R02ieysxJEFvRm.jpg', link: '/e-sport' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/TnlPex30oHhq9VjuVGHepApfxhKwH6ICnG7MTYoK.jpg', link: '/casino/group/lobby' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/wc2GspbjIhGDybRZjb1gjLDOgDiVBdpB502QydC5.jpg', link: '/casino/group/lobby' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/xD03ziX0lqz8EXdgPFC2ZEQ4dKBwKoq9EaYNAW6G.jpg', link: '/e-sport' }
+    ];
+  } else {
+    // Türkçe ve diğer diller için varsayılan resimler
+    imgData = [
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/ROELUQ3ISxOenQJHNFc4yAMtNPcylODoHCbCQFUY.png', link: '/promotions' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/AXSKkxrllHsXnGHHYzTndh9r3T5WE7UKcXQZGu4M.png', link: '/casino/group/live-lobby' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/45JxD9g8BbtkeHgcp1BEOj7ObQSVARMnCKABkLDM.png', link: '/sportsbook' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/nO2qJDlJsBl4M8I6BSvzuVV0eFnCDrblaxQ71qv2.png', link: '/casino/group/popular' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/rzXqfxNYaLSnYe6i4xsK4E2C8KrcDzLbQ79y0f7Q.png', link: '/e-sport' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/fLhk5LWspK2GdnWj78lQX1x5rQLCCmnsLJUyDS8m.png', link: '/casino/group/lobby' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/zT0xdICudEaX0rlEkEgPP2OBtrBx9u6xNdksGbzW.png', link: '/casino/group/lobby' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/vJMbXAzP6qM7hJLpWqCxw9Xq87VHrU0Tbpi1Gqcp.png', link: '/e-sport' }
+    ];
+  }
+
+  imgData.forEach(item => {
+    const slide = document.createElement('div'); slide.className = 'swiper-slide Custom8Banner-slide';
+    const a = document.createElement('a');
+    const clean = String(item.link || '/').replace(/^\//, '');
+    const targetPath = `/${lang}/${clean}`;
+    a.className = 'slot slot--carousel Custom8Banner-link';
+    a.setAttribute('role','link'); a.setAttribute('tabindex','0'); a.setAttribute('aria-label','banner');
+    const onNav = (e) => { e.preventDefault(); e.stopPropagation(); spaNavigate(targetPath); };
+    a.addEventListener('click', onNav);
+    a.addEventListener('keydown', e => { if (e.key === 'Enter' || e.keyCode === 13) onNav(e); });
+
+    const cover = document.createElement('div'); cover.className = 'slot__cover slot__cover--no-layer Custom8Banner-cover';
+    const span  = document.createElement('span'); span.className  = 'slot__img Custom8Banner-img';
+    const img   = document.createElement('img'); img.src = item.src; img.alt = 'banner'; img.loading = 'lazy';
+    span.appendChild(img); cover.appendChild(span); a.appendChild(cover); slide.appendChild(a); grid.appendChild(slide);
+  });
+
+  const wrap = document.createElement('div'); wrap.className = 'Custom8Banner-container';
+  wrap.appendChild(grid); ticker.appendChild(wrap); outer.appendChild(ticker); wrapper.appendChild(outer);
+}
+
+function addPromoBannerImages(AppState, targetSelector = '#extra-slider3') {
+  const wrapper = document.querySelector(targetSelector);
+  if (!wrapper) return;
+
+  // Çift kontrol: hem children sayısı hem de özel marker
+  if (wrapper.children.length > 0 ) {
+    console.log('Promo banner already exists, skipping...');
+    return;
+  }
+
+  // Önceki slider'ı temizle (eğer varsa)
+  const existed = wrapper.querySelector('.Custom3B2-wrapper');
+  if (existed) {
+    // Temizle mevcut slider'ı ve timer'ı
+    if (existed.autoSlideTimer) {
+      clearInterval(existed.autoSlideTimer);
+    }
+    existed.remove();
+  }
+
+  // Marker ekle - bu wrapper'a promo banner yüklendiğini işaretle
+  wrapper.dataset.promoBannerLoaded = 'true';
+
+  wrapper.classList.add('section');
+  wrapper.style.setProperty('padding-top', '0px', 'important');
+
+  const outer = document.createElement('div'); 
+  outer.className = 'container Custom3B2-wrapper';
+  
+  const ticker = document.createElement('div'); 
+  ticker.className = 'ticker-swiper-container Custom3B2-ticker';
+  
+  const grid = document.createElement('div'); 
+  grid.className = 'custom-banners Custom3B2-grid';
+
+  if (!document.getElementById('Custom3B2-styles')) {
+    const css = `
+      /* Container taşmasın */
+      .Custom3B2-wrapper{padding:0!important;position:relative!important}
+      .Custom3B2-ticker{overflow:hidden!important;position:relative!important}
+
+      /* Auto-sliding grid - 2 sıra */
+      .Custom3B2-grid{
+        display:grid!important;
+        grid-template-columns:repeat(2, 1fr)!important;
+        grid-template-rows:repeat(2, 1fr)!important;
+        gap:12px!important;
+        overflow:hidden!important;
+        scroll-behavior:smooth!important;
+        padding:12px 0 50px 0!important;margin:0!important;
+        transition:transform 0.5s ease-in-out!important;
+        height:480px!important;
+        width:100%!important
+      }
+
+      /* Kart boyutu: daha büyük ve 2x2 grid */
+      .Custom3B2-slide{
+        position:relative!important;
+        width:100%!important;height:100%!important;
+        overflow:hidden!important;border-radius:16px!important;
+        box-sizing:border-box!important;background:#0b0b0b!important;
+        transition:transform 0.3s ease!important;
+        min-height:220px!important
+      }
+      .Custom3B2-slide:hover{transform:scale(1.03)!important}
+
+      /* Tam sığdır: taşma yok, kırpma yok */
+      .Custom3B2-link,.Custom3B2-cover,.Custom3B2-img{
+        display:block!important;width:100%!important;height:100%!important;margin:0!important;padding:0!important
+      }
+      .Custom3B2-link{cursor:pointer!important}
+      .slot__cover,.slot__img{width:100%!important;height:100%!important}
+      .Custom3B2-img img{
+        display:block!important;width:100%!important;height:100%!important;
+        object-fit:contain!important;object-position:center!important;max-width:100%!important;max-height:100%!important
+      }
+
+      /* Navigation dots */
+      .Custom3B2-dots{
+        display:flex!important;justify-content:center!important;gap:8px!important;
+        position:absolute!important;bottom:8px!important;left:50%!important;
+        transform:translateX(-50%)!important;z-index:10!important
+      }
+      .Custom3B2-dot{
+        width:10px!important;height:10px!important;border-radius:50%!important;
+        background:rgba(255,255,255,0.4)!important;cursor:pointer!important;
+        transition:background 0.3s ease!important;border:none!important;padding:0!important
+      }
+      .Custom3B2-dot.active{background:rgba(255,255,255,0.9)!important}
+      .Custom3B2-dot:hover{background:rgba(255,255,255,0.7)!important}
+
+      /* Navigation arrows */
+      .Custom3B2-nav{
+        position:absolute!important;top:50%!important;transform:translateY(-50%)!important;
+        width:40px!important;height:40px!important;background:rgba(0,0,0,0.6)!important;
+        border:none!important;border-radius:50%!important;color:white!important;
+        cursor:pointer!important;z-index:10!important;font-size:18px!important;
+        display:flex!important;align-items:center!important;justify-content:center!important;
+        transition:background 0.3s ease!important;opacity:0!important;
+        pointer-events:none!important
+      }
+      .Custom3B2-wrapper:hover .Custom3B2-nav{opacity:1!important;pointer-events:auto!important}
+      .Custom3B2-nav:hover{background:rgba(0,0,0,0.8)!important}
+      .Custom3B2-nav-prev{left:10px!important}
+      .Custom3B2-nav-next{right:10px!important}
+
+      /* Responsive */
+      @media(max-width:1700px){
+        .Custom3B2-grid{
+          display:flex!important;flex-direction:row!important;
+          flex-wrap:nowrap!important;overflow-x:auto!important;
+          -webkit-overflow-scrolling:touch!important;scroll-snap-type:x mandatory!important;
+          gap:16px!important;padding:10px 16px 20px 16px!important;
+          height:auto!important;grid-template-columns:none!important;
+          grid-template-rows:none!important
+        }
+        .Custom3B2-grid::-webkit-scrollbar{height:6px!important}
+        .Custom3B2-grid::-webkit-scrollbar-track{background:rgba(255,255,255,0.1)!important;border-radius:3px!important}
+        .Custom3B2-grid::-webkit-scrollbar-thumb{background:rgba(192,130,9,0.6)!important;border-radius:3px!important}
+        .Custom3B2-grid::-webkit-scrollbar-thumb:hover{background:rgba(192,130,9,0.8)!important}
+        .Custom3B2-slide{
+          scroll-snap-align:start!important;flex:0 0 auto!important;
+          width:400px!important;height:280px!important;min-height:280px!important
+        }
+        .Custom3B2-nav{display:none!important}
+        .Custom3B2-dots{bottom:0px!important}
+      }
+      @media(max-width:768px){
+        .Custom3B2-grid{
+          flex-direction:column!important;padding:0 16px 50px 16px!important;
+          overflow-x:visible!important;scroll-snap-type:none!important
+        }
+        .Custom3B2-grid::-webkit-scrollbar{display:none!important}
+        .Custom3B2-slide{
+          width:100%!important;height:200px!important;min-height:200px!important
+        }
+      }`;
+    const s = document.createElement('style'); 
+    s.id = 'Custom3B2-styles'; 
+    s.textContent = css; 
+    document.head.appendChild(s);
+  }
+
+  const lang = (AppState && AppState.currentLanguage) ? AppState.currentLanguage.replace(/^\/+/, '') : 'tr';
+  
+  let imgData;
+  if (lang === 'en') {
+    imgData = [
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/9NtRXUf7HdFMvudDbD5BSxR1FNPsAlb46arKyL1Z.jpg', link: '/promotion/100-hosgeldin-bonusun-hazir' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/bMJnopASMhlSCbMKdLWkTCnGXwaikbAjkipFJC8e.jpg', link: '/promotion/25-spor-anlik-discount' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/G9Z3jAkckS5uLAhwHYGhmWoC3N1xgDcqO2CuEMnH.jpg', link: '/promotion/haftasonuna-ozel-cevrimsiz-bonus' }
+    ];
+  } else {
+    imgData = [
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/promotions/LqldSf7adMZqbhMC2Wow5bOQbJYkTLAYpHewQC3z.jpg', link: '/promotion/100-hosgeldin-bonusun-hazir' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/promotions/7TszhPxzHMTBzjPdmFQZ1lPVD07OOsG1vFMy92k5.jpg', link: '/promotion/25-spor-anlik-discount' },
+      { src: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/promotions/Q9LlqbOAXvPVmPAIsQEr7f1sdecLNgRqBpaKhTt9.jpg', link: '/promotion/haftasonuna-ozel-cevrimsiz-bonus' }
+    ];
+  }
+
+  // Slide'ları oluştur
+  imgData.forEach(item => {
+    const slide = document.createElement('div'); 
+    slide.className = 'swiper-slide Custom3B2-slide';
+    const a = document.createElement('a');
+    const clean = String(item.link || '/').replace(/^\//, '');
+    const targetPath = `/${lang}/${clean}`;
+    a.className = 'slot slot--carousel Custom3B2-link';
+    a.setAttribute('role','link'); 
+    a.setAttribute('tabindex','0'); 
+    a.setAttribute('aria-label','promo-banner');
+    
+    const onNav = (e) => { 
+      e.preventDefault(); 
+      e.stopPropagation(); 
+      spaNavigate(targetPath); 
+    };
+    a.addEventListener('click', onNav);
+    a.addEventListener('keydown', e => { 
+      if (e.key === 'Enter' || e.keyCode === 13) onNav(e); 
+    });
+
+    const cover = document.createElement('div');  
+    cover.className = 'slot__cover slot__cover--no-layer Custom3B2-cover';
+    const span = document.createElement('span'); 
+    span.className = 'slot__img Custom3B2-img';
+    const img = document.createElement('img');  
+    img.src = item.src; 
+    img.alt = 'promo-banner'; 
+    img.loading = 'lazy';
+    
+    span.appendChild(img); 
+    cover.appendChild(span); 
+    a.appendChild(cover); 
+    slide.appendChild(a); 
+    grid.appendChild(slide);
+  });
+
+  // Navigation dots oluştur - sayfa bazlı
+  const dotsContainer = document.createElement('div');
+  dotsContainer.className = 'Custom3B2-dots';
+  
+  const slideCount = imgData.length; // slideCount'u burada tanımla
+  const dotCount = window.innerWidth <= 768 ? slideCount : Math.ceil(slideCount / 4);
+  for (let i = 0; i < dotCount; i++) {
+    const dot = document.createElement('button');
+    dot.className = `Custom3B2-dot ${i === 0 ? 'active' : ''}`;
+    dot.setAttribute('aria-label', window.innerWidth <= 768 ? `Slide ${i + 1}` : `Page ${i + 1}`);
+    dotsContainer.appendChild(dot);
+  }
+
+  // Navigation arrows oluştur
+  const prevButton = document.createElement('button');
+  prevButton.className = 'Custom3B2-nav Custom3B2-nav-prev';
+  prevButton.innerHTML = '‹';
+  prevButton.setAttribute('aria-label', 'Previous slide');
+  
+  const nextButton = document.createElement('button');
+  nextButton.className = 'Custom3B2-nav Custom3B2-nav-next';
+  nextButton.innerHTML = '›';
+  nextButton.setAttribute('aria-label', 'Next slide');
+
+  const wrap = document.createElement('div'); 
+  wrap.className = 'Custom3B2-container';
+  wrap.appendChild(grid);
+  
+  ticker.appendChild(wrap);
+  ticker.appendChild(dotsContainer);
+  ticker.appendChild(prevButton);
+  ticker.appendChild(nextButton);
+  
+  outer.appendChild(ticker);
+  wrapper.appendChild(outer);
+
+  // Auto-slide functionality - 2x2 grid için güncellenmiş
+  let currentSlide = 0;
+  const slidesPerPage = window.innerWidth <= 768 ? 1 : 4; // Mobilde 1, desktop'ta 4 (2x2)
+  const totalPages = Math.ceil(slideCount / slidesPerPage);
+  
+  function updateSlider() {
+    if (window.innerWidth <= 768) {
+      // Mobil: vertical scroll
+      const translateY = -currentSlide * (200 + 16); // slide height + gap
+      grid.style.transform = `translateY(${translateY}px)`;
+    } else {
+      // Desktop: grid pages (her page'de 4 slide)
+      const pageIndex = Math.floor(currentSlide / 4);
+      const gridWidth = grid.offsetWidth || window.innerWidth - 40;
+      const translateX = -pageIndex * gridWidth;
+      grid.style.transform = `translateX(${translateX}px)`;
+    }
+    
+    // Update dots - her slide için değil, her page için
+    const dots = dotsContainer.querySelectorAll('.Custom3B2-dot');
+    const activePageIndex = window.innerWidth <= 768 ? currentSlide : Math.floor(currentSlide / 4);
+    dots.forEach((dot, index) => {
+      dot.classList.toggle('active', index === activePageIndex);
+    });
+  }
+
+  function nextSlide() {
+    if (window.innerWidth <= 768) {
+      // Mobil: tek tek slide
+      currentSlide = (currentSlide + 1) % slideCount;
+    } else {
+      // Desktop: 4'lü gruplar halinde
+      const currentPage = Math.floor(currentSlide / 4);
+      const nextPage = (currentPage + 1) % totalPages;
+      currentSlide = nextPage * 4;
+    }
+    updateSlider();
+  }
+
+  function prevSlide() {
+    if (window.innerWidth <= 768) {
+      // Mobil: tek tek slide
+      currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+    } else {
+      // Desktop: 4'lü gruplar halinde
+      const currentPage = Math.floor(currentSlide / 4);
+      const prevPage = (currentPage - 1 + totalPages) % totalPages;
+      currentSlide = prevPage * 4;
+    }
+    updateSlider();
+  }
+
+  function goToSlide(index) {
+    if (window.innerWidth <= 768) {
+      currentSlide = index;
+    } else {
+      // Desktop: page index olarak kullan
+      currentSlide = index * 4;
+    }
+    updateSlider();
+  }
+
+  // Event listeners
+  nextButton.addEventListener('click', nextSlide);
+  prevButton.addEventListener('click', prevSlide);
+  
+  const dots = dotsContainer.querySelectorAll('.Custom3B2-dot');
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => goToSlide(index));
+  });
+
+  // Auto-slide timer (4 saniyede bir slide değişir)
+  let autoSlideTimer = setInterval(nextSlide, 4000);
+  
+  // Mouse hover'da timer'ı duraklat
+  ticker.addEventListener('mouseenter', () => {
+    clearInterval(autoSlideTimer);
+  });
+  
+  ticker.addEventListener('mouseleave', () => {
+    autoSlideTimer = setInterval(nextSlide, 4000);
+  });
+
+  // Responsive update - dots ve layout güncellemesi
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      // Dots'ları yeniden oluştur
+      dotsContainer.innerHTML = '';
+      const newDotCount = window.innerWidth <= 768 ? slideCount : Math.ceil(slideCount / 4);
+      for (let i = 0; i < newDotCount; i++) {
+        const dot = document.createElement('button');
+        dot.className = `Custom3B2-dot ${i === 0 ? 'active' : ''}`;
+        dot.setAttribute('aria-label', window.innerWidth <= 768 ? `Slide ${i + 1}` : `Page ${i + 1}`);
+        dot.addEventListener('click', () => goToSlide(i));
+        dotsContainer.appendChild(dot);
+      }
+      
+      // Slider'ı sıfırla ve güncelle
+      currentSlide = 0;
+      updateSlider();
+    }, 250);
+  });
+
+  // Timer'ı wrapper'a kaydet temizlik için
+  outer.autoSlideTimer = autoSlideTimer;
+  
+  // İlk slide'ı göster
+  updateSlider();
+}
+
+// Promo banner'ı tamamen temizle (gerekirse kullanmak için)
+function clearPromoBanner(targetSelector = '#extra-slider3') {
+  const wrapper = document.querySelector(targetSelector);
+  if (!wrapper) return;
+  
+  // Timer'ları temizle
+  const existed = wrapper.querySelector('.Custom3B2-wrapper');
+  if (existed && existed.autoSlideTimer) {
+    clearInterval(existed.autoSlideTimer);
+  }
+  
+  // İçeriği temizle
+  wrapper.innerHTML = '';
+  
+  // Marker'ı kaldır
+  delete wrapper.dataset.promoBannerLoaded;
+  
+  console.log('Promo banner cleared');
+}
+</script>

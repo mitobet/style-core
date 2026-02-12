@@ -1,0 +1,39 @@
+/* Logo - 600x200 PNG için düzeltilmiş */
+.sidebar__logo {
+    display: block;
+    width: 150px !important;
+    height: 50px !important;
+    background-size: contain !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+
+@media (min-width: 1200px) {
+    .sidebar__logo {
+        width: 160px !important;
+        height: 53px !important;
+        background-size: contain !important;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+    }
+}
+
+/* Mobil için */
+@media (max-width: 1199px) {
+    .sidebar__logo {
+        width: 120px !important;
+        height: 40px !important;
+    }
+}
+
+.slot__pos,
+.slot__title--no {
+    visibility: hidden;
+    display: none;
+}
+
+.slot__cover--no-layer img {
+    height: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+}

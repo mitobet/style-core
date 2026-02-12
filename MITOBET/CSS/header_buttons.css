@@ -1,0 +1,615 @@
+/* =====================================================
+   MITOBET - Header Butonları (Kompakt + Divider)
+   TV | PROMOSYONLAR | CANLI DESTEK | GİRİŞ YAP | KAYIT OL
+   Ana Renk: #CFAE6D (Altın/Bej)
+   ===================================================== */
+
+/* =====================================================
+   1. HEADER ACTIONS - KOMPAKT CONTAINER
+   ===================================================== */
+
+.header__actions {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 6px !important;
+    flex-shrink: 0 !important;
+    flex-wrap: nowrap !important;
+}
+
+/* Mobil search butonu desktop'ta gizli ama flex'te yer kaplıyor - tamamen kaldır */
+.header__actions .header__search-btnmob {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+}
+
+/* =====================================================
+   2. TÜM BUTONLAR - ORTAK STİL (Büyük & Okunaklı)
+   ===================================================== */
+
+.header__signin,
+.header__signup,
+.header__actions [class*="signup"],
+.header__actions [class*="register"],
+.header__actions .btn-primary,
+.mito-header-btn {
+    height: 36px !important;
+    min-width: auto !important;
+    padding: 0 16px !important;
+
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    border-radius: 6px !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    box-sizing: border-box !important;
+    line-height: 1 !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+/* =====================================================
+   3. GİRİŞ YAP (Outline Altın)
+   ===================================================== */
+
+.header__signin {
+    background: transparent !important;
+    border: 1.5px solid rgba(207, 174, 109, 0.45) !important;
+    color: #CFAE6D !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.header__signin:hover {
+    background: rgba(207, 174, 109, 0.1) !important;
+    border-color: #CFAE6D !important;
+    color: #e9c37a !important;
+    box-shadow: 0 0 12px rgba(207, 174, 109, 0.15) !important;
+}
+
+.header__signin:active {
+    transform: scale(0.96) !important;
+}
+
+/* =====================================================
+   4. KAYIT OL (Solid Altın Gradient)
+   ===================================================== */
+
+.header__signup,
+.header__actions [class*="signup"],
+.header__actions [class*="register"],
+.header__actions .btn-primary {
+    background: linear-gradient(135deg, #CFAE6D 0%, #b8973d 100%) !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+}
+
+.header__signup:hover,
+.header__actions [class*="signup"]:hover,
+.header__actions [class*="register"]:hover,
+.header__actions .btn-primary:hover {
+    background: linear-gradient(135deg, #e9c37a 0%, #CFAE6D 100%) !important;
+    box-shadow: 0 3px 15px rgba(207, 174, 109, 0.35) !important;
+    transform: translateY(-1px) !important;
+    color: #000 !important;
+}
+
+.header__signup:active,
+.header__actions [class*="signup"]:active,
+.header__actions [class*="register"]:active {
+    transform: translateY(0) scale(0.96) !important;
+}
+
+/* Sweep efekti */
+.header__signup::before,
+.header__actions [class*="signup"]::before,
+.header__actions [class*="register"]::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+    transition: left 0.5s ease !important;
+    pointer-events: none !important;
+}
+
+.header__signup:hover::before,
+.header__actions [class*="signup"]:hover::before,
+.header__actions [class*="register"]:hover::before {
+    left: 100% !important;
+}
+
+/* =====================================================
+   5. PROMOSYONLAR BUTONU (Shimmer Animasyonlu)
+   ===================================================== */
+
+.mito-header-btn--promo {
+    background: linear-gradient(135deg, #CFAE6D 0%, #b8973d 50%, #CFAE6D 100%) !important;
+    background-size: 200% 100% !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    animation: mitoPromoSweepBg 3s ease-in-out infinite !important;
+}
+
+/* Buton arka planı kayma animasyonu */
+@keyframes mitoPromoSweepBg {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Üstten geçen ışık çizgisi */
+.mito-header-btn--promo::after {
+    content: '' !important;
+    position: absolute !important;
+    top: -50% !important;
+    left: -60% !important;
+    width: 40% !important;
+    height: 200% !important;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.45),
+        transparent
+    ) !important;
+    transform: skewX(-20deg) !important;
+    animation: mitoSweepLine 3s ease-in-out infinite !important;
+    pointer-events: none !important;
+}
+
+@keyframes mitoSweepLine {
+    0% { left: -60%; }
+    50% { left: 120%; }
+    100% { left: 120%; }
+}
+
+.mito-header-btn--promo:hover {
+    animation: none !important;
+    background: linear-gradient(135deg, #e9c37a 0%, #CFAE6D 100%) !important;
+    background-size: 100% 100% !important;
+    box-shadow: 0 3px 18px rgba(207, 174, 109, 0.45) !important;
+    transform: translateY(-1px) !important;
+}
+
+.mito-header-btn--promo:hover::after {
+    animation: none !important;
+    opacity: 0 !important;
+}
+
+.mito-header-btn--promo:active {
+    transform: translateY(0) scale(0.96) !important;
+}
+
+/* =====================================================
+   6. CANLI DESTEK BUTONU (Outline + Yeşil Dot)
+   ===================================================== */
+
+.mito-header-btn--support {
+    background: transparent !important;
+    border: 1.5px solid rgba(207, 174, 109, 0.45) !important;
+    color: #CFAE6D !important;
+    transition: border-color 0.6s ease, box-shadow 0.6s ease !important;
+}
+
+.mito-header-btn--support .mito-live-dot {
+    width: 6px !important;
+    height: 6px !important;
+    background: #4ade80 !important;
+    border-radius: 50% !important;
+    display: inline-block !important;
+    flex-shrink: 0 !important;
+    animation: mitoLiveDot 1.5s ease-in-out infinite !important;
+}
+
+@keyframes mitoLiveDot {
+    0%, 100% { 
+        box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.5);
+        opacity: 1;
+    }
+    50% { 
+        box-shadow: 0 0 0 4px rgba(74, 222, 128, 0);
+        opacity: 0.6;
+    }
+}
+
+.mito-header-btn--support:hover {
+    animation: none !important;
+    background: rgba(207, 174, 109, 0.1) !important;
+    border-color: #CFAE6D !important;
+    color: #e9c37a !important;
+    box-shadow: 0 0 12px rgba(207, 174, 109, 0.15) !important;
+}
+
+.mito-header-btn--support:active {
+    transform: scale(0.96) !important;
+}
+
+/* =====================================================
+   7. TV BUTONU (Outline + İkon)
+   ===================================================== */
+
+.mito-header-btn--tv {
+    background: transparent !important;
+    border: 1.5px solid rgba(207, 174, 109, 0.45) !important;
+    color: #CFAE6D !important;
+}
+
+.mito-header-btn--tv .mito-tv-icon {
+    font-size: 13px !important;
+    line-height: 1 !important;
+    display: inline-block !important;
+}
+
+.mito-header-btn--tv:hover {
+    background: rgba(207, 174, 109, 0.1) !important;
+    border-color: #CFAE6D !important;
+    color: #e9c37a !important;
+    box-shadow: 0 0 12px rgba(207, 174, 109, 0.15) !important;
+}
+
+.mito-header-btn--tv:active {
+    transform: scale(0.96) !important;
+}
+
+/* =====================================================
+   8. TELEGRAM BUTONU (Outline)
+   ===================================================== */
+
+.mito-header-btn--telegram {
+    background: transparent !important;
+    border: 1.5px solid rgba(207, 174, 109, 0.45) !important;
+    color: #CFAE6D !important;
+}
+
+.mito-header-btn--telegram:hover {
+    background: rgba(207, 174, 109, 0.1) !important;
+    border-color: #CFAE6D !important;
+    color: #e9c37a !important;
+    box-shadow: 0 0 12px rgba(207, 174, 109, 0.15) !important;
+}
+
+.mito-header-btn--telegram:active {
+    transform: scale(0.96) !important;
+}
+
+/* =====================================================
+   9. DİVİDER (CANLI DESTEK | GİRİŞ YAP arası çizgi)
+   ===================================================== */
+
+.mito-header-divider {
+    width: 1px !important;
+    height: 20px !important;
+    background: rgba(207, 174, 109, 0.3) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    display: block !important;
+}
+
+/* =====================================================
+   9. ÜST BANNER - GÜNCEL GİRİŞ (Her ekran)
+   ===================================================== */
+
+.mito-topbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    background: #181818 !important;
+    margin-top: 5px !important;
+    padding: 4px 12px !important;
+    width: 100% !important;
+    border: none !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    flex-shrink: 0 !important;
+}
+
+.mito-topbar span {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 10px !important;
+}
+
+.mito-topbar a {
+    color: #CFAE6D !important;
+    text-decoration: none !important;
+    font-weight: 800 !important;
+    font-size: 11px !important;
+    background: linear-gradient(90deg, #CFAE6D, #e9c37a) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    transition: all 0.2s ease !important;
+}
+
+.mito-topbar a:hover {
+    filter: brightness(1.2) !important;
+}
+
+
+/* =====================================================
+   10. MOBİL RESPONSIVE
+   ===================================================== */
+
+/* =====================================================
+   11. MOBİL BAR (Header altı ortalanmış butonlar)
+   ===================================================== */
+
+.mito-mobile-bar {
+    display: none;
+}
+
+@media (max-width: 992px) {
+    .mito-header-btn--promo,
+    .mito-header-btn--support,
+    .mito-header-btn--tv,
+    .mito-header-btn--telegram,
+    .mito-header-divider {
+        display: none !important;
+    }
+
+    /* Header'ı mobilede daralt & hizala */
+    #header .container .row > .col-12 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Header alt çizgi */
+    #header,
+    header.header {
+        border-bottom: 1px solid rgba(207, 174, 109, 0.15) !important;
+    }
+
+    header#header .container .row .col-12 .header__content,
+    #header .header__content,
+    .header__content {
+        padding-top: 5px !important;
+        padding-bottom: 0 !important;
+        min-height: 0 !important;
+        min-height: unset !important;
+        height: 55px !important;
+        max-height: 55px !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+    }
+
+    /* header__actions (buton container) mobilede yüksekliği daralt */
+    .header__actions {
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+    }
+
+    /* GİRİŞ YAP / KAYIT OL butonları mobilde 80px → 32px */
+    .header__actions .header__signin,
+    .header__actions .header__signup,
+    .header__actions [class*="signup"],
+    .header__actions [class*="register"],
+    .header__actions .btn-primary {
+        height: 32px !important;
+        max-height: 32px !important;
+        line-height: 32px !important;
+        padding: 0 14px !important;
+    }
+
+    .mito-mobile-bar {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        background: #181818 !important;
+        padding: 5px 20px !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        border-top: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Header container ile aynı hizaya getir */
+    #header .container {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+
+    .mito-mobile-btn {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+        height: 30px !important;
+        padding: 0 14px !important;
+        border-radius: 5px !important;
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.3px !important;
+        cursor: pointer !important;
+        transition: all 0.25s ease !important;
+        white-space: nowrap !important;
+        text-decoration: none !important;
+        box-sizing: border-box !important;
+        line-height: 1 !important;
+    }
+
+    /* TV */
+    .mito-mobile-btn--tv {
+        background: transparent !important;
+        border: 1.5px solid rgba(207, 174, 109, 0.4) !important;
+        color: #CFAE6D !important;
+    }
+
+    /* Promosyonlar - Sweep animasyonu */
+    .mito-mobile-btn--promo {
+        background: linear-gradient(135deg, #CFAE6D 0%, #b8973d 50%, #CFAE6D 100%) !important;
+        background-size: 200% 100% !important;
+        border: none !important;
+        color: #000 !important;
+        position: relative !important;
+        overflow: hidden !important;
+        animation: mitoPromoSweepBg 3s ease-in-out infinite !important;
+    }
+
+    .mito-mobile-btn--promo::after {
+        content: '' !important;
+        position: absolute !important;
+        top: -50% !important;
+        left: -60% !important;
+        width: 40% !important;
+        height: 200% !important;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            rgba(255, 255, 255, 0.45),
+            transparent
+        ) !important;
+        transform: skewX(-20deg) !important;
+        animation: mitoSweepLine 3s ease-in-out infinite !important;
+        pointer-events: none !important;
+    }
+
+    /* Canlı Destek */
+    .mito-mobile-btn--support {
+        background: transparent !important;
+        border: 1.5px solid rgba(207, 174, 109, 0.4) !important;
+        color: #CFAE6D !important;
+        transition: border-color 0.6s ease, box-shadow 0.6s ease !important;
+    }
+
+    .mito-mobile-btn--support .mito-live-dot {
+        width: 5px !important;
+        height: 5px !important;
+        background: #4ade80 !important;
+        border-radius: 50% !important;
+        display: inline-block !important;
+        animation: mitoLiveDot 1.5s ease-in-out infinite !important;
+    }
+
+    .mito-mobile-btn .mito-tv-icon {
+        font-size: 11px !important;
+    }
+
+    /* Telegram mobil */
+    .mito-mobile-btn--telegram {
+        background: transparent !important;
+        border: 1.5px solid rgba(207, 174, 109, 0.4) !important;
+        color: #CFAE6D !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .header__actions {
+        gap: 4px !important;
+    }
+
+    .header__signin,
+    .header__signup,
+    .header__actions [class*="signup"],
+    .header__actions [class*="register"] {
+        height: 28px !important;
+        padding: 0 12px !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        border-radius: 5px !important;
+        box-shadow: none !important;
+    }
+
+    /* Mobilde GİRİŞ YAP outline kalmalı, gradient/glow olmamalı */
+    .header__signin,
+    .header__signin.header__signup {
+        background: transparent !important;
+        border: 1.5px solid rgba(207, 174, 109, 0.45) !important;
+        color: #CFAE6D !important;
+        box-shadow: none !important;
+    }
+
+    /* ——— Login Sonrası Header (Mobil) ——— */
+
+    /* ——— Login Sonrası Header (Mobil) ——— */
+
+    /* Logo dikeyde tam ortala */
+    .header__content .header__logo {
+        display: flex !important;
+        align-items: center !important;
+        margin-top: auto !important;
+        margin-bottom: auto !important;
+        height: 100% !important;
+    }
+
+    /* header__action - tüm ikonlar eşit aralıklı */
+    .header__content .header__action {
+        display: flex !important;
+        align-items: center !important;
+        gap: 12px !important;
+        margin-left: auto !important;
+    }
+
+    /* Bakiye + cüzdan yapışık */
+    .header__content .header__wallet {
+        display: flex !important;
+        align-items: center !important;
+        gap: 0 !important;
+    }
+
+    /* Bakiye yazısı küçült */
+    .header__content #dropdownWalet {
+        font-size: 12px !important;
+        padding: 0 4px !important;
+    }
+
+    /* Cüzdan ikon butonu bakiyeye yapışık */
+    .header__content .header__wallet-btn {
+        margin-left: 0 !important;
+        padding: 0 2px !important;
+    }
+
+    /* Bildirim & profil ikonları - eşit aralık (gap: 12px üstten geliyor) */
+    .header__content .header__dropdown {
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .header__content .header__dropdown button {
+        padding: 4px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .header__signin,
+    .header__signup,
+    .header__actions [class*="signup"],
+    .header__actions [class*="register"] {
+        height: 26px !important;
+        padding: 0 10px !important;
+        font-size: 11px !important;
+        box-shadow: none !important;
+    }
+
+    .header__signin,
+    .header__signin.header__signup {
+        box-shadow: none !important;
+    }
+
+    /* Login sonrası - daha küçük ekran */
+    .header__content #dropdownWalet {
+        font-size: 12px !important;
+    }
+}
