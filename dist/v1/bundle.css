@@ -1059,24 +1059,46 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
 
 /* ——— Footer: Para Birimleri & Ödeme Yöntemleri Efektleri ——— */
 
-/* Idle pulse animasyonu */
+/* Idle pulse animasyonu (sadece ödeme yöntemleri için) */
 @keyframes mito-icon-pulse {
     0%, 100% { opacity: 0.65; }
     50% { opacity: 0.88; }
 }
 
-/* ——— KABUL EDİLEN PARA BİRİMLERİ — Tek satır, ikon + isim ——— */
+/* ——— KABUL EDİLEN PARA BİRİMLERİ — Jojova Tarzı ——— */
+
+/* Container: altın border çerçeve, koyu arka plan */
+.footer__currencies:not(#footer-payment-methods) {
+    border: 1px solid rgba(207, 174, 109, 0.3) !important;
+    border-radius: 10px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    padding: 16px 20px 14px !important;
+    margin: 0 0 16px 0 !important;
+}
+
+/* Başlık: altın renk */
+.footer__currencies:not(#footer-payment-methods) .section__title,
+.footer__currencies:not(#footer-payment-methods) .footer__title,
+.footer__currencies:not(#footer-payment-methods) > span:first-child,
+.footer__currencies:not(#footer-payment-methods) > div:first-child {
+    color: #CFAE6D !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    letter-spacing: 1.5px !important;
+    text-transform: uppercase !important;
+}
 
 /* Liste: tek satır yatay, taşarsa scroll */
 .footer__currencies:not(#footer-payment-methods) ul.footer__accepted {
     display: flex !important;
     flex-wrap: nowrap !important;
     align-items: center !important;
-    gap: 0 !important;
+    gap: 6px !important;
     overflow-x: auto !important;
     overflow-y: hidden !important;
-    padding: 8px 0 !important;
-    margin: 8px 0 0 0 !important;
+    padding: 10px 0 2px !important;
+    margin: 0 !important;
+    list-style: none !important;
     scrollbar-width: none !important;
     -ms-overflow-style: none !important;
 }
@@ -1084,23 +1106,19 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     display: none !important;
 }
 
-/* Her li: ikon + isim yan yana, ayraçlı */
+/* Her li: ikon + isim yan yana */
 .footer__currencies:not(#footer-payment-methods) ul.footer__accepted li {
     flex-shrink: 0 !important;
     display: flex !important;
     align-items: center !important;
     padding: 0 !important;
-    margin: 0 !important;
+    margin: 0 4px !important;
 }
 
-/* Ayraç (· nokta) */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:not(:last-child)::after {
-    content: '·' !important;
-    display: inline-block !important;
-    color: rgba(255, 255, 255, 0.2) !important;
-    font-size: 18px !important;
-    margin: 0 14px !important;
-    line-height: 1 !important;
+/* Ayraç yok (Jojova'da yok) */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li::after {
+    content: none !important;
+    display: none !important;
 }
 
 /* instrument-icon-wrapper: ikon + isim container */
@@ -1108,52 +1126,66 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     display: flex !important;
     align-items: center !important;
     gap: 6px !important;
-    padding: 4px 0 !important;
-    transition: transform 0.25s ease, opacity 0.25s ease !important;
+    padding: 4px 6px !important;
+    border-radius: 6px !important;
+    transition: background 0.2s ease, transform 0.2s ease !important;
 }
 
-/* İkon küçült */
+/* İkon: küçük renkli daire */
 .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
     width: 22px !important;
     height: 22px !important;
     max-height: 22px !important;
     border-radius: 50% !important;
     filter: none !important;
-    opacity: 0.85 !important;
-    animation: mito-icon-pulse 3.5s ease-in-out infinite !important;
-    transition: transform 0.25s ease, opacity 0.25s ease, filter 0.25s ease !important;
+    opacity: 1 !important;
+    animation: none !important;
+    transition: transform 0.2s ease, filter 0.2s ease !important;
 }
 
 /* İsim etiketi (JS tarafından eklenir) */
 .footer__currencies:not(#footer-payment-methods) .mito-currency-label {
     font-size: 12px !important;
     font-weight: 500 !important;
-    color: rgba(255, 255, 255, 0.55) !important;
+    color: rgba(255, 255, 255, 0.75) !important;
     white-space: nowrap !important;
-    letter-spacing: 0.5px !important;
-    transition: color 0.25s ease !important;
+    letter-spacing: 0.3px !important;
+    transition: color 0.2s ease !important;
 }
 
-/* Hover: ikon parla + isim belirginleş */
+/* Hover: hafif arka plan + isim belirginleş */
+.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover {
+    background: rgba(207, 174, 109, 0.08) !important;
+}
 .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover img {
-    opacity: 1 !important;
-    transform: scale(1.12) !important;
-    filter: brightness(1.15) drop-shadow(0 1px 6px rgba(207, 174, 109, 0.3)) !important;
-    animation: none !important;
+    transform: scale(1.08) !important;
+    filter: brightness(1.1) !important;
 }
 .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover .mito-currency-label {
     color: #CFAE6D !important;
 }
 
-/* nth-child pulse delay (organik gorunum) */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img {
-    animation-delay: -1.2s !important;
-}
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img {
-    animation-delay: -2.4s !important;
-}
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img {
-    animation-delay: -0.6s !important;
+/* Mobil */
+@media (max-width: 767px) {
+    .footer__currencies:not(#footer-payment-methods) {
+        padding: 12px 14px 10px !important;
+        margin: 0 0 12px 0 !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
+        width: 18px !important;
+        height: 18px !important;
+        max-height: 18px !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) .mito-currency-label {
+        font-size: 10px !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper {
+        gap: 4px !important;
+        padding: 3px 4px !important;
+    }
+    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted li {
+        margin: 0 2px !important;
+    }
 }
 
 /* ——— ÖDEME YÖNTEMLERİ — Mevcut efektler ——— */
