@@ -590,26 +590,100 @@ input, select, textarea,
         return 'tr';
     }
 
+    // ===== CANLI DESTEK BAKIM POPUP'I =====
+    var supportPopupOverlay = null;
+    var supportPopupModal = null;
+
+    function ensureSupportPopup() {
+        if (supportPopupOverlay && supportPopupModal) return;
+
+        supportPopupOverlay = document.createElement('div');
+        supportPopupOverlay.className = 'mito-support-popup-overlay';
+        supportPopupOverlay.style.cssText =
+            'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;' +
+            'background:rgba(0,0,0,0.75);backdrop-filter:blur(2px);opacity:0;pointer-events:none;' +
+            'transition:opacity 0.25s ease;';
+
+        supportPopupModal = document.createElement('div');
+        supportPopupModal.className = 'mito-support-popup';
+        supportPopupModal.style.cssText =
+            'background:#181818;border:1px solid #CFAE6D;border-radius:10px;box-shadow:0 18px 45px rgba(0,0,0,0.85);' +
+            'padding:20px 22px;max-width:420px;width:92%;color:#f9f9f9;font-family:inherit;position:relative;';
+
+        var title = document.createElement('div');
+        title.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px;font-weight:600;font-size:16px;';
+        var icon = document.createElement('span');
+        icon.style.cssText =
+            'width:22px;height:22px;border-radius:50%;border:2px solid #EAB308;display:flex;align-items:center;justify-content:center;' +
+            'color:#EAB308;font-size:14px;flex-shrink:0;';
+        icon.textContent = '!';
+        var titleText = document.createElement('span');
+        titleText.textContent = 'Canlı Destek Altyapı Güncellemesi';
+
+        title.appendChild(icon);
+        title.appendChild(titleText);
+
+        var body = document.createElement('div');
+        body.style.cssText = 'font-size:13px;line-height:1.6;color:#e5e5e5;margin-bottom:16px;';
+        body.innerHTML =
+            '<p>Değerli MitoBet üyesi, canlı destek altyapımızda performans ve güvenlik iyileştirmeleri yapıyoruz.</p>' +
+            '<p>Kısa bir süre boyunca canlı destek paneline erişim sınırlı olabilir. Tüm işlemleriniz kesintisiz devam etmektedir.</p>' +
+            '<p>Bize bu süreçte <strong>resmî Telegram kanalımız</strong> üzerinden her zaman ulaşabilirsiniz.</p>';
+
+        var actions = document.createElement('div');
+        actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;';
+
+        var tgBtn = document.createElement('a');
+        tgBtn.href = 'https://t.me/mitobetsupport';
+        tgBtn.target = '_blank';
+        tgBtn.textContent = 'Telegram ile İletişim';
+        tgBtn.style.cssText =
+            'flex:1 1 auto;text-align:center;padding:8px 14px;border-radius:999px;border:none;cursor:pointer;' +
+            'background:linear-gradient(90deg,#FACC6B,#CFAE6D);color:#111;font-weight:600;font-size:13px;text-decoration:none;';
+
+        var closeBtn = document.createElement('button');
+        closeBtn.type = 'button';
+        closeBtn.textContent = 'Kapat';
+        closeBtn.style.cssText =
+            'flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid rgba(207,174,109,0.65);' +
+            'background:transparent;color:#f5f5f5;font-size:12px;cursor:pointer;';
+
+        actions.appendChild(tgBtn);
+        actions.appendChild(closeBtn);
+
+        supportPopupModal.appendChild(title);
+        supportPopupModal.appendChild(body);
+        supportPopupModal.appendChild(actions);
+        supportPopupOverlay.appendChild(supportPopupModal);
+
+        function hide() {
+            supportPopupOverlay.style.opacity = '0';
+            supportPopupOverlay.style.pointerEvents = 'none';
+        }
+
+        closeBtn.addEventListener('click', hide);
+        supportPopupOverlay.addEventListener('click', function(e) {
+            if (e.target === supportPopupOverlay) hide();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') hide();
+        });
+
+        document.body.appendChild(supportPopupOverlay);
+    }
+
+    function showSupportPopup() {
+        ensureSupportPopup();
+        requestAnimationFrame(function() {
+            supportPopupOverlay.style.opacity = '1';
+            supportPopupOverlay.style.pointerEvents = 'auto';
+        });
+    }
+
     function createSupportClickHandler() {
         return function() {
-            if (typeof Comm100API !== 'undefined') {
-                if (Comm100API.open_chat_window) { Comm100API.open_chat_window(); return; }
-                if (Comm100API.open) { Comm100API.open(); return; }
-                if (Comm100API.do) { Comm100API.do('livechat.button.click'); return; }
-            }
-            var comm100Btn = document.querySelector('[id*="comm100"], [class*="comm100"], #chat-button, .comm100-button, iframe[src*="comm100"]');
-            if (comm100Btn) { comm100Btn.click(); return; }
-            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) { Tawk_API.maximize(); return; }
-            if (typeof LiveChatWidget !== 'undefined' && LiveChatWidget.call) { LiveChatWidget.call('maximize'); return; }
-            if (typeof Intercom !== 'undefined') { Intercom('show'); return; }
-            if (typeof $crisp !== 'undefined' && $crisp.push) { $crisp.push(['do', 'chat:open']); return; }
-            if (typeof zE !== 'undefined') { zE('messenger', 'open'); return; }
-            var chatEls = document.querySelectorAll('[class*="chat-btn"], [class*="chat-button"], [class*="livechat"], [id*="chat-button"], [id*="livechat"], [class*="support"], [onclick*="chat"]');
-            for (var i = 0; i < chatEls.length; i++) {
-                if (chatEls[i].offsetParent !== null) { chatEls[i].click(); return; }
-            }
-            console.log('[MITO] Canlı destek widget bulunamadı, fallback kullanılıyor');
-            window.open('/tr/contact', '_blank');
+            showSupportPopup();
         };
     }
 
@@ -950,6 +1024,23 @@ input, select, textarea,
     }
 
     function init() {
+        // Comm100 deprecated API hatalarını engelle — sayfa yüklenirken oluşan TypeError'u durdur
+        try {
+            if (typeof window.Comm100API !== 'undefined' && window.Comm100API) {
+                if (!window.Comm100API.open_chat_window || typeof window.Comm100API.open_chat_window !== 'function') {
+                    window.Comm100API.open_chat_window = function() {
+                        showSupportPopup();
+                    };
+                }
+            } else {
+                window.Comm100API = {
+                    open_chat_window: function() { showSupportPopup(); },
+                    open: function() { showSupportPopup(); },
+                    do: function() { showSupportPopup(); }
+                };
+            }
+        } catch(e) {}
+
         injectAnimationCSS();
 
         if (window.innerWidth > 992) {
@@ -958,6 +1049,45 @@ input, select, textarea,
             addMobileBar();
             fixMobileHeaderHeight();
         }
+
+        // Sitedeki tüm canlı destek/destek bağlantılarını yakala ve popup'a yönlendir
+        document.addEventListener('click', function(e) {
+            var target = e.target;
+            if (!target) return;
+
+            var el = target.closest ? target.closest('a, button, [role="button"]') : target;
+            if (!el) return;
+
+            var dominated = false;
+            var href = (el.getAttribute('href') || '').toLowerCase();
+            var text = (el.textContent || '').trim().toLowerCase();
+            var cls = (typeof el.className === 'string' ? el.className : '').toLowerCase();
+
+            // Bizim butonlarımız (class kontrolü)
+            if (cls.indexOf('mito-header-btn--support') > -1 || cls.indexOf('mito-mobile-btn--support') > -1) dominated = true;
+            // Parent kontrol (span içinden tıklama)
+            if (target.closest && target.closest('.mito-header-btn--support, .mito-mobile-btn--support')) dominated = true;
+
+            // href kontrolleri
+            if (href.indexOf('/contact') > -1 || href.indexOf('livechat') > -1 || href.indexOf('live-support') > -1) dominated = true;
+
+            // text kontrolleri (indexOf kullan, tam eşitlik değil)
+            if (text.indexOf('canlı destek') > -1 || text.indexOf('canli destek') > -1 ||
+                text.indexOf('live support') > -1 || text === 'destek') dominated = true;
+
+            // Comm100 elementleri
+            if (el.id && el.id.toLowerCase().indexOf('comm100') > -1) dominated = true;
+            if (cls.indexOf('comm100') > -1) dominated = true;
+
+            // Alt navbar Destek butonu (#tabbar içinde)
+            if (el.closest && el.closest('#tabbar') && text.indexOf('destek') > -1) dominated = true;
+
+            if (dominated) {
+                e.preventDefault();
+                e.stopPropagation();
+                showSupportPopup();
+            }
+        }, true);
 
         // Animasyonları başlat
         startPromoSlider();
@@ -1015,4 +1145,114 @@ input, select, textarea,
         setTimeout(init, 500);
     }
 
+})();
+
+
+/* ===== SCRIPT/footer_marquee.js ===== */
+/* =====================================================
+   MITOBET - Footer Marquee
+   Sağlayıcılar, Ödeme Yöntemleri, Para Birimleri
+   logolarını sonsuz yatay kayma efektiyle gösterir.
+   ===================================================== */
+
+(function() {
+    'use strict';
+
+    /**
+     * Sağlayıcıları (#providers-grid içindeki tüm .provider-item) toplayıp
+     * yalnızca 2 satıra böler ve her satırı sonsuz marquee için klonlar.
+     */
+    function setupProviderRows() {
+        var grid = document.querySelector('#footer-providers-section #providers-grid');
+        if (!grid) return;
+
+        // Zaten bizim tarafımızdan kurulmuşsa tekrar yapma
+        if (grid.getAttribute('data-mito-providers-built')) return;
+
+        // Tüm mevcut provider item'larını topla
+        var allItems = Array.prototype.slice.call(
+            grid.querySelectorAll('.provider-item')
+        );
+        if (allItems.length === 0) return;
+
+        // Grid'i temizle
+        grid.innerHTML = '';
+
+        // 2 adet satır oluştur
+        var row1 = document.createElement('div');
+        row1.className = 'provider-row mito-row-1';
+        var row2 = document.createElement('div');
+        row2.className = 'provider-row mito-row-2';
+
+        // Item'ları sırayla 2 satıra dağıt
+        allItems.forEach(function(item, index) {
+            var clone = item.cloneNode(true);
+            if (index % 2 === 0) {
+                row1.appendChild(clone);
+            } else {
+                row2.appendChild(clone);
+            }
+        });
+
+        grid.appendChild(row1);
+        grid.appendChild(row2);
+
+        // Sonsuz loop için her satırdaki item'ları bir kez daha klonla
+        [row1, row2].forEach(function(row) {
+            var items = Array.prototype.slice.call(row.children || []);
+            if (items.length < 2) return;
+            items.forEach(function(it) {
+                row.appendChild(it.cloneNode(true));
+            });
+        });
+
+        grid.setAttribute('data-mito-providers-built', '1');
+    }
+
+    /**
+     * Para birimleri ve ödeme yöntemleri için
+     * .footer__currencies içindeki ul.footer__accepted listelerini klonlar.
+     */
+    function setupAcceptedLists() {
+        var lists = document.querySelectorAll('.footer__currencies ul.footer__accepted');
+        lists.forEach(function(list) {
+            if (list.getAttribute('data-mito-marquee')) return;
+            list.setAttribute('data-mito-marquee', '1');
+
+            var items = Array.prototype.slice.call(list.querySelectorAll('li'));
+            if (items.length < 2) return;
+
+            items.forEach(function(item) {
+                var clone = item.cloneNode(true);
+                list.appendChild(clone);
+            });
+        });
+    }
+
+    function setupMarquee() {
+        setupProviderRows();
+        setupAcceptedLists();
+    }
+
+    function init() {
+        setupMarquee();
+
+        // DOM değişikliklerine karşı (geç yüklenen footer elemanları)
+        var footer = document.querySelector('#footer, footer, .footer__content');
+        if (footer) {
+            var observer = new MutationObserver(function() {
+                setupMarquee();
+            });
+            observer.observe(footer, { childList: true, subtree: true });
+        }
+
+        // 3 sn sonra bir kez daha çalıştır (güvenlik)
+        setTimeout(setupMarquee, 3000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 800); });
+    } else {
+        setTimeout(init, 800);
+    }
 })();
