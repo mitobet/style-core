@@ -1020,6 +1020,16 @@ header,
     box-shadow: none !important;
 }
 
+/* Sağlayıcı logoları - beyaz, yarı saydam */
+#footer-providers-section #providers-grid .partner img {
+    filter: brightness(0) invert(1) !important;
+    opacity: 0.5 !important;
+    transition: opacity 0.25s ease !important;
+}
+#footer-providers-section #providers-grid .partner:hover img {
+    opacity: 0.9 !important;
+}
+
 /* Para birimleri & ödeme yöntemleri - kutusuz */
 .footer__currencies ul.footer__accepted li,
 #footer-payment-methods ul.footer__accepted li,
@@ -1047,7 +1057,7 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     outline: none !important;
 }
 
-/* ——— Footer: "TÜMÜNÜ GÖR" Butonlarını Gizle ——— */
+/* ——— Footer: CMS "TÜMÜNÜ GÖR" Butonlarını Gizle ——— */
 #footer-providers-section .section__view,
 #footer-providers-section .section__view--carousel,
 #footer-providers-section .section__title-wrap .section__view,
@@ -1058,6 +1068,97 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
     width: 0 !important;
     height: 0 !important;
     overflow: hidden !important;
+}
+
+/* ——— Footer: Sağlayıcılar Collapse Sistemi ——— */
+
+/* Grid collapse: varsayılan 2 satır (~180px web, ~130px mobil) */
+#footer-providers-section #providers-grid {
+    max-height: 180px !important;
+    overflow: hidden !important;
+    position: relative !important;
+    transition: max-height 0.5s ease !important;
+}
+
+/* Açık durumda */
+#footer-providers-section #providers-grid.mito-expanded {
+    max-height: 3000px !important;
+}
+
+/* Alt gradient fade — "devamı var" hissi */
+#footer-providers-section #providers-grid::after {
+    content: '' !important;
+    display: block !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 60px !important;
+    background: linear-gradient(to bottom, transparent, #181818 90%) !important;
+    pointer-events: none !important;
+    z-index: 2 !important;
+    transition: opacity 0.4s ease !important;
+}
+
+/* Açık durumda gradient kaybolsun */
+#footer-providers-section #providers-grid.mito-expanded::after {
+    opacity: 0 !important;
+    height: 0 !important;
+}
+
+/* Toggle buton stili */
+.mito-providers-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    margin: 12px auto 0 !important;
+    padding: 8px 22px !important;
+    background: transparent !important;
+    border: 1px solid rgba(207, 174, 109, 0.35) !important;
+    border-radius: 20px !important;
+    color: #CFAE6D !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    outline: none !important;
+}
+
+.mito-providers-toggle:hover {
+    border-color: #CFAE6D !important;
+    background: rgba(207, 174, 109, 0.08) !important;
+    color: #e9c37a !important;
+}
+
+/* Ok ikonu */
+.mito-providers-toggle .mito-toggle-arrow {
+    display: inline-block !important;
+    transition: transform 0.35s ease !important;
+    font-size: 10px !important;
+}
+
+/* Açık durumda ok yukarı dönsün */
+.mito-providers-toggle.mito-expanded .mito-toggle-arrow {
+    transform: rotate(180deg) !important;
+}
+
+/* Mobil ayarlar */
+@media (max-width: 767px) {
+    #footer-providers-section #providers-grid {
+        max-height: 130px !important;
+    }
+
+    #footer-providers-section #providers-grid::after {
+        height: 50px !important;
+    }
+
+    .mito-providers-toggle {
+        font-size: 11px !important;
+        padding: 6px 18px !important;
+        margin-top: 8px !important;
+    }
 }
 
 /* ——— Random Winners Slider Gizle (Web & Mobil) ——— */
