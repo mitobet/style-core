@@ -21,100 +21,30 @@
         return 'tr';
     }
 
-    // ===== CANLI DESTEK BAKIM POPUP'I =====
-    var supportPopupOverlay = null;
-    var supportPopupModal = null;
-
-    function ensureSupportPopup() {
-        if (supportPopupOverlay && supportPopupModal) return;
-
-        supportPopupOverlay = document.createElement('div');
-        supportPopupOverlay.className = 'mito-support-popup-overlay';
-        supportPopupOverlay.style.cssText =
-            'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;' +
-            'background:rgba(0,0,0,0.75);backdrop-filter:blur(2px);opacity:0;pointer-events:none;' +
-            'transition:opacity 0.25s ease;';
-
-        supportPopupModal = document.createElement('div');
-        supportPopupModal.className = 'mito-support-popup';
-        supportPopupModal.style.cssText =
-            'background:#181818;border:1px solid #CFAE6D;border-radius:10px;box-shadow:0 18px 45px rgba(0,0,0,0.85);' +
-            'padding:20px 22px;max-width:420px;width:92%;color:#f9f9f9;font-family:inherit;position:relative;';
-
-        var title = document.createElement('div');
-        title.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:10px;font-weight:600;font-size:16px;';
-        var icon = document.createElement('span');
-        icon.style.cssText =
-            'width:22px;height:22px;border-radius:50%;border:2px solid #EAB308;display:flex;align-items:center;justify-content:center;' +
-            'color:#EAB308;font-size:14px;flex-shrink:0;';
-        icon.textContent = '!';
-        var titleText = document.createElement('span');
-        titleText.textContent = 'Canlı Destek Altyapı Güncellemesi';
-
-        title.appendChild(icon);
-        title.appendChild(titleText);
-
-        var body = document.createElement('div');
-        body.style.cssText = 'font-size:13px;line-height:1.6;color:#e5e5e5;margin-bottom:16px;';
-        body.innerHTML =
-            '<p>Değerli MitoBet üyesi, canlı destek altyapımızda performans ve güvenlik iyileştirmeleri yapıyoruz.</p>' +
-            '<p>Kısa bir süre boyunca canlı destek paneline erişim sınırlı olabilir. Tüm işlemleriniz kesintisiz devam etmektedir.</p>' +
-            '<p>Bize bu süreçte <strong>resmî Telegram kanalımız</strong> üzerinden her zaman ulaşabilirsiniz.</p>';
-
-        var actions = document.createElement('div');
-        actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end;';
-
-        var tgBtn = document.createElement('a');
-        tgBtn.href = 'https://t.me/mitobetsupport';
-        tgBtn.target = '_blank';
-        tgBtn.textContent = 'Telegram ile İletişim';
-        tgBtn.style.cssText =
-            'flex:1 1 auto;text-align:center;padding:8px 14px;border-radius:999px;border:none;cursor:pointer;' +
-            'background:linear-gradient(90deg,#FACC6B,#CFAE6D);color:#111;font-weight:600;font-size:13px;text-decoration:none;';
-
-        var closeBtn = document.createElement('button');
-        closeBtn.type = 'button';
-        closeBtn.textContent = 'Kapat';
-        closeBtn.style.cssText =
-            'flex:0 0 auto;padding:8px 14px;border-radius:999px;border:1px solid rgba(207,174,109,0.65);' +
-            'background:transparent;color:#f5f5f5;font-size:12px;cursor:pointer;';
-
-        actions.appendChild(tgBtn);
-        actions.appendChild(closeBtn);
-
-        supportPopupModal.appendChild(title);
-        supportPopupModal.appendChild(body);
-        supportPopupModal.appendChild(actions);
-        supportPopupOverlay.appendChild(supportPopupModal);
-
-        function hide() {
-            supportPopupOverlay.style.opacity = '0';
-            supportPopupOverlay.style.pointerEvents = 'none';
-        }
-
-        closeBtn.addEventListener('click', hide);
-        supportPopupOverlay.addEventListener('click', function(e) {
-            if (e.target === supportPopupOverlay) hide();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') hide();
-        });
-
-        document.body.appendChild(supportPopupOverlay);
-    }
-
-    function showSupportPopup() {
-        ensureSupportPopup();
-        requestAnimationFrame(function() {
-            supportPopupOverlay.style.opacity = '1';
-            supportPopupOverlay.style.pointerEvents = 'auto';
-        });
-    }
-
+    // ===== CANLI DESTEK — Comm100 Widget Açma =====
     function createSupportClickHandler() {
         return function() {
-            showSupportPopup();
+            try {
+                // Comm100 API ile widget'ı aç
+                if (typeof window.Comm100API !== 'undefined' && window.Comm100API) {
+                    if (typeof window.Comm100API.open_chat_window === 'function') {
+                        window.Comm100API.open_chat_window();
+                        return;
+                    }
+                    if (typeof window.Comm100API.do === 'function') {
+                        window.Comm100API.do('livechat.button.click');
+                        return;
+                    }
+                }
+                // Fallback: Comm100'in kendi widget butonuna tıkla
+                var comm100Btn = document.querySelector('#comm100-float-button-f4df5455-dbc5-4a00-af9b-63e3890e8521-2 a, [id*="comm100-float-button"] a');
+                if (comm100Btn) {
+                    comm100Btn.click();
+                    return;
+                }
+            } catch(e) {
+                console.warn('[MITO] Comm100 widget açılamadı:', e);
+            }
         };
     }
 
@@ -455,23 +385,6 @@
     }
 
     function init() {
-        // Comm100 deprecated API hatalarını engelle — sayfa yüklenirken oluşan TypeError'u durdur
-        try {
-            if (typeof window.Comm100API !== 'undefined' && window.Comm100API) {
-                if (!window.Comm100API.open_chat_window || typeof window.Comm100API.open_chat_window !== 'function') {
-                    window.Comm100API.open_chat_window = function() {
-                        showSupportPopup();
-                    };
-                }
-            } else {
-                window.Comm100API = {
-                    open_chat_window: function() { showSupportPopup(); },
-                    open: function() { showSupportPopup(); },
-                    do: function() { showSupportPopup(); }
-                };
-            }
-        } catch(e) {}
-
         injectAnimationCSS();
 
         if (window.innerWidth > 992) {
@@ -480,45 +393,6 @@
             addMobileBar();
             fixMobileHeaderHeight();
         }
-
-        // Sitedeki tüm canlı destek/destek bağlantılarını yakala ve popup'a yönlendir
-        document.addEventListener('click', function(e) {
-            var target = e.target;
-            if (!target) return;
-
-            var el = target.closest ? target.closest('a, button, [role="button"]') : target;
-            if (!el) return;
-
-            var dominated = false;
-            var href = (el.getAttribute('href') || '').toLowerCase();
-            var text = (el.textContent || '').trim().toLowerCase();
-            var cls = (typeof el.className === 'string' ? el.className : '').toLowerCase();
-
-            // Bizim butonlarımız (class kontrolü)
-            if (cls.indexOf('mito-header-btn--support') > -1 || cls.indexOf('mito-mobile-btn--support') > -1) dominated = true;
-            // Parent kontrol (span içinden tıklama)
-            if (target.closest && target.closest('.mito-header-btn--support, .mito-mobile-btn--support')) dominated = true;
-
-            // href kontrolleri
-            if (href.indexOf('/contact') > -1 || href.indexOf('livechat') > -1 || href.indexOf('live-support') > -1) dominated = true;
-
-            // text kontrolleri (indexOf kullan, tam eşitlik değil)
-            if (text.indexOf('canlı destek') > -1 || text.indexOf('canli destek') > -1 ||
-                text.indexOf('live support') > -1 || text === 'destek') dominated = true;
-
-            // Comm100 elementleri
-            if (el.id && el.id.toLowerCase().indexOf('comm100') > -1) dominated = true;
-            if (cls.indexOf('comm100') > -1) dominated = true;
-
-            // Alt navbar Destek butonu (#tabbar içinde)
-            if (el.closest && el.closest('#tabbar') && text.indexOf('destek') > -1) dominated = true;
-
-            if (dominated) {
-                e.preventDefault();
-                e.stopPropagation();
-                showSupportPopup();
-            }
-        }, true);
 
         // Animasyonları başlat
         startPromoSlider();
