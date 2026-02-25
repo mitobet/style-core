@@ -655,8 +655,13 @@ input, select, textarea,
 
     // ===== PROMO TEXT SLİDER =====
     var promoTexts = ['PROMOSYONLAR', 'HEMEN KAZAN', 'BONUSLAR'];
+    var promoTextsEn = ['PROMOTIONS', 'WIN NOW', 'BONUSES'];
     var promoIdx = 0;
     var sliding = false;
+
+    function getPromoTexts() {
+        return getLang() === 'en' ? promoTextsEn : promoTexts;
+    }
 
     function setupPromoSlider(btn) {
         if (!btn || btn.getAttribute('data-mito-slider')) return;
@@ -666,6 +671,7 @@ input, select, textarea,
         var isDesktop = !!textEl;
         var cs = getComputedStyle(btn);
         var lineH = parseInt(cs.fontSize) || 12;
+        var texts = getPromoTexts();
 
         // Buton boyutunu sabitle
         var rect = btn.getBoundingClientRect();
@@ -676,12 +682,12 @@ input, select, textarea,
         btn.style.setProperty('min-height', rect.height + 'px', 'important');
         btn.style.setProperty('max-height', rect.height + 'px', 'important');
 
-        // En uzun text genişliği
+        // En uzun text genişliği (mevcut dil)
         var measure = document.createElement('span');
         measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + cs.font + ';letter-spacing:' + cs.letterSpacing + ';';
         document.body.appendChild(measure);
         var maxW = 0;
-        promoTexts.forEach(function(t) { measure.textContent = t; if (measure.offsetWidth > maxW) maxW = measure.offsetWidth; });
+        texts.forEach(function(t) { measure.textContent = t; if (measure.offsetWidth > maxW) maxW = measure.offsetWidth; });
         document.body.removeChild(measure);
 
         // Mask
@@ -691,13 +697,13 @@ input, select, textarea,
             'height:' + lineH + 'px;line-height:' + lineH + 'px;vertical-align:middle;' +
             'width:' + maxW + 'px;text-align:center;';
 
-        // A span (görünür, mevcut text)
+        // A span (görünür, mevcut dildeki sıradaki metin)
         var spanA = document.createElement('span');
         spanA.className = 'mito-slide-a';
         spanA.style.cssText = 'display:block;position:absolute;left:0;right:0;top:0;height:' + lineH + 'px;' +
             'line-height:' + lineH + 'px;white-space:nowrap;text-align:center;' +
             'will-change:transform;backface-visibility:hidden;';
-        spanA.textContent = isDesktop ? textEl.textContent.trim() : btn.textContent.trim();
+        spanA.textContent = texts[promoIdx % texts.length];
 
         // B span (aşağıda bekliyor)
         var spanB = document.createElement('span');
@@ -729,8 +735,9 @@ input, select, textarea,
         var id = setInterval(function() {
             if (sliding) return;
             sliding = true;
-            promoIdx = (promoIdx + 1) % promoTexts.length;
-            var newText = promoTexts[promoIdx];
+            var texts = getPromoTexts();
+            promoIdx = (promoIdx + 1) % texts.length;
+            var newText = texts[promoIdx];
 
             document.querySelectorAll('.mito-slider-mask').forEach(function(mask) {
                 var spanA = mask.querySelector('.mito-slide-a');
