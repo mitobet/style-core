@@ -241,15 +241,20 @@
         var header = document.querySelector('#header') || document.querySelector('header');
         if (!header) return;
 
+        var lang = getLang();
         var nextDomain = getNextDomain();
         var topbar = document.createElement('div');
         topbar.className = 'mito-topbar';
         topbar.setAttribute('data-mito-extra', 'topbar');
 
+        var labelNext = lang === 'en' ? 'Next address:' : 'Sıradaki adresimiz:';
+        var labelLogin = lang === 'en' ? 'Current login:' : 'Güncel Giriş:';
+        var linkHref = 'https://mito.ws/giris';
+
         if (nextDomain) {
-            topbar.innerHTML = '<span>Sıradaki adresimiz:</span> <a href="https://mito.ws" target="_blank">' + nextDomain + '</a>';
+            topbar.innerHTML = '<span>' + labelNext + '</span> <a href="' + linkHref + '" target="_blank">' + nextDomain + '</a>';
         } else {
-            topbar.innerHTML = '<span>Güncel Giriş:</span> <a href="https://mito.ws" target="_blank">mito.ws</a>';
+            topbar.innerHTML = '<span>' + labelLogin + '</span> <a href="' + linkHref + '" target="_blank">mito.ws</a>';
         }
 
         header.parentNode.insertBefore(topbar, header);
