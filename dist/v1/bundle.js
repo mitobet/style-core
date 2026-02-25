@@ -584,6 +584,9 @@ input, select, textarea,
 
     // Font Awesome kaldırıldı (ikonlar kullanılmıyor)
 
+    /** Geçici: menüden dil değişince üst bar/butonları güncelleme — true yapınca tekrar aktif */
+    var SPA_LANG_REFRESH_ENABLED = false;
+
     var lastMitoPath = '';
 
     function getLang() {
@@ -1012,18 +1015,20 @@ input, select, textarea,
             fixMobileHeaderHeight();
         }
 
-        // SPA: URL değişince (dil değişimi) metinleri güncelle
-        window.addEventListener('popstate', function() { refreshMitoLang(); });
-        var origPush = history.pushState;
-        var origReplace = history.replaceState;
-        history.pushState = function() {
-            origPush.apply(this, arguments);
-            refreshMitoLang();
-        };
-        history.replaceState = function() {
-            origReplace.apply(this, arguments);
-            refreshMitoLang();
-        };
+        // SPA: URL değişince (dil değişimi) metinleri güncelle — SPA_LANG_REFRESH_ENABLED true iken aktif
+        if (SPA_LANG_REFRESH_ENABLED) {
+            window.addEventListener('popstate', function() { refreshMitoLang(); });
+            var origPush = history.pushState;
+            var origReplace = history.replaceState;
+            history.pushState = function() {
+                origPush.apply(this, arguments);
+                refreshMitoLang();
+            };
+            history.replaceState = function() {
+                origReplace.apply(this, arguments);
+                refreshMitoLang();
+            };
+        }
 
         // Animasyonları başlat
         startPromoSlider();
