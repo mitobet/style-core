@@ -15,10 +15,46 @@
 
     // Font Awesome kaldırıldı (ikonlar kullanılmıyor)
 
+    var lastMitoPath = '';
+
     function getLang() {
         var path = window.location.pathname;
         if (path.indexOf('/en') === 0 || path === '/en') return 'en';
         return 'tr';
+    }
+
+    /** SPA: URL değişince üst bar ve butonları mevcut dile göre yeniden oluştur */
+    function refreshMitoLang() {
+        var path = window.location.pathname;
+        if (path === lastMitoPath) return;
+        lastMitoPath = path;
+
+        var topbar = document.querySelector('.mito-topbar');
+        if (topbar) topbar.remove();
+
+        var headerActions = document.querySelector('.header__actions');
+        if (headerActions) {
+            headerActions.querySelectorAll('.mito-header-btn, .mito-header-divider').forEach(function(el) { el.remove(); });
+        }
+
+        var mobileBar = document.querySelector('.mito-mobile-bar');
+        if (mobileBar) mobileBar.remove();
+
+        addTopBar();
+        if (window.innerWidth > 992) {
+            addDesktopButtons();
+        } else {
+            addMobileBar();
+            fixMobileHeaderHeight();
+        }
+        setupPromoSlidersForCurrentButtons();
+    }
+
+    /** Yeni eklenen promo butonlarına slider kur (SPA refresh sonrası) */
+    function setupPromoSlidersForCurrentButtons() {
+        setTimeout(function() {
+            document.querySelectorAll('.mito-header-btn--promo, .mito-mobile-btn--promo').forEach(setupPromoSlider);
+        }, 300);
     }
 
     // ===== CANLI DESTEK — Comm100 Widget Açma =====
@@ -390,6 +426,7 @@
     }
 
     function init() {
+        lastMitoPath = window.location.pathname;
         injectAnimationCSS();
 
         if (window.innerWidth > 992) {
@@ -398,6 +435,19 @@
             addMobileBar();
             fixMobileHeaderHeight();
         }
+
+        // SPA: URL değişince (dil değişimi) metinleri güncelle
+        window.addEventListener('popstate', function() { refreshMitoLang(); });
+        var origPush = history.pushState;
+        var origReplace = history.replaceState;
+        history.pushState = function() {
+            origPush.apply(this, arguments);
+            refreshMitoLang();
+        };
+        history.replaceState = function() {
+            origReplace.apply(this, arguments);
+            refreshMitoLang();
+        };
 
         // Animasyonları başlat
         startPromoSlider();
