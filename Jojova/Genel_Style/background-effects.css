@@ -1,0 +1,55 @@
+/* Background Effects */
+body {
+    position: relative;
+    overflow-x: hidden;
+    background: #273341 !important;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/ze0z0eskNINKF115seHnujKtLKXg9nCOdHqspqfg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#main__content,
+.main-content,
+[id*="main"] {
+    position: relative;
+    z-index: 2;
+    background: transparent !important;
+}
+
+
+.background-glow {
+    position: absolute;
+    width: 1200px;
+    height: 800px;
+    top: 400px;
+    left: -306px;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: -1;
+    filter: blur(100px);
+    mix-blend-mode: color-dodge;
+}
+
+.background-container {
+    position: absolute;
+    top: 330px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

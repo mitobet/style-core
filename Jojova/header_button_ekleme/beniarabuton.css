@@ -1,0 +1,272 @@
+/* Desktop styles for contact_button_new - Giriş yap butonu referansı */
+.contact_button_new {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    height: 46px !important;
+    padding: 0 18px !important;
+    margin: 0 !important;
+    border-radius: 12px !important;
+    color: var(--tf-tc) !important;
+    text-decoration: none !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    min-width: auto !important;
+    width: auto !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    border: 2px solid rgba(255, 229, 92, 0.2) !important;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+    box-shadow: 0 3px 12px rgba(255, 229, 92, 0.15) !important;
+}
+
+/* Phone icon for contact_button_new */
+.contact_button_new::before {
+    content: '📞' !important; /* Direct Unicode phone icon */
+    margin-right: 8px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 22px !important;
+}
+
+/* Shine efekti - giriş yap butonu gibi */
+.contact_button_new::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent) !important;
+    transition: left 0.6s ease !important;
+    z-index: 1 !important;
+}
+
+/* Hover effect - giriş yap butonu gibi */
+.contact_button_new:hover {
+    border-color: rgba(255, 229, 92, 0.4) !important;
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.04) 100%) !important;
+    color: #ffffff !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 30px rgba(255, 229, 92, 0.3) !important;
+}
+
+.contact_button_new:hover::after {
+    left: 100% !important;
+}
+
+/* Pulse animation kaldırıldı - giriş yap butonu gibi */
+
+/* Mobile styles - Giriş yap butonu referansı ile sadece simge */
+@media (max-width: 767px) {
+    .contact_button_new {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 50px !important;
+        width: 50px !important;
+        min-width: 50px !important;
+        max-width: 50px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        border-radius: 8px !important;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%) !important;
+        border: 1px solid rgba(255, 229, 92, 0.1) !important;
+        box-shadow: none !important;
+        color: var(--tf-tc) !important;
+        font-size: 0 !important;
+        white-space: nowrap !important;
+        position: relative !important;
+        overflow: hidden !important;
+        animation: none !important;
+        gap: 0 !important;
+    }
+
+    .contact_button_new::before {
+        content: '📞' !important;
+        margin-right: 0 !important;
+        display: block !important;
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 20px !important;
+        line-height: 1 !important;
+    }
+
+    .contact_button_new::after {
+        display: none !important;
+    }
+
+    .contact_button_new:hover {
+        border-color: rgba(255, 229, 92, 0.4) !important;
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.04) 100%) !important;
+        color: #ffffff !important;
+        transform: translateY(-3px) !important;
+        box-shadow: 0 10px 30px rgba(255, 229, 92, 0.3) !important;
+    }
+
+    .contact_button_new span {
+        display: none !important;
+        visibility: hidden !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* Talep Form Stilleri */
+.talep-form-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(0, 0, 0, 0.85) !important; /* daha koyu siyah */
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 9999 !important;
+}
+
+.talep-form-container {
+    background: linear-gradient(180deg, #0f0f10 0%, #141414 100%) !important; /* siyah türevleri */
+    border: 1px solid rgba(255, 229, 92, 0.28) !important; /* sarı vurgu */
+    border-radius: 12px !important;
+    padding: 30px !important;
+    width: 90% !important;
+    max-width: 480px !important;
+    position: relative !important;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+.talep-form-container h3 {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    font-weight: 700 !important;
+}
+
+.talep-form-close {
+    position: absolute !important;
+    top: 10px !important;
+    right: 15px !important;
+    font-size: 24px !important;
+    background: none !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    cursor: pointer !important;
+}
+
+.talep-form-close:hover {
+    color: #ffffff !important;
+}
+
+.talep-form-container form {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+}
+
+.talep-form-container input,
+.talep-form-container textarea {
+    padding: 12px 15px !important;
+    border-radius: 8px !important;
+    border: 1px solid rgba(255, 229, 92, 0.2) !important;
+    background: rgba(20, 20, 30, 0.6) !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+}
+
+.talep-form-container textarea {
+    min-height: 120px !important;
+    resize: vertical !important;
+}
+
+.talep-form-container input:focus,
+.talep-form-container textarea:focus {
+    outline: none !important;
+    border-color: rgba(255, 229, 92, 0.5) !important;
+    box-shadow: 0 0 10px rgba(255, 229, 92, 0.2) !important;
+}
+
+.talep-form-container button[type="submit"] {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.8) 0%, rgba(255, 165, 0, 0.8) 100%) !important;
+    color: #000000 !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.talep-form-container button[type="submit"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(255, 229, 92, 0.4) !important;
+}
+
+/* Mobile styles for form */
+@media (max-width: 767px) {
+    .talep-form-container {
+        padding: 20px !important;
+        width: 95% !important;
+    }
+    
+    .talep-form-container h3 {
+        font-size: 20px !important;
+    }
+    
+    .talep-form-container input,
+    .talep-form-container textarea {
+        padding: 10px !important;
+        font-size: 14px !important;
+    }
+    
+    .talep-form-container button[type="submit"] {
+        padding: 10px !important;
+        font-size: 16px !important;
+    }
+}
+
+/* Success card (daha profesyonel görünüm) */
+.success-wrap { width: 100% !important; }
+.success-card {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+    border: 1px solid rgba(255, 229, 92, 0.45) !important;
+    background: linear-gradient(180deg, rgba(255,215,0,0.08), rgba(255,215,0,0.04)) !important;
+    color: #FFE55C !important;
+}
+.success-card__icon {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: radial-gradient(circle at 30% 30%, #FFE680, #FFE55C) !important;
+    color: #111 !important;
+    font-weight: 800 !important;
+    box-shadow: 0 2px 8px rgba(255, 229, 92, 0.35) !important;
+}
+.success-card__texts { display: flex !important; flex-direction: column !important; }
+.success-card__title { color: #FFE55C !important; font-weight: 800 !important; }
+.success-card__desc { color: rgba(255,255,255,0.85) !important; font-size: 14px !important; margin-top: 2px !important; }
+.success-card__bar { width: 100% !important; height: 3px !important; border-radius: 2px !important; background: linear-gradient(90deg, #FFE55C, #FFB000) !important; margin-top: 10px !important; animation: successBar 3s linear forwards !important; }
+
+@keyframes successBar { from { width: 100%; } to { width: 0%; } }

@@ -1,0 +1,71 @@
+/* ========================================
+   MOBİL ALT BAR - ORTA BUTON İKON DEĞİŞTİRME
+   ======================================== */
+
+/* ========================================
+   ORTA BUTON İKON DEĞİŞTİRME
+   ======================================== */
+
+@keyframes goldenGlow {
+    0%, 100% {
+        filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.8)) 
+                drop-shadow(0 0 8px rgba(255, 215, 0, 0.6))
+                drop-shadow(0 0 12px rgba(255, 215, 0, 0.4));
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 1)) 
+                drop-shadow(0 0 16px rgba(255, 215, 0, 0.8))
+                drop-shadow(0 0 24px rgba(255, 215, 0, 0.6));
+        transform: scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+/* Mobil cihazlarda uygula */
+@media (max-width: 768px) {
+    /* Inner menu button boyutunu ayarla */
+    .inner-menu.closed button {
+        width: 64px !important;
+        height: 64px !important;
+        overflow: visible !important;
+    }
+    
+    /* Button span */
+    .inner-menu.closed button span {
+        width: 100% !important;
+        height: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Orijinal dice ikonunu gizle */
+    .inner-menu.closed .icon.plus svg {
+        display: none !important;
+    }
+    
+    /* Yeni SVG ile değiştir - Renkli */
+    .inner-menu.closed .icon.plus {
+        width: 52px !important;
+        height: 52px !important;
+        background-color: #FFE55C !important;
+        -webkit-mask-image: url('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/o3YKTIIrCiBOXGeVTAHvKbSdXWCBx4nhcXalWjFn.svg') !important;
+        mask-image: url('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/o3YKTIIrCiBOXGeVTAHvKbSdXWCBx4nhcXalWjFn.svg') !important;
+        -webkit-mask-size: 100% 100% !important;
+        mask-size: 100% 100% !important;
+        -webkit-mask-repeat: no-repeat !important;
+        mask-repeat: no-repeat !important;
+        -webkit-mask-position: center !important;
+        mask-position: center !important;
+        animation: goldenGlow 2s ease-in-out infinite !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .inner-menu.closed button:hover .icon.plus {
+        transform: scale(1.15) rotate(-5deg) !important;
+    }
+}
+
+

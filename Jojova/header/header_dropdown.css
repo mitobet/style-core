@@ -1,0 +1,561 @@
+/* Header Dropdown Styles - Login Sonrası Kullanıcı Menüsü */
+
+/* Ana dropdown container */
+.header__dropdown {
+    position: relative;
+}
+
+/* Dropdown toggle button - User ve Notifications için */
+.header__action,
+#dropdownNotifications {
+    background: transparent;
+    border: 1px solid rgba(255, 229, 92, 0.2);
+    border-radius: 8px;
+    padding: 8px;
+    transition: all 0.3s ease;
+}
+
+.header__action:hover,
+#dropdownNotifications:hover {
+    background: rgba(255, 229, 92, 0.1);
+    border-color: rgba(255, 229, 92, 0.4);
+    transform: translateY(-1px);
+}
+
+.header__action.show,
+#dropdownNotifications.show {
+    background: rgba(255, 229, 92, 0.15);
+    border-color: rgba(255, 229, 92, 0.5);
+}
+
+/* Notifications buton icon stilleri */
+#dropdownNotifications .svg-icon {
+    stroke: var(--tf-tc2);
+    fill: var(--tf-tc2);
+    transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+#dropdownNotifications:hover .svg-icon,
+#dropdownNotifications.show .svg-icon {
+    stroke: var(--tf-active);
+    fill: var(--tf-active);
+}
+
+/* Dropdown menu - Premium Dark Style, kesik gözükmesin */
+.header__user-menu {
+    background: #0a0a0a !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    min-width: 260px;
+    margin-top: 8px;
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    position: relative;
+    overflow: visible;
+}
+
+/* Light mode için arka plan */
+[data-bs-theme="light"] .header__user-menu {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 
+                0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Dropdown menu items - animasyon kaldırıldı, direkt görünür */
+.header__user-menu li {
+    margin-bottom: 4px;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.1s ease;
+}
+
+.header__user-menu li:last-child {
+    margin-bottom: 0;
+}
+
+.header__user-menu a,
+.header__user-menu button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 229, 92, 0.1);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+/* Sidebar'dan alınan shine effect */
+.header__user-menu a:before, 
+.header__user-menu button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.header__user-menu a:hover:before, 
+.header__user-menu button:hover:before {
+    left: 100%;
+}
+
+/* Light mode için link renkleri */
+[data-bs-theme="light"] .header__user-menu a,
+[data-bs-theme="light"] .header__user-menu button {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1d2735;
+}
+
+/* Premium hover efekti - Sadece seçim, büyüme yok */
+.header__user-menu a:hover,
+.header__user-menu button:hover {
+    border-color: rgba(255, 229, 92, 0.3);
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.05) 0%, rgba(255, 229, 92, 0.02) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #ffffff;
+}
+
+[data-bs-theme="light"] .header__user-menu a:hover,
+[data-bs-theme="light"] .header__user-menu button:hover {
+    background: rgba(255, 229, 92, 0.2);
+    border-color: rgba(255, 229, 92, 0.4);
+    color: #1d2735;
+}
+
+/* Icon stilleri - Sidebar tarzı */
+.header__user-menu .svg-icon,
+.header__user-menu .mini-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    stroke: var(--tf-tc2);
+    fill: var(--tf-tc2);
+    transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.header__user-menu a:hover .svg-icon,
+.header__user-menu a:hover .mini-icon,
+.header__user-menu button:hover .svg-icon,
+.header__user-menu button:hover .mini-icon {
+    stroke: var(--tf-active);
+    fill: var(--tf-active);
+}
+
+[data-bs-theme="light"] .header__user-menu a:hover .svg-icon,
+[data-bs-theme="light"] .header__user-menu a:hover .mini-icon,
+[data-bs-theme="light"] .header__user-menu button:hover .svg-icon,
+[data-bs-theme="light"] .header__user-menu button:hover .mini-icon {
+    fill: #1d2735;
+}
+
+/* Span text stilleri */
+.header__user-menu span {
+    flex: 1;
+    text-align: left;
+}
+
+/* Sidebar tarzı buton stilleri */
+
+/* Çıkış yap butonu */
+.header__user-menu li:last-child button {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.03) 100%);
+    border-color: rgba(255, 229, 92, 0.1);
+}
+
+.header__user-menu li:last-child button:hover {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.3);
+}
+
+.header__user-menu li:last-child button:hover .svg-icon {
+    stroke: var(--tf-active);
+    fill: var(--tf-active);
+}
+
+/* VIP butonu */
+.header__user-menu a[href*="vip"] {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.03) 100%);
+    border-color: rgba(255, 229, 92, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.header__user-menu a[href*="vip"]:hover {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.3);
+}
+
+/* Bonus talebi */
+.header__user-menu a[href*="bonus-code"] {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.03) 100%);
+    border-color: rgba(255, 229, 92, 0.1);
+}
+
+.header__user-menu a[href*="bonus-code"]:hover {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.3);
+}
+
+/* Canlı destek */
+.header__user-menu button:has(.svg-icon[href*="head-set"]) {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.03) 100%);
+    border-color: rgba(255, 229, 92, 0.1);
+}
+
+.header__user-menu button:has(.svg-icon[href*="head-set"]):hover {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.3);
+}
+
+/* Ayırıcı çizgi - Sidebar tarzı */
+.header__user-menu li:nth-child(9) {
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(255, 229, 92, 0.3);
+}
+
+/* Premium animasyon efektleri - minimal ve hızlı */
+.header__user-menu {
+    transform-origin: top right;
+    opacity: 1;
+    transform: none;
+}
+
+.header__user-menu.show {
+    animation: quickFadeIn 0.15s ease-out;
+}
+
+@keyframes quickFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Glow efekti kaldırıldı - performans ve tıklama için */
+
+/* Dropdown pozisyonlama düzeltmesi */
+.dropdown-menu.show[data-popper-placement="bottom-end"] {
+    right: 0;
+    left: auto !important;
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 768px) {
+    .header__user-menu {
+        min-width: 200px;
+        font-size: 13px;
+    }
+    
+    .header__user-menu a,
+    .header__user-menu button {
+        padding: 8px 10px;
+    }
+    
+    .header__user-menu .svg-icon,
+    .header__user-menu .mini-icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 8px;
+    }
+    
+
+}
+
+/* Daha küçük ekranlar için ekstra düzenleme */
+@media (max-width: 480px) {
+    /* Dropdown menü mobilde daha kompakt */
+    .header__user-menu {
+        min-width: 180px;
+        padding: 8px;
+    }
+    
+    .header__user-menu li {
+        margin-bottom: 2px;
+    }
+    
+    .header__user-menu a,
+    .header__user-menu button {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+    
+    .header__user-menu .svg-icon,
+    .header__user-menu .mini-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 6px;
+    }
+}
+
+/* Z-index düzenlemesi ve görünürlük garantisi */
+.header__dropdown .dropdown-menu {
+    z-index: 9999;
+}
+
+/* Menü açıkken kesinlikle görünür olsun */
+.header__user-menu.show {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Menü öğeleri her zaman görünür ve tıklanabilir */
+.header__user-menu li,
+.header__user-menu a,
+.header__user-menu button {
+    visibility: visible !important;
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Tıklanabilirliği garantile */
+.header__user-menu a,
+.header__user-menu button {
+    cursor: pointer !important;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+/* Focus durumunda görünür outline */
+.header__user-menu a:focus,
+.header__user-menu button:focus {
+    outline: 2px solid rgba(255, 229, 92, 0.5);
+    outline-offset: -2px;
+}
+
+/* Gölge ve derinlik efekti */
+.header__user-menu::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.3) 0%, rgba(255, 229, 92, 0.1) 100%);
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+[data-bs-theme="light"] .header__user-menu::before {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+/* ===== NOTIFICATIONS DROPDOWN STYLES ===== */
+/* Notifications dropdown - Aynı user menu stillerini kullan */
+
+/* Notifications dropdown menu */
+.header__notifications-menu,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] {
+    background: #0a0a0a !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 14px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    min-width: 300px;
+    margin-top: 8px;
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    backdrop-filter: blur(20px) saturate(180%);
+    position: relative;
+    overflow: visible;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+/* Light mode için notifications arka planı */
+[data-bs-theme="light"] .header__notifications-menu,
+[data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"] {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15), 
+                0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Notifications menu items */
+.header__notifications-menu li,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] li {
+    margin-bottom: 4px;
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.1s ease;
+}
+
+.header__notifications-menu li:last-child,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] li:last-child {
+    margin-bottom: 0;
+}
+
+.header__notifications-menu a,
+.header__notifications-menu button,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] a,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 229, 92, 0.1);
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 2px;
+}
+
+/* Shine effect for notifications */
+.header__notifications-menu a:before, 
+.header__notifications-menu button:before,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] a:before,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.header__notifications-menu a:hover:before, 
+.header__notifications-menu button:hover:before,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] a:hover:before,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] button:hover:before {
+    left: 100%;
+}
+
+/* Notifications hover effects */
+.header__notifications-menu a:hover,
+.header__notifications-menu button:hover,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] a:hover,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] button:hover {
+    border-color: rgba(255, 229, 92, 0.3);
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.05) 0%, rgba(255, 229, 92, 0.02) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #ffffff;
+}
+
+/* Light mode notifications */
+[data-bs-theme="light"] .header__notifications-menu a,
+[data-bs-theme="light"] .header__notifications-menu button,
+[data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"] a,
+[data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"] button {
+    background: rgba(0, 0, 0, 0.05);
+    color: #1d2735;
+}
+
+[data-bs-theme="light"] .header__notifications-menu a:hover,
+[data-bs-theme="light"] .header__notifications-menu button:hover,
+[data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"] a:hover,
+[data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"] button:hover {
+    background: rgba(255, 229, 92, 0.2);
+    border-color: rgba(255, 229, 92, 0.4);
+    color: #1d2735;
+}
+
+/* Notifications icon stilleri */
+.header__notifications-menu .svg-icon,
+.header__notifications-menu .mini-icon,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] .svg-icon,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] .mini-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 12px;
+    stroke: var(--tf-tc2);
+    fill: var(--tf-tc2);
+    transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.header__notifications-menu a:hover .svg-icon,
+.header__notifications-menu a:hover .mini-icon,
+.header__notifications-menu button:hover .svg-icon,
+.header__notifications-menu button:hover .mini-icon,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] a:hover .svg-icon,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] a:hover .mini-icon,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] button:hover .svg-icon,
+.dropdown-menu[aria-labelledby="dropdownNotifications"] button:hover .mini-icon {
+    stroke: var(--tf-active);
+    fill: var(--tf-active);
+}
+
+/* Notifications animasyon */
+.header__notifications-menu.show,
+.dropdown-menu[aria-labelledby="dropdownNotifications"].show {
+    animation: quickFadeIn 0.15s ease-out;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Notifications gölge efekti */
+.header__notifications-menu::before,
+.dropdown-menu[aria-labelledby="dropdownNotifications"]::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.3) 0%, rgba(255, 229, 92, 0.1) 100%);
+    border-radius: 12px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+[data-bs-theme="light"] .header__notifications-menu::before,
+[data-bs-theme="light"] .dropdown-menu[aria-labelledby="dropdownNotifications"]::before {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+}
+
+/* Header SVG'leri için sarı renk zorlaması */
+.header svg,
+.header .svg-icon,
+.header .mini-icon,
+.header__actions svg,
+.header__dropdown svg,
+.header__user-menu svg,
+.header__notifications-menu svg,
+.dropdown-menu svg {
+    fill: #FFE55C !important;
+    stroke: #FFE55C !important;
+    color: #FFE55C !important;
+}
+
+/* Header'daki tüm SVG path'leri için sarı renk */
+.header svg path,
+.header .svg-icon path,
+.header .mini-icon path,
+.header__actions svg path,
+.header__dropdown svg path,
+.header__user-menu svg path,
+.header__notifications-menu svg path,
+.dropdown-menu svg path {
+    fill: #FFE55C !important;
+    stroke: #FFE55C !important;
+}

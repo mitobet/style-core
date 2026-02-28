@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futbol Sekmesi Test</title>
+    <link rel="stylesheet" href="futbol_sekmesi.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .demo-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 5px solid #007bff;
+        }
+        
+        .demo-info h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        
+        .futbol-sekme-target {
+            margin: 30px 0;
+        }
+        
+        .test-controls {
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+        
+        .test-btn.danger {
+            background: #dc3545;
+        }
+        
+        .test-btn.danger:hover {
+            background: #c82333;
+        }
+        
+        .test-btn.success {
+            background: #28a745;
+        }
+        
+        .test-btn.success:hover {
+            background: #218838;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>⚽ Futbol Sekmesi Test Sayfası</h1>
+        
+        <div class="demo-info">
+            <h3>🎯 Test Bilgileri</h3>
+            <p><strong>Özellikler:</strong></p>
+            <ul>
+                <li>✅ Responsive tasarım (mobil uyumlu)</li>
+                <li>✅ 5 farklı futbol ligi (Bundesliga, La Liga, Premier League, Serie A, Süper Lig)</li>
+                <li>✅ Hover efektleri ve animasyonlar</li>
+                <li>✅ Resim yükleme kontrolü ve fallback</li>
+                <li>✅ Tıklama analitikleri</li>
+                <li>✅ Dark mode desteği</li>
+            </ul>
+        </div>
+        
+        <!-- Futbol sekmesi buraya yüklenecek -->
+        <div class="futbol-sekme-target"></div>
+        
+        <div class="test-controls">
+            <button class="test-btn" onclick="testRefresh()">🔄 Yenile</button>
+            <button class="test-btn danger" onclick="testDestroy()">🗑️ Kaldır</button>
+            <button class="test-btn success" onclick="testReload()">➕ Yeniden Yükle</button>
+        </div>
+        
+        <footer>
+            <p>Bu test sayfası futbol sekmesinin doğru çalışıp çalışmadığını kontrol etmek için oluşturulmuştur.</p>
+            <p>Geliştirici: JOJOVA CSS Framework</p>
+        </footer>
+    </div>
+
+    <script src="futbol_sekmesi.js"></script>
+    <script>
+        // Test fonksiyonları
+        function testRefresh() {
+            if (window.futbolSekmesi) {
+                window.futbolSekmesi.refresh();
+                console.log('Futbol sekmesi yenilendi');
+                alert('Futbol sekmesi yenilendi! ✅');
+            }
+        }
+        
+        function testDestroy() {
+            if (window.futbolSekmesi) {
+                window.futbolSekmesi.destroy();
+                console.log('Futbol sekmesi kaldırıldı');
+                alert('Futbol sekmesi kaldırıldı! 🗑️');
+            }
+        }
+        
+        function testReload() {
+            if (window.futbolSekmesi) {
+                window.futbolSekmesi.destroy();
+            }
+            window.futbolSekmesi = new FutbolSekmesi();
+            console.log('Futbol sekmesi yeniden yüklendi');
+            alert('Futbol sekmesi yeniden yüklendi! ➕');
+        }
+        
+        // Konsol logları için debug
+        console.log('Futbol Sekmesi Test Sayfası yüklendi');
+        console.log('Mevcut futbolSekmesi objesi:', window.futbolSekmesi);
+        
+        // Sayfa yüklendiğinde test
+        window.addEventListener('load', () => {
+            console.log('Sayfa tamamen yüklendi');
+            console.log('Futbol sekmesi durumu:', window.futbolSekmesi ? 'Aktif' : 'Pasif');
+        });
+        
+        // Responsive test
+        window.addEventListener('resize', () => {
+            console.log('Pencere boyutu değişti:', window.innerWidth + 'x' + window.innerHeight);
+        });
+    </script>
+</body>
+</html>

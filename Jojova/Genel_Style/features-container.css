@@ -1,0 +1,129 @@
+/* Features Container */
+.features-container {
+    width: calc(100% - 20px); /* Soldan ve sağdan 10px boşluk */
+    margin: 15px auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+}
+
+.features-inner {
+    margin: 0 auto;
+    width: 98%; /* Biraz daha daraltma */
+    max-width: 1400px;
+}
+
+.features-content {
+    display: flex;
+    gap: 4px; /* Öğeler arasındaki boşluğu azalttım */
+    justify-content: space-between;
+    width: 100%;
+}
+
+@keyframes featureFloat {
+    0% {
+        transform: translateY(0) translateX(0);
+        box-shadow: 0 3px 10px rgba(246, 96, 45, 0.15);
+    }
+    25% {
+        transform: translateY(-3px) translateX(1px);
+        box-shadow: 0 5px 12px rgba(246, 96, 45, 0.25);
+    }
+    75% {
+        transform: translateY(2px) translateX(-1px);
+        box-shadow: 0 4px 10px rgba(246, 96, 45, 0.2);
+    }
+    100% {
+        transform: translateY(0) translateX(0);
+        box-shadow: 0 3px 10px rgba(246, 96, 45, 0.15);
+    }
+}
+
+.feature-item {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 8px 6px;
+    border: 1px solid #FFE55C;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    justify-content: flex-start;
+    transition: all 0.4s ease;
+    animation: featureFloat 6s ease-in-out infinite;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    max-height: 65px;
+    overflow: hidden;
+}
+
+.feature-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(246, 96, 45, 0.2);
+    border-color: #EF9336;
+}
+
+.feature-icon-wrapper {
+    flex-shrink: 0;
+    margin-right: 8px;
+}
+
+.feature-icon-bg {
+    width: 35px;
+    height: 35px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #FFE55C 0%, #FFE55C 29%, #FFE55C 68%, #FFE55C 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.feature-icon-bg:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(142, 94, 65, 0.3);
+}
+
+.feature-icon-bg::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #8e5e41 0%, #452818 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    z-index: -1;
+}
+
+.feature-icon-bg:hover::after {
+    opacity: 0.6;
+}
+
+.feature-icon {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    transition: transform 0.4s ease;
+}
+
+.feature-icon-bg:hover .feature-icon {
+    transform: scale(1.1);
+}
+
+.feature-text {
+    flex: 1;
+}
+
+/* Web görünümü için feature-title */
+.feature-title {
+    color: #FFFFFF;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0px;
+    text-align: center;
+    white-space: normal;
+    overflow: visible;
+}
