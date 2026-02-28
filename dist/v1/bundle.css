@@ -541,56 +541,6 @@
         color: #CFAE6D !important;
         box-shadow: none !important;
     }
-
-    /* ——— Login Sonrası Header (Mobil) ——— */
-
-    /* ——— Login Sonrası Header (Mobil) ——— */
-
-    /* Logo dikeyde tam ortala */
-    .header__content .header__logo {
-        display: flex !important;
-        align-items: center !important;
-        margin-top: auto !important;
-        margin-bottom: auto !important;
-        height: 100% !important;
-    }
-
-    /* header__action - tüm ikonlar eşit aralıklı */
-    .header__content .header__action {
-        display: flex !important;
-        align-items: center !important;
-        gap: 12px !important;
-        margin-left: auto !important;
-    }
-
-    /* Bakiye + cüzdan yapışık */
-    .header__content .header__wallet {
-        display: flex !important;
-        align-items: center !important;
-        gap: 0 !important;
-    }
-
-    /* Bakiye yazısı küçült */
-    .header__content #dropdownWalet {
-        font-size: 12px !important;
-        padding: 0 4px !important;
-    }
-
-    /* Cüzdan ikon butonu bakiyeye yapışık */
-    .header__content .header__wallet-btn {
-        margin-left: 0 !important;
-        padding: 0 2px !important;
-    }
-
-    /* Bildirim & profil ikonları - eşit aralık (gap: 12px üstten geliyor) */
-    .header__content .header__dropdown {
-        display: flex !important;
-        align-items: center !important;
-    }
-
-    .header__content .header__dropdown button {
-        padding: 4px !important;
-    }
 }
 
 @media (max-width: 480px) {
@@ -607,11 +557,6 @@
     .header__signin,
     .header__signin.header__signup {
         box-shadow: none !important;
-    }
-
-    /* Login sonrası - daha küçük ekran */
-    .header__content #dropdownWalet {
-        font-size: 12px !important;
     }
 }
 
@@ -913,439 +858,6 @@ header,
     border-color: #CFAE6D !important;
 }
 
-/* ——— Para Yatır / Para Çek Container & Responsive ——— */
-
-/* Container padding düzeltme */
-.section--first > .container,
-.section:first-child > .container {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-}
-
-/* Üst satır (başlık + tablar) */
-.section--first .col-12.d-flex.justify-content-between,
-.section:first-child .col-12.d-flex.justify-content-between {
-    flex-wrap: wrap !important;
-    gap: 8px !important;
-    padding: 12px 0 !important;
-    margin-bottom: 8px !important;
-}
-
-/* Başlık */
-.section--first h1,
-.section:first-child .col-12.d-flex h1 {
-    font-size: clamp(18px, 4vw, 26px) !important;
-    white-space: nowrap !important;
-    margin: 0 !important;
-    line-height: 1.2 !important;
-}
-
-/* Tab'lar */
-#tabs-nav.nav.nav-tabs.tabs-nav {
-    flex-wrap: wrap !important;
-    gap: 4px !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-#tabs-nav .nav-link,
-#tabs-nav .nav-item .nav-link {
-    padding: 8px 14px !important;
-    font-size: 14px !important;
-    white-space: nowrap !important;
-    border-radius: 6px !important;
-}
-
-/* Kartlar satırı - üst boşluk */
-.section--first > .container > .row:nth-child(2),
-.section:first-child > .container > .row:nth-child(2) {
-    padding-top: 4px !important;
-}
-
-/* Mobil */
-@media (max-width: 767px) {
-    .section--first > .container,
-    .section:first-child > .container {
-        padding-left: 8px !important;
-        padding-right: 8px !important;
-    }
-
-    .section--first .col-12.d-flex.justify-content-between,
-    .section:first-child .col-12.d-flex.justify-content-between {
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 6px !important;
-        padding: 10px 0 !important;
-        margin-bottom: 4px !important;
-    }
-
-    .section--first h1,
-    .section:first-child .col-12.d-flex h1 {
-        font-size: 20px !important;
-    }
-
-    #tabs-nav.nav.nav-tabs.tabs-nav {
-        width: 100% !important;
-    }
-
-    #tabs-nav .nav-link,
-    #tabs-nav .nav-item .nav-link {
-        padding: 6px 10px !important;
-        font-size: 13px !important;
-    }
-
-    /* Kartlar arası boşluk */
-    .section--first > .container > .row:nth-child(2) > [class*="col-"],
-    .section:first-child > .container > .row:nth-child(2) > [class*="col-"] {
-        padding-left: 4px !important;
-        padding-right: 4px !important;
-        margin-bottom: 8px !important;
-    }
-}
-
-/* ——— Footer: Kutusuz Tasarım (Sadece border/bg/shadow kaldırma) ——— */
-
-/* Sağlayıcı kartları - kutusuz */
-#footer-providers-section #providers-grid .provider-item {
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-#footer-providers-section #providers-grid .provider-item .partner,
-#footer-providers-section #providers-grid .partner {
-    border: none !important;
-    background: transparent !important;
-    box-shadow: none !important;
-}
-
-/* Sağlayıcı logoları - beyaz, yarı saydam */
-#footer-providers-section #providers-grid .partner img {
-    filter: brightness(0) invert(1) !important;
-    opacity: 0.5 !important;
-    transition: opacity 0.25s ease !important;
-}
-#footer-providers-section #providers-grid .partner:hover img {
-    opacity: 0.9 !important;
-}
-
-/* Para birimleri & ödeme yöntemleri - kutusuz */
-.footer__currencies ul.footer__accepted li,
-#footer-payment-methods ul.footer__accepted li,
-div.footer__currencies ul.footer__accepted li {
-    border: none !important;
-    border-width: 0 !important;
-    background: transparent !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-.footer__currencies ul.footer__accepted .instrument-icon-wrapper,
-#footer-payment-methods ul.footer__accepted li .instrument-icon-wrapper,
-#footer-payment-methods .footer__accepted li .instrument-icon-wrapper,
-div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
-.footer__currencies .footer__accepted .instrument-icon-wrapper {
-    background: transparent !important;
-    background-color: transparent !important;
-    background-image: none !important;
-    border: none !important;
-    border-width: 0 !important;
-    border-radius: 0 !important;
-    box-shadow: none !important;
-    outline: none !important;
-}
-
-/* ——— Footer: Para Birimleri & Ödeme Yöntemleri Efektleri ——— */
-
-/* Idle pulse animasyonu (sadece ödeme yöntemleri için) */
-@keyframes mito-icon-pulse {
-    0%, 100% { opacity: 0.65; }
-    50% { opacity: 0.88; }
-}
-
-/* ——— KABUL EDİLEN PARA BİRİMLERİ — Jojova Tarzı ——— */
-
-/* Container: altın border çerçeve, koyu arka plan */
-.footer__currencies:not(#footer-payment-methods) {
-    border: 1px solid rgba(207, 174, 109, 0.3) !important;
-    border-radius: 10px !important;
-    background: rgba(255, 255, 255, 0.02) !important;
-    padding: 16px 20px 14px !important;
-    margin: 0 0 16px 0 !important;
-}
-
-/* Başlık: altın renk */
-.footer__currencies:not(#footer-payment-methods) .section__title,
-.footer__currencies:not(#footer-payment-methods) .footer__title,
-.footer__currencies:not(#footer-payment-methods) > span:first-child,
-.footer__currencies:not(#footer-payment-methods) > div:first-child {
-    color: #CFAE6D !important;
-    font-weight: 600 !important;
-    font-size: 12px !important;
-    letter-spacing: 1.5px !important;
-    text-transform: uppercase !important;
-}
-
-/* Liste: tek satır yatay, taşarsa scroll */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted {
-    display: flex !important;
-    flex-wrap: nowrap !important;
-    align-items: center !important;
-    gap: 6px !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    padding: 10px 0 2px !important;
-    margin: 0 !important;
-    list-style: none !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
-}
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted::-webkit-scrollbar {
-    display: none !important;
-}
-
-/* Her li: ikon + isim yan yana */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li {
-    flex-shrink: 0 !important;
-    display: flex !important;
-    align-items: center !important;
-    padding: 0 !important;
-    margin: 0 4px !important;
-}
-
-/* Ayraç yok (Jojova'da yok) */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted li::after {
-    content: none !important;
-    display: none !important;
-}
-
-/* instrument-icon-wrapper: ikon + isim container */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 4px 6px !important;
-    border-radius: 6px !important;
-    transition: background 0.2s ease, transform 0.2s ease !important;
-}
-
-/* İkon: küçük renkli daire */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
-    width: 22px !important;
-    height: 22px !important;
-    max-height: 22px !important;
-    border-radius: 50% !important;
-    filter: none !important;
-    opacity: 1 !important;
-    animation: none !important;
-    transition: transform 0.2s ease, filter 0.2s ease !important;
-}
-
-/* İsim etiketi (JS tarafından eklenir) */
-.footer__currencies:not(#footer-payment-methods) .mito-currency-label {
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    color: rgba(255, 255, 255, 0.75) !important;
-    white-space: nowrap !important;
-    letter-spacing: 0.3px !important;
-    transition: color 0.2s ease !important;
-}
-
-/* Hover: hafif arka plan + isim belirginleş */
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover {
-    background: rgba(207, 174, 109, 0.08) !important;
-}
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover img {
-    transform: scale(1.08) !important;
-    filter: brightness(1.1) !important;
-}
-.footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper:hover .mito-currency-label {
-    color: #CFAE6D !important;
-}
-
-/* Mobil */
-@media (max-width: 767px) {
-    .footer__currencies:not(#footer-payment-methods) {
-        padding: 12px 14px 10px !important;
-        margin: 0 0 12px 0 !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
-        width: 18px !important;
-        height: 18px !important;
-        max-height: 18px !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) .mito-currency-label {
-        font-size: 10px !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper {
-        gap: 4px !important;
-        padding: 3px 4px !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted li {
-        margin: 0 2px !important;
-    }
-}
-
-/* ——— ÖDEME YÖNTEMLERİ — Mevcut efektler ——— */
-
-/* Logolara idle pulse + hover */
-#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper img {
-    opacity: 0.65 !important;
-    filter: none !important;
-    animation: mito-icon-pulse 3.5s ease-in-out infinite !important;
-    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease !important;
-    will-change: transform, opacity !important;
-}
-
-#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper:hover img {
-    opacity: 1 !important;
-    transform: scale(1.08) translateY(-2px) !important;
-    filter: brightness(1.15) drop-shadow(0 2px 8px rgba(207, 174, 109, 0.35)) !important;
-    animation: none !important;
-}
-
-#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper {
-    transition: transform 0.3s ease !important;
-}
-#footer-payment-methods ul.footer__accepted .instrument-icon-wrapper:hover {
-    transform: translateY(-1px) !important;
-}
-
-#footer-payment-methods ul.footer__accepted li:nth-child(2n) .instrument-icon-wrapper img {
-    animation-delay: -1.2s !important;
-}
-#footer-payment-methods ul.footer__accepted li:nth-child(3n) .instrument-icon-wrapper img {
-    animation-delay: -2.4s !important;
-}
-#footer-payment-methods ul.footer__accepted li:nth-child(5n) .instrument-icon-wrapper img {
-    animation-delay: -0.6s !important;
-}
-
-/* ——— Mobil: Para Birimleri daha küçük ——— */
-@media (max-width: 767px) {
-    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper img {
-        width: 16px !important;
-        height: 16px !important;
-        max-height: 16px !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) .mito-currency-label {
-        font-size: 10px !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted li:not(:last-child)::after {
-        margin: 0 8px !important;
-        font-size: 14px !important;
-    }
-    .footer__currencies:not(#footer-payment-methods) ul.footer__accepted .instrument-icon-wrapper {
-        gap: 4px !important;
-    }
-}
-
-/* ——— Footer: CMS "TÜMÜNÜ GÖR" Butonlarını Gizle ——— */
-#footer-providers-section .section__view,
-#footer-providers-section .section__view--carousel,
-#footer-providers-section .section__title-wrap .section__view,
-.footer__currencies .section__view,
-#footer-payment-methods .section__view {
-    display: none !important;
-    visibility: hidden !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-}
-
-/* ——— Footer: Sağlayıcılar Collapse Sistemi ——— */
-
-/* Grid collapse: varsayılan 2 satır (~180px web, ~130px mobil) */
-#footer-providers-section #providers-grid {
-    max-height: 180px !important;
-    overflow: hidden !important;
-    position: relative !important;
-    transition: max-height 0.5s ease !important;
-}
-
-/* Açık durumda */
-#footer-providers-section #providers-grid.mito-expanded {
-    max-height: 3000px !important;
-}
-
-/* Alt gradient fade — "devamı var" hissi */
-#footer-providers-section #providers-grid::after {
-    content: '' !important;
-    display: block !important;
-    position: absolute !important;
-    bottom: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    height: 60px !important;
-    background: linear-gradient(to bottom, transparent, #181818 90%) !important;
-    pointer-events: none !important;
-    z-index: 2 !important;
-    transition: opacity 0.4s ease !important;
-}
-
-/* Açık durumda gradient kaybolsun */
-#footer-providers-section #providers-grid.mito-expanded::after {
-    opacity: 0 !important;
-    height: 0 !important;
-}
-
-/* Toggle buton stili */
-.mito-providers-toggle {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 6px !important;
-    margin: 12px auto 0 !important;
-    padding: 8px 22px !important;
-    background: transparent !important;
-    border: 1px solid rgba(207, 174, 109, 0.35) !important;
-    border-radius: 20px !important;
-    color: #CFAE6D !important;
-    font-size: 12px !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.5px !important;
-    cursor: pointer !important;
-    transition: all 0.25s ease !important;
-    outline: none !important;
-}
-
-.mito-providers-toggle:hover {
-    border-color: #CFAE6D !important;
-    background: rgba(207, 174, 109, 0.08) !important;
-    color: #e9c37a !important;
-}
-
-/* Ok ikonu */
-.mito-providers-toggle .mito-toggle-arrow {
-    display: inline-block !important;
-    transition: transform 0.35s ease !important;
-    font-size: 10px !important;
-}
-
-/* Açık durumda ok yukarı dönsün */
-.mito-providers-toggle.mito-expanded .mito-toggle-arrow {
-    transform: rotate(180deg) !important;
-}
-
-/* Mobil ayarlar */
-@media (max-width: 767px) {
-    #footer-providers-section #providers-grid {
-        max-height: 130px !important;
-    }
-
-    #footer-providers-section #providers-grid::after {
-        height: 50px !important;
-    }
-
-    .mito-providers-toggle {
-        font-size: 11px !important;
-        padding: 6px 18px !important;
-        margin-top: 8px !important;
-    }
-}
-
 /* ——— Random Winners Slider Gizle (Web & Mobil) ——— */
 #random-winners-slider,
 .RandomSlider-wrapper,
@@ -1363,18 +875,6 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
    MITOBET - Hide CSS
    Gizlenecek elementler & Modal Düzeltmeleri
    ===================================================== */
-
-/* ——— Geçici: Sol menü dil seçici kapat (EN görseller güncellenince kaldırılacak) ——— */
-#sidebar .sidebar__lang,
-.sidebar__lang,
-.sidebar__actions .sidebar__lang {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-}
 
 /* ——— Modal Görsel Gizle (Giriş/Kayıt) ——— */
 .modal__sign-img,
@@ -1906,7 +1406,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     display: none !important;
 }
 /* Sadece promosyon sayfasındaki filtre tablarını gizle; #tabs-nav (Para Yatır/Çek) ve wallet-modal içindekiler görünsün */
-.section:has(.section__title--head) .nav.nav-tabs.tabs-nav,
+.ection:has(.section__title--head) .nav.nav-tabs.tabs-nav,
 .section:has(.section__title--head) .nav.nav-tabs.tabs-nav {
     display: none !important;
 }
@@ -1914,43 +1414,6 @@ body[data-page*="vip"] .vip:has(.vip__title) {
 #wallet-modal .nav.nav-tabs.tabs-nav,
 #wallet-modal .tabs-nav {
     display: flex !important;
-}
-
-/* Promosyon kartı görselleri - Tüm ekranlar */
-.post__cover {
-    display: block !important;
-    visibility: visible !important;
-    width: 100% !important;
-    aspect-ratio: 16/9 !important;
-    overflow: hidden !important;
-    position: relative !important;
-}
-.post__cover img {
-    display: block !important;
-    visibility: visible !important;
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-}
-
-/* AdBlock fallback: img engellense bile lazy-load span'daki background-image gorunsun */
-.post__cover .lazy-load-image-background {
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    min-height: 180px !important;
-    background-size: cover !important;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-}
-.post__cover .lazy-load-image-background.blur {
-    filter: none !important;
-}
-.post__cover .lazy-load-image-background[data-mito-fallback="1"] {
-    min-height: 200px !important;
-}
-.post__cover .lazy-load-image-background[data-mito-fallback="1"] img {
-    display: none !important;
 }
 
 @media (max-width: 768px) {
@@ -2901,20 +2364,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
 
 
 /* ===== yatirim_uyari_sistemi/yatirim_uyari.css ===== */
-/* =====================================================
-   MITOBET - Yatırım Uyarı Sistemi CSS
-   Ana Renk: #CFAE6D (Altın/Bej)
-   ===================================================== */
-
-/* CSS Variables - Mito Gold */
-:root {
-    --mito-gold: #CFAE6D;
-    --mito-gold-rgb: 207, 174, 109;
-    --mito-gold-light: #e9c37a;
-    --mito-gold-dark: #b8973d;
-}
-
-/* Form Note Error - Mito Güncelleme */
+/* Form Note Error - Jojova Güncelleme */
 #wallet-modal .form__note.error {
     display: flex !important;
     flex-direction: row !important;
@@ -2922,7 +2372,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     align-items: center !important;
     height: 40px !important;
     margin-top: 20px !important;
-    border: 1px solid #CFAE6D !important;
+    border: 1px solid var(--tf-active) !important;
     border-radius: 8px !important;
     padding: 0 12px !important;
     background-color: transparent !important;
@@ -2943,35 +2393,35 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     width: 20px !important;
     height: 20px !important;
     margin-right: 8px !important;
-    background-color: #CFAE6D !important;
-    color: #000000 !important;
+    background-color: var(--tf-active) !important;
+    color: white !important;
     border-radius: 50% !important;
     text-align: center !important;
     line-height: 20px !important;
     font-weight: bold !important;
     font-size: 12px !important;
     flex-shrink: 0 !important;
-    animation: mitoPulse 2s infinite !important;
+    animation: pulse 2s infinite !important;
 }
 
 #wallet-modal .form__note.error:hover {
-    background-color: rgba(207, 174, 109, 0.1) !important;
-    color: #CFAE6D !important;
+    background-color: rgba(var(--tf-active-rgb), 0.1) !important;
+    color: var(--tf-active) !important;
 }
 
-/* Yeni Sabit Uyarı Kutusu - MITO GOLD AGRESIF */
-.mito-warning-container {
+/* Yeni Sabit Uyarı Kutusu - AGRESIF */
+.jojova-warning-container {
     display: flex !important;
     flex-direction: row !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
     min-height: 40px !important;
     margin: 15px 0 !important;
-    border: 2px solid #CFAE6D !important;
+    border: 2px solid var(--tf-active) !important;
     border-radius: 8px !important;
     padding: 12px !important;
-    background-color: rgba(207, 174, 109, 0.08) !important;
-    color: var(--tf-tc, #FFFFFF) !important;
+    background-color: rgba(var(--tf-active-rgb), 0.05) !important;
+    color: var(--tf-tc) !important;
     font-size: 14px !important;
     font-weight: 600 !important;
     font-style: normal !important;
@@ -2982,31 +2432,31 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     opacity: 1 !important;
     visibility: visible !important;
     cursor: pointer !important;
-    box-shadow: 0 0 15px rgba(207, 174, 109, 0.4) !important;
-    animation: mitoBorderBlink 2s infinite, mitoInitialShake 0.8s ease-out !important;
+    box-shadow: 0 0 15px rgba(var(--tf-active-rgb), 0.4) !important;
+    animation: borderBlink 2s infinite, initialShake 0.8s ease-out !important;
 }
 
-.mito-warning-container::before {
+.jojova-warning-container::before {
     content: "⚠" !important;
     display: inline-block !important;
     width: 24px !important;
     height: 24px !important;
     margin-right: 10px !important;
     margin-top: 1px !important;
-    background-color: #CFAE6D !important;
-    color: #000000 !important;
+    background-color: var(--tf-active) !important;
+    color: white !important;
     border-radius: 50% !important;
     text-align: center !important;
     line-height: 24px !important;
     font-weight: bold !important;
     font-size: 14px !important;
     flex-shrink: 0 !important;
-    animation: mitoIconPulse 1.5s infinite, mitoIconGlow 2s infinite !important;
-    box-shadow: 0 0 10px rgba(207, 174, 109, 0.6) !important;
+    animation: iconPulse 1.5s infinite, iconGlow 2s infinite !important;
+    box-shadow: 0 0 10px rgba(var(--tf-active-rgb), 0.6) !important;
 }
 
-/* MITO GOLD ANIMASYONLAR */
-@keyframes mitoPulse {
+/* AGRESIF ANIMASYONLAR */
+@keyframes pulse {
     0% {
         transform: scale(1);
         opacity: 1;
@@ -3021,51 +2471,51 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     }
 }
 
-@keyframes mitoBorderBlink {
+@keyframes borderBlink {
     0%, 50% {
-        border-color: #CFAE6D;
-        box-shadow: 0 0 15px rgba(207, 174, 109, 0.4);
+        border-color: var(--tf-active);
+        box-shadow: 0 0 15px rgba(var(--tf-active-rgb), 0.4);
     }
     25%, 75% {
-        border-color: #e9c37a;
-        box-shadow: 0 0 20px rgba(233, 195, 122, 0.6);
+        border-color: #ff4757;
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.6);
     }
 }
 
-@keyframes mitoInitialShake {
+@keyframes initialShake {
     0%, 100% { transform: translateX(0); }
     10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
     20%, 40%, 60%, 80% { transform: translateX(3px); }
 }
 
-@keyframes mitoIconPulse {
+@keyframes iconPulse {
     0%, 100% { 
         transform: scale(1); 
-        background-color: #CFAE6D;
+        background-color: var(--tf-active);
     }
     50% { 
         transform: scale(1.2); 
-        background-color: #e9c37a;
+        background-color: #ff4757;
     }
 }
 
-@keyframes mitoIconGlow {
+@keyframes iconGlow {
     0%, 100% { 
-        box-shadow: 0 0 10px rgba(207, 174, 109, 0.6);
+        box-shadow: 0 0 10px rgba(var(--tf-active-rgb), 0.6);
     }
     50% { 
-        box-shadow: 0 0 20px rgba(233, 195, 122, 0.8);
+        box-shadow: 0 0 20px rgba(255, 71, 87, 0.8);
     }
 }
 
-.mito-warning-container:hover {
-    background-color: rgba(207, 174, 109, 0.15) !important;
-    color: #CFAE6D !important;
-    box-shadow: 0 0 25px rgba(207, 174, 109, 0.7) !important;
+.jojova-warning-container:hover {
+    background-color: rgba(var(--tf-active-rgb), 0.15) !important;
+    color: var(--tf-active) !important;
+    box-shadow: 0 0 25px rgba(var(--tf-active-rgb), 0.7) !important;
     transform: scale(1.02) !important;
 }
 
-.mito-warning-text {
+.jojova-warning-text {
     display: block;
     line-height: 1.5;
     text-align: left;
@@ -3078,25 +2528,25 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     hyphens: auto;
 }
 
-.mito-warning-text strong {
-    color: #CFAE6D;
-    font-weight: 700;
+.jojova-warning-text strong {
+    color: var(--tf-active);
+    font-weight: 600;
     font-style: normal !important;
 }
 
-/* İkinci sabit uyarı kutusu - INFO */
-.mito-info-container {
+/* İkinci sabit uyarı kutusu */
+.jojova-info-container {
     display: flex !important;
     flex-direction: row !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
     min-height: 40px !important;
     margin: 10px 0 !important;
-    border: 1px solid #CFAE6D !important;
+    border: 1px solid var(--tf-active) !important;
     border-radius: 8px !important;
     padding: 12px !important;
     background-color: transparent !important;
-    color: var(--tf-tc, #FFFFFF) !important;
+    color: var(--tf-tc) !important;
     font-size: 14px !important;
     font-weight: 500 !important;
     font-style: normal !important;
@@ -3109,15 +2559,15 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     cursor: default !important;
 }
 
-.mito-info-container::before {
+.jojova-info-container::before {
     content: "i" !important;
     display: inline-block !important;
     width: 20px !important;
     height: 20px !important;
     margin-right: 10px !important;
     margin-top: 2px !important;
-    background-color: #CFAE6D !important;
-    color: #000000 !important;
+    background-color: #007bff !important;
+    color: white !important;
     border-radius: 50% !important;
     text-align: center !important;
     line-height: 20px !important;
@@ -3126,12 +2576,12 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     flex-shrink: 0 !important;
 }
 
-.mito-info-container:hover {
-    background-color: rgba(207, 174, 109, 0.1) !important;
-    border-color: #e9c37a !important;
+.jojova-info-container:hover {
+    background-color: rgba(0, 123, 255, 0.1) !important;
+    border-color: #007bff !important;
 }
 
-.mito-info-text {
+.jojova-info-text {
     display: block;
     line-height: 1.5;
     text-align: left;
@@ -3144,8 +2594,8 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     hyphens: auto;
 }
 
-.mito-info-text strong {
-    color: #CFAE6D;
+.jojova-info-text strong {
+    color: #007bff;
     font-weight: 600;
     font-style: normal !important;
 }
@@ -3153,8 +2603,8 @@ body[data-page*="vip"] .vip:has(.vip__title) {
 /* Mobil uyumluluk */
 @media (max-width: 768px) {
     #wallet-modal .form__note.error,
-    .mito-warning-container,
-    .mito-info-container {
+    .jojova-warning-container,
+    .jojova-info-container {
         padding: 12px !important;
         font-size: 12px;
         margin: 12px 0;
@@ -3169,8 +2619,8 @@ body[data-page*="vip"] .vip:has(.vip__title) {
         box-sizing: border-box !important;
     }
     
-    .mito-warning-text,
-    .mito-info-text {
+    .jojova-warning-text,
+    .jojova-info-text {
         line-height: 1.5;
         font-style: normal !important;
         padding-top: 0px;
@@ -3183,8 +2633,8 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     }
     
     #wallet-modal .form__note.error::before,
-    .mito-warning-container::before,
-    .mito-info-container::before {
+    .jojova-warning-container::before,
+    .jojova-info-container::before {
         width: 16px !important;
         height: 16px !important;
         line-height: 16px !important;
@@ -3194,7 +2644,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
         flex-shrink: 0 !important;
         min-width: 16px !important;
     }
-}
+} 
 
 /* ===== CSS/EK ===== */
 .blog__cover {

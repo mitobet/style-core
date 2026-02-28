@@ -178,155 +178,118 @@
         resizeTimer = setTimeout(changePromoImage, 250);
     });
 
-    // ========== AdBlock bypass: Çok katmanlı gorsel kurtarma ==========
-    var _blobCache = {};
+    // ========== AdBlock bypass v3: Proaktif URL Rewriting ==========
+    // Strateji: img.src'yi AdBlocker istek yapmadan ONCE proxy URL ile degistir.
+    // Boylece tarayici hicbir zaman /promotions/ URL'sine istek yapmaz.
 
-    // Katman 1: XHR ile URL obfuscation — AdBlocker statik pattern matching'i atlatır
-    function xhrBlobFetch(url) {
-        if (_blobCache[url]) return Promise.resolve(_blobCache[url]);
-        return new Promise(function(resolve, reject) {
-            try {
-                var p = url.split('/');
-                var base = p.slice(0, 3).join('/');
-                var rest = p.slice(3);
-                var rebuilt = [base].concat(rest).join(String.fromCharCode(47));
-                var x = new XMLHttpRequest();
-                x.open(String.fromCharCode(71, 69, 84), rebuilt, true);
-                x.responseType = 'blob';
-                x.onload = function() {
-                    if (x.status >= 200 && x.status < 300 && x.response) {
-                        var b = URL.createObjectURL(x.response);
-                        _blobCache[url] = b;
-                        resolve(b);
-                    } else { reject(); }
-                };
-                x.onerror = function() { reject(); };
-                x.ontimeout = function() { reject(); };
-                x.timeout = 8000;
-                x.send();
-            } catch(e) { reject(e); }
-        });
+    var _proxyBase = 'https://' + 'wsrv.nl' + '/?url=';
+    var _blocked = String.fromCharCode(47, 112, 114, 111, 109, 111, 116, 105); // "/promoti"
+
+    function _isPromoSrc(s) {
+        return s && s.indexOf(_blocked) > -1;
     }
 
-    // Katman 2: wsrv.nl görsel proxy — tamamen farklı domain üzerinden sunar
-    function proxyFetch(url) {
-        var proxyUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(url) + '&default=1';
-        return new Promise(function(resolve, reject) {
-            try {
-                var x = new XMLHttpRequest();
-                x.open('GET', proxyUrl, true);
-                x.responseType = 'blob';
-                x.onload = function() {
-                    if (x.status >= 200 && x.status < 300 && x.response && x.response.size > 500) {
-                        var b = URL.createObjectURL(x.response);
-                        _blobCache[url] = b;
-                        resolve(b);
-                    } else { reject(); }
-                };
-                x.onerror = function() { reject(); };
-                x.ontimeout = function() { reject(); };
-                x.timeout = 10000;
-                x.send();
-            } catch(e) { reject(e); }
-        });
+    function _makeProxyUrl(originalUrl) {
+        return _proxyBase + encodeURIComponent(originalUrl);
     }
 
-    // Katmanlı deneme: XHR -> proxy -> placeholder
-    function rescueImage(url) {
-        if (_blobCache[url]) return Promise.resolve(_blobCache[url]);
-        return xhrBlobFetch(url).catch(function() {
-            return proxyFetch(url);
-        });
-    }
+    function rewriteImgSrc(img) {
+        if (!img || img.dataset.mitoRw === '1') return;
 
-    function applyBlobToImg(img, span, blobUrl) {
-        img.src = blobUrl;
+        var src = img.getAttribute('src') || '';
+        var dataSrc = img.getAttribute('data-src') || '';
+        var targetSrc = src || dataSrc;
+
+        if (!_isPromoSrc(targetSrc)) return;
+
+        img.dataset.mitoRw = '1';
+        img.dataset.mitoOrig = targetSrc;
+
+        var proxyUrl = _makeProxyUrl(targetSrc);
+
+        if (src) img.setAttribute('src', proxyUrl);
+        if (dataSrc) img.setAttribute('data-src', proxyUrl);
+        if (img.srcset) img.removeAttribute('srcset');
+
         img.style.display = '';
         img.style.visibility = 'visible';
         img.style.opacity = '1';
-        span.classList.remove('blur');
-        span.style.display = 'inline-block';
-        span.style.width = '100%';
-        span.style.height = '100%';
-    }
 
-    function applyPlaceholder(img, span) {
-        span.classList.remove('blur');
-        span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
-        span.style.backgroundSize = 'cover';
-        span.style.display = 'block';
-        span.style.width = '100%';
-        span.style.height = '100%';
-        span.style.minHeight = '200px';
-        img.style.display = 'none';
-    }
-
-    function fixBlockedImage(span) {
-        if (span.dataset.mitoFixed === '1') return;
-        var img = span.querySelector('img');
-        if (!img) return;
-        var src = img.getAttribute('src') || '';
-        if (!src) return;
-
-        function doFix() {
-            if (span.dataset.mitoFixed === '1') return;
-            span.dataset.mitoFixed = '1';
-            rescueImage(src).then(function(blobUrl) {
-                applyBlobToImg(img, span, blobUrl);
-            }).catch(function() {
-                applyPlaceholder(img, span);
-            });
+        var span = img.closest('.lazy-load-image-background');
+        if (span) {
+            span.classList.remove('blur');
+            span.style.display = 'inline-block';
+            span.style.width = '100%';
+            span.style.height = '100%';
         }
 
-        if (img.complete && img.naturalWidth === 0) {
-            doFix();
-            return;
-        }
-        if (!img.complete) {
-            img.addEventListener('error', doFix);
-            setTimeout(function() {
-                if (span.dataset.mitoFixed !== '1' && img.naturalWidth === 0) doFix();
-            }, 2500);
+        img.addEventListener('error', function _proxyErr() {
+            img.removeEventListener('error', _proxyErr);
+            if (span) {
+                span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+                span.style.backgroundSize = 'cover';
+                span.style.display = 'block';
+                span.style.width = '100%';
+                span.style.height = '100%';
+                span.style.minHeight = '200px';
+            }
+            img.style.display = 'none';
+        });
+    }
+
+    function scanAllPromoImgs() {
+        var imgs = document.querySelectorAll('img');
+        for (var i = 0; i < imgs.length; i++) {
+            rewriteImgSrc(imgs[i]);
         }
     }
 
-    function scanPromoImages() {
-        var spans = document.querySelectorAll('.post__cover .lazy-load-image-background');
-        spans.forEach(fixBlockedImage);
-    }
+    // Erken MutationObserver — document.documentElement uzerinde baslar (body'den once)
+    var _promoObTarget = document.documentElement || document.body;
+    var _promoRewriteObs = new MutationObserver(function(muts) {
+        for (var i = 0; i < muts.length; i++) {
+            var added = muts[i].addedNodes;
+            for (var j = 0; j < added.length; j++) {
+                var node = added[j];
+                if (node.nodeType !== 1) continue;
+                if (node.tagName === 'IMG') {
+                    rewriteImgSrc(node);
+                } else if (node.querySelectorAll) {
+                    var imgs = node.querySelectorAll('img');
+                    for (var k = 0; k < imgs.length; k++) {
+                        rewriteImgSrc(imgs[k]);
+                    }
+                }
+            }
+            // Attribute degisikligi (React src guncellerse)
+            if (muts[i].type === 'attributes' && muts[i].target.tagName === 'IMG') {
+                var t = muts[i].target;
+                t.dataset.mitoRw = '';
+                rewriteImgSrc(t);
+            }
+        }
+    });
 
-    function runPromoFix() {
-        if (!document.querySelector('.blog-grid .post__cover')) return;
-        scanPromoImages();
-        setTimeout(scanPromoImages, 600);
-        setTimeout(scanPromoImages, 2000);
+    _promoRewriteObs.observe(_promoObTarget, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['src', 'data-src']
+    });
+
+    // Sayfa hazir olunca tam tarama
+    function _initPromoRewrite() {
+        scanAllPromoImgs();
+        setTimeout(scanAllPromoImgs, 500);
+        setTimeout(scanAllPromoImgs, 2000);
+        setTimeout(scanAllPromoImgs, 5000);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runPromoFix);
+        document.addEventListener('DOMContentLoaded', _initPromoRewrite);
     } else {
-        runPromoFix();
+        _initPromoRewrite();
     }
-    window.addEventListener('load', runPromoFix);
-
-    var promoObserver = new MutationObserver(function(mutations) {
-        var dominated = false;
-        for (var i = 0; i < mutations.length; i++) {
-            var nodes = mutations[i].addedNodes;
-            for (var j = 0; j < nodes.length; j++) {
-                var n = nodes[j];
-                if (!n.querySelectorAll) continue;
-                if (n.querySelectorAll('.post__cover .lazy-load-image-background').length) {
-                    dominated = true;
-                    break;
-                }
-            }
-            if (dominated) break;
-        }
-        if (dominated || document.querySelector('.blog-grid .post__cover')) {
-            setTimeout(scanPromoImages, 200);
-        }
-    });
-    promoObserver.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('load', _initPromoRewrite);
 
 })();
