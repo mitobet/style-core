@@ -58,10 +58,84 @@
     }
 
     // ===== CANLI DESTEK — Telegram Yönlendirme =====
+    var TG_SUPPORT = 'https://t.me/mitobetsupport';
+
     function createSupportClickHandler() {
-        return function() {
-            window.open('https://t.me/mitobetsupport', '_blank');
+        return function(e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            window.open(TG_SUPPORT, '_blank');
         };
+    }
+
+    // ===== COMM100 DEAKTIF =====
+    function killComm100() {
+        // Comm100 global nesnelerini öldür
+        if (window.Comm100API) {
+            try { window.Comm100API.close && window.Comm100API.close(); } catch(e) {}
+            try { window.Comm100API.destroy && window.Comm100API.destroy(); } catch(e) {}
+            window.Comm100API = { open: function() { window.open(TG_SUPPORT, '_blank'); }, close: function(){}, destroy: function(){} };
+        }
+        if (window.Comm100) {
+            window.Comm100 = null;
+        }
+
+        // Comm100 iframe, container ve butonlarını kaldır
+        var selectors = [
+            'iframe[src*="comm100"]', 'iframe[id*="comm100"]', 'iframe[name*="comm100"]',
+            'div[id*="comm100"]', 'div[class*="comm100"]',
+            '#comm100-container', '#comm100-button', '#comm100-chat',
+            '.comm100-container', '.comm100-button',
+            'div[id*="Comm100"]', 'div[class*="Comm100"]',
+            '#livechat-compact-container', '#livechat-full',
+            'div[id*="livechat"]', 'iframe[src*="livechat"]'
+        ];
+        document.querySelectorAll(selectors.join(',')).forEach(function(el) {
+            el.parentNode && el.parentNode.removeChild(el);
+        });
+
+        // Comm100 script'lerinin yüklenmesini engelle
+        var origCreate = document.createElement;
+        document.createElement = function(tag) {
+            var el = origCreate.call(document, tag);
+            if (tag.toLowerCase() === 'script') {
+                var origSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src') ||
+                              Object.getOwnPropertyDescriptor(el.__proto__, 'src');
+                if (origSrc && origSrc.set) {
+                    var origSet = origSrc.set;
+                    Object.defineProperty(el, 'src', {
+                        set: function(v) {
+                            if (typeof v === 'string' && (v.indexOf('comm100') > -1 || v.indexOf('livechat') > -1)) {
+                                console.log('[MITO] Comm100 script engellendi:', v);
+                                return;
+                            }
+                            origSet.call(this, v);
+                        },
+                        get: origSrc.get ? origSrc.get.bind(el) : function() { return el.getAttribute('src'); }
+                    });
+                }
+            }
+            return el;
+        };
+
+        console.log('[MITO] Comm100 deaktif edildi');
+    }
+
+    // Sitedeki tüm canlı destek butonlarını Telegram'a yönlendir
+    function hijackAllSupportButtons() {
+        var sels = [
+            'a[href*="livechat"]', 'a[href*="live-chat"]', 'a[href*="comm100"]',
+            'button[onclick*="Comm100"]', 'button[onclick*="livechat"]',
+            '[data-action*="chat"]', '[data-action*="support"]'
+        ];
+        document.querySelectorAll(sels.join(',')).forEach(function(el) {
+            if (el.dataset.mitoHijacked) return;
+            el.dataset.mitoHijacked = '1';
+            el.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(TG_SUPPORT, '_blank');
+            }, true);
+        });
     }
 
     // ===== PROMO TEXT SLİDER =====
@@ -415,6 +489,7 @@
     function init() {
         lastMitoPath = window.location.pathname;
         injectAnimationCSS();
+        killComm100();
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
@@ -453,12 +528,23 @@
                 }
                 fixMobileHeaderHeight();
             }
+            hijackAllSupportButtons();
         });
 
         var root = document.getElementById('root');
         if (root) {
             observer.observe(root, { childList: true, subtree: true });
         }
+
+        // Comm100 elementlerini periyodik temizle (geç yüklenen widget için)
+        var comm100CleanCount = 0;
+        var comm100Timer = setInterval(function() {
+            killComm100();
+            hijackAllSupportButtons();
+            comm100CleanCount++;
+            if (comm100CleanCount >= 10) clearInterval(comm100Timer);
+        }, 2000);
+        window._mitoIntervals.push(comm100Timer);
 
         // Resize
         var resizeTimer;
@@ -485,8 +571,9 @@
 
         // Sidebar "Canlı Destek" linkini Telegram'a yönlendir
         hijackSidebarSupport();
+        hijackAllSupportButtons();
 
-        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi');
+        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi (Comm100 deaktif)');
     }
 
     // ===== SIDEBAR CANLI DESTEK -> TELEGRAM =====
