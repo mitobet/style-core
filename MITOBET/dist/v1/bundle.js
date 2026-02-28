@@ -796,12 +796,14 @@ input, select, textarea,
         el.dataset.mitoTgForced = '1';
         el.removeAttribute('onclick');
         el.onclick = null;
+        if (el.tagName === 'A') {
+            el.href = TG_SUPPORT;
+            el.target = '_blank';
+            el.rel = 'noopener noreferrer';
+        }
         el.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
             e.stopImmediatePropagation();
             window.open(TG_SUPPORT, '_blank');
-            return false;
         }, true);
     }
 
@@ -1072,12 +1074,13 @@ input, select, textarea,
         promoBtn.innerHTML = '<span class="mito-btn-text">' + (lang === 'en' ? 'PROMOTIONS' : 'PROMOSYONLAR') + '</span>';
         promoBtn.setAttribute('data-mito-extra', 'promo');
 
-        var supportBtn = document.createElement('button');
-        supportBtn.type = 'button';
+        var supportBtn = document.createElement('a');
+        supportBtn.href = TG_SUPPORT;
+        supportBtn.target = '_blank';
+        supportBtn.rel = 'noopener noreferrer';
         supportBtn.className = 'mito-header-btn mito-header-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span><span class="mito-btn-text">' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK') + '</span>';
         supportBtn.setAttribute('data-mito-extra', 'support');
-        supportBtn.addEventListener('click', createSupportClickHandler());
 
         var divider = document.createElement('span');
         divider.className = 'mito-header-divider';
@@ -1129,11 +1132,12 @@ input, select, textarea,
         promoBtn.style.position = 'relative';
         promoBtn.style.overflow = 'hidden';
 
-        var supportBtn = document.createElement('button');
-        supportBtn.type = 'button';
+        var supportBtn = document.createElement('a');
+        supportBtn.href = TG_SUPPORT;
+        supportBtn.target = '_blank';
+        supportBtn.rel = 'noopener noreferrer';
         supportBtn.className = 'mito-mobile-btn mito-mobile-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span> ' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK');
-        supportBtn.addEventListener('click', createSupportClickHandler());
 
         var tgBtn = document.createElement('a');
         tgBtn.href = 'https://t.me/mitoresmi';
