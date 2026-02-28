@@ -399,43 +399,107 @@ input, select, textarea,
         resizeTimer = setTimeout(changePromoImage, 250);
     });
 
-    // ========== AdBlock fallback: promosyon kartı görselleri ==========
-    // img engellendiyse (blocked:other) lazy-load span'daki background-image gorunsun
-    function applyPromoCoverFallback() {
-        var covers = document.querySelectorAll('.post__cover .lazy-load-image-background');
-        covers.forEach(function(span) {
-            var img = span.querySelector('img');
-            var blocked = !img || (img.complete && img.naturalWidth === 0);
-            if (blocked && span.style.backgroundImage) {
+    // ========== AdBlock bypass: fetch() -> blob URL ==========
+    // AdBlocker /promotions/ path'li img ve background-image isteklerini engelliyor.
+    // fetch() API genelde engellenmez; görseli fetch ile indirip blob URL'e çeviriyoruz.
+
+    var blobCache = {};
+
+    function fetchAsBlob(url) {
+        if (blobCache[url]) return Promise.resolve(blobCache[url]);
+        return fetch(url, { mode: 'cors', credentials: 'omit' })
+            .then(function(r) {
+                if (!r.ok) throw new Error(r.status);
+                return r.blob();
+            })
+            .then(function(blob) {
+                var blobUrl = URL.createObjectURL(blob);
+                blobCache[url] = blobUrl;
+                return blobUrl;
+            });
+    }
+
+    function fixBlockedImage(span) {
+        if (span.dataset.mitoFixed === '1') return;
+        var img = span.querySelector('img');
+        if (!img) return;
+        var src = img.getAttribute('src') || '';
+        if (!src) return;
+
+        function doFix() {
+            span.dataset.mitoFixed = '1';
+            fetchAsBlob(src).then(function(blobUrl) {
+                img.src = blobUrl;
+                img.style.display = '';
+                img.style.visibility = 'visible';
+                img.style.opacity = '1';
                 span.classList.remove('blur');
+                span.style.display = 'inline-block';
+                span.style.width = '100%';
+                span.style.height = '100%';
+                console.log('[MITO] Promo gorsel kurtarildi:', src.slice(-30));
+            }).catch(function() {
+                span.classList.remove('blur');
+                span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+                span.style.backgroundSize = 'cover';
                 span.style.display = 'block';
                 span.style.width = '100%';
                 span.style.height = '100%';
-                span.style.backgroundSize = 'cover';
-                span.style.backgroundPosition = 'center';
-                span.style.backgroundRepeat = 'no-repeat';
-            }
-        });
+                span.style.minHeight = '200px';
+                img.style.display = 'none';
+            });
+        }
+
+        if (img.complete && img.naturalWidth === 0) {
+            doFix();
+            return;
+        }
+        if (!img.complete) {
+            img.addEventListener('error', doFix);
+            setTimeout(function() {
+                if (span.dataset.mitoFixed !== '1' && img.naturalWidth === 0) doFix();
+            }, 2500);
+        }
     }
 
-    function runPromoCoverFallback() {
+    function scanPromoImages() {
+        var spans = document.querySelectorAll('.post__cover .lazy-load-image-background');
+        spans.forEach(fixBlockedImage);
+    }
+
+    function runPromoFix() {
         if (!document.querySelector('.blog-grid .post__cover')) return;
-        applyPromoCoverFallback();
-        setTimeout(applyPromoCoverFallback, 800);
-        setTimeout(applyPromoCoverFallback, 2000);
+        scanPromoImages();
+        setTimeout(scanPromoImages, 600);
+        setTimeout(scanPromoImages, 2000);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runPromoCoverFallback);
+        document.addEventListener('DOMContentLoaded', runPromoFix);
     } else {
-        runPromoCoverFallback();
+        runPromoFix();
     }
-    window.addEventListener('load', runPromoCoverFallback);
+    window.addEventListener('load', runPromoFix);
 
-    var promoCoverObserver = new MutationObserver(function() {
-        if (document.querySelector('.blog-grid .post__cover')) runPromoCoverFallback();
+    var promoObserver = new MutationObserver(function(mutations) {
+        var dominated = false;
+        for (var i = 0; i < mutations.length; i++) {
+            var nodes = mutations[i].addedNodes;
+            for (var j = 0; j < nodes.length; j++) {
+                var n = nodes[j];
+                if (!n.querySelectorAll) continue;
+                if (n.querySelectorAll('.post__cover .lazy-load-image-background').length) {
+                    dominated = true;
+                    break;
+                }
+            }
+            if (dominated) break;
+        }
+        if (dominated || document.querySelector('.blog-grid .post__cover')) {
+            setTimeout(scanPromoImages, 200);
+        }
     });
-    promoCoverObserver.observe(document.body, { childList: true, subtree: true });
+    promoObserver.observe(document.body, { childList: true, subtree: true });
 
 })();
 
@@ -664,31 +728,79 @@ input, select, textarea,
         }, 300);
     }
 
-    // ===== CANLI DESTEK — Comm100 Widget Açma =====
-    function createSupportClickHandler() {
-        return function() {
-            try {
-                // Comm100 API ile widget'ı aç
-                if (typeof window.Comm100API !== 'undefined' && window.Comm100API) {
-                    if (typeof window.Comm100API.open_chat_window === 'function') {
-                        window.Comm100API.open_chat_window();
-                        return;
-                    }
-                    if (typeof window.Comm100API.do === 'function') {
-                        window.Comm100API.do('livechat.button.click');
-                        return;
-                    }
-                }
-                // Fallback: Comm100'in kendi widget butonuna tıkla
-                var comm100Btn = document.querySelector('#comm100-float-button-f4df5455-dbc5-4a00-af9b-63e3890e8521-2 a, [id*="comm100-float-button"] a');
-                if (comm100Btn) {
-                    comm100Btn.click();
+    // ===== CANLI DESTEK — Telegram Yönlendirme =====
+    var TG_SUPPORT = 'https://t.me/mitobetsupport';
+
+    // ===== COMM100 DEAKTIF =====
+    function killComm100() {
+        try {
+            window.Comm100API = { open: function(){}, close: function(){}, destroy: function(){}, on: function(){}, do: function(){} };
+            window.Comm100 = null;
+        } catch(e) {}
+        document.querySelectorAll(
+            'iframe[src*="comm100"],iframe[id*="comm100"],div[id*="comm100"],div[class*="comm100"],' +
+            'div[id*="Comm100"],div[class*="Comm100"],#livechat-compact-container,#livechat-full,' +
+            'div[id*="livechat"],iframe[src*="livechat"]'
+        ).forEach(function(el) { try { el.remove(); } catch(e) {} });
+    }
+
+    // Document-level capture listener: "canlı destek" veya "live support" tıklamalarını yakala
+    var _mitoDocListenerAdded = false;
+    function isSupportElement(el) {
+        if (!el) return false;
+        var txt = (el.textContent || '').trim().toLowerCase();
+        if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') return true;
+        if (el.classList && (el.classList.contains('mito-header-btn--support') || el.classList.contains('mito-mobile-btn--support'))) return true;
+        if (el.getAttribute && el.getAttribute('data-mito-extra') === 'support') return true;
+        return false;
+    }
+
+    function addDocumentSupportListener() {
+        if (_mitoDocListenerAdded) return;
+        _mitoDocListenerAdded = true;
+        document.addEventListener('click', function(e) {
+            var target = e.target;
+            var el = target;
+            // 5 seviye yukarı çık, parent'a bak
+            for (var i = 0; i < 6 && el; i++) {
+                if (isSupportElement(el)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    window.open(TG_SUPPORT, '_blank');
                     return;
                 }
-            } catch(e) {
-                console.warn('[MITO] Comm100 widget açılamadı:', e);
+                el = el.parentElement;
             }
-        };
+        }, true);
+    }
+
+    function enforceSupportRedirect() {
+        var sels = [
+            '.mito-header-btn--support', '.mito-mobile-btn--support',
+            '[data-mito-extra="support"]',
+            'a[href*="livechat"]', 'a[href*="comm100"]'
+        ];
+        document.querySelectorAll(sels.join(',')).forEach(function(el) {
+            el.removeAttribute('onclick');
+            el.onclick = null;
+            if (el.tagName === 'A') {
+                el.href = TG_SUPPORT;
+                el.target = '_blank';
+            }
+        });
+        // Metin bazlı tarama
+        document.querySelectorAll('a, button').forEach(function(el) {
+            var txt = (el.textContent || '').trim().toLowerCase();
+            if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') {
+                el.removeAttribute('onclick');
+                el.onclick = null;
+                if (el.tagName === 'A') {
+                    el.href = TG_SUPPORT;
+                    el.target = '_blank';
+                }
+            }
+        });
     }
 
     // ===== PROMO TEXT SLİDER =====
@@ -936,12 +1048,13 @@ input, select, textarea,
         promoBtn.innerHTML = '<span class="mito-btn-text">' + (lang === 'en' ? 'PROMOTIONS' : 'PROMOSYONLAR') + '</span>';
         promoBtn.setAttribute('data-mito-extra', 'promo');
 
-        var supportBtn = document.createElement('button');
-        supportBtn.type = 'button';
+        var supportBtn = document.createElement('a');
+        supportBtn.href = TG_SUPPORT;
+        supportBtn.target = '_blank';
+        supportBtn.rel = 'noopener noreferrer';
         supportBtn.className = 'mito-header-btn mito-header-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span><span class="mito-btn-text">' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK') + '</span>';
         supportBtn.setAttribute('data-mito-extra', 'support');
-        supportBtn.addEventListener('click', createSupportClickHandler());
 
         var divider = document.createElement('span');
         divider.className = 'mito-header-divider';
@@ -993,11 +1106,12 @@ input, select, textarea,
         promoBtn.style.position = 'relative';
         promoBtn.style.overflow = 'hidden';
 
-        var supportBtn = document.createElement('button');
-        supportBtn.type = 'button';
+        var supportBtn = document.createElement('a');
+        supportBtn.href = TG_SUPPORT;
+        supportBtn.target = '_blank';
+        supportBtn.rel = 'noopener noreferrer';
         supportBtn.className = 'mito-mobile-btn mito-mobile-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span> ' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK');
-        supportBtn.addEventListener('click', createSupportClickHandler());
 
         var tgBtn = document.createElement('a');
         tgBtn.href = 'https://t.me/mitoresmi';
@@ -1042,6 +1156,8 @@ input, select, textarea,
     function init() {
         lastMitoPath = window.location.pathname;
         injectAnimationCSS();
+        killComm100();
+        addDocumentSupportListener();
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
@@ -1080,12 +1196,23 @@ input, select, textarea,
                 }
                 fixMobileHeaderHeight();
             }
+            enforceSupportRedirect();
         });
 
         var root = document.getElementById('root');
         if (root) {
             observer.observe(root, { childList: true, subtree: true });
         }
+
+        // Comm100 periyodik temizle + destek butonlarını sürekli düzelt
+        var cleanCount = 0;
+        var cleanTimer = setInterval(function() {
+            killComm100();
+            enforceSupportRedirect();
+            cleanCount++;
+            if (cleanCount >= 30) clearInterval(cleanTimer);
+        }, 1500);
+        window._mitoIntervals.push(cleanTimer);
 
         // Resize
         var resizeTimer;
@@ -1110,8 +1237,12 @@ input, select, textarea,
             }, 200);
         });
 
-        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi');
+        enforceSupportRedirect();
+        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi (Comm100 deaktif)');
     }
+
+    // Document-level listener'ı hemen ekle (init'ten önce bile çalışsın)
+    addDocumentSupportListener();
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 500); });
