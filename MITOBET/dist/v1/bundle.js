@@ -1154,7 +1154,41 @@ input, select, textarea,
             }, 200);
         });
 
+        // Sidebar "Canlı Destek" linkini Telegram'a yönlendir
+        hijackSidebarSupport();
+
         console.log('[MITO] Header extra butonlar + animasyonlar yüklendi');
+    }
+
+    // ===== SIDEBAR CANLI DESTEK -> TELEGRAM =====
+    function hijackSidebarSupport() {
+        var links = document.querySelectorAll('.sidebar__nav a, .sidebar__menu a, #sidebar a');
+        links.forEach(function(a) {
+            if (a.dataset.mitoHijacked) return;
+            var txt = (a.textContent || '').trim().toLowerCase();
+            if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') {
+                a.dataset.mitoHijacked = '1';
+                a.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    window.open('https://t.me/mitobetsupport', '_blank');
+                }, true);
+            }
+        });
+    }
+
+    // Sidebar SPA'da yeniden render olabilir, MutationObserver ile tekrar yakala
+    var sidebarObserver = new MutationObserver(function() {
+        hijackSidebarSupport();
+    });
+    var sidebarEl = document.getElementById('sidebar') || document.getElementById('sidebar-content');
+    if (sidebarEl) {
+        sidebarObserver.observe(sidebarEl, { childList: true, subtree: true });
+    } else {
+        document.addEventListener('DOMContentLoaded', function() {
+            var el = document.getElementById('sidebar') || document.getElementById('sidebar-content');
+            if (el) sidebarObserver.observe(el, { childList: true, subtree: true });
+        });
     }
 
     if (document.readyState === 'loading') {
