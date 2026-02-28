@@ -399,24 +399,87 @@ input, select, textarea,
         resizeTimer = setTimeout(changePromoImage, 250);
     });
 
-    // ========== AdBlock bypass: fetch() -> blob URL ==========
-    // AdBlocker /promotions/ path'li img ve background-image isteklerini engelliyor.
-    // fetch() API genelde engellenmez; görseli fetch ile indirip blob URL'e çeviriyoruz.
+    // ========== AdBlock bypass: Çok katmanlı gorsel kurtarma ==========
+    var _blobCache = {};
 
-    var blobCache = {};
+    // Katman 1: XHR ile URL obfuscation — AdBlocker statik pattern matching'i atlatır
+    function xhrBlobFetch(url) {
+        if (_blobCache[url]) return Promise.resolve(_blobCache[url]);
+        return new Promise(function(resolve, reject) {
+            try {
+                var p = url.split('/');
+                var base = p.slice(0, 3).join('/');
+                var rest = p.slice(3);
+                var rebuilt = [base].concat(rest).join(String.fromCharCode(47));
+                var x = new XMLHttpRequest();
+                x.open(String.fromCharCode(71, 69, 84), rebuilt, true);
+                x.responseType = 'blob';
+                x.onload = function() {
+                    if (x.status >= 200 && x.status < 300 && x.response) {
+                        var b = URL.createObjectURL(x.response);
+                        _blobCache[url] = b;
+                        resolve(b);
+                    } else { reject(); }
+                };
+                x.onerror = function() { reject(); };
+                x.ontimeout = function() { reject(); };
+                x.timeout = 8000;
+                x.send();
+            } catch(e) { reject(e); }
+        });
+    }
 
-    function fetchAsBlob(url) {
-        if (blobCache[url]) return Promise.resolve(blobCache[url]);
-        return fetch(url, { mode: 'cors', credentials: 'omit' })
-            .then(function(r) {
-                if (!r.ok) throw new Error(r.status);
-                return r.blob();
-            })
-            .then(function(blob) {
-                var blobUrl = URL.createObjectURL(blob);
-                blobCache[url] = blobUrl;
-                return blobUrl;
-            });
+    // Katman 2: wsrv.nl görsel proxy — tamamen farklı domain üzerinden sunar
+    function proxyFetch(url) {
+        var proxyUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(url) + '&default=1';
+        return new Promise(function(resolve, reject) {
+            try {
+                var x = new XMLHttpRequest();
+                x.open('GET', proxyUrl, true);
+                x.responseType = 'blob';
+                x.onload = function() {
+                    if (x.status >= 200 && x.status < 300 && x.response && x.response.size > 500) {
+                        var b = URL.createObjectURL(x.response);
+                        _blobCache[url] = b;
+                        resolve(b);
+                    } else { reject(); }
+                };
+                x.onerror = function() { reject(); };
+                x.ontimeout = function() { reject(); };
+                x.timeout = 10000;
+                x.send();
+            } catch(e) { reject(e); }
+        });
+    }
+
+    // Katmanlı deneme: XHR -> proxy -> placeholder
+    function rescueImage(url) {
+        if (_blobCache[url]) return Promise.resolve(_blobCache[url]);
+        return xhrBlobFetch(url).catch(function() {
+            return proxyFetch(url);
+        });
+    }
+
+    function applyBlobToImg(img, span, blobUrl) {
+        img.src = blobUrl;
+        img.style.display = '';
+        img.style.visibility = 'visible';
+        img.style.opacity = '1';
+        span.classList.remove('blur');
+        span.style.display = 'inline-block';
+        span.style.width = '100%';
+        span.style.height = '100%';
+    }
+
+    function applyPlaceholder(img, span) {
+        span.classList.remove('blur');
+        span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+        span.style.backgroundSize = 'cover';
+        span.style.display = 'block';
+        span.style.width = '100%';
+        span.style.height = '100%';
+        span.style.minHeight = '200px';
+        img.style.display = 'none';
     }
 
     function fixBlockedImage(span) {
@@ -427,26 +490,12 @@ input, select, textarea,
         if (!src) return;
 
         function doFix() {
+            if (span.dataset.mitoFixed === '1') return;
             span.dataset.mitoFixed = '1';
-            fetchAsBlob(src).then(function(blobUrl) {
-                img.src = blobUrl;
-                img.style.display = '';
-                img.style.visibility = 'visible';
-                img.style.opacity = '1';
-                span.classList.remove('blur');
-                span.style.display = 'inline-block';
-                span.style.width = '100%';
-                span.style.height = '100%';
-                console.log('[MITO] Promo gorsel kurtarildi:', src.slice(-30));
+            rescueImage(src).then(function(blobUrl) {
+                applyBlobToImg(img, span, blobUrl);
             }).catch(function() {
-                span.classList.remove('blur');
-                span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
-                span.style.backgroundSize = 'cover';
-                span.style.display = 'block';
-                span.style.width = '100%';
-                span.style.height = '100%';
-                span.style.minHeight = '200px';
-                img.style.display = 'none';
+                applyPlaceholder(img, span);
             });
         }
 
