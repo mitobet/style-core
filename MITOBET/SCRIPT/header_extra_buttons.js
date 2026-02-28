@@ -60,100 +60,74 @@
     // ===== CANLI DESTEK — Telegram Yönlendirme =====
     var TG_SUPPORT = 'https://t.me/mitobetsupport';
 
-    function createSupportClickHandler() {
-        return function(e) {
-            if (e) { e.preventDefault(); e.stopPropagation(); }
-            window.open(TG_SUPPORT, '_blank');
-        };
-    }
-
     // ===== COMM100 DEAKTIF =====
     function killComm100() {
-        // Comm100 global nesnelerini öldür
-        if (window.Comm100API) {
-            try { window.Comm100API.close && window.Comm100API.close(); } catch(e) {}
-            try { window.Comm100API.destroy && window.Comm100API.destroy(); } catch(e) {}
-            window.Comm100API = { open: function() { window.open(TG_SUPPORT, '_blank'); }, close: function(){}, destroy: function(){} };
-        }
-        if (window.Comm100) {
+        try {
+            window.Comm100API = { open: function(){}, close: function(){}, destroy: function(){}, on: function(){}, do: function(){} };
             window.Comm100 = null;
-        }
-
-        // Comm100 iframe, container ve butonlarını kaldır
-        var selectors = [
-            'iframe[src*="comm100"]', 'iframe[id*="comm100"]', 'iframe[name*="comm100"]',
-            'div[id*="comm100"]', 'div[class*="comm100"]',
-            '#comm100-container', '#comm100-button', '#comm100-chat',
-            '.comm100-container', '.comm100-button',
-            'div[id*="Comm100"]', 'div[class*="Comm100"]',
-            '#livechat-compact-container', '#livechat-full',
-            'div[id*="livechat"]', 'iframe[src*="livechat"]'
-        ];
-        document.querySelectorAll(selectors.join(',')).forEach(function(el) {
-            el.parentNode && el.parentNode.removeChild(el);
-        });
-
-        // Comm100 script'lerinin yüklenmesini engelle
-        var origCreate = document.createElement;
-        document.createElement = function(tag) {
-            var el = origCreate.call(document, tag);
-            if (tag.toLowerCase() === 'script') {
-                var origSrc = Object.getOwnPropertyDescriptor(HTMLScriptElement.prototype, 'src') ||
-                              Object.getOwnPropertyDescriptor(el.__proto__, 'src');
-                if (origSrc && origSrc.set) {
-                    var origSet = origSrc.set;
-                    Object.defineProperty(el, 'src', {
-                        set: function(v) {
-                            if (typeof v === 'string' && (v.indexOf('comm100') > -1 || v.indexOf('livechat') > -1)) {
-                                console.log('[MITO] Comm100 script engellendi:', v);
-                                return;
-                            }
-                            origSet.call(this, v);
-                        },
-                        get: origSrc.get ? origSrc.get.bind(el) : function() { return el.getAttribute('src'); }
-                    });
-                }
-            }
-            return el;
-        };
-
-        console.log('[MITO] Comm100 deaktif edildi');
+        } catch(e) {}
+        document.querySelectorAll(
+            'iframe[src*="comm100"],iframe[id*="comm100"],div[id*="comm100"],div[class*="comm100"],' +
+            'div[id*="Comm100"],div[class*="Comm100"],#livechat-compact-container,#livechat-full,' +
+            'div[id*="livechat"],iframe[src*="livechat"]'
+        ).forEach(function(el) { try { el.remove(); } catch(e) {} });
     }
 
-    function forceToTelegram(el) {
-        if (el.dataset.mitoTgForced) return;
-        el.dataset.mitoTgForced = '1';
-        el.removeAttribute('onclick');
-        el.onclick = null;
-        if (el.tagName === 'A') {
-            el.href = TG_SUPPORT;
-            el.target = '_blank';
-            el.rel = 'noopener noreferrer';
-        }
-        el.addEventListener('click', function(e) {
-            e.stopImmediatePropagation();
-            window.open(TG_SUPPORT, '_blank');
+    // Document-level capture listener: "canlı destek" veya "live support" tıklamalarını yakala
+    var _mitoDocListenerAdded = false;
+    function isSupportElement(el) {
+        if (!el) return false;
+        var txt = (el.textContent || '').trim().toLowerCase();
+        if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') return true;
+        if (el.classList && (el.classList.contains('mito-header-btn--support') || el.classList.contains('mito-mobile-btn--support'))) return true;
+        if (el.getAttribute && el.getAttribute('data-mito-extra') === 'support') return true;
+        return false;
+    }
+
+    function addDocumentSupportListener() {
+        if (_mitoDocListenerAdded) return;
+        _mitoDocListenerAdded = true;
+        document.addEventListener('click', function(e) {
+            var target = e.target;
+            var el = target;
+            // 5 seviye yukarı çık, parent'a bak
+            for (var i = 0; i < 6 && el; i++) {
+                if (isSupportElement(el)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    e.stopImmediatePropagation();
+                    window.open(TG_SUPPORT, '_blank');
+                    return;
+                }
+                el = el.parentElement;
+            }
         }, true);
     }
 
-    function hijackAllSupportButtons() {
-        // Selector bazlı
+    function enforceSupportRedirect() {
         var sels = [
             '.mito-header-btn--support', '.mito-mobile-btn--support',
-            'a[href*="livechat"]', 'a[href*="live-chat"]', 'a[href*="comm100"]',
-            'button[onclick*="Comm100"]', 'button[onclick*="livechat"]',
-            '[data-action*="chat"]', '[data-action*="support"]',
-            '[data-mito-extra="support"]'
+            '[data-mito-extra="support"]',
+            'a[href*="livechat"]', 'a[href*="comm100"]'
         ];
-        document.querySelectorAll(sels.join(',')).forEach(forceToTelegram);
-
-        // Text bazlı - sayfadaki tüm a ve button'ları tara
-        var all = document.querySelectorAll('a, button');
-        all.forEach(function(el) {
-            if (el.dataset.mitoTgForced) return;
+        document.querySelectorAll(sels.join(',')).forEach(function(el) {
+            el.removeAttribute('onclick');
+            el.onclick = null;
+            if (el.tagName === 'A') {
+                el.href = TG_SUPPORT;
+                el.target = '_blank';
+            }
+        });
+        // Metin bazlı tarama
+        document.querySelectorAll('a, button').forEach(function(el) {
             var txt = (el.textContent || '').trim().toLowerCase();
             if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') {
-                forceToTelegram(el);
+                el.removeAttribute('onclick');
+                el.onclick = null;
+                if (el.tagName === 'A') {
+                    el.href = TG_SUPPORT;
+                    el.target = '_blank';
+                }
             }
         });
     }
@@ -512,6 +486,7 @@
         lastMitoPath = window.location.pathname;
         injectAnimationCSS();
         killComm100();
+        addDocumentSupportListener();
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
@@ -550,7 +525,7 @@
                 }
                 fixMobileHeaderHeight();
             }
-            hijackAllSupportButtons();
+            enforceSupportRedirect();
         });
 
         var root = document.getElementById('root');
@@ -558,16 +533,15 @@
             observer.observe(root, { childList: true, subtree: true });
         }
 
-        // Comm100 periyodik temizle + tüm destek butonlarını sürekli yakala
-        var comm100CleanCount = 0;
-        var comm100Timer = setInterval(function() {
+        // Comm100 periyodik temizle + destek butonlarını sürekli düzelt
+        var cleanCount = 0;
+        var cleanTimer = setInterval(function() {
             killComm100();
-            hijackAllSupportButtons();
-            hijackSidebarSupport();
-            comm100CleanCount++;
-            if (comm100CleanCount >= 30) clearInterval(comm100Timer);
+            enforceSupportRedirect();
+            cleanCount++;
+            if (cleanCount >= 30) clearInterval(cleanTimer);
         }, 1500);
-        window._mitoIntervals.push(comm100Timer);
+        window._mitoIntervals.push(cleanTimer);
 
         // Resize
         var resizeTimer;
@@ -592,37 +566,12 @@
             }, 200);
         });
 
-        // Sidebar "Canlı Destek" linkini Telegram'a yönlendir
-        hijackSidebarSupport();
-        hijackAllSupportButtons();
-
+        enforceSupportRedirect();
         console.log('[MITO] Header extra butonlar + animasyonlar yüklendi (Comm100 deaktif)');
     }
 
-    // ===== SIDEBAR CANLI DESTEK -> TELEGRAM =====
-    function hijackSidebarSupport() {
-        var links = document.querySelectorAll('.sidebar__nav a, .sidebar__menu a, #sidebar a');
-        links.forEach(function(a) {
-            var txt = (a.textContent || '').trim().toLowerCase();
-            if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') {
-                forceToTelegram(a);
-            }
-        });
-    }
-
-    // Sidebar SPA'da yeniden render olabilir, MutationObserver ile tekrar yakala
-    var sidebarObserver = new MutationObserver(function() {
-        hijackSidebarSupport();
-    });
-    var sidebarEl = document.getElementById('sidebar') || document.getElementById('sidebar-content');
-    if (sidebarEl) {
-        sidebarObserver.observe(sidebarEl, { childList: true, subtree: true });
-    } else {
-        document.addEventListener('DOMContentLoaded', function() {
-            var el = document.getElementById('sidebar') || document.getElementById('sidebar-content');
-            if (el) sidebarObserver.observe(el, { childList: true, subtree: true });
-        });
-    }
+    // Document-level listener'ı hemen ekle (init'ten önce bile çalışsın)
+    addDocumentSupportListener();
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 500); });
