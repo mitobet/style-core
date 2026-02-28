@@ -5,7 +5,7 @@
     display: none !important;
 }
 /* Sadece promosyon sayfasındaki filtre tablarını gizle; #tabs-nav (Para Yatır/Çek) ve wallet-modal içindekiler görünsün */
-.ection:has(.section__title--head) .nav.nav-tabs.tabs-nav,
+.section:has(.section__title--head) .nav.nav-tabs.tabs-nav,
 .section:has(.section__title--head) .nav.nav-tabs.tabs-nav {
     display: none !important;
 }
@@ -13,6 +13,23 @@
 #wallet-modal .nav.nav-tabs.tabs-nav,
 #wallet-modal .tabs-nav {
     display: flex !important;
+}
+
+/* Promosyon kartı görselleri - Tüm ekranlar */
+.post__cover {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    aspect-ratio: 16/9 !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+.post__cover img {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
 @media (max-width: 768px) {
