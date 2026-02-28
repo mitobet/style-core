@@ -37,13 +37,19 @@
     display: block !important;
     width: 100% !important;
     height: 100% !important;
-    min-height: 100% !important;
+    min-height: 180px !important;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
 }
 .post__cover .lazy-load-image-background.blur {
     filter: none !important;
+}
+.post__cover .lazy-load-image-background[data-mito-fallback="1"] {
+    min-height: 200px !important;
+}
+.post__cover .lazy-load-image-background[data-mito-fallback="1"] img {
+    display: none !important;
 }
 
 @media (max-width: 768px) {

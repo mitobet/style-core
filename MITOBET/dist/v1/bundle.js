@@ -400,29 +400,59 @@ input, select, textarea,
     });
 
     // ========== AdBlock fallback: promosyon kartı görselleri ==========
-    // img engellendiyse (blocked:other) lazy-load span'daki background-image gorunsun
+    // AdBlocker /promotions/ path'ini engelliyor. img blocked olduğunda
+    // parent span'a background-image atayarak görseli kurtarıyoruz.
+
+    function activateFallback(span, src) {
+        if (!src || span.dataset.mitoFallback === '1') return;
+        span.dataset.mitoFallback = '1';
+        span.classList.remove('blur');
+        span.style.backgroundImage = 'url("' + src + '")';
+        span.style.backgroundSize = 'cover';
+        span.style.backgroundPosition = 'center';
+        span.style.backgroundRepeat = 'no-repeat';
+        span.style.display = 'block';
+        span.style.width = '100%';
+        span.style.height = '100%';
+        var img = span.querySelector('img');
+        if (img) img.style.display = 'none';
+    }
+
+    function checkAndFixImage(span) {
+        if (span.dataset.mitoFallback === '1') return;
+        var img = span.querySelector('img');
+        if (!img) {
+            var src = span.style.backgroundImage;
+            if (src) {
+                src = src.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+                activateFallback(span, src);
+            }
+            return;
+        }
+        var src = img.getAttribute('src') || '';
+        if (!src) return;
+
+        if (img.complete) {
+            if (img.naturalWidth === 0) activateFallback(span, src);
+            return;
+        }
+        img.addEventListener('error', function() { activateFallback(span, src); });
+        setTimeout(function() {
+            if (img.naturalWidth === 0) activateFallback(span, src);
+        }, 3000);
+    }
+
     function applyPromoCoverFallback() {
         var covers = document.querySelectorAll('.post__cover .lazy-load-image-background');
-        covers.forEach(function(span) {
-            var img = span.querySelector('img');
-            var blocked = !img || (img.complete && img.naturalWidth === 0);
-            if (blocked && span.style.backgroundImage) {
-                span.classList.remove('blur');
-                span.style.display = 'block';
-                span.style.width = '100%';
-                span.style.height = '100%';
-                span.style.backgroundSize = 'cover';
-                span.style.backgroundPosition = 'center';
-                span.style.backgroundRepeat = 'no-repeat';
-            }
-        });
+        covers.forEach(checkAndFixImage);
     }
 
     function runPromoCoverFallback() {
         if (!document.querySelector('.blog-grid .post__cover')) return;
         applyPromoCoverFallback();
-        setTimeout(applyPromoCoverFallback, 800);
-        setTimeout(applyPromoCoverFallback, 2000);
+        setTimeout(applyPromoCoverFallback, 500);
+        setTimeout(applyPromoCoverFallback, 1500);
+        setTimeout(applyPromoCoverFallback, 4000);
     }
 
     if (document.readyState === 'loading') {
@@ -432,8 +462,19 @@ input, select, textarea,
     }
     window.addEventListener('load', runPromoCoverFallback);
 
-    var promoCoverObserver = new MutationObserver(function() {
-        if (document.querySelector('.blog-grid .post__cover')) runPromoCoverFallback();
+    var promoCoverObserver = new MutationObserver(function(mutations) {
+        for (var i = 0; i < mutations.length; i++) {
+            var nodes = mutations[i].addedNodes;
+            for (var j = 0; j < nodes.length; j++) {
+                var n = nodes[j];
+                if (!n.querySelectorAll) continue;
+                var spans = n.querySelectorAll('.post__cover .lazy-load-image-background');
+                if (spans.length) spans.forEach(checkAndFixImage);
+            }
+        }
+        if (document.querySelector('.blog-grid .post__cover')) {
+            setTimeout(applyPromoCoverFallback, 300);
+        }
     });
     promoCoverObserver.observe(document.body, { childList: true, subtree: true });
 
