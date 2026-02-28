@@ -57,30 +57,10 @@
         }, 300);
     }
 
-    // ===== CANLI DESTEK — Comm100 Widget Açma =====
+    // ===== CANLI DESTEK — Telegram Yönlendirme =====
     function createSupportClickHandler() {
         return function() {
-            try {
-                // Comm100 API ile widget'ı aç
-                if (typeof window.Comm100API !== 'undefined' && window.Comm100API) {
-                    if (typeof window.Comm100API.open_chat_window === 'function') {
-                        window.Comm100API.open_chat_window();
-                        return;
-                    }
-                    if (typeof window.Comm100API.do === 'function') {
-                        window.Comm100API.do('livechat.button.click');
-                        return;
-                    }
-                }
-                // Fallback: Comm100'in kendi widget butonuna tıkla
-                var comm100Btn = document.querySelector('#comm100-float-button-f4df5455-dbc5-4a00-af9b-63e3890e8521-2 a, [id*="comm100-float-button"] a');
-                if (comm100Btn) {
-                    comm100Btn.click();
-                    return;
-                }
-            } catch(e) {
-                console.warn('[MITO] Comm100 widget açılamadı:', e);
-            }
+            window.open('https://t.me/mitobetsupport', '_blank');
         };
     }
 
