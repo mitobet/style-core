@@ -177,5 +177,43 @@
         clearTimeout(resizeTimer);
         resizeTimer = setTimeout(changePromoImage, 250);
     });
-    
+
+    // ========== AdBlock fallback: promosyon kartı görselleri ==========
+    // img engellendiyse (blocked:other) lazy-load span'daki background-image gorunsun
+    function applyPromoCoverFallback() {
+        var covers = document.querySelectorAll('.post__cover .lazy-load-image-background');
+        covers.forEach(function(span) {
+            var img = span.querySelector('img');
+            var blocked = !img || (img.complete && img.naturalWidth === 0);
+            if (blocked && span.style.backgroundImage) {
+                span.classList.remove('blur');
+                span.style.display = 'block';
+                span.style.width = '100%';
+                span.style.height = '100%';
+                span.style.backgroundSize = 'cover';
+                span.style.backgroundPosition = 'center';
+                span.style.backgroundRepeat = 'no-repeat';
+            }
+        });
+    }
+
+    function runPromoCoverFallback() {
+        if (!document.querySelector('.blog-grid .post__cover')) return;
+        applyPromoCoverFallback();
+        setTimeout(applyPromoCoverFallback, 800);
+        setTimeout(applyPromoCoverFallback, 2000);
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runPromoCoverFallback);
+    } else {
+        runPromoCoverFallback();
+    }
+    window.addEventListener('load', runPromoCoverFallback);
+
+    var promoCoverObserver = new MutationObserver(function() {
+        if (document.querySelector('.blog-grid .post__cover')) runPromoCoverFallback();
+    });
+    promoCoverObserver.observe(document.body, { childList: true, subtree: true });
+
 })();

@@ -1933,6 +1933,20 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     object-fit: cover !important;
 }
 
+/* AdBlock fallback: img engellense bile lazy-load span'daki background-image gorunsun */
+.post__cover .lazy-load-image-background {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+}
+.post__cover .lazy-load-image-background.blur {
+    filter: none !important;
+}
+
 @media (max-width: 768px) {
     
     /* Ana grid kapsayıcısı */
