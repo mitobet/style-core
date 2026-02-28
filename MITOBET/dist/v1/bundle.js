@@ -399,84 +399,107 @@ input, select, textarea,
         resizeTimer = setTimeout(changePromoImage, 250);
     });
 
-    // ========== AdBlock fallback: promosyon kartı görselleri ==========
-    // AdBlocker /promotions/ path'ini engelliyor. img blocked olduğunda
-    // parent span'a background-image atayarak görseli kurtarıyoruz.
+    // ========== AdBlock bypass: fetch() -> blob URL ==========
+    // AdBlocker /promotions/ path'li img ve background-image isteklerini engelliyor.
+    // fetch() API genelde engellenmez; görseli fetch ile indirip blob URL'e çeviriyoruz.
 
-    function activateFallback(span, src) {
-        if (!src || span.dataset.mitoFallback === '1') return;
-        span.dataset.mitoFallback = '1';
-        span.classList.remove('blur');
-        span.style.backgroundImage = 'url("' + src + '")';
-        span.style.backgroundSize = 'cover';
-        span.style.backgroundPosition = 'center';
-        span.style.backgroundRepeat = 'no-repeat';
-        span.style.display = 'block';
-        span.style.width = '100%';
-        span.style.height = '100%';
-        var img = span.querySelector('img');
-        if (img) img.style.display = 'none';
+    var blobCache = {};
+
+    function fetchAsBlob(url) {
+        if (blobCache[url]) return Promise.resolve(blobCache[url]);
+        return fetch(url, { mode: 'cors', credentials: 'omit' })
+            .then(function(r) {
+                if (!r.ok) throw new Error(r.status);
+                return r.blob();
+            })
+            .then(function(blob) {
+                var blobUrl = URL.createObjectURL(blob);
+                blobCache[url] = blobUrl;
+                return blobUrl;
+            });
     }
 
-    function checkAndFixImage(span) {
-        if (span.dataset.mitoFallback === '1') return;
+    function fixBlockedImage(span) {
+        if (span.dataset.mitoFixed === '1') return;
         var img = span.querySelector('img');
-        if (!img) {
-            var src = span.style.backgroundImage;
-            if (src) {
-                src = src.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
-                activateFallback(span, src);
-            }
-            return;
-        }
+        if (!img) return;
         var src = img.getAttribute('src') || '';
         if (!src) return;
 
-        if (img.complete) {
-            if (img.naturalWidth === 0) activateFallback(span, src);
+        function doFix() {
+            span.dataset.mitoFixed = '1';
+            fetchAsBlob(src).then(function(blobUrl) {
+                img.src = blobUrl;
+                img.style.display = '';
+                img.style.visibility = 'visible';
+                img.style.opacity = '1';
+                span.classList.remove('blur');
+                span.style.display = 'inline-block';
+                span.style.width = '100%';
+                span.style.height = '100%';
+                console.log('[MITO] Promo gorsel kurtarildi:', src.slice(-30));
+            }).catch(function() {
+                span.classList.remove('blur');
+                span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+                span.style.backgroundSize = 'cover';
+                span.style.display = 'block';
+                span.style.width = '100%';
+                span.style.height = '100%';
+                span.style.minHeight = '200px';
+                img.style.display = 'none';
+            });
+        }
+
+        if (img.complete && img.naturalWidth === 0) {
+            doFix();
             return;
         }
-        img.addEventListener('error', function() { activateFallback(span, src); });
-        setTimeout(function() {
-            if (img.naturalWidth === 0) activateFallback(span, src);
-        }, 3000);
+        if (!img.complete) {
+            img.addEventListener('error', doFix);
+            setTimeout(function() {
+                if (span.dataset.mitoFixed !== '1' && img.naturalWidth === 0) doFix();
+            }, 2500);
+        }
     }
 
-    function applyPromoCoverFallback() {
-        var covers = document.querySelectorAll('.post__cover .lazy-load-image-background');
-        covers.forEach(checkAndFixImage);
+    function scanPromoImages() {
+        var spans = document.querySelectorAll('.post__cover .lazy-load-image-background');
+        spans.forEach(fixBlockedImage);
     }
 
-    function runPromoCoverFallback() {
+    function runPromoFix() {
         if (!document.querySelector('.blog-grid .post__cover')) return;
-        applyPromoCoverFallback();
-        setTimeout(applyPromoCoverFallback, 500);
-        setTimeout(applyPromoCoverFallback, 1500);
-        setTimeout(applyPromoCoverFallback, 4000);
+        scanPromoImages();
+        setTimeout(scanPromoImages, 600);
+        setTimeout(scanPromoImages, 2000);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runPromoCoverFallback);
+        document.addEventListener('DOMContentLoaded', runPromoFix);
     } else {
-        runPromoCoverFallback();
+        runPromoFix();
     }
-    window.addEventListener('load', runPromoCoverFallback);
+    window.addEventListener('load', runPromoFix);
 
-    var promoCoverObserver = new MutationObserver(function(mutations) {
+    var promoObserver = new MutationObserver(function(mutations) {
+        var dominated = false;
         for (var i = 0; i < mutations.length; i++) {
             var nodes = mutations[i].addedNodes;
             for (var j = 0; j < nodes.length; j++) {
                 var n = nodes[j];
                 if (!n.querySelectorAll) continue;
-                var spans = n.querySelectorAll('.post__cover .lazy-load-image-background');
-                if (spans.length) spans.forEach(checkAndFixImage);
+                if (n.querySelectorAll('.post__cover .lazy-load-image-background').length) {
+                    dominated = true;
+                    break;
+                }
             }
+            if (dominated) break;
         }
-        if (document.querySelector('.blog-grid .post__cover')) {
-            setTimeout(applyPromoCoverFallback, 300);
+        if (dominated || document.querySelector('.blog-grid .post__cover')) {
+            setTimeout(scanPromoImages, 200);
         }
     });
-    promoCoverObserver.observe(document.body, { childList: true, subtree: true });
+    promoObserver.observe(document.body, { childList: true, subtree: true });
 
 })();
 
