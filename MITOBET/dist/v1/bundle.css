@@ -1364,17 +1364,7 @@ div.footer__currencies ul.footer__accepted li div.instrument-icon-wrapper,
    Gizlenecek elementler & Modal Düzeltmeleri
    ===================================================== */
 
-/* ——— Geçici: Sol menü dil seçici kapat (EN görseller güncellenince kaldırılacak) ——— */
-#sidebar .sidebar__lang,
-.sidebar__lang,
-.sidebar__actions .sidebar__lang {
-    display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-}
+/* ——— Geçici: EN dil seçeneği JS ile gizleniyor (header_extra_buttons.js) ——— */
 
 /* ——— Modal Görsel Gizle (Giriş/Kayıt) ——— */
 .modal__sign-img,

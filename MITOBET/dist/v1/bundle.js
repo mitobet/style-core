@@ -399,156 +399,115 @@ input, select, textarea,
         resizeTimer = setTimeout(changePromoImage, 250);
     });
 
-    // ========== AdBlock bypass: Çok katmanlı gorsel kurtarma ==========
-    var _blobCache = {};
+    // ========== Sadakat Kart Görselleri: /statics/ URL ile değiştir ==========
+    var STATICS_TEST_IMAGE = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/NNpwfWh3DCcKIzff6PAcQdctBPka7liZhjOyqOHR.png';
+    var _blockedPath = String.fromCharCode(47, 112, 114, 111, 109, 111, 116, 105, 111, 110, 115, 47); // "/promotions/"
 
-    // Katman 1: XHR ile URL obfuscation — AdBlocker statik pattern matching'i atlatır
-    function xhrBlobFetch(url) {
-        if (_blobCache[url]) return Promise.resolve(_blobCache[url]);
-        return new Promise(function(resolve, reject) {
-            try {
-                var p = url.split('/');
-                var base = p.slice(0, 3).join('/');
-                var rest = p.slice(3);
-                var rebuilt = [base].concat(rest).join(String.fromCharCode(47));
-                var x = new XMLHttpRequest();
-                x.open(String.fromCharCode(71, 69, 84), rebuilt, true);
-                x.responseType = 'blob';
-                x.onload = function() {
-                    if (x.status >= 200 && x.status < 300 && x.response) {
-                        var b = URL.createObjectURL(x.response);
-                        _blobCache[url] = b;
-                        resolve(b);
-                    } else { reject(); }
-                };
-                x.onerror = function() { reject(); };
-                x.ontimeout = function() { reject(); };
-                x.timeout = 8000;
-                x.send();
-            } catch(e) { reject(e); }
-        });
+    function _isPromoUrl(s) {
+        return s && s.indexOf(_blockedPath) > -1;
     }
 
-    // Katman 2: wsrv.nl görsel proxy — tamamen farklı domain üzerinden sunar
-    function proxyFetch(url) {
-        var proxyUrl = 'https://wsrv.nl/?url=' + encodeURIComponent(url) + '&default=1';
-        return new Promise(function(resolve, reject) {
-            try {
-                var x = new XMLHttpRequest();
-                x.open('GET', proxyUrl, true);
-                x.responseType = 'blob';
-                x.onload = function() {
-                    if (x.status >= 200 && x.status < 300 && x.response && x.response.size > 500) {
-                        var b = URL.createObjectURL(x.response);
-                        _blobCache[url] = b;
-                        resolve(b);
-                    } else { reject(); }
-                };
-                x.onerror = function() { reject(); };
-                x.ontimeout = function() { reject(); };
-                x.timeout = 10000;
-                x.send();
-            } catch(e) { reject(e); }
-        });
-    }
+    function replacePromoCardImages() {
+        var cards = document.querySelectorAll('.blog-grid a.post');
+        if (!cards.length) return;
 
-    // Katmanlı deneme: XHR -> proxy -> placeholder
-    function rescueImage(url) {
-        if (_blobCache[url]) return Promise.resolve(_blobCache[url]);
-        return xhrBlobFetch(url).catch(function() {
-            return proxyFetch(url);
-        });
-    }
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+            var img = card.querySelector('span.post__cover img');
+            var lazySpan = card.querySelector('span.lazy-load-image-background');
 
-    function applyBlobToImg(img, span, blobUrl) {
-        img.src = blobUrl;
-        img.style.display = '';
-        img.style.visibility = 'visible';
-        img.style.opacity = '1';
-        span.classList.remove('blur');
-        span.style.display = 'inline-block';
-        span.style.width = '100%';
-        span.style.height = '100%';
-    }
+            if (img && img.dataset.staticsRw !== '1') {
+                var origSrc = img.getAttribute('src') || '';
+                if (_isPromoUrl(origSrc)) {
+                    img.dataset.staticsRw = '1';
+                    img.setAttribute('src', STATICS_TEST_IMAGE);
+                    if (img.getAttribute('data-src')) {
+                        img.setAttribute('data-src', STATICS_TEST_IMAGE);
+                    }
+                    if (img.srcset) img.removeAttribute('srcset');
+                    img.style.display = '';
+                    img.style.visibility = 'visible';
+                    img.style.opacity = '1';
+                }
+            }
 
-    function applyPlaceholder(img, span) {
-        span.classList.remove('blur');
-        span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
-        span.style.backgroundSize = 'cover';
-        span.style.display = 'block';
-        span.style.width = '100%';
-        span.style.height = '100%';
-        span.style.minHeight = '200px';
-        img.style.display = 'none';
-    }
-
-    function fixBlockedImage(span) {
-        if (span.dataset.mitoFixed === '1') return;
-        var img = span.querySelector('img');
-        if (!img) return;
-        var src = img.getAttribute('src') || '';
-        if (!src) return;
-
-        function doFix() {
-            if (span.dataset.mitoFixed === '1') return;
-            span.dataset.mitoFixed = '1';
-            rescueImage(src).then(function(blobUrl) {
-                applyBlobToImg(img, span, blobUrl);
-            }).catch(function() {
-                applyPlaceholder(img, span);
-            });
+            if (lazySpan) {
+                var bgImg = lazySpan.style.backgroundImage || '';
+                if (_isPromoUrl(bgImg) && lazySpan.dataset.staticsRw !== '1') {
+                    lazySpan.dataset.staticsRw = '1';
+                    lazySpan.style.backgroundImage = 'url("' + STATICS_TEST_IMAGE + '")';
+                    lazySpan.style.backgroundSize = '100% 100%';
+                    lazySpan.classList.remove('blur');
+                    lazySpan.style.display = 'inline-block';
+                    lazySpan.style.width = '100%';
+                    lazySpan.style.height = '100%';
+                }
+            }
         }
 
-        if (img.complete && img.naturalWidth === 0) {
-            doFix();
-            return;
-        }
-        if (!img.complete) {
-            img.addEventListener('error', doFix);
-            setTimeout(function() {
-                if (span.dataset.mitoFixed !== '1' && img.naturalWidth === 0) doFix();
-            }, 2500);
+        var standaloneImgs = document.querySelectorAll('img');
+        for (var j = 0; j < standaloneImgs.length; j++) {
+            var sImg = standaloneImgs[j];
+            if (sImg.dataset.staticsRw === '1') continue;
+            var sSrc = sImg.getAttribute('src') || '';
+            if (_isPromoUrl(sSrc)) {
+                sImg.dataset.staticsRw = '1';
+                sImg.setAttribute('src', STATICS_TEST_IMAGE);
+                if (sImg.getAttribute('data-src')) {
+                    sImg.setAttribute('data-src', STATICS_TEST_IMAGE);
+                }
+                if (sImg.srcset) sImg.removeAttribute('srcset');
+                sImg.style.display = '';
+                sImg.style.visibility = 'visible';
+                sImg.style.opacity = '1';
+
+                var parentSpan = sImg.closest('.lazy-load-image-background');
+                if (parentSpan && parentSpan.dataset.staticsRw !== '1') {
+                    parentSpan.dataset.staticsRw = '1';
+                    parentSpan.style.backgroundImage = 'url("' + STATICS_TEST_IMAGE + '")';
+                    parentSpan.style.backgroundSize = '100% 100%';
+                    parentSpan.classList.remove('blur');
+                    parentSpan.style.display = 'inline-block';
+                    parentSpan.style.width = '100%';
+                    parentSpan.style.height = '100%';
+                }
+            }
         }
     }
 
-    function scanPromoImages() {
-        var spans = document.querySelectorAll('.post__cover .lazy-load-image-background');
-        spans.forEach(fixBlockedImage);
-    }
+    var _cardObTarget = document.documentElement || document.body;
+    var _cardRewriteObs = new MutationObserver(function(muts) {
+        var shouldScan = false;
+        for (var i = 0; i < muts.length; i++) {
+            if (muts[i].addedNodes.length > 0) { shouldScan = true; break; }
+            if (muts[i].type === 'attributes' && muts[i].target.tagName === 'IMG') {
+                muts[i].target.dataset.staticsRw = '';
+                shouldScan = true;
+            }
+        }
+        if (shouldScan) setTimeout(replacePromoCardImages, 50);
+    });
 
-    function runPromoFix() {
-        if (!document.querySelector('.blog-grid .post__cover')) return;
-        scanPromoImages();
-        setTimeout(scanPromoImages, 600);
-        setTimeout(scanPromoImages, 2000);
+    _cardRewriteObs.observe(_cardObTarget, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['src', 'data-src']
+    });
+
+    function _initStaticsRewrite() {
+        replacePromoCardImages();
+        setTimeout(replacePromoCardImages, 500);
+        setTimeout(replacePromoCardImages, 2000);
+        setTimeout(replacePromoCardImages, 5000);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', runPromoFix);
+        document.addEventListener('DOMContentLoaded', _initStaticsRewrite);
     } else {
-        runPromoFix();
+        _initStaticsRewrite();
     }
-    window.addEventListener('load', runPromoFix);
-
-    var promoObserver = new MutationObserver(function(mutations) {
-        var dominated = false;
-        for (var i = 0; i < mutations.length; i++) {
-            var nodes = mutations[i].addedNodes;
-            for (var j = 0; j < nodes.length; j++) {
-                var n = nodes[j];
-                if (!n.querySelectorAll) continue;
-                if (n.querySelectorAll('.post__cover .lazy-load-image-background').length) {
-                    dominated = true;
-                    break;
-                }
-            }
-            if (dominated) break;
-        }
-        if (dominated || document.querySelector('.blog-grid .post__cover')) {
-            setTimeout(scanPromoImages, 200);
-        }
-    });
-    promoObserver.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('load', _initStaticsRewrite);
 
 })();
 
@@ -775,6 +734,17 @@ input, select, textarea,
         setTimeout(function() {
             document.querySelectorAll('.mito-header-btn--promo, .mito-mobile-btn--promo').forEach(setupPromoSlider);
         }, 300);
+    }
+
+    // ===== EN DİL SEÇENEĞİNİ GİZLE =====
+    function hideEnglishOption() {
+        document.querySelectorAll('.sidebar__lang-menu a, .sidebar__lang-small-menu a').forEach(function(a) {
+            var txt = (a.textContent || '').trim().toUpperCase();
+            if (txt === 'EN' || txt === 'ENGLISH') {
+                var li = a.closest('li');
+                if (li) li.style.setProperty('display', 'none', 'important');
+            }
+        });
     }
 
     // ===== CANLI DESTEK — Telegram Yönlendirme =====
@@ -1207,6 +1177,7 @@ input, select, textarea,
         injectAnimationCSS();
         killComm100();
         addDocumentSupportListener();
+        hideEnglishOption();
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
@@ -1246,6 +1217,7 @@ input, select, textarea,
                 fixMobileHeaderHeight();
             }
             enforceSupportRedirect();
+            hideEnglishOption();
         });
 
         var root = document.getElementById('root');
@@ -1258,6 +1230,7 @@ input, select, textarea,
         var cleanTimer = setInterval(function() {
             killComm100();
             enforceSupportRedirect();
+            hideEnglishOption();
             cleanCount++;
             if (cleanCount >= 30) clearInterval(cleanTimer);
         }, 1500);

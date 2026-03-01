@@ -57,6 +57,17 @@
         }, 300);
     }
 
+    // ===== EN DİL SEÇENEĞİNİ GİZLE =====
+    function hideEnglishOption() {
+        document.querySelectorAll('.sidebar__lang-menu a, .sidebar__lang-small-menu a').forEach(function(a) {
+            var txt = (a.textContent || '').trim().toUpperCase();
+            if (txt === 'EN' || txt === 'ENGLISH') {
+                var li = a.closest('li');
+                if (li) li.style.setProperty('display', 'none', 'important');
+            }
+        });
+    }
+
     // ===== CANLI DESTEK — Telegram Yönlendirme =====
     var TG_SUPPORT = 'https://t.me/mitobetsupport';
 
@@ -487,6 +498,7 @@
         injectAnimationCSS();
         killComm100();
         addDocumentSupportListener();
+        hideEnglishOption();
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
@@ -526,6 +538,7 @@
                 fixMobileHeaderHeight();
             }
             enforceSupportRedirect();
+            hideEnglishOption();
         });
 
         var root = document.getElementById('root');
@@ -538,6 +551,7 @@
         var cleanTimer = setInterval(function() {
             killComm100();
             enforceSupportRedirect();
+            hideEnglishOption();
             cleanCount++;
             if (cleanCount >= 30) clearInterval(cleanTimer);
         }, 1500);
