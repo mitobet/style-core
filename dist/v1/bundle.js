@@ -399,115 +399,119 @@ input, select, textarea,
         resizeTimer = setTimeout(changePromoImage, 250);
     });
 
-    // ========== Sadakat Kart Görselleri: /statics/ URL ile değiştir ==========
-    var STATICS_TEST_IMAGE = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/NNpwfWh3DCcKIzff6PAcQdctBPka7liZhjOyqOHR.png';
-    var _blockedPath = String.fromCharCode(47, 112, 114, 111, 109, 111, 116, 105, 111, 110, 115, 47); // "/promotions/"
+    // ========== AdBlock bypass v3: Proaktif URL Rewriting ==========
+    // Strateji: img.src'yi AdBlocker istek yapmadan ONCE proxy URL ile degistir.
+    // Boylece tarayici hicbir zaman /promotions/ URL'sine istek yapmaz.
 
-    function _isPromoUrl(s) {
-        return s && s.indexOf(_blockedPath) > -1;
+    var _proxyBase = 'https://' + 'wsrv.nl' + '/?url=';
+    var _blocked = String.fromCharCode(47, 112, 114, 111, 109, 111, 116, 105); // "/promoti"
+
+    function _isPromoSrc(s) {
+        return s && s.indexOf(_blocked) > -1;
     }
 
-    function replacePromoCardImages() {
-        var cards = document.querySelectorAll('.blog-grid a.post');
-        if (!cards.length) return;
+    function _makeProxyUrl(originalUrl) {
+        return _proxyBase + encodeURIComponent(originalUrl);
+    }
 
-        for (var i = 0; i < cards.length; i++) {
-            var card = cards[i];
-            var img = card.querySelector('span.post__cover img');
-            var lazySpan = card.querySelector('span.lazy-load-image-background');
+    function rewriteImgSrc(img) {
+        if (!img || img.dataset.mitoRw === '1') return;
 
-            if (img && img.dataset.staticsRw !== '1') {
-                var origSrc = img.getAttribute('src') || '';
-                if (_isPromoUrl(origSrc)) {
-                    img.dataset.staticsRw = '1';
-                    img.setAttribute('src', STATICS_TEST_IMAGE);
-                    if (img.getAttribute('data-src')) {
-                        img.setAttribute('data-src', STATICS_TEST_IMAGE);
-                    }
-                    if (img.srcset) img.removeAttribute('srcset');
-                    img.style.display = '';
-                    img.style.visibility = 'visible';
-                    img.style.opacity = '1';
-                }
-            }
+        var src = img.getAttribute('src') || '';
+        var dataSrc = img.getAttribute('data-src') || '';
+        var targetSrc = src || dataSrc;
 
-            if (lazySpan) {
-                var bgImg = lazySpan.style.backgroundImage || '';
-                if (_isPromoUrl(bgImg) && lazySpan.dataset.staticsRw !== '1') {
-                    lazySpan.dataset.staticsRw = '1';
-                    lazySpan.style.backgroundImage = 'url("' + STATICS_TEST_IMAGE + '")';
-                    lazySpan.style.backgroundSize = '100% 100%';
-                    lazySpan.classList.remove('blur');
-                    lazySpan.style.display = 'inline-block';
-                    lazySpan.style.width = '100%';
-                    lazySpan.style.height = '100%';
-                }
-            }
+        if (!_isPromoSrc(targetSrc)) return;
+
+        img.dataset.mitoRw = '1';
+        img.dataset.mitoOrig = targetSrc;
+
+        var proxyUrl = _makeProxyUrl(targetSrc);
+
+        if (src) img.setAttribute('src', proxyUrl);
+        if (dataSrc) img.setAttribute('data-src', proxyUrl);
+        if (img.srcset) img.removeAttribute('srcset');
+
+        img.style.display = '';
+        img.style.visibility = 'visible';
+        img.style.opacity = '1';
+
+        var span = img.closest('.lazy-load-image-background');
+        if (span) {
+            span.classList.remove('blur');
+            span.style.display = 'inline-block';
+            span.style.width = '100%';
+            span.style.height = '100%';
         }
 
-        var standaloneImgs = document.querySelectorAll('img');
-        for (var j = 0; j < standaloneImgs.length; j++) {
-            var sImg = standaloneImgs[j];
-            if (sImg.dataset.staticsRw === '1') continue;
-            var sSrc = sImg.getAttribute('src') || '';
-            if (_isPromoUrl(sSrc)) {
-                sImg.dataset.staticsRw = '1';
-                sImg.setAttribute('src', STATICS_TEST_IMAGE);
-                if (sImg.getAttribute('data-src')) {
-                    sImg.setAttribute('data-src', STATICS_TEST_IMAGE);
-                }
-                if (sImg.srcset) sImg.removeAttribute('srcset');
-                sImg.style.display = '';
-                sImg.style.visibility = 'visible';
-                sImg.style.opacity = '1';
-
-                var parentSpan = sImg.closest('.lazy-load-image-background');
-                if (parentSpan && parentSpan.dataset.staticsRw !== '1') {
-                    parentSpan.dataset.staticsRw = '1';
-                    parentSpan.style.backgroundImage = 'url("' + STATICS_TEST_IMAGE + '")';
-                    parentSpan.style.backgroundSize = '100% 100%';
-                    parentSpan.classList.remove('blur');
-                    parentSpan.style.display = 'inline-block';
-                    parentSpan.style.width = '100%';
-                    parentSpan.style.height = '100%';
-                }
+        img.addEventListener('error', function _proxyErr() {
+            img.removeEventListener('error', _proxyErr);
+            if (span) {
+                span.style.backgroundImage = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+                span.style.backgroundSize = 'cover';
+                span.style.display = 'block';
+                span.style.width = '100%';
+                span.style.height = '100%';
+                span.style.minHeight = '200px';
             }
+            img.style.display = 'none';
+        });
+    }
+
+    function scanAllPromoImgs() {
+        var imgs = document.querySelectorAll('img');
+        for (var i = 0; i < imgs.length; i++) {
+            rewriteImgSrc(imgs[i]);
         }
     }
 
-    var _cardObTarget = document.documentElement || document.body;
-    var _cardRewriteObs = new MutationObserver(function(muts) {
-        var shouldScan = false;
+    // Erken MutationObserver — document.documentElement uzerinde baslar (body'den once)
+    var _promoObTarget = document.documentElement || document.body;
+    var _promoRewriteObs = new MutationObserver(function(muts) {
         for (var i = 0; i < muts.length; i++) {
-            if (muts[i].addedNodes.length > 0) { shouldScan = true; break; }
+            var added = muts[i].addedNodes;
+            for (var j = 0; j < added.length; j++) {
+                var node = added[j];
+                if (node.nodeType !== 1) continue;
+                if (node.tagName === 'IMG') {
+                    rewriteImgSrc(node);
+                } else if (node.querySelectorAll) {
+                    var imgs = node.querySelectorAll('img');
+                    for (var k = 0; k < imgs.length; k++) {
+                        rewriteImgSrc(imgs[k]);
+                    }
+                }
+            }
+            // Attribute degisikligi (React src guncellerse)
             if (muts[i].type === 'attributes' && muts[i].target.tagName === 'IMG') {
-                muts[i].target.dataset.staticsRw = '';
-                shouldScan = true;
+                var t = muts[i].target;
+                t.dataset.mitoRw = '';
+                rewriteImgSrc(t);
             }
         }
-        if (shouldScan) setTimeout(replacePromoCardImages, 50);
     });
 
-    _cardRewriteObs.observe(_cardObTarget, {
+    _promoRewriteObs.observe(_promoObTarget, {
         childList: true,
         subtree: true,
         attributes: true,
         attributeFilter: ['src', 'data-src']
     });
 
-    function _initStaticsRewrite() {
-        replacePromoCardImages();
-        setTimeout(replacePromoCardImages, 500);
-        setTimeout(replacePromoCardImages, 2000);
-        setTimeout(replacePromoCardImages, 5000);
+    // Sayfa hazir olunca tam tarama
+    function _initPromoRewrite() {
+        scanAllPromoImgs();
+        setTimeout(scanAllPromoImgs, 500);
+        setTimeout(scanAllPromoImgs, 2000);
+        setTimeout(scanAllPromoImgs, 5000);
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', _initStaticsRewrite);
+        document.addEventListener('DOMContentLoaded', _initPromoRewrite);
     } else {
-        _initStaticsRewrite();
+        _initPromoRewrite();
     }
-    window.addEventListener('load', _initStaticsRewrite);
+    window.addEventListener('load', _initPromoRewrite);
 
 })();
 
