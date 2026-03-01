@@ -68,80 +68,6 @@
         });
     }
 
-    // ===== CANLI DESTEK — Telegram Yönlendirme =====
-    var TG_SUPPORT = 'https://t.me/mitobetsupport';
-
-    // ===== COMM100 DEAKTIF =====
-    function killComm100() {
-        try {
-            window.Comm100API = { open: function(){}, close: function(){}, destroy: function(){}, on: function(){}, do: function(){} };
-            window.Comm100 = null;
-        } catch(e) {}
-        document.querySelectorAll(
-            'iframe[src*="comm100"],iframe[id*="comm100"],div[id*="comm100"],div[class*="comm100"],' +
-            'div[id*="Comm100"],div[class*="Comm100"],#livechat-compact-container,#livechat-full,' +
-            'div[id*="livechat"],iframe[src*="livechat"]'
-        ).forEach(function(el) { try { el.remove(); } catch(e) {} });
-    }
-
-    // Document-level capture listener: "canlı destek" veya "live support" tıklamalarını yakala
-    var _mitoDocListenerAdded = false;
-    function isSupportElement(el) {
-        if (!el) return false;
-        var txt = (el.textContent || '').trim().toLowerCase();
-        if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') return true;
-        if (el.classList && (el.classList.contains('mito-header-btn--support') || el.classList.contains('mito-mobile-btn--support'))) return true;
-        if (el.getAttribute && el.getAttribute('data-mito-extra') === 'support') return true;
-        return false;
-    }
-
-    function addDocumentSupportListener() {
-        if (_mitoDocListenerAdded) return;
-        _mitoDocListenerAdded = true;
-        document.addEventListener('click', function(e) {
-            var target = e.target;
-            var el = target;
-            // 5 seviye yukarı çık, parent'a bak
-            for (var i = 0; i < 6 && el; i++) {
-                if (isSupportElement(el)) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    e.stopImmediatePropagation();
-                    window.open(TG_SUPPORT, '_blank');
-                    return;
-                }
-                el = el.parentElement;
-            }
-        }, true);
-    }
-
-    function enforceSupportRedirect() {
-        var sels = [
-            '.mito-header-btn--support', '.mito-mobile-btn--support',
-            '[data-mito-extra="support"]',
-            'a[href*="livechat"]', 'a[href*="comm100"]'
-        ];
-        document.querySelectorAll(sels.join(',')).forEach(function(el) {
-            el.removeAttribute('onclick');
-            el.onclick = null;
-            if (el.tagName === 'A') {
-                el.href = TG_SUPPORT;
-                el.target = '_blank';
-            }
-        });
-        // Metin bazlı tarama
-        document.querySelectorAll('a, button').forEach(function(el) {
-            var txt = (el.textContent || '').trim().toLowerCase();
-            if (txt === 'canlı destek' || txt === 'canli destek' || txt === 'live support' || txt === 'live chat') {
-                el.removeAttribute('onclick');
-                el.onclick = null;
-                if (el.tagName === 'A') {
-                    el.href = TG_SUPPORT;
-                    el.target = '_blank';
-                }
-            }
-        });
-    }
 
     // ===== PROMO TEXT SLİDER =====
     var promoTexts = ['PROMOSYONLAR', 'HEMEN KAZAN', 'BONUSLAR'];
@@ -388,10 +314,8 @@
         promoBtn.innerHTML = '<span class="mito-btn-text">' + (lang === 'en' ? 'PROMOTIONS' : 'PROMOSYONLAR') + '</span>';
         promoBtn.setAttribute('data-mito-extra', 'promo');
 
-        var supportBtn = document.createElement('a');
-        supportBtn.href = TG_SUPPORT;
-        supportBtn.target = '_blank';
-        supportBtn.rel = 'noopener noreferrer';
+        var supportBtn = document.createElement('button');
+        supportBtn.type = 'button';
         supportBtn.className = 'mito-header-btn mito-header-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span><span class="mito-btn-text">' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK') + '</span>';
         supportBtn.setAttribute('data-mito-extra', 'support');
@@ -446,10 +370,8 @@
         promoBtn.style.position = 'relative';
         promoBtn.style.overflow = 'hidden';
 
-        var supportBtn = document.createElement('a');
-        supportBtn.href = TG_SUPPORT;
-        supportBtn.target = '_blank';
-        supportBtn.rel = 'noopener noreferrer';
+        var supportBtn = document.createElement('button');
+        supportBtn.type = 'button';
         supportBtn.className = 'mito-mobile-btn mito-mobile-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span> ' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK');
 
@@ -496,8 +418,6 @@
     function init() {
         lastMitoPath = window.location.pathname;
         injectAnimationCSS();
-        killComm100();
-        addDocumentSupportListener();
         hideEnglishOption();
 
         if (window.innerWidth > 992) {
@@ -537,7 +457,6 @@
                 }
                 fixMobileHeaderHeight();
             }
-            enforceSupportRedirect();
             hideEnglishOption();
         });
 
@@ -546,11 +465,8 @@
             observer.observe(root, { childList: true, subtree: true });
         }
 
-        // Comm100 periyodik temizle + destek butonlarını sürekli düzelt
         var cleanCount = 0;
         var cleanTimer = setInterval(function() {
-            killComm100();
-            enforceSupportRedirect();
             hideEnglishOption();
             cleanCount++;
             if (cleanCount >= 30) clearInterval(cleanTimer);
@@ -580,12 +496,8 @@
             }, 200);
         });
 
-        enforceSupportRedirect();
-        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi (Comm100 deaktif)');
+        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi');
     }
-
-    // Document-level listener'ı hemen ekle (init'ten önce bile çalışsın)
-    addDocumentSupportListener();
 
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 500); });
