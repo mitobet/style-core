@@ -49,6 +49,7 @@ const JS_FILES = [
     'SCRIPT/promo_image_replacer.js',
     'SCRIPT/mito_tv_button.js',
     'SCRIPT/header_extra_buttons.js',
+    'SCRIPT/promo_page_enhancer.js',
 ];
 
 // ============================================================

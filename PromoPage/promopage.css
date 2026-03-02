@@ -1,12 +1,15 @@
-/* Promo Page Mobile Fixes & Redesign */
+/* =====================================================
+   MITOBET - Promosyon Sayfasi Redesign v3
+   Tarayici uyumlu, sade ve kaliteli
+   ===================================================== */
 
-/* Promosyonlar Başlık ve Filtreleri Gizle (Web & Mobil) - Yatır/Çek tablarına dokunma */
+/* Sayfa Basligi Gizle */
 .section__title.section__title--head {
     display: none !important;
 }
-/* Sadece promosyon sayfasındaki filtre tablarını gizle; #tabs-nav (Para Yatır/Çek) ve wallet-modal içindekiler görünsün */
-.ection:has(.section__title--head) .nav.nav-tabs.tabs-nav,
-.section:has(.section__title--head) .nav.nav-tabs.tabs-nav {
+
+.section:has(.section__title--head) .nav.nav-tabs.tabs-nav,
+.ection:has(.section__title--head) .nav.nav-tabs.tabs-nav {
     display: none !important;
 }
 #tabs-nav,
@@ -15,109 +18,319 @@
     display: flex !important;
 }
 
-@media (max-width: 768px) {
-    
-    /* Ana grid kapsayıcısı */
+/* =====================================================
+   TABS NAV
+   ===================================================== */
+#tabs-nav {
+    display: -webkit-inline-box !important;
+    display: -ms-inline-flexbox !important;
+    display: inline-flex !important;
+    gap: 4px !important;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border-radius: 10px !important;
+    padding: 4px !important;
+    margin-bottom: 16px !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+#tabs-nav .nav-link,
+#tabs-nav .tabs-nav__btn {
+    background: transparent !important;
+    border: none !important;
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    padding: 8px 20px !important;
+    border-radius: 8px !important;
+    -webkit-transition: all 0.25s ease !important;
+    transition: all 0.25s ease !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+}
+
+#tabs-nav .nav-link:hover,
+#tabs-nav .tabs-nav__btn:hover {
+    color: rgba(255, 255, 255, 0.75) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+#tabs-nav .nav-link.active,
+#tabs-nav .tabs-nav__btn.active {
+    background: rgba(207, 174, 109, 0.12) !important;
+    color: #CFAE6D !important;
+    font-weight: 600 !important;
+}
+
+/* =====================================================
+   BLOG GRID
+   ===================================================== */
+.blog-grid {
+    display: -ms-grid !important;
+    display: grid !important;
+    gap: 20px !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    padding: 0 !important;
+    margin-top: 8px !important;
+}
+
+@media (max-width: 1399px) {
     .blog-grid {
-        padding: 10px 10px 40px 10px !important;
-        box-sizing: border-box !important;
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 16px !important; /* Kartlar arası eşit boşluk */
-    }
-
-    /* Post Kart Tasarımı - Modern Kart Görünümü */
-    .post {
-        width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        margin: 0 !important; /* Marginleri sıfırla (Gap kullanıyoruz) */
-        text-decoration: none !important;
-        
-        /* Kart Stili */
-        background: #161616 !important; /* Koyu gri zemin */
-        border: 1px solid rgba(255, 255, 255, 0.08) !important; /* İnce çerçeve */
-        border-radius: 12px !important;
-        overflow: hidden !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-        position: relative !important; /* Efekt için gerekli */
-    }
-
-    /* Light Sweep Efekti - KALDIRILDI */
-    /*
-    .post::after {
-        content: "" !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: -100% !important;
-        width: 50% !important;
-        height: 100% !important;
-        background: linear-gradient(
-            to right, 
-            rgba(255, 255, 255, 0) 0%, 
-            rgba(255, 255, 255, 0.05) 50%, 
-            rgba(255, 255, 255, 0) 100%
-        ) !important;
-        transform: skewX(-25deg) !important;
-        animation: shine 6s infinite !important;
-        pointer-events: none !important;
-        z-index: 2 !important;
-    }
-    */
-
-    /* Aktif/Hover durumunda hafif efekt */
-    .post:active {
-        transform: scale(0.98) !important;
-        background: #1a1a1a !important;
-        border-color: rgba(233, 195, 122, 0.3) !important; /* Tıklanınca hafif gold border */
-    }
-
-    /* Görsel ayarları - Tam genişlik */
-    .post__cover {
-        width: 100% !important;
-        aspect-ratio: 16/9 !important;
-        display: block !important;
-        margin-bottom: 12px !important;
-        border-radius: 0 !important; /* Köşeleri düz (kartın içinde) */
-        border-bottom: 1px solid rgba(255,255,255,0.05) !important;
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    .post__cover img {
-        width: 100% !important;
-        height: 100% !important;
-        object-fit: cover !important;
-    }
-
-    /* Tarih/Meta bilgisi - GİZLENDİ */
-    .post__meta, 
-    .post__date {
-        display: none !important;
-    }
-
-    /* Başlık ayarları */
-    .post__title {
-        font-size: 17px !important;
-        line-height: 1.4 !important;
-        margin: 0 15px 6px 15px !important;
-        color: #ffffff !important;
-        font-weight: 700 !important;
-        order: 3;
-        position: relative !important;
-        z-index: 3 !important;
-    }
-
-    /* Metin ayarları */
-    .post__text {
-        font-size: 13px !important;
-        line-height: 1.5 !important;
-        color: #a0a0a0 !important; /* Daha okunabilir gri */
-        margin: 0 15px 15px 15px !important; /* Alttan da boşluk */
-        font-weight: 400 !important;
-        order: 4;
-        position: relative !important;
-        z-index: 3 !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 16px !important;
     }
 }
+
+@media (max-width: 767px) {
+    .blog-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+        padding: 0 2px !important;
+    }
+}
+
+/* =====================================================
+   POST KART
+   ===================================================== */
+.post {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+    background: #0e0e0e !important;
+    border: 1px solid rgba(207, 174, 109, 0.1) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+    text-decoration: none !important;
+    position: relative !important;
+    -webkit-transition: -webkit-transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease !important;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.03),
+                inset 0 0 0 1px rgba(207, 174, 109, 0.04) !important;
+}
+
+.post:hover {
+    -webkit-transform: translateY(-8px) !important;
+    transform: translateY(-8px) !important;
+    border-color: rgba(207, 174, 109, 0.35) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4),
+                0 0 25px rgba(207, 174, 109, 0.07),
+                inset 0 1px 0 rgba(207, 174, 109, 0.1),
+                inset 0 0 0 1px rgba(207, 174, 109, 0.15) !important;
+}
+
+.post:active {
+    -webkit-transform: translateY(-3px) !important;
+    transform: translateY(-3px) !important;
+}
+
+/* Ust kenar altin cizgi */
+.post::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 15% !important;
+    right: 15% !important;
+    height: 2px !important;
+    background: -webkit-linear-gradient(left, transparent, #CFAE6D, transparent) !important;
+    background: linear-gradient(90deg, transparent, #CFAE6D, transparent) !important;
+    opacity: 0 !important;
+    -webkit-transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease !important;
+    transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease !important;
+    z-index: 5 !important;
+}
+
+.post:hover::before {
+    opacity: 1 !important;
+    left: 5% !important;
+    right: 5% !important;
+}
+
+/* Sweep isik efekti */
+.post::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -80% !important;
+    width: 40% !important;
+    height: 100% !important;
+    background: -webkit-linear-gradient(left, transparent, rgba(255, 255, 255, 0.025), transparent) !important;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.025), transparent) !important;
+    -webkit-transform: skewX(-15deg) !important;
+    transform: skewX(-15deg) !important;
+    -webkit-transition: left 0.8s ease !important;
+    transition: left 0.8s ease !important;
+    pointer-events: none !important;
+    z-index: 4 !important;
+}
+
+.post:hover::after {
+    left: 130% !important;
+}
+
+/* =====================================================
+   POST COVER
+   ===================================================== */
+.post__cover {
+    position: relative !important;
+    display: block !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+}
+
+.post__cover img,
+.post__cover .lazy-load-image-background img {
+    width: 100% !important;
+    height: 100% !important;
+    -o-object-fit: cover !important;
+    object-fit: cover !important;
+    display: block !important;
+    -webkit-transition: filter 0.4s ease !important;
+    transition: filter 0.4s ease !important;
+}
+
+.post:hover .post__cover img,
+.post:hover .post__cover .lazy-load-image-background img {
+    -webkit-filter: brightness(1.06) !important;
+    filter: brightness(1.06) !important;
+}
+
+.post__cover .lazy-load-image-background {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* =====================================================
+   POST TITLE
+   ===================================================== */
+.post__title {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+    padding: 14px 16px !important;
+    background: transparent !important;
+    -webkit-transition: color 0.3s ease !important;
+    transition: color 0.3s ease !important;
+    display: block !important;
+    letter-spacing: 0.3px !important;
+    position: relative !important;
+}
+
+/* Baslik altinda genisleyen altin cizgi */
+.post__title::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 8px !important;
+    left: 16px !important;
+    width: 30px !important;
+    height: 2px !important;
+    background: -webkit-linear-gradient(left, #CFAE6D, rgba(207, 174, 109, 0.15)) !important;
+    background: linear-gradient(90deg, #CFAE6D, rgba(207, 174, 109, 0.15)) !important;
+    border-radius: 1px !important;
+    -webkit-transition: width 0.45s ease !important;
+    transition: width 0.45s ease !important;
+}
+
+.post:hover .post__title::after {
+    width: 55px !important;
+}
+
+.post:hover .post__title {
+    color: #CFAE6D !important;
+}
+
+/* Baslik altinda aciklama */
+
+
+@media (max-width: 767px) {
+    .post__title {
+        font-size: 22px !important;
+        padding: 12px 14px !important;
+        line-height: 1.35 !important;
+    }
+
+    .post__title::after {
+        left: 14px !important;
+        bottom: 6px !important;
+    }
+
+
+}
+
+/* =====================================================
+   META & TEXT - Gizle
+   ===================================================== */
+.blog-grid .post__meta,
+.blog-grid .post__date,
+.blog-grid .post__text {
+    display: none !important;
+}
+
+/* =====================================================
+   POST CONTENT & BIG
+   ===================================================== */
+.post__content {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-orient: vertical !important;
+    -ms-flex-direction: column !important;
+    flex-direction: column !important;
+    width: 100% !important;
+}
+
+.post--big {
+    padding-bottom: 0 !important;
+    border-bottom: none !important;
+}
+
+.post--big .post__cover {
+    max-width: 100% !important;
+}
+
+@media (min-width: 1200px) {
+    .post--big {
+        display: -webkit-box !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-orient: vertical !important;
+        -ms-flex-direction: column !important;
+        flex-direction: column !important;
+    }
+}
+
+/* =====================================================
+   REVEAL ANIMASYONU
+   ===================================================== */
+.post[data-promo-reveal] {
+    opacity: 0;
+    -webkit-transform: translateY(20px);
+    transform: translateY(20px);
+    -webkit-transition: opacity 0.55s ease, -webkit-transform 0.55s ease !important;
+    transition: opacity 0.55s ease, transform 0.55s ease !important;
+}
+
+.post[data-promo-reveal="visible"] {
+    opacity: 1 !important;
+    -webkit-transform: translateY(0) !important;
+    transform: translateY(0) !important;
+}
+
+.post[data-promo-reveal="visible"]:hover {
+    -webkit-transform: translateY(-8px) !important;
+    transform: translateY(-8px) !important;
+}
+
+

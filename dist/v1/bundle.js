@@ -698,69 +698,39 @@ input, select, textarea,
 
     // Font Awesome kaldırıldı (ikonlar kullanılmıyor)
 
-    var lastMitoPath = '';
-
     function getLang() {
         var path = window.location.pathname;
         if (path.indexOf('/en') === 0 || path === '/en') return 'en';
         return 'tr';
     }
 
-    /** SPA: URL değişince üst bar ve butonları mevcut dile göre yeniden oluştur */
-    function refreshMitoLang() {
-        var path = window.location.pathname;
-        if (path === lastMitoPath) return;
-        lastMitoPath = path;
-
-        var topbar = document.querySelector('.mito-topbar');
-        if (topbar) topbar.remove();
-
-        var headerActions = document.querySelector('.header__actions');
-        if (headerActions) {
-            headerActions.querySelectorAll('.mito-header-btn, .mito-header-divider').forEach(function(el) { el.remove(); });
-        }
-
-        var mobileBar = document.querySelector('.mito-mobile-bar');
-        if (mobileBar) mobileBar.remove();
-
-        addTopBar();
-        if (window.innerWidth > 992) {
-            addDesktopButtons();
-        } else {
-            addMobileBar();
-            fixMobileHeaderHeight();
-        }
-        setupPromoSlidersForCurrentButtons();
-    }
-
-    /** Yeni eklenen promo butonlarına slider kur (SPA refresh sonrası) */
-    function setupPromoSlidersForCurrentButtons() {
-        setTimeout(function() {
-            document.querySelectorAll('.mito-header-btn--promo, .mito-mobile-btn--promo').forEach(setupPromoSlider);
-        }, 300);
-    }
-
-    // ===== EN DİL SEÇENEĞİNİ GİZLE =====
-    function hideEnglishOption() {
-        document.querySelectorAll('.sidebar__lang-menu a, .sidebar__lang-small-menu a').forEach(function(a) {
-            var txt = (a.textContent || '').trim().toUpperCase();
-            if (txt === 'EN' || txt === 'ENGLISH') {
-                var li = a.closest('li');
-                if (li) li.style.setProperty('display', 'none', 'important');
+    function createSupportClickHandler() {
+        return function() {
+            if (typeof Comm100API !== 'undefined') {
+                if (Comm100API.open_chat_window) { Comm100API.open_chat_window(); return; }
+                if (Comm100API.open) { Comm100API.open(); return; }
+                if (Comm100API.do) { Comm100API.do('livechat.button.click'); return; }
             }
-        });
+            var comm100Btn = document.querySelector('[id*="comm100"], [class*="comm100"], #chat-button, .comm100-button, iframe[src*="comm100"]');
+            if (comm100Btn) { comm100Btn.click(); return; }
+            if (typeof Tawk_API !== 'undefined' && Tawk_API.maximize) { Tawk_API.maximize(); return; }
+            if (typeof LiveChatWidget !== 'undefined' && LiveChatWidget.call) { LiveChatWidget.call('maximize'); return; }
+            if (typeof Intercom !== 'undefined') { Intercom('show'); return; }
+            if (typeof $crisp !== 'undefined' && $crisp.push) { $crisp.push(['do', 'chat:open']); return; }
+            if (typeof zE !== 'undefined') { zE('messenger', 'open'); return; }
+            var chatEls = document.querySelectorAll('[class*="chat-btn"], [class*="chat-button"], [class*="livechat"], [id*="chat-button"], [id*="livechat"], [class*="support"], [onclick*="chat"]');
+            for (var i = 0; i < chatEls.length; i++) {
+                if (chatEls[i].offsetParent !== null) { chatEls[i].click(); return; }
+            }
+            console.log('[MITO] Canlı destek widget bulunamadı, fallback kullanılıyor');
+            window.open('/tr/contact', '_blank');
+        };
     }
-
 
     // ===== PROMO TEXT SLİDER =====
     var promoTexts = ['PROMOSYONLAR', 'HEMEN KAZAN', 'BONUSLAR'];
-    var promoTextsEn = ['PROMOTIONS', 'WIN NOW', 'BONUSES'];
     var promoIdx = 0;
     var sliding = false;
-
-    function getPromoTexts() {
-        return getLang() === 'en' ? promoTextsEn : promoTexts;
-    }
 
     function setupPromoSlider(btn) {
         if (!btn || btn.getAttribute('data-mito-slider')) return;
@@ -770,7 +740,6 @@ input, select, textarea,
         var isDesktop = !!textEl;
         var cs = getComputedStyle(btn);
         var lineH = parseInt(cs.fontSize) || 12;
-        var texts = getPromoTexts();
 
         // Buton boyutunu sabitle
         var rect = btn.getBoundingClientRect();
@@ -781,12 +750,12 @@ input, select, textarea,
         btn.style.setProperty('min-height', rect.height + 'px', 'important');
         btn.style.setProperty('max-height', rect.height + 'px', 'important');
 
-        // En uzun text genişliği (mevcut dil)
+        // En uzun text genişliği
         var measure = document.createElement('span');
         measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + cs.font + ';letter-spacing:' + cs.letterSpacing + ';';
         document.body.appendChild(measure);
         var maxW = 0;
-        texts.forEach(function(t) { measure.textContent = t; if (measure.offsetWidth > maxW) maxW = measure.offsetWidth; });
+        promoTexts.forEach(function(t) { measure.textContent = t; if (measure.offsetWidth > maxW) maxW = measure.offsetWidth; });
         document.body.removeChild(measure);
 
         // Mask
@@ -796,13 +765,13 @@ input, select, textarea,
             'height:' + lineH + 'px;line-height:' + lineH + 'px;vertical-align:middle;' +
             'width:' + maxW + 'px;text-align:center;';
 
-        // A span (görünür, mevcut dildeki sıradaki metin)
+        // A span (görünür, mevcut text)
         var spanA = document.createElement('span');
         spanA.className = 'mito-slide-a';
         spanA.style.cssText = 'display:block;position:absolute;left:0;right:0;top:0;height:' + lineH + 'px;' +
             'line-height:' + lineH + 'px;white-space:nowrap;text-align:center;' +
             'will-change:transform;backface-visibility:hidden;';
-        spanA.textContent = texts[promoIdx % texts.length];
+        spanA.textContent = isDesktop ? textEl.textContent.trim() : btn.textContent.trim();
 
         // B span (aşağıda bekliyor)
         var spanB = document.createElement('span');
@@ -834,9 +803,8 @@ input, select, textarea,
         var id = setInterval(function() {
             if (sliding) return;
             sliding = true;
-            var texts = getPromoTexts();
-            promoIdx = (promoIdx + 1) % texts.length;
-            var newText = texts[promoIdx];
+            promoIdx = (promoIdx + 1) % promoTexts.length;
+            var newText = promoTexts[promoIdx];
 
             document.querySelectorAll('.mito-slider-mask').forEach(function(mask) {
                 var spanA = mask.querySelector('.mito-slide-a');
@@ -952,20 +920,15 @@ input, select, textarea,
         var header = document.querySelector('#header') || document.querySelector('header');
         if (!header) return;
 
-        var lang = getLang();
         var nextDomain = getNextDomain();
         var topbar = document.createElement('div');
         topbar.className = 'mito-topbar';
         topbar.setAttribute('data-mito-extra', 'topbar');
 
-        var labelNext = lang === 'en' ? 'Next address:' : 'Sıradaki adresimiz:';
-        var labelLogin = lang === 'en' ? 'Current login:' : 'Güncel Giriş:';
-        var linkHref = 'https://mito.ws/giris';
-
         if (nextDomain) {
-            topbar.innerHTML = '<span>' + labelNext + '</span> <a href="' + linkHref + '" target="_blank">' + nextDomain + '</a>';
+            topbar.innerHTML = '<span>Sıradaki adresimiz:</span> <a href="https://mito.ws" target="_blank">' + nextDomain + '</a>';
         } else {
-            topbar.innerHTML = '<span>' + labelLogin + '</span> <a href="' + linkHref + '" target="_blank">mito.ws</a>';
+            topbar.innerHTML = '<span>Güncel Giriş:</span> <a href="https://mito.ws" target="_blank">mito.ws</a>';
         }
 
         header.parentNode.insertBefore(topbar, header);
@@ -1002,6 +965,7 @@ input, select, textarea,
         supportBtn.className = 'mito-header-btn mito-header-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span><span class="mito-btn-text">' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK') + '</span>';
         supportBtn.setAttribute('data-mito-extra', 'support');
+        supportBtn.addEventListener('click', createSupportClickHandler());
 
         var divider = document.createElement('span');
         divider.className = 'mito-header-divider';
@@ -1057,6 +1021,7 @@ input, select, textarea,
         supportBtn.type = 'button';
         supportBtn.className = 'mito-mobile-btn mito-mobile-btn--support';
         supportBtn.innerHTML = '<span class="mito-live-dot"></span> ' + (lang === 'en' ? 'LIVE SUPPORT' : 'CANLI DESTEK');
+        supportBtn.addEventListener('click', createSupportClickHandler());
 
         var tgBtn = document.createElement('a');
         tgBtn.href = 'https://t.me/mitoresmi';
@@ -1099,9 +1064,7 @@ input, select, textarea,
     }
 
     function init() {
-        lastMitoPath = window.location.pathname;
         injectAnimationCSS();
-        hideEnglishOption();
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
@@ -1109,19 +1072,6 @@ input, select, textarea,
             addMobileBar();
             fixMobileHeaderHeight();
         }
-
-        // SPA: URL değişince (dil değişimi) metinleri güncelle
-        window.addEventListener('popstate', function() { refreshMitoLang(); });
-        var origPush = history.pushState;
-        var origReplace = history.replaceState;
-        history.pushState = function() {
-            origPush.apply(this, arguments);
-            refreshMitoLang();
-        };
-        history.replaceState = function() {
-            origReplace.apply(this, arguments);
-            refreshMitoLang();
-        };
 
         // Animasyonları başlat
         startPromoSlider();
@@ -1140,21 +1090,12 @@ input, select, textarea,
                 }
                 fixMobileHeaderHeight();
             }
-            hideEnglishOption();
         });
 
         var root = document.getElementById('root');
         if (root) {
             observer.observe(root, { childList: true, subtree: true });
         }
-
-        var cleanCount = 0;
-        var cleanTimer = setInterval(function() {
-            hideEnglishOption();
-            cleanCount++;
-            if (cleanCount >= 30) clearInterval(cleanTimer);
-        }, 1500);
-        window._mitoIntervals.push(cleanTimer);
 
         // Resize
         var resizeTimer;
@@ -1191,230 +1132,207 @@ input, select, textarea,
 })();
 
 
-/* ===== SCRIPT/footer_marquee.js ===== */
+/* ===== SCRIPT/promo_page_enhancer.js ===== */
 /* =====================================================
-   MITOBET - Footer: Sağlayıcılar Collapse + Para Birimleri İsim Ekleme
+   MITOBET - Promosyon Sayfasi Enhancer v4
+   Stagger reveal, tilt, alt metin, scroll progress
+   Tum tarayicilarla uyumlu
    ===================================================== */
-
 (function() {
     'use strict';
 
-    /* ——————————————————————————————————————————————————
-       1. SAGLAYICILAR COLLAPSE TOGGLE
-       —————————————————————————————————————————————————— */
+    if (window._promoEnhancerLoaded) return;
+    window._promoEnhancerLoaded = true;
 
-    var TOGGLE_TEXT_SHOW = '▼  Tümünü Gör';
-    var TOGGLE_TEXT_HIDE = '▲  Gizle';
+    var isPromoPage = window.location.pathname.indexOf('promot') > -1 ||
+                      window.location.pathname.indexOf('promo') > -1;
 
-    function setupProvidersCollapse() {
-        var grid = document.querySelector('#footer-providers-section #providers-grid');
-        if (!grid) return;
-        if (grid.getAttribute('data-mito-collapse-ready')) return;
+    if (!isPromoPage) return;
 
-        var parent = grid.parentElement;
-        if (!parent) return;
+    // ===== STAGGER REVEAL =====
+    function setupRevealObserver() {
+        var posts = document.querySelectorAll('.blog-grid .post');
+        if (!posts.length) return;
 
-        var itemCount = grid.querySelectorAll('.provider-item').length || 93;
-
-        var btn = document.createElement('button');
-        btn.className = 'mito-providers-toggle';
-        btn.type = 'button';
-        btn.innerHTML = '<span>' + TOGGLE_TEXT_SHOW + ' (' + itemCount + ')</span> <span class="mito-toggle-arrow">▼</span>';
-
-        var isOpen = false;
-
-        btn.addEventListener('click', function() {
-            isOpen = !isOpen;
-            if (isOpen) {
-                grid.classList.add('mito-expanded');
-                btn.classList.add('mito-expanded');
-                btn.querySelector('span:first-child').textContent = TOGGLE_TEXT_HIDE;
-            } else {
-                grid.classList.remove('mito-expanded');
-                btn.classList.remove('mito-expanded');
-                btn.querySelector('span:first-child').textContent = TOGGLE_TEXT_SHOW + ' (' + itemCount + ')';
-                var rect = grid.getBoundingClientRect();
-                if (rect.top < 0) {
-                    grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-        });
-
-        if (grid.nextSibling) {
-            parent.insertBefore(btn, grid.nextSibling);
-        } else {
-            parent.appendChild(btn);
-        }
-
-        grid.setAttribute('data-mito-collapse-ready', '1');
-    }
-
-    /* ——————————————————————————————————————————————————
-       2. KABUL EDILEN PARA BIRIMLERI — İkon yanına isim ekle
-       —————————————————————————————————————————————————— */
-
-    // Kripto ikon dosya adı → kısa isim eşleştirmesi
-    // CMS'deki img src'den dosya adını alıp eşleştiriyoruz
-    var CURRENCY_MAP = {
-        // Yaygın eşleştirmeler (img src'deki anahtar kelimeler)
-        'try': 'TRY',
-        'tl': 'TRY',
-        'lira': 'TRY',
-        'btc': 'BTC',
-        'bitcoin': 'BTC',
-        'eth': 'ETH',
-        'ethereum': 'ETH',
-        'usdt': 'USDT',
-        'tether': 'USDT',
-        'bnb': 'BNB',
-        'binance': 'BNB',
-        'trx': 'TRX',
-        'tron': 'TRX',
-        'xrp': 'XRP',
-        'ripple': 'XRP',
-        'doge': 'DOGE',
-        'dogecoin': 'DOGE',
-        'ltc': 'LTC',
-        'litecoin': 'LTC',
-        'usdc': 'USDC',
-        'usd-coin': 'USDC',
-        'dai': 'DAI',
-        'sol': 'SOL',
-        'solana': 'SOL',
-        'ada': 'ADA',
-        'cardano': 'ADA',
-        'avax': 'AVAX',
-        'avalanche': 'AVAX',
-        'dot': 'DOT',
-        'polkadot': 'DOT',
-        'matic': 'MATIC',
-        'polygon': 'MATIC',
-        'shib': 'SHIB',
-        'shiba': 'SHIB',
-        'atom': 'ATOM',
-        'cosmos': 'ATOM',
-        'link': 'LINK',
-        'chainlink': 'LINK',
-        'uni': 'UNI',
-        'uniswap': 'UNI',
-        'xlm': 'XLM',
-        'stellar': 'XLM',
-        'eur': 'EUR',
-        'euro': 'EUR',
-        'usd': 'USD',
-        'dollar': 'USD',
-        'gbp': 'GBP',
-        'pound': 'GBP',
-        'rub': 'RUB',
-        'ruble': 'RUB'
-    };
-
-    function guessCurrencyName(imgSrc) {
-        if (!imgSrc) return null;
-        // URL'den dosya adını al, küçük harfe çevir
-        var parts = imgSrc.toLowerCase().split('/');
-        var filename = parts[parts.length - 1] || '';
-        // Uzantıyı kaldır
-        filename = filename.replace(/\.(png|jpg|jpeg|svg|webp|gif).*$/i, '');
-
-        // Tam eşleştirme dene
-        if (CURRENCY_MAP[filename]) return CURRENCY_MAP[filename];
-
-        // Parçalı eşleştirme — dosya adı içinde anahtar kelime ara
-        var keys = Object.keys(CURRENCY_MAP);
-        for (var i = 0; i < keys.length; i++) {
-            if (filename.indexOf(keys[i]) > -1) {
-                return CURRENCY_MAP[keys[i]];
+        var i;
+        for (i = 0; i < posts.length; i++) {
+            if (!posts[i].hasAttribute('data-promo-reveal')) {
+                posts[i].setAttribute('data-promo-reveal', 'hidden');
             }
         }
 
-        // Alt attribute'dan dene
-        return null;
+        if (!('IntersectionObserver' in window)) {
+            for (i = 0; i < posts.length; i++) {
+                posts[i].setAttribute('data-promo-reveal', 'visible');
+            }
+            return;
+        }
+
+        var delay = 0;
+        var observer = new IntersectionObserver(function(entries) {
+            for (var j = 0; j < entries.length; j++) {
+                if (entries[j].isIntersecting) {
+                    (function(el, d) {
+                        setTimeout(function() {
+                            el.setAttribute('data-promo-reveal', 'visible');
+                        }, d);
+                    })(entries[j].target, delay);
+                    delay += 80;
+                    observer.unobserve(entries[j].target);
+                }
+            }
+            setTimeout(function() { delay = 0; }, 600);
+        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+        for (i = 0; i < posts.length; i++) {
+            observer.observe(posts[i]);
+        }
     }
 
-    function setupCurrencyLabels() {
-        // Sadece "KABUL EDİLEN PARA BİRİMLERİ" bölümü (footer-payment-methods DEĞİL)
-        var currencyDivs = document.querySelectorAll('.footer__currencies:not(#footer-payment-methods)');
+    // ===== SUBTLE TILT =====
+    function setupTiltEffect() {
+        var posts = document.querySelectorAll('.blog-grid .post');
+        for (var i = 0; i < posts.length; i++) {
+            (function(post) {
+                if (post._tiltBound) return;
+                post._tiltBound = true;
 
-        currencyDivs.forEach(function(div) {
-            if (div.getAttribute('data-mito-labels-done')) return;
-
-            var wrappers = div.querySelectorAll('ul.footer__accepted .instrument-icon-wrapper');
-            if (!wrappers.length) return;
-
-            wrappers.forEach(function(wrapper) {
-                // Zaten label eklenmiş mi?
-                if (wrapper.querySelector('.mito-currency-label')) return;
-
-                var img = wrapper.querySelector('img');
-                if (!img) return;
-
-                // İsim bul: önce alt, sonra title, sonra src'den tahmin
-                var name = null;
-                var alt = (img.getAttribute('alt') || '').trim();
-                var title = (img.getAttribute('title') || '').trim();
-
-                if (alt && alt.length <= 10) {
-                    name = alt.toUpperCase();
-                } else if (title && title.length <= 10) {
-                    name = title.toUpperCase();
-                } else {
-                    name = guessCurrencyName(img.src || img.getAttribute('src'));
-                }
-
-                if (!name) {
-                    // Alt'tan uzun isim varsa kısalt
-                    if (alt) {
-                        name = alt.substring(0, 5).toUpperCase();
-                    } else {
-                        return; // İsim bulunamadı, span ekleme
-                    }
-                }
-
-                var label = document.createElement('span');
-                label.className = 'mito-currency-label';
-                label.textContent = name;
-                wrapper.appendChild(label);
-            });
-
-            div.setAttribute('data-mito-labels-done', '1');
-        });
-    }
-
-    /* ——————————————————————————————————————————————————
-       3. INIT
-       —————————————————————————————————————————————————— */
-
-    function init() {
-        setupProvidersCollapse();
-        setupCurrencyLabels();
-
-        // Footer geç yüklenebilir
-        var targets = [
-            document.querySelector('#footer'),
-            document.querySelector('footer'),
-            document.querySelector('.footer__content'),
-            document.querySelector('#main__content')
-        ];
-
-        targets.forEach(function(target) {
-            if (!target) return;
-            try {
-                var observer = new MutationObserver(function() {
-                    setupProvidersCollapse();
-                    setupCurrencyLabels();
+                post.addEventListener('mousemove', function(e) {
+                    var rect = post.getBoundingClientRect();
+                    var x = (e.clientX - rect.left) / rect.width;
+                    var y = (e.clientY - rect.top) / rect.height;
+                    var tiltX = (y - 0.5) * 2;
+                    var tiltY = (x - 0.5) * -2;
+                    post.style.WebkitTransform = 'translateY(-8px) perspective(800px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
+                    post.style.transform = 'translateY(-8px) perspective(800px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)';
                 });
-                observer.observe(target, { childList: true, subtree: true });
-            } catch(e) {}
-        });
 
-        setTimeout(function() { setupProvidersCollapse(); setupCurrencyLabels(); }, 3000);
-        setTimeout(function() { setupProvidersCollapse(); setupCurrencyLabels(); }, 6000);
+                post.addEventListener('mouseleave', function() {
+                    post.style.WebkitTransform = '';
+                    post.style.transform = '';
+                });
+            })(posts[i]);
+        }
+    }
+
+    // ===== GORSEL PLACEHOLDER =====
+    function setupImagePlaceholders() {
+        var images = document.querySelectorAll('.blog-grid .post__cover img');
+        for (var i = 0; i < images.length; i++) {
+            (function(img) {
+                if (img._placeholderDone) return;
+                img._placeholderDone = true;
+
+                var wrapper = img.closest('.lazy-load-image-background') || img.parentElement;
+
+                if (!img.complete || img.naturalHeight === 0) {
+                    wrapper.style.background = 'linear-gradient(135deg, #1a1a1a 0%, #111 50%, #1a1a1a 100%)';
+                    wrapper.style.backgroundSize = '200% 200%';
+                }
+
+                img.addEventListener('load', function() {
+                    wrapper.style.background = '';
+                    wrapper.style.backgroundSize = '';
+                });
+
+                img.addEventListener('error', function() {
+                    wrapper.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)';
+                    img.style.display = 'none';
+                });
+            })(images[i]);
+        }
+    }
+
+
+    // ===== CATEGORY TILE =====
+    function setupCategoryTileEffects() {
+        var tiles = document.querySelectorAll('.category-tile');
+        for (var i = 0; i < tiles.length; i++) {
+            (function(tile) {
+                if (tile._tileEffectDone) return;
+                tile._tileEffectDone = true;
+
+                tile.addEventListener('mouseenter', function() {
+                    for (var j = 0; j < tiles.length; j++) {
+                        if (tiles[j] !== tile && !tiles[j].classList.contains('active')) {
+                            tiles[j].style.opacity = '0.6';
+                        }
+                    }
+                });
+
+                tile.addEventListener('mouseleave', function() {
+                    for (var j = 0; j < tiles.length; j++) {
+                        tiles[j].style.opacity = '';
+                    }
+                });
+            })(tiles[i]);
+        }
+    }
+
+    // ===== SCROLL PROGRESS =====
+    function setupScrollProgress() {
+        if (document.getElementById('promo-scroll-bar')) return;
+
+        var bar = document.createElement('div');
+        bar.id = 'promo-scroll-bar';
+        bar.style.cssText = 'position:fixed;top:0;left:0;height:2px;z-index:99999;pointer-events:none;width:0;' +
+            'background:-webkit-linear-gradient(left,#CFAE6D,#FFD700);' +
+            'background:linear-gradient(90deg,#CFAE6D,#FFD700);' +
+            '-webkit-transition:width 0.15s ease;transition:width 0.15s ease;';
+        document.body.appendChild(bar);
+
+        window.addEventListener('scroll', function() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (docHeight > 0) {
+                bar.style.width = Math.min((scrollTop / docHeight) * 100, 100) + '%';
+            }
+        });
+    }
+
+    // ===== INIT =====
+    function initAll() {
+        var blogGrid = document.querySelector('.blog-grid');
+        if (!blogGrid) return false;
+
+        setupRevealObserver();
+        setupTiltEffect();
+        setupImagePlaceholders();
+        setupCategoryTileEffects();
+        setupScrollProgress();
+
+        console.log('[MITO] Promo page enhancer v4 yuklendi');
+        return true;
+    }
+
+    function tryInit() {
+        if (!initAll()) {
+            setTimeout(tryInit, 500);
+        }
     }
 
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 1500); });
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(tryInit, 300); });
     } else {
-        setTimeout(init, 1500);
+        setTimeout(tryInit, 300);
     }
+
+    // SPA navigasyon
+    var root = document.getElementById('root');
+    if (root) {
+        var _promoObs = new MutationObserver(function(muts) {
+            var onPromo = window.location.pathname.indexOf('promot') > -1 ||
+                          window.location.pathname.indexOf('promo') > -1;
+            if (!onPromo) return;
+
+            for (var i = 0; i < muts.length; i++) {
+                if (muts[i].addedNodes.length && document.querySelector('.blog-grid')) {
+                    setTimeout(initAll, 200);
+                    break;
+                }
+            }
+        });
+        _promoObs.observe(root, { childList: true, subtree: true });
+    }
+
 })();
