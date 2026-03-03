@@ -15,6 +15,8 @@
 
     // Font Awesome kaldırıldı (ikonlar kullanılmıyor)
 
+    var lastMitoPath = '';
+
     function getLang() {
         var path = window.location.pathname;
         if (path.indexOf('/en') === 0 || path === '/en') return 'en';
@@ -46,8 +48,13 @@
 
     // ===== PROMO TEXT SLİDER =====
     var promoTexts = ['PROMOSYONLAR', 'HEMEN KAZAN', 'BONUSLAR'];
+    var promoTextsEn = ['PROMOTIONS', 'WIN NOW', 'BONUSES'];
     var promoIdx = 0;
     var sliding = false;
+
+    function getPromoTexts() {
+        return getLang() === 'en' ? promoTextsEn : promoTexts;
+    }
 
     function setupPromoSlider(btn) {
         if (!btn || btn.getAttribute('data-mito-slider')) return;
@@ -57,6 +64,7 @@
         var isDesktop = !!textEl;
         var cs = getComputedStyle(btn);
         var lineH = parseInt(cs.fontSize) || 12;
+        var texts = getPromoTexts();
 
         // Buton boyutunu sabitle
         var rect = btn.getBoundingClientRect();
@@ -67,12 +75,12 @@
         btn.style.setProperty('min-height', rect.height + 'px', 'important');
         btn.style.setProperty('max-height', rect.height + 'px', 'important');
 
-        // En uzun text genişliği
+        // En uzun text genişliği (mevcut dil)
         var measure = document.createElement('span');
         measure.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + cs.font + ';letter-spacing:' + cs.letterSpacing + ';';
         document.body.appendChild(measure);
         var maxW = 0;
-        promoTexts.forEach(function(t) { measure.textContent = t; if (measure.offsetWidth > maxW) maxW = measure.offsetWidth; });
+        texts.forEach(function(t) { measure.textContent = t; if (measure.offsetWidth > maxW) maxW = measure.offsetWidth; });
         document.body.removeChild(measure);
 
         // Mask
@@ -82,13 +90,13 @@
             'height:' + lineH + 'px;line-height:' + lineH + 'px;vertical-align:middle;' +
             'width:' + maxW + 'px;text-align:center;';
 
-        // A span (görünür, mevcut text)
+        // A span (görünür, mevcut dildeki sıradaki metin)
         var spanA = document.createElement('span');
         spanA.className = 'mito-slide-a';
         spanA.style.cssText = 'display:block;position:absolute;left:0;right:0;top:0;height:' + lineH + 'px;' +
             'line-height:' + lineH + 'px;white-space:nowrap;text-align:center;' +
             'will-change:transform;backface-visibility:hidden;';
-        spanA.textContent = isDesktop ? textEl.textContent.trim() : btn.textContent.trim();
+        spanA.textContent = texts[promoIdx % texts.length];
 
         // B span (aşağıda bekliyor)
         var spanB = document.createElement('span');
@@ -120,8 +128,9 @@
         var id = setInterval(function() {
             if (sliding) return;
             sliding = true;
-            promoIdx = (promoIdx + 1) % promoTexts.length;
-            var newText = promoTexts[promoIdx];
+            var texts = getPromoTexts();
+            promoIdx = (promoIdx + 1) % texts.length;
+            var newText = texts[promoIdx];
 
             document.querySelectorAll('.mito-slider-mask').forEach(function(mask) {
                 var spanA = mask.querySelector('.mito-slide-a');
@@ -237,19 +246,63 @@
         var header = document.querySelector('#header') || document.querySelector('header');
         if (!header) return;
 
+        var lang = getLang();
         var nextDomain = getNextDomain();
         var topbar = document.createElement('div');
         topbar.className = 'mito-topbar';
         topbar.setAttribute('data-mito-extra', 'topbar');
 
+        var labelNext = lang === 'en' ? 'Next address:' : 'Sıradaki adresimiz:';
+        var labelLogin = lang === 'en' ? 'Current login:' : 'Güncel Giriş:';
+        var linkHref = 'https://mito.ws/giris';
+
         if (nextDomain) {
-            topbar.innerHTML = '<span>Sıradaki adresimiz:</span> <a href="https://mito.ws" target="_blank">' + nextDomain + '</a>';
+            topbar.innerHTML = '<span>' + labelNext + '</span> <a href="' + linkHref + '" target="_blank">' + nextDomain + '</a>';
         } else {
-            topbar.innerHTML = '<span>Güncel Giriş:</span> <a href="https://mito.ws" target="_blank">mito.ws</a>';
+            topbar.innerHTML = '<span>' + labelLogin + '</span> <a href="' + linkHref + '" target="_blank">mito.ws</a>';
         }
 
         header.parentNode.insertBefore(topbar, header);
         console.log('[MITO] Üst banner eklendi');
+    }
+
+    function refreshMitoLang() {
+        var path = window.location.pathname;
+        if (path === lastMitoPath) return;
+        lastMitoPath = path;
+
+        if (window._mitoIntervals) {
+            window._mitoIntervals.forEach(function(id) { clearInterval(id); });
+        }
+        window._mitoIntervals = [];
+
+        var topbar = document.querySelector('.mito-topbar');
+        if (topbar) topbar.remove();
+
+        var headerActions = document.querySelector('.header__actions');
+        if (headerActions) {
+            headerActions.querySelectorAll('.mito-header-btn, .mito-header-divider').forEach(function(el) { el.remove(); });
+        }
+
+        var mobileBar = document.querySelector('.mito-mobile-bar');
+        if (mobileBar) mobileBar.remove();
+
+        addTopBar();
+        if (window.innerWidth > 992) {
+            addDesktopButtons();
+        } else {
+            addMobileBar();
+            fixMobileHeaderHeight();
+        }
+        setupPromoSlidersForCurrentButtons();
+        startPromoSlider();
+        startSupportPulse();
+    }
+
+    function setupPromoSlidersForCurrentButtons() {
+        setTimeout(function() {
+            document.querySelectorAll('.mito-header-btn--promo, .mito-mobile-btn--promo').forEach(setupPromoSlider);
+        }, 300);
     }
 
     // ===== DESKTOP BUTONLARI =====
@@ -381,7 +434,20 @@
     }
 
     function init() {
+        lastMitoPath = window.location.pathname;
         injectAnimationCSS();
+
+        window.addEventListener('popstate', function() { refreshMitoLang(); });
+        var origPush = history.pushState;
+        var origReplace = history.replaceState;
+        history.pushState = function() {
+            origPush.apply(this, arguments);
+            refreshMitoLang();
+        };
+        history.replaceState = function() {
+            origReplace.apply(this, arguments);
+            refreshMitoLang();
+        };
 
         if (window.innerWidth > 992) {
             addDesktopButtons();
