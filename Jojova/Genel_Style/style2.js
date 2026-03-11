@@ -216,6 +216,10 @@
         div.row:has(.vip) {
           display: none !important;
         }
+        /* Yatırma/Çekme - FAVORİ YÖNTEMLER duplike bölümünü gizle */
+        #fav-deposit-form-modal {
+          display: none !important;
+        }
         /* Jackpot Container Konumlandırma */
         #jackpots-container {
           background: transparent !important;
@@ -478,6 +482,20 @@
         }
       });
       
+      // FAVORİ YÖNTEMLER bölümünü gizle (duplike ödeme yöntemleri)
+      document.querySelectorAll('.section__title--head').forEach(function(h1) {
+        if (h1.textContent.trim().indexOf('FAVOR') !== -1) {
+          var headingRow = h1.closest('.row');
+          if (headingRow) {
+            headingRow.style.cssText = 'display: none !important;';
+            var nextRow = headingRow.nextElementSibling;
+            if (nextRow && nextRow.classList.contains('row') && !nextRow.querySelector('.section__title')) {
+              nextRow.style.cssText = 'display: none !important;';
+            }
+          }
+        }
+      });
+
       // Last Bets Wrapper'ı gizle (Web & Mobil)
       const lastBetsWrapper = document.getElementById('last-bets-wrapper');
       if (lastBetsWrapper) {
@@ -1098,185 +1116,6 @@
       }
     }, 2000); // 2 saniyede bir kontrol et
   }
-
-  // Özel Telegram Popup Sistemi
-  function initCustomPermissionSystem() {
-    // Özel Telegram popup'ını oluştur
-    createCustomPermissionPopup();
-  }
-  
-  // Telegram popup sistemi için SDK yükleme gereksiz
-  
-  // Özel izin popup'ını oluştur
-  function createCustomPermissionPopup() {
-    // CSS stillerini ekle
-    const styles = `
-    <style id="custom-perm-styles">
-    .custom-perm{
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) scale(0.8);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: linear-gradient(145deg, #ffffff 0%, #f8fafe 100%);
-      color: #333333;
-      padding: 22px;
-      border-radius: 18px;
-      box-shadow: 0 15px 50px rgba(0,0,0,0.25), 0 5px 15px rgba(30,144,255,0.1);
-      border: 1px solid rgba(30,144,255,0.1);
-      max-width: 420px;
-      width: calc(100% - 40px);
-      font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial;
-      z-index: 99999;
-      opacity: 0;
-      transition: transform 300ms ease, opacity 300ms ease;
-    }
-    .custom-perm.show{
-      transform: translate(-50%, -50%) scale(1);
-      opacity: 1;
-    }
-    .custom-perm .bell{
-      color: #1e90ff;
-      flex: 0 0 40px;
-      margin-left: 2px;
-    }
-    .perm-body{ flex: 1; min-width: 0; }
-    .perm-title{ font-weight: 700; font-size: 15px; margin-bottom: 5px; color: #2c3e50; line-height: 1.3; }
-    .perm-sub{ font-size: 13px; color: #5a6c7d; margin-bottom: 12px; line-height: 1.4; }
-    .perm-actions{ display:flex; gap:8px; justify-content:flex-end; }
-    .btn{
-      border: none;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 13px;
-      transition: all 0.25s ease;
-      letter-spacing: 0.3px;
-    }
-    .btn-deny{
-      background: #f5f5f5;
-      color: #666;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .btn-deny:hover{
-      background: #e9e9e9;
-    }
-    .btn-allow{
-      background: linear-gradient(135deg,#1e90ff 0%,#0066cc 100%);
-      color: #ffffff;
-      box-shadow: 0 8px 25px rgba(30,144,255,0.35);
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .btn-allow:hover{
-      background: linear-gradient(135deg,#4da6ff 0%,#0056b3 100%);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(30,144,255,0.45);
-    }
-    .perm-close{
-      position: absolute;
-      top: 6px;
-      right: 8px;
-      background: transparent;
-      color: #999;
-      border: 0;
-      font-size: 18px;
-      cursor: pointer;
-      transition: color 0.2s ease;
-    }
-    .perm-close:hover{
-      color: #333;
-    }
-    @media (max-width:480px){
-      .custom-perm{ width: calc(100% - 24px); padding: 16px; }
-      .perm-title{ font-size: 15px; }
-    }
-    .hidden { display: none !important; }
-    </style>
-    `;
-    
-    // HTML popup'ını oluştur
-    const popupHTML = `
-    <div id="custom-perm" class="custom-perm" role="dialog" aria-live="polite" aria-label="Bildirim izni">
-      <div class="perm-left">
-        <svg class="bell" width="34" height="34" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M15 17H9a3 3 0 006 0z" fill="currentColor" />
-          <path d="M18 8a6 6 0 10-12 0v5l-2 2v1h16v-1l-2-2V8z" stroke="currentColor" stroke-width="0.5" />
-        </svg>
-      </div>
-      <div class="perm-body">
-        <div class="perm-title">Promosyonlar ve güncel giriş adresi için Jojova telegram adresine katıl!</div>
-        <div class="perm-sub">Hemen katıl ve promosyonlarda geri kalma.</div>
-        <div class="perm-actions">
-          <button id="perm-deny" class="btn btn-deny" type="button">Sonra</button>
-          <button id="perm-allow" class="btn btn-allow" type="button">Telegram'a Git</button>
-        </div>
-      </div>
-      <button id="perm-close" class="perm-close" aria-label="Kapat">&times;</button>
-    </div>
-    `;
-    
-    // Head'e CSS ekle
-    document.head.insertAdjacentHTML('beforeend', styles);
-    
-    // Body'e popup ekle
-    document.body.insertAdjacentHTML('beforeend', popupHTML);
-    
-    
-    // Event listener'ları bağla
-    setupPermissionEvents();
-  }
-  
-  // Event listener'ları kurma
-  function setupPermissionEvents() {
-    const customPerm = document.getElementById('custom-perm');
-    const allowBtn = document.getElementById('perm-allow');
-    const denyBtn = document.getElementById('perm-deny');
-    const closeBtn = document.getElementById('perm-close');
-    
-    const dismissedKey = 'custom-perm-dismissed-v1';
-    
-    // Popup gösterme kontrolü
-    if (localStorage.getItem(dismissedKey) === '1') {
-      customPerm.classList.add('hidden');
-    } else {
-      // Hemen popup'ı göster
-      customPerm.classList.add('show');
-    }
-    
-    function hidePerm(saveDismiss = true) {
-      customPerm.classList.remove('show');
-      if (saveDismiss) localStorage.setItem(dismissedKey, '1');
-      setTimeout(() => customPerm.classList.add('hidden'), 220);
-    }
-    
-    // Engelle butonu
-    denyBtn.addEventListener('click', () => {
-      hidePerm(true);
-    });
-    
-    // Kapat butonu
-    closeBtn.addEventListener('click', () => {
-      hidePerm(true);
-    });
-    
-    // Telegram'a Git butonu
-    allowBtn.addEventListener('click', async () => {
-      hidePerm(false);
-      
-      // Telegram adresine yönlendir
-      window.open('https://t.me/+9VwSnEpsgB00MmFk', '_blank');
-    });
-  }
-  
-  // Telegram yönlendirmesi için push notification kodları gereksiz
-
-  // Ana sistem başlatma
-  setTimeout(() => {
-    initCustomPermissionSystem();
-  }, 1000);
 
   // DOM yüklendikten sonra veya hemen çalıştır
   if (document.readyState === 'loading') {
