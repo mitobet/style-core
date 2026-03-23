@@ -1425,7 +1425,7 @@ input, select, textarea,
 (function() {
     'use strict';
 
-    var POPUP_IMAGE = 'https://dummyimage.com/800x450/1a1a2e/cfae6d&text=MITOBET+KAMPANYA';
+    var POPUP_IMAGE = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/KAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif';
     var POPUP_LINK = 'https://mitobonus.com/survey/mitobet-buyuk-cekilis-e9e4aff7';
     var POPUP_DELAY = 1500;
     var PARTICLE_COUNT = 18;
@@ -1483,7 +1483,7 @@ input, select, textarea,
                 'animation:mpFloat linear infinite;opacity:.6}' +
 
             '@media(max-width:768px){' +
-                '.mp-box{width:90vw;max-width:360px}' +
+                '.mp-box{width:95vw;max-width:800px}' +
                 '.mp-close{top:-9px;right:-9px;width:26px;height:26px;font-size:12px}' +
             '}' +
             '@media(min-width:769px){.mp-box{width:800px}}';
