@@ -1,0 +1,46 @@
+# Mitobet Gelistirme Kurallari
+
+## Proje
+- Repo: mitobet/style-core (GitHub)
+- CDN: jsDelivr — commit hash ile cache-busting
+- Pipeline dokumani: PIPELINE.md (her zaman oku ve uy)
+
+## Gelistirme Akisi
+1. Kod degisikligi yap (active/ altinda)
+2. `node build.js` calistir
+3. `git add -A && git commit -m "aciklama" && git push origin main`
+4. `git rev-parse --short HEAD` ile hash al
+5. Kullaniciya KISA CDN test kodu ver (asagidaki format)
+6. Test onaylanirsa: VERSIONS.md guncelle + kullaniciya CMS kodu ver
+7. CMS hash guncellemesini KULLANICI yapar
+
+## Test Kodu Formati
+Her zaman su formatta, HASH doldurulmus:
+```
+(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js';document.body.appendChild(s);var l=document.createElement('link');l.rel='stylesheet';l.href='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css';document.head.appendChild(l)})();
+```
+
+## CMS Kodu Formati
+Test onaylaninca kullaniciya verilecek:
+```
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js"></script>
+```
+
+## Kesin Kurallar
+- dist/ repo'ya DAHIL (gitignore'da DEGIL) — CDN buradan okur
+- Uzun kod blogu chat'e ASLA yazilmaz — test kodu max 3 satir
+- "Test kodu ver" = kisa CDN IIFE, bundle icerigi DEGIL
+- Her guncelleme VERSIONS.md'ye kaydedilir (isim, hash, tarih, degisiklikler)
+- PIPELINE.md'deki "Son aktif CDN hash" test onayindan sonra guncellenir
+- inject.js YOK — tum testler GitHub CDN uzerinden
+
+## Kod Standartlari
+- CSS: Bootstrap 5.3.2 uyumlu, !important ile override
+- JS: ES5 uyumlu (var kullan, const/let YASAK)
+- JS: Her script IIFE icinde — `(function(){ ... })();`
+- Turkce degisken/fonksiyon isimleri YASAK, Ingilizce kullan
+
+## Dil
+- Kullaniciyla Turkce konusma
+- Kod icinde Ingilizce

@@ -1,0 +1,110 @@
+/* Promo Up Button - Elit MitoBet Style */
+
+/* Grid Wrapper */
+.category-grid-wrapper {
+    padding: 10px 0 !important;
+    background: transparent !important;
+}
+
+.category-grid {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+}
+
+/* Ana Buton (Tile) Tasarımı */
+.category-tile {
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    height: 60px !important; /* Yükseklik sabitlendi */
+    background: linear-gradient(145deg, #1a1a1a 0%, #0b0b0b 100%) !important; /* Koyu elit zemin */
+    border: 1px solid rgba(233, 195, 122, 0.3) !important; /* Hafif altın çerçeve */
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+}
+
+/* Hover Efekti */
+.category-tile:hover {
+    transform: translateY(-2px) !important;
+    border-color: rgba(233, 195, 122, 0.8) !important;
+    box-shadow: 0 8px 25px rgba(233, 195, 122, 0.15) !important;
+}
+
+/* Aktif Durum (Varsa) */
+.category-tile.active {
+    border-color: #e9c37a !important;
+    background: linear-gradient(145deg, #222 0%, #111 100%) !important;
+}
+
+/* Sol Taraftaki Görsel (Altın Doku) */
+.category-image {
+    width: 80px !important; /* Genişlik ayarı */
+    height: 100% !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    border-right: 1px solid rgba(233, 195, 122, 0.2) !important;
+}
+
+.category-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+    filter: brightness(1.1) contrast(1.1) !important; /* Altın parlaklığı */
+}
+
+/* Sağ Taraf (Metin ve Ok) */
+.category-info {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 20px !important;
+    height: 100% !important;
+}
+
+/* Başlık Metni */
+.category-title {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Ok İşareti */
+.category-arrow {
+    font-size: 24px !important;
+    color: #e9c37a !important; /* Altın rengi ok */
+    font-weight: 300 !important;
+    transition: transform 0.3s ease !important;
+    margin-top: -2px !important; /* Dikey hizalama fix */
+}
+
+.category-tile:hover .category-arrow {
+    transform: translateX(5px) !important;
+    color: #fff !important;
+}
+
+/* Mobilde biraz daha kompakt olabilir */
+@media (max-width: 768px) {
+    .category-tile {
+        height: 50px !important;
+        border-radius: 10px !important;
+    }
+    
+    .category-image {
+        width: 60px !important;
+    }
+    
+    .category-title {
+        font-size: 14px !important;
+    }
+}
+

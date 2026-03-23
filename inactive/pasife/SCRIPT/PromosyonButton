@@ -1,0 +1,92 @@
+<script>
+/** .sidebar__big yüklenince çalıştıracak güvenli kurulum **/
+
+function waitForElement(selector, timeout = 15000) {
+  return new Promise((resolve, reject) => {
+    const existing = document.querySelector(selector);
+    if (existing) return resolve(existing);
+
+    const obs = new MutationObserver(() => {
+      const el = document.querySelector(selector);
+      if (el) {
+        obs.disconnect();
+        resolve(el);
+      }
+    });
+
+    const start = () => obs.observe(document.documentElement, { childList: true, subtree: true });
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start, { once: true });
+    } else {
+      start();
+    }
+
+    setTimeout(() => {
+      obs.disconnect();
+      reject(new Error(`Element not found: ${selector}`));
+    }, timeout);
+  });
+}
+
+function updateLanguage(newLang) {
+  const sidebarBig = document.querySelector('.sidebar__big');
+  if (!sidebarBig) return; // güvenlik
+
+  const existing = document.querySelector('.custom_side');
+  if (existing) existing.remove();
+
+  const config = {
+    tr: {
+      image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/p8tJpW3EjGIRea6Q8Zlv3EIXrfaCQnyzqEs8JoSX.png',
+      link: '/tr/promotions'
+    },
+    en: {
+      image: 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/p8tJpW3EjGIRea6Q8Zlv3EIXrfaCQnyzqEs8JoSX.png',
+      link: '/en/promotions'
+    }
+  };
+
+  if (!config[newLang]) return;
+
+  const { image, link: href } = config[newLang];
+
+  const newDiv = document.createElement('div');
+  newDiv.classList.add('sidebar__links', 'custom_side');
+
+  const link = document.createElement('a');
+  link.classList.add('sidebar__link', 'sidebar__link--casino', 'w-100');
+  link.href = href;
+  link.style.height = '46px';
+  link.style.background = `url("${image}") no-repeat center`;
+  link.style.backgroundSize = 'cover';
+
+  newDiv.appendChild(link);
+
+  if (sidebarBig.children.length >= 1) {
+    sidebarBig.insertBefore(newDiv, sidebarBig.children[1]);
+  } else {
+    sidebarBig.appendChild(newDiv);
+  }
+}
+
+// Lang değişimini izle, ama .sidebar__big hazır olunca uygula
+const langObserver = new MutationObserver(muts => {
+  for (const m of muts) {
+    if (m.attributeName === 'lang') {
+      waitForElement('.sidebar__big')
+        .then(() => updateLanguage(document.documentElement.lang))
+        .catch(err => console.warn(err.message));
+    }
+  }
+});
+langObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+
+// İlk çalıştırma: önce .sidebar__big’i bekle, sonra dili uygula
+(function init() {
+  const siteLanguage = document.documentElement.lang || 'en';
+  waitForElement('.sidebar__big')
+    .then(() => updateLanguage(siteLanguage))
+    .catch(err => console.warn(err.message));
+})();
+</script>
