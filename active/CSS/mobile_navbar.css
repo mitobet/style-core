@@ -38,17 +38,28 @@
     justify-content: center !important;
 }
 
-/* Tüm nav linkleri / butonları */
+/* Tüm nav linkleri / butonları (ortadaki sticky-menu hariç) */
 #tabbar nav a,
 #tabbar nav button,
-#tabbar nav > *,
+#tabbar nav > *:not(.center),
 .lowbar nav a,
 .lowbar nav button,
-.lowbar nav > * {
+.lowbar nav > *:not(.center) {
     color: #CFAE6D !important;
     opacity: 0.7 !important;
     transition: all 0.2s ease !important;
     background: transparent !important;
+}
+
+/* Ortadaki sticky-menu — sitenin toggle mekanizmasına dokunma */
+#tabbar nav > .center,
+.lowbar nav > .center,
+#tabbar .sticky-menu-container,
+.lowbar .sticky-menu-container,
+#tabbar .sticky-menu-container *,
+.lowbar .sticky-menu-container * {
+    opacity: 1 !important;
+    transition: none !important;
 }
 
 /* Aktif durum */
