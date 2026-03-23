@@ -33,7 +33,6 @@
             if (shouldBlock(el)) {
                 el.disabled = true;
                 el.parentNode && el.parentNode.removeChild(el);
-                console.log('[MITO BLOCKER] Kaldırıldı:', el.tagName, el.getAttribute('href') || '(inline)');
             }
         });
 
@@ -47,7 +46,6 @@
                     if (sheet.ownerNode) {
                         sheet.ownerNode.parentNode && sheet.ownerNode.parentNode.removeChild(sheet.ownerNode);
                     }
-                    console.log('[MITO BLOCKER] StyleSheet devre dışı:', href);
                 }
             }
         } catch(e) {}
@@ -65,7 +63,6 @@
                     if (shouldBlock(n)) {
                         n.disabled = true;
                         n.parentNode && n.parentNode.removeChild(n);
-                        console.log('[MITO BLOCKER] Engellendi:', tag, n.getAttribute('href') || '(inline)');
                     }
                 }
                 // İçindeki link/style'ları da kontrol et
@@ -75,7 +72,6 @@
                         if (shouldBlock(el)) {
                             el.disabled = true;
                             el.parentNode && el.parentNode.removeChild(el);
-                            console.log('[MITO BLOCKER] İç eleman engellendi');
                         }
                     });
                 }
@@ -94,5 +90,4 @@
     // Periyodik kontrol
     setInterval(killCSS, 1000);
 
-    console.log('[MITO BLOCKER] Aktif - btT2zvLncVttPgLh7UhpfCCihTtMYy5y.css engelleniyor');
 })();

@@ -286,7 +286,6 @@
         }
 
         header.parentNode.insertBefore(topbar, header);
-        console.log('[MITO] Üst banner eklendi');
     }
 
     // ===== DESKTOP BUTONLARI =====
@@ -340,7 +339,6 @@
         // Butonlar eklendikten sonra sweep ekle
         setTimeout(function() { addSweepToBtn(promoBtn); }, 200);
 
-        console.log('[MITO] Desktop header butonlar eklendi');
     }
 
     // ===== MOBİL BAR =====
@@ -392,7 +390,6 @@
         // Butonlar eklendikten sonra sweep ekle
         setTimeout(function() { addSweepToBtn(promoBtn); }, 200);
 
-        console.log('[MITO] Mobil header bar eklendi');
     }
 
     // Mobilde header yükseklik fix
@@ -496,7 +493,6 @@
             }, 200);
         });
 
-        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi');
     }
 
     if (document.readyState === 'loading') {

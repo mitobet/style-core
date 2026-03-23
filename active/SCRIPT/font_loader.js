@@ -87,7 +87,6 @@ input, select, textarea,
         link.rel = 'stylesheet';
         link.href = GOOGLE_FONTS_URL;
         document.head.appendChild(link);
-        console.log('🌐 Google Fonts linki eklendi: Stack Sans Headline');
     }
 
     // Style Injection
@@ -99,7 +98,6 @@ input, select, textarea,
         style.id = 'mito-font-styles';
         style.textContent = FONT_STYLES;
         document.head.appendChild(style);
-        console.log('🎨 Mito Font stilleri enjekte edildi');
     }
     
     function init() {

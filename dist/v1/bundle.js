@@ -34,7 +34,6 @@
             if (shouldBlock(el)) {
                 el.disabled = true;
                 el.parentNode && el.parentNode.removeChild(el);
-                console.log('[MITO BLOCKER] Kaldırıldı:', el.tagName, el.getAttribute('href') || '(inline)');
             }
         });
 
@@ -48,7 +47,6 @@
                     if (sheet.ownerNode) {
                         sheet.ownerNode.parentNode && sheet.ownerNode.parentNode.removeChild(sheet.ownerNode);
                     }
-                    console.log('[MITO BLOCKER] StyleSheet devre dışı:', href);
                 }
             }
         } catch(e) {}
@@ -66,7 +64,6 @@
                     if (shouldBlock(n)) {
                         n.disabled = true;
                         n.parentNode && n.parentNode.removeChild(n);
-                        console.log('[MITO BLOCKER] Engellendi:', tag, n.getAttribute('href') || '(inline)');
                     }
                 }
                 // İçindeki link/style'ları da kontrol et
@@ -76,7 +73,6 @@
                         if (shouldBlock(el)) {
                             el.disabled = true;
                             el.parentNode && el.parentNode.removeChild(el);
-                            console.log('[MITO BLOCKER] İç eleman engellendi');
                         }
                     });
                 }
@@ -95,7 +91,6 @@
     // Periyodik kontrol
     setInterval(killCSS, 1000);
 
-    console.log('[MITO BLOCKER] Aktif - btT2zvLncVttPgLh7UhpfCCihTtMYy5y.css engelleniyor');
 })();
 
 
@@ -189,7 +184,6 @@ input, select, textarea,
         link.rel = 'stylesheet';
         link.href = GOOGLE_FONTS_URL;
         document.head.appendChild(link);
-        console.log('🌐 Google Fonts linki eklendi: Stack Sans Headline');
     }
 
     // Style Injection
@@ -201,7 +195,6 @@ input, select, textarea,
         style.id = 'mito-font-styles';
         style.textContent = FONT_STYLES;
         document.head.appendChild(style);
-        console.log('🎨 Mito Font stilleri enjekte edildi');
     }
     
     function init() {
@@ -317,7 +310,6 @@ input, select, textarea,
         `;
         
         document.head.appendChild(style);
-        console.log('✅ Promosyonlar CSS eklendi');
     }
     
     // Görseli değiştir (Responsive) - SADECE büyük butona
@@ -341,7 +333,6 @@ input, select, textarea,
                 promoLink.style.backgroundPosition = 'center center';
                 promoLink.style.backgroundRepeat = 'no-repeat';
                 
-                console.log('✅ Promosyonlar büyük buton görseli değiştirildi:', isMobile ? 'Mobil' : 'Desktop', imageUrl);
             }
         });
     }
@@ -519,164 +510,111 @@ input, select, textarea,
 /* ===== active/SCRIPT/mito_tv_button.js ===== */
 (function() {
     'use strict';
-    
-    const DESKTOP_TV = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/08q1fN1eVVRaHZJ3kCPfvIsldskFz2kFqelrp40l.png';
-    const MOBILE_TV = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/6oLnWMti5FNnahtOYcXR0gChURUjr3uu7xgtLIad.png';
-    const TV_LINK = 'https://mito.ws/tv';
-    
-    let added = false;
-    
-    // CSS ekle
+
+    var DESKTOP_TV_ORIG = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/08q1fN1eVVRaHZJ3kCPfvIsldskFz2kFqelrp40l.png';
+    var MOBILE_TV_ORIG = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/6oLnWMti5FNnahtOYcXR0gChURUjr3uu7xgtLIad.png';
+    var TV_LINK = 'https://mito.ws/tv';
+
+    var _proxyBase = 'https://' + 'wsrv.nl' + '/?url=';
+    var DESKTOP_TV = _proxyBase + encodeURIComponent(DESKTOP_TV_ORIG);
+    var MOBILE_TV = _proxyBase + encodeURIComponent(MOBILE_TV_ORIG);
+
+    var added = false;
+
     function injectCSS() {
-        const styleId = 'mito-tv-styles';
+        var styleId = 'mito-tv-styles';
         if (document.getElementById(styleId)) return;
-        
-        const style = document.createElement('style');
+
+        var style = document.createElement('style');
         style.id = styleId;
-        style.textContent = `
-            /* Mito TV Butonu - Promosyonlar gibi stil */
-            a.sidebar__link--mitotv {
-                overflow: hidden !important;
-                position: relative !important;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 
-                            0 0 20px rgba(154, 106, 12, 0.15) !important;
-            }
-            
-            /* Hover Animasyonu - Yukarı Kalk + Glow */
-            a.sidebar__link--mitotv:hover {
-                transform: translateY(-4px) !important;
-                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 
-                            0 0 35px rgba(154, 106, 12, 0.4),
-                            0 0 50px rgba(154, 106, 12, 0.2) !important;
-                filter: brightness(1.08) !important;
-            }
-            
-            /* Parlama Efekti */
-            a.sidebar__link--mitotv:before {
-                content: '' !important;
-                position: absolute !important;
-                top: 0 !important;
-                left: -100% !important;
-                width: 100% !important;
-                height: 100% !important;
-                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
-                transition: left 0.6s ease !important;
-                z-index: 1 !important;
-                pointer-events: none !important;
-            }
-            
-            a.sidebar__link--mitotv:hover:before {
-                left: 100% !important;
-            }
-            
-            /* Pulse Animasyonu - Devamlı hafif ışıltı */
-            @keyframes mitoTVPulse {
-                0%, 100% { 
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 
-                                0 0 20px rgba(154, 106, 12, 0.15);
-                }
-                50% { 
-                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), 
-                                0 0 30px rgba(154, 106, 12, 0.25),
-                                0 0 45px rgba(154, 106, 12, 0.15);
-                }
-            }
-            
-            a.sidebar__link--mitotv {
-                animation: mitoTVPulse 3s ease-in-out infinite !important;
-            }
-            
-            /* Hover'da animasyonu durdur */
-            a.sidebar__link--mitotv:hover {
-                animation: none !important;
-            }
-            
-            /* Mobil için özel ayarlar */
-            @media (max-width: 767px) {
-                a.sidebar__link--mitotv:hover {
-                    transform: translateY(-2px) !important;
-                }
-            }
-        `;
-        
+        style.textContent =
+            'a.sidebar__link--mitotv{overflow:hidden!important;position:relative!important;transition:all .4s cubic-bezier(.4,0,.2,1)!important;box-shadow:0 4px 15px rgba(0,0,0,.2),0 0 20px rgba(154,106,12,.15)!important}' +
+            'a.sidebar__link--mitotv:hover{transform:translateY(-4px)!important;box-shadow:0 8px 25px rgba(0,0,0,.3),0 0 35px rgba(154,106,12,.4),0 0 50px rgba(154,106,12,.2)!important;filter:brightness(1.08)!important}' +
+            'a.sidebar__link--mitotv:before{content:""!important;position:absolute!important;top:0!important;left:-100%!important;width:100%!important;height:100%!important;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent)!important;transition:left .6s ease!important;z-index:1!important;pointer-events:none!important}' +
+            'a.sidebar__link--mitotv:hover:before{left:100%!important}' +
+            '@keyframes mitoTVPulse{0%,100%{box-shadow:0 4px 15px rgba(0,0,0,.2),0 0 20px rgba(154,106,12,.15)}50%{box-shadow:0 4px 15px rgba(0,0,0,.2),0 0 30px rgba(154,106,12,.25),0 0 45px rgba(154,106,12,.15)}}' +
+            'a.sidebar__link--mitotv{animation:mitoTVPulse 3s ease-in-out infinite!important}' +
+            'a.sidebar__link--mitotv:hover{animation:none!important}' +
+            '@media(max-width:767px){a.sidebar__link--mitotv:hover{transform:translateY(-2px)!important}}';
+
         document.head.appendChild(style);
     }
-    
+
     function addTV() {
         if (added) return;
-        
-        const promoButton = document.querySelector('a[href*="promotions"]');
+
+        var promoButton = document.querySelector('a[href*="promotions"]');
         if (!promoButton) return;
-        
-        const promoParent = promoButton.closest('.sidebar__links');
+
+        var promoParent = promoButton.closest('.sidebar__links');
         if (!promoParent) return;
-        
-        const sidebar = promoParent.parentElement;
+
+        var sidebar = promoParent.parentElement;
         if (!sidebar) return;
-        
-        // Zaten var mı kontrol et
+
         if (document.querySelector('.sidebar__link--mitotv')) {
             added = true;
             return;
         }
-        
-        // TV wrapper oluştur
-        const tvWrapper = document.createElement('div');
+
+        var tvWrapper = document.createElement('div');
         tvWrapper.className = 'sidebar__links custom_side';
-        
-        // TV butonu oluştur
-        const tvButton = document.createElement('a');
+
+        var tvButton = document.createElement('a');
         tvButton.className = 'sidebar__link sidebar__link--casino sidebar__link--mitotv w-100';
         tvButton.href = TV_LINK;
         tvButton.target = '_blank';
-        tvButton.style.cssText = 'height: 46px;';
-        
-        // Görsel ekle
-        const isMobile = window.innerWidth <= 767;
-        tvButton.style.background = `url("${isMobile ? MOBILE_TV : DESKTOP_TV}") center center / cover no-repeat`;
-        
-        // Butonu wrapper'a ekle
+        tvButton.style.cssText = 'height:46px;';
+
+        var isMobile = window.innerWidth <= 767;
+        var imgUrl = isMobile ? MOBILE_TV : DESKTOP_TV;
+        tvButton.style.background = 'url("' + imgUrl + '") center center / cover no-repeat';
+
+        var testImg = new Image();
+        testImg.onload = function() {
+            tvButton.style.background = 'url("' + imgUrl + '") center center / cover no-repeat';
+        };
+        testImg.onerror = function() {
+            var origUrl = isMobile ? MOBILE_TV_ORIG : DESKTOP_TV_ORIG;
+            tvButton.style.background = 'url("' + origUrl + '") center center / cover no-repeat';
+        };
+        testImg.src = imgUrl;
+
         tvWrapper.appendChild(tvButton);
-        
-        // Promo parent'tan sonra ekle
+
         if (promoParent.nextSibling) {
             sidebar.insertBefore(tvWrapper, promoParent.nextSibling);
         } else {
             sidebar.appendChild(tvWrapper);
         }
-        
+
         added = true;
     }
-    
-    // CSS'i hemen ekle
+
     injectCSS();
-    
-    // TV butonunu ekle
+
     setTimeout(addTV, 100);
     setTimeout(addTV, 500);
     setTimeout(addTV, 1000);
     setTimeout(addTV, 2000);
     setTimeout(addTV, 3000);
-    
-    // DOM yüklenince dene
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', addTV);
     } else {
         addTV();
     }
-    
-    // Interval
-    const interval = setInterval(() => {
+
+    var interval = setInterval(function() {
         if (added) {
             clearInterval(interval);
             return;
         }
         addTV();
     }, 1000);
-    
-    setTimeout(() => clearInterval(interval), 20000);
-    
+
+    setTimeout(function() { clearInterval(interval); }, 20000);
+
 })();
 
 
@@ -969,7 +907,6 @@ input, select, textarea,
         }
 
         header.parentNode.insertBefore(topbar, header);
-        console.log('[MITO] Üst banner eklendi');
     }
 
     // ===== DESKTOP BUTONLARI =====
@@ -1023,7 +960,6 @@ input, select, textarea,
         // Butonlar eklendikten sonra sweep ekle
         setTimeout(function() { addSweepToBtn(promoBtn); }, 200);
 
-        console.log('[MITO] Desktop header butonlar eklendi');
     }
 
     // ===== MOBİL BAR =====
@@ -1075,7 +1011,6 @@ input, select, textarea,
         // Butonlar eklendikten sonra sweep ekle
         setTimeout(function() { addSweepToBtn(promoBtn); }, 200);
 
-        console.log('[MITO] Mobil header bar eklendi');
     }
 
     // Mobilde header yükseklik fix
@@ -1179,7 +1114,6 @@ input, select, textarea,
             }, 200);
         });
 
-        console.log('[MITO] Header extra butonlar + animasyonlar yüklendi');
     }
 
     if (document.readyState === 'loading') {
@@ -1416,173 +1350,5 @@ input, select, textarea,
         document.addEventListener('DOMContentLoaded', function() { setTimeout(init, 1500); });
     } else {
         setTimeout(init, 1500);
-    }
-})();
-
-
-/* ===== active/SCRIPT/popup.js ===== */
-// MITOBET - Elit Premium Gorsel Popup
-(function() {
-    'use strict';
-
-    var POPUP_IMAGE = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/KAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif';
-    var POPUP_LINK = 'https://mitobonus.com/survey/mitobet-buyuk-cekilis-e9e4aff7';
-    var POPUP_DELAY = 1500;
-    var PARTICLE_COUNT = 18;
-
-    function injectStyles() {
-        if (document.getElementById('mito-popup-css')) return;
-        var s = document.createElement('style');
-        s.id = 'mito-popup-css';
-        s.textContent =
-            '@keyframes mpFadeIn{0%{opacity:0}100%{opacity:1}}' +
-            '@keyframes mpSlideIn{0%{transform:scale(.92) translateY(18px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}' +
-            '@keyframes mpFadeOut{0%{opacity:1}100%{opacity:0}}' +
-            '@keyframes mpSlideOut{0%{transform:scale(1) translateY(0);opacity:1}100%{transform:scale(.92) translateY(18px);opacity:0}}' +
-            '@keyframes mpBorder{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}' +
-            '@keyframes mpShine{0%{left:-120%}100%{left:120%}}' +
-            '@keyframes mpFloat{0%{transform:translateY(0) scale(1);opacity:.6}100%{transform:translateY(-100px) scale(0);opacity:0}}' +
-            '@keyframes mpCloseIn{0%{transform:scale(0) rotate(-90deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}' +
-
-            '#mito-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;' +
-                'background:rgba(0,0,0,.88);' +
-                'display:flex;justify-content:center;align-items:center;z-index:99999;' +
-                'animation:mpFadeIn .35s ease-out forwards;' +
-                'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}' +
-            '#mito-popup-overlay.mp-closing{animation:mpFadeOut .3s ease-in forwards}' +
-
-            '.mp-box{position:relative;overflow:visible;' +
-                'animation:mpSlideIn .45s cubic-bezier(.22,.9,.36,1) .08s both}' +
-            '.mp-box.mp-closing{animation:mpSlideOut .3s ease-in forwards}' +
-
-            '.mp-border{position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;border-radius:13px;' +
-                'background:linear-gradient(135deg,#cfae6d,#f5d98a,#8a6d2f,#cfae6d,#f5d98a);' +
-                'background-size:400% 400%;animation:mpBorder 6s linear infinite;z-index:0}' +
-
-            '.mp-content{position:relative;z-index:1;border-radius:12px;overflow:hidden;line-height:0}' +
-
-            '.mp-img-wrap{display:block;position:relative;overflow:hidden;cursor:pointer;line-height:0}' +
-            '.mp-img-wrap::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;' +
-                'background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);' +
-                'transform:skewX(-18deg);pointer-events:none;animation:mpShine 5s ease-in-out 2s infinite}' +
-            '.mp-img{width:100%;height:auto;display:block;transition:transform .5s cubic-bezier(.25,.46,.45,.94),filter .5s ease}' +
-            '.mp-img-wrap:hover .mp-img{transform:scale(1.025);filter:brightness(1.08)}' +
-
-            '.mp-close{position:absolute;top:-10px;right:-10px;width:28px;height:28px;' +
-                'border:1px solid rgba(207,174,109,.5);background:rgba(10,10,20,.9);color:rgba(207,174,109,.8);' +
-                'font-size:14px;line-height:1;border-radius:50%;cursor:pointer;' +
-                'display:flex;justify-content:center;align-items:center;z-index:10;' +
-                'transition:all .3s ease;animation:mpCloseIn .35s ease .45s both;' +
-                'backdrop-filter:blur(4px)}' +
-            '.mp-close:hover{background:#cfae6d;color:#0a0a14;border-color:#cfae6d;' +
-                'transform:rotate(90deg) scale(1.1)}' +
-
-            '.mp-particles{position:absolute;top:0;left:0;width:100%;height:100%;' +
-                'pointer-events:none;overflow:hidden;z-index:0;border-radius:13px}' +
-            '.mp-dot{position:absolute;bottom:-6px;border-radius:50%;' +
-                'animation:mpFloat linear infinite;opacity:.6}' +
-
-            '@media(max-width:768px){' +
-                '.mp-box{width:95vw;max-width:800px}' +
-                '.mp-close{top:-9px;right:-9px;width:26px;height:26px;font-size:12px}' +
-            '}' +
-            '@media(min-width:769px){.mp-box{width:800px}}';
-        document.head.appendChild(s);
-    }
-
-    function createParticles(container) {
-        for (var i = 0; i < PARTICLE_COUNT; i++) {
-            var dot = document.createElement('span');
-            dot.className = 'mp-dot';
-            var size = 1.5 + Math.random() * 2.5;
-            var left = Math.random() * 100;
-            var dur = 3 + Math.random() * 5;
-            var delay = Math.random() * 6;
-            var alpha = (0.3 + Math.random() * 0.4).toFixed(2);
-            dot.style.cssText =
-                'left:' + left + '%;' +
-                'width:' + size + 'px;height:' + size + 'px;' +
-                'background:rgba(207,174,109,' + alpha + ');' +
-                'box-shadow:0 0 ' + (size + 1) + 'px rgba(207,174,109,.2);' +
-                'animation-duration:' + dur + 's;' +
-                'animation-delay:' + delay + 's;';
-            container.appendChild(dot);
-        }
-    }
-
-    function showPopup() {
-        if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
-        injectStyles();
-
-        var overlay = document.createElement('div');
-        overlay.id = 'mito-popup-overlay';
-
-        var box = document.createElement('div');
-        box.className = 'mp-box';
-
-        var particles = document.createElement('div');
-        particles.className = 'mp-particles';
-        createParticles(particles);
-
-        var border = document.createElement('div');
-        border.className = 'mp-border';
-
-        var content = document.createElement('div');
-        content.className = 'mp-content';
-
-        var imgWrap = document.createElement('a');
-        imgWrap.className = 'mp-img-wrap';
-        imgWrap.href = POPUP_LINK;
-        imgWrap.target = '_blank';
-        imgWrap.rel = 'noopener';
-
-        var img = document.createElement('img');
-        img.className = 'mp-img';
-        img.src = POPUP_IMAGE;
-        img.alt = 'Mitobet Kampanya';
-        img.draggable = false;
-
-        var closeBtn = document.createElement('button');
-        closeBtn.className = 'mp-close';
-        closeBtn.type = 'button';
-        closeBtn.setAttribute('aria-label', 'Kapat');
-        closeBtn.innerHTML = '&#10005;';
-
-        var closed = false;
-        function closePopup() {
-            if (closed) return;
-            closed = true;
-            overlay.classList.add('mp-closing');
-            box.classList.add('mp-closing');
-            setTimeout(function() {
-                if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
-            }, 320);
-            document.body.dataset.mitoPopupShown = '1';
-        }
-
-        closeBtn.onclick = function(e) { e.stopPropagation(); closePopup(); };
-        overlay.onclick = function(e) { if (e.target === overlay) closePopup(); };
-
-        document.addEventListener('keydown', function onEsc(e) {
-            if (e.key === 'Escape' || e.keyCode === 27) {
-                closePopup();
-                document.removeEventListener('keydown', onEsc);
-            }
-        });
-
-        imgWrap.appendChild(img);
-        content.appendChild(imgWrap);
-        box.appendChild(particles);
-        box.appendChild(border);
-        box.appendChild(content);
-        box.appendChild(closeBtn);
-        overlay.appendChild(box);
-        document.body.appendChild(overlay);
-    }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() { setTimeout(showPopup, POPUP_DELAY); });
-    } else {
-        setTimeout(showPopup, POPUP_DELAY);
     }
 })();

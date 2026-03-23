@@ -49,7 +49,7 @@ const JS_FILES = [
     'active/SCRIPT/mito_tv_button.js',
     'active/SCRIPT/header_extra_buttons.js',
     'active/SCRIPT/footer_marquee.js',
-    'active/SCRIPT/popup.js',
+    // 'active/SCRIPT/popup.js', // deaktif — test basarili, sonra tekrar aktif edilecek
 ];
 
 // ============================================================

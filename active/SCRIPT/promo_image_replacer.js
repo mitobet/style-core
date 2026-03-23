@@ -96,7 +96,6 @@
         `;
         
         document.head.appendChild(style);
-        console.log('✅ Promosyonlar CSS eklendi');
     }
     
     // Görseli değiştir (Responsive) - SADECE büyük butona
@@ -120,7 +119,6 @@
                 promoLink.style.backgroundPosition = 'center center';
                 promoLink.style.backgroundRepeat = 'no-repeat';
                 
-                console.log('✅ Promosyonlar büyük buton görseli değiştirildi:', isMobile ? 'Mobil' : 'Desktop', imageUrl);
             }
         });
     }
