@@ -1,2 +1,14 @@
 node_modules/
 .DS_Store
+
+# Eski/gereksiz klasorler (active/ ve inactive/ yeterli)
+Jojova/
+MITOBET/
+CSS/
+SCRIPT/
+PromoPage/
+Slider_Alt_CSS/
+giris_gorseli/
+pasife/
+slot_oncesi_css/
+yatirim_uyari_sistemi/

@@ -23,9 +23,12 @@
 |-------|-----------|
 | Kod yazma / duzenleme | AI |
 | `node build.js` calistirma | AI |
-| `git add + commit + push` | AI |
-| Hash alma + CDN test kodu verme | AI |
-| Konsol testi (siteye yapistirma) | Kullanici |
+| `node dev-server.js` baslatma | AI |
+| Lokal test kodu verme | AI |
+| Lokal konsol testi (siteye yapistirma) | Kullanici |
+| Lokal test onayi | Kullanici |
+| `git add + commit + push` (onay sonrasi) | AI |
+| Hash alma + CDN test kodu + CMS kodu verme | AI |
 | CMS hash guncellemesi | Kullanici |
 | VERSIONS.md guncelleme | AI |
 
@@ -40,30 +43,51 @@ AI: Kod Yaz / Duzenle (active/ altinda)
 AI: node build.js (bundle uret)
        |
        v
-AI: git add + commit + push
+AI: dev-server baslatir (localhost:3000)
        |
        v
-AI: git rev-parse --short HEAD → HASH al
+AI: Kullaniciya LOKAL test kodu verir
        |
        v
-AI: Kullaniciya kisa CDN test kodu ver (hash ile)
+KULLANICI: Siteyi ac, konsola lokal test kodunu yapistir, test et
        |
        v
-KULLANICI: Siteyi ac, konsola yapistir, test et
-       |
-       v
-Test Basarili mi?
+Lokal Test Basarili mi?
   |           |
  Hayir       Evet
   |           |
   v           v
-AI: Koda   KULLANICI: CMS hash guncelle
+AI: Koda   AI: git add + commit + push
   Don         |
+              v
+           AI: git rev-parse --short HEAD → HASH al
+              |
+              v
+           AI: Kullaniciya CDN test kodu + CMS kodu verir
+              |
+              v
+           KULLANICI: CMS hash guncelle
+              |
               v
            AI: VERSIONS.md'ye kaydet
 ```
 
-**Test icin konsola yapistirilan KOD (kisa, tek satir):**
+### Lokal Test (Oncelikli)
+
+Dev-server uzerinden test yapilir. Push gerekmez, anlik test:
+```bash
+node build.js          # Bundle uret
+node dev-server.js     # localhost:3000 baslat (zaten calisiyorsa tekrar baslatma)
+```
+
+**Lokal test icin konsola yapistirilan KOD:**
+```javascript
+(function(){var s=document.createElement('script');s.src='http://localhost:3000/injector.js?t='+Date.now();document.body.appendChild(s)})();
+```
+
+### CDN Test (Onay sonrasi)
+
+Lokal test onaylaninca push yapilir ve CDN test kodu verilir:
 ```javascript
 (function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/dist/v1/bundle.js';document.body.appendChild(s);var l=document.createElement('link');l.rel='stylesheet';l.href='https://cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/dist/v1/bundle.css';document.head.appendChild(l)})();
 ```
@@ -74,18 +98,21 @@ AI: Koda   KULLANICI: CMS hash guncelle
 ## Kurallar
 
 1. `dist/` repo'ya DAHIL — CDN buradan okur, `.gitignore`'a EKLENMEZ
-2. Test icin GitHub CDN uzerinden yapilir — push et, hash al, kisa CDN kodunu ver
-3. CDN format: `https://cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/dist/v1/bundle.css`
-4. Test onaylanirsa KULLANICI CMS'deki hash'i gunceller
-5. Yeni dosya eklendiginde `build.js` dosya listesi guncellenir
-6. Tum Mitobet islemleri bu pipeline'a uygun yapilir
-7. **HER GUNCELLEME VERSIYONLANIR** — `VERSIONS.md`'ye isim, aciklama, hash ve tarih yazilir
-8. Git commit mesajlari aciklayici olur: ne degisti, neden degisti
-9. `VERSIONS.md` repo'ya dahildir ve her push'ta guncel tutulur
-10. **Uzun kod bloku chat'e ASLA yazilmaz** — test kodu max 3 satir, tek IIFE formatinda
-11. Kullanici "test kodu ver" dediginde KISA CDN test kodu verilir, tum bundle DEGIL
-12. Test kodu formati: `(function(){var s=document.createElement('script');s.src='CDN_URL';...})();`
-13. Her push sonrasi AI kullaniciya hazir CMS kodunu (`<link>` + `<script>`) da verir
+2. **ONCE LOKAL TEST** — Her degisiklik once `localhost:3000` uzerinden test edilir, push yapilmaz
+3. Lokal test icin `node build.js` + `node dev-server.js` calistirilir
+4. Lokal test kodu: `(function(){var s=document.createElement('script');s.src='http://localhost:3000/injector.js?t='+Date.now();document.body.appendChild(s)})();`
+5. Kullanici lokal testi onaylarsa AI `git add + commit + push` yapar
+6. Push sonrasi AI hash alir ve CDN test kodu + CMS kodu verir
+7. CDN format: `https://cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/dist/v1/bundle.css`
+8. Test onaylanirsa KULLANICI CMS'deki hash'i gunceller
+9. Yeni dosya eklendiginde `build.js` dosya listesi guncellenir
+10. Tum Mitobet islemleri bu pipeline'a uygun yapilir
+11. **HER GUNCELLEME VERSIYONLANIR** — `VERSIONS.md`'ye isim, aciklama, hash ve tarih yazilir
+12. Git commit mesajlari aciklayici olur: ne degisti, neden degisti
+13. `VERSIONS.md` repo'ya dahildir ve her push'ta guncel tutulur
+14. **Uzun kod bloku chat'e ASLA yazilmaz** — test kodu max 3 satir, tek IIFE formatinda
+15. Kullanici "test kodu ver" dediginde KISA lokal test kodu verilir, tum bundle DEGIL
+16. Her push sonrasi AI kullaniciya hazir CMS kodunu (`<link>` + `<script>`) da verir
 
 ---
 
@@ -96,7 +123,7 @@ allmito/
   PIPELINE.md              <-- Bu dosya
   VERSIONS.md              <-- Versiyon gecmisi
   build.js                 <-- Bundle uretici
-  dev-server.js            <-- Lokal sunucu (opsiyonel)
+  dev-server.js            <-- Lokal test sunucusu (localhost:3000)
   package.json
   .gitignore
   active/                  <-- AKTIF dosyalar (bundle'a dahil)
@@ -175,7 +202,7 @@ Kullanilmayan ama saklanmasi gereken dosyalar. Gerekirse tekrar aktif edilebilir
 ### Arac Dosyalari
 
 - `build.js` — CSS+JS bundle uretici (`dist/v1/bundle.css` + `dist/v1/bundle.js`)
-- `dev-server.js` — Lokal gelistirme sunucusu (opsiyonel)
+- `dev-server.js` — Lokal gelistirme sunucusu (localhost:3000, lokal test icin zorunlu)
 - `package.json` — Node.js bagimliliklar
 - `PIPELINE.md` — Bu dosya (kurallar ve workflow)
 - `VERSIONS.md` — Versiyon gecmisi
@@ -206,24 +233,31 @@ Kullanilmayan ama saklanmasi gereken dosyalar. Gerekirse tekrar aktif edilebilir
 
 ### KRITIK KURALLAR (AI ICIN)
 
-1. Test kodu SADECE kisa CDN IIFE olarak verilir (1-3 satir max)
+1. **ONCE LOKAL TEST** — degisiklik yapilinca ONCE localhost uzerinden test edilir
 2. Bundle icerigi, uzun kod bloklari chat'e ASLA yazilmaz
-3. Kullanici "test kodu ver" dediginde: push et, hash al, kisa CDN kodunu ver
-4. Her test kodu icin ONCE push yapilmali (CDN güncel hash'i alabilsin)
-5. Test onaylanirsa kullaniciya hazir CMS kodu (`<link>` + `<script>`) verilir
+3. Kullanici "test kodu ver" dediginde: build al, dev-server baslat, lokal test kodu ver
+4. Push SADECE kullanici lokal testi onayladiktan sonra yapilir
+5. Push sonrasi CDN test kodu + CMS kodu verilir
+6. Test onaylanirsa kullaniciya hazir CMS kodu (`<link>` + `<script>`) verilir
 
 ### Test Akisi
 
+**Adim 1 — Lokal Test (push yok):**
 1. AI kodu yazar ve `node build.js` calistirir
-2. AI `git add -A && git commit && git push` yapar
-3. AI `git rev-parse --short HEAD` ile hash alir
-4. AI kullaniciya kisa test kodunu verir:
+2. AI `node dev-server.js` baslatir (zaten calisiyorsa tekrar baslatmaz)
+3. AI kullaniciya lokal test kodunu verir:
 ```javascript
-(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js';document.body.appendChild(s);var l=document.createElement('link');l.rel='stylesheet';l.href='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css';document.head.appendChild(l)})();
+(function(){var s=document.createElement('script');s.src='http://localhost:3000/injector.js?t='+Date.now();document.body.appendChild(s)})();
 ```
-5. Kullanici siteyi acar, konsola yapistir, test eder
-6. Test basarili ise kullanici onaylar
-7. AI `VERSIONS.md`'yi gunceller ve CMS kodunu verir
+4. Kullanici siteyi acar, konsola yapistir, lokal test eder
+5. Sorun varsa AI kodu duzeltir, tekrar build alir (push yok, anlik test)
+
+**Adim 2 — Onay + Push (kullanici onayladiktan sonra):**
+6. Kullanici lokal testi onaylar
+7. AI `git add -A && git commit && git push` yapar
+8. AI `git rev-parse --short HEAD` ile hash alir
+9. AI kullaniciya CDN test kodu + CMS kodu verir
+10. AI `VERSIONS.md`'yi gunceller
 
 ---
 
@@ -248,10 +282,17 @@ Zorunlu alanlar: versiyon, isim, tarih, hash, aciklama, degisiklik listesi.
 
 ## Push ve CMS Guncelleme
 
-### AI Adimlari (Push)
+### AI Adimlari (Lokal Test)
 
 ```bash
-node build.js
+node build.js                 # Bundle uret
+node dev-server.js            # localhost:3000 baslat (zaten calisiyorsa atla)
+# Kullaniciya lokal test kodu ver, onay bekle
+```
+
+### AI Adimlari (Onay Sonrasi Push)
+
+```bash
 git add -A
 git commit -m "aciklayici commit mesaji"
 git push origin main

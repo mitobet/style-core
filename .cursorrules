@@ -8,32 +8,42 @@
 ## Gelistirme Akisi
 1. Kod degisikligi yap (active/ altinda)
 2. `node build.js` calistir
-3. `git add -A && git commit -m "aciklama" && git push origin main`
-4. `git rev-parse --short HEAD` ile hash al
-5. Kullaniciya KISA CDN test kodu ver (asagidaki format)
-6. Test onaylanirsa: VERSIONS.md guncelle + kullaniciya CMS kodu ver
-7. CMS hash guncellemesini KULLANICI yapar
+3. `node dev-server.js` baslat (zaten calisiyorsa tekrar baslatma)
+4. Kullaniciya LOKAL test kodu ver (asagidaki format)
+5. Kullanici lokal test yapar, onaylarsa:
+6. `git add -A && git commit -m "aciklama" && git push origin main`
+7. `git rev-parse --short HEAD` ile hash al
+8. Kullaniciya CDN test kodu + CMS kodu ver
+9. VERSIONS.md guncelle
+10. CMS hash guncellemesini KULLANICI yapar
 
-## Test Kodu Formati
-Her zaman su formatta, HASH doldurulmus:
+## Lokal Test Kodu Formati
+Her degisiklikte ONCE lokal test yapilir (push YAPILMAZ):
+```
+(function(){var s=document.createElement('script');s.src='http://localhost:3000/injector.js?t='+Date.now();document.body.appendChild(s)})();
+```
+
+## CDN Test Kodu Formati
+Lokal test onaylanip push yapildiktan sonra, HASH doldurulmus:
 ```
 (function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js';document.body.appendChild(s);var l=document.createElement('link');l.rel='stylesheet';l.href='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css';document.head.appendChild(l)})();
 ```
 
 ## CMS Kodu Formati
-Test onaylaninca kullaniciya verilecek:
+Push sonrasi kullaniciya verilecek:
 ```
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css">
 <script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js"></script>
 ```
 
 ## Kesin Kurallar
+- **ONCE LOKAL TEST** — push SADECE kullanici onayladiktan sonra yapilir
 - dist/ repo'ya DAHIL (gitignore'da DEGIL) — CDN buradan okur
 - Uzun kod blogu chat'e ASLA yazilmaz — test kodu max 3 satir
-- "Test kodu ver" = kisa CDN IIFE, bundle icerigi DEGIL
+- "Test kodu ver" = lokal injector IIFE, bundle icerigi DEGIL
 - Her guncelleme VERSIONS.md'ye kaydedilir (isim, hash, tarih, degisiklikler)
 - PIPELINE.md'deki "Son aktif CDN hash" test onayindan sonra guncellenir
-- inject.js YOK — tum testler GitHub CDN uzerinden
+- dev-server.js zorunlu — lokal test icin kullanilir
 
 ## Kod Standartlari
 - CSS: Bootstrap 5.3.2 uyumlu, !important ile override
