@@ -1,0 +1,141 @@
+/* =====================================================
+   MITOBET - Mobil Alt Bar (Tabbar/Lowbar)
+   Site temasına uygun renk güncellemesi
+   Arka plan: #181818 | Altın: #CFAE6D
+   ===================================================== */
+
+/* Ana container - tek renk */
+#tabbar,
+.lowbar,
+#tabbar *,
+.lowbar * {
+    background-color: #181818 !important;
+    background-image: none !important;
+}
+
+#tabbar,
+.lowbar {
+    border-top: 1px solid rgba(207, 174, 109, 0.15) !important;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Nav container */
+#tabbar nav,
+.lowbar nav {
+    background: #181818 !important;
+}
+
+/* Ortadaki logo butonu */
+#tabbar nav > *:nth-child(3),
+.lowbar nav > *:nth-child(3),
+#tabbar nav [class*="logo"],
+#tabbar nav [class*="center"],
+.lowbar nav [class*="logo"],
+.lowbar nav [class*="center"] {
+    background: transparent !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Tüm nav linkleri / butonları */
+#tabbar nav a,
+#tabbar nav button,
+#tabbar nav > *,
+.lowbar nav a,
+.lowbar nav button,
+.lowbar nav > * {
+    color: #CFAE6D !important;
+    opacity: 0.7 !important;
+    transition: all 0.2s ease !important;
+    background: transparent !important;
+}
+
+/* Aktif durum */
+#tabbar nav a.active,
+#tabbar nav button.active,
+#tabbar nav > *.active,
+.lowbar nav a.active,
+.lowbar nav button.active,
+.lowbar nav > *.active,
+#tabbar nav a[class*="active"],
+.lowbar nav a[class*="active"] {
+    color: #e9c37a !important;
+    opacity: 1 !important;
+}
+
+/* Hover */
+#tabbar nav a:hover,
+#tabbar nav button:hover,
+.lowbar nav a:hover,
+.lowbar nav button:hover {
+    color: #e9c37a !important;
+    opacity: 1 !important;
+}
+
+/* SVG ikonları */
+#tabbar svg,
+#tabbar .svg-icon,
+.lowbar svg,
+.lowbar .svg-icon {
+    fill: #CFAE6D !important;
+    color: #CFAE6D !important;
+    background: transparent !important;
+}
+
+#tabbar .active svg,
+#tabbar a.active svg,
+.lowbar .active svg,
+.lowbar a.active svg,
+#tabbar [class*="active"] svg,
+.lowbar [class*="active"] svg {
+    fill: #e9c37a !important;
+    color: #e9c37a !important;
+}
+
+/* Yazı rengi */
+#tabbar span,
+#tabbar label,
+.lowbar span,
+.lowbar label {
+    color: inherit !important;
+    background: transparent !important;
+}
+
+/* Ortadaki logo img */
+#tabbar img,
+.lowbar img {
+    background: transparent !important;
+}
+
+/* Ortadaki animasyonlu logo (inner-menu) */
+#tabbar .inner-menu,
+.lowbar .inner-menu {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+}
+
+#tabbar .inner-menu .icon,
+.lowbar .inner-menu .icon,
+#tabbar .inner-menu .icon.plus,
+.lowbar .inner-menu .icon.plus {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 48px !important;
+    height: 48px !important;
+    margin: 0 auto !important;
+    background: transparent !important;
+}
+
+#tabbar .inner-menu .icon img,
+.lowbar .inner-menu .icon img {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    margin: 0 auto !important;
+    display: block !important;
+    background: transparent !important;
+}

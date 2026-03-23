@@ -1,0 +1,58 @@
+/* Main Slider Border & Skeleton Effects */
+
+/* Skeleton Loading Animasyonu */
+@keyframes shimmerMain {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Slider Container Ayarları */
+#main-slider .slide {
+  position: relative !important;
+  overflow: hidden !important;
+  border-radius: 12px !important; /* Varsayılan radius */
+  z-index: 1 !important;
+  
+  /* 4. Skeleton Loading Background */
+  background: linear-gradient(90deg, #1a1a1a 25%, #252525 50%, #1a1a1a 75%) !important;
+  background-size: 200% 100% !important;
+  animation: shimmerMain 1.5s infinite linear !important;
+}
+
+/* 3. Inner Shadow (Derinlik Efekti) */
+#main-slider .slide::after {
+  content: "" !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  /* Hafif iç gölge ve alt kısımdan yukarı doğru karartma */
+  box-shadow: inset 0 0 20px rgba(0,0,0,0.2), inset 0 -50px 60px rgba(0,0,0,0.5) !important;
+  pointer-events: none !important;
+  z-index: 2 !important; /* Resmin üzerinde */
+  border-radius: 12px !important;
+  transition: box-shadow 0.3s ease !important;
+}
+
+/* Resim Ayarları */
+#main-slider .slide img.slide-image {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Hover Durumu */
+#main-slider .slide:hover {
+  /* Hover'da skeleton dursun (gerçi resim varken görünmez ama) */
+  animation: none !important;
+}
+
+#main-slider .slide:hover::after {
+  /* Hover'da gölgeyi biraz hafiflet */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1), inset 0 -30px 40px rgba(0,0,0,0.3) !important;
+}
+

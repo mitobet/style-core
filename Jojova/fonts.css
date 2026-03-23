@@ -1,0 +1,108 @@
+/* Jojova Genel Font Tanımları */
+/* Google Fonts yükleme - Commissioner, Inter, Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Commissioner:wght,VOLM@100..900,37&family=Inter:opsz,wght@14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Root font tanımları */
+:root {
+    --jojova-font-primary: 'Poppins', 'Inter', sans-serif;
+    --jojova-font-secondary: 'Inter', 'Poppins', sans-serif;
+    --jojova-font-display: 'Commissioner', 'Poppins', sans-serif;
+    --jojova-font-heading: 'Poppins', 'Commissioner', sans-serif;
+}
+
+/* Genel font uygulama */
+* {
+    font-family: var(--jojova-font-primary) !important;
+}
+
+body {
+    font-family: var(--jojova-font-primary) !important;
+}
+
+/* Başlık fontları için özel tanımlar */
+h1, h2, h3, h4, h5, h6,
+.title, .heading, .banner-title, .welcome-title,
+.payment-title, .feature-title, .sport-title {
+    font-family: var(--jojova-font-heading) !important;
+}
+
+/* Display başlıklar için Commissioner */
+.display-title, .hero-title, .main-title,
+.welcome-title-white, .welcome-title-orange {
+    font-family: var(--jojova-font-display) !important;
+}
+
+/* Buton ve UI elementleri */
+button, .btn, .button,
+input, select, textarea,
+.form-control, .form-input {
+    font-family: var(--jojova-font-primary) !important;
+}
+
+/* Sidebar özel fontları */
+.sidebar__title,
+.crypto-link__title {
+    font-family: var(--jojova-font-heading) !important;
+}
+
+.crypto-link__subtitle,
+.sidebar__link,
+.sidebar__text {
+    font-family: var(--jojova-font-secondary) !important;
+}
+
+/* Menü ve navigasyon */
+.nav, .menu, .navigation,
+.sidebar__nav, .header__nav {
+    font-family: var(--jojova-font-secondary) !important;
+}
+
+/* Font weight eşlemeleri */
+/* Normal -> 400, Bold -> 700 */
+.font-thin { font-weight: 100 !important; }
+.font-extralight { font-weight: 200 !important; }
+.font-light { font-weight: 300 !important; }
+.font-normal, .font-regular { font-weight: 400 !important; }
+.font-medium { font-weight: 500 !important; }
+.font-semibold { font-weight: 600 !important; }
+.font-bold, .bold { font-weight: 700 !important; }
+.font-extrabold { font-weight: 800 !important; }
+.font-black { font-weight: 900 !important; }
+
+/* Mevcut font-weight'leri override et */
+[style*="font-weight"] {
+    font-family: var(--jojova-font-primary) !important;
+}
+
+/* Gilroy kullanan elementleri yakala */
+[style*="Gilroy"],
+[class*="gilroy"],
+.gilroy {
+    font-family: var(--jojova-font-primary) !important;
+}
+
+/* Özel kullanım alanları */
+.subtitle, .description, .content-text {
+    font-family: var(--jojova-font-secondary) !important;
+}
+
+.label, .caption, .small-text {
+    font-family: var(--jojova-font-secondary) !important;
+    font-weight: 400 !important;
+}
+
+/* Responsive font boyutları korunur */
+@media (max-width: 768px) {
+    * {
+        font-family: var(--jojova-font-primary) !important;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--jojova-font-heading) !important;
+    }
+    
+    .welcome-title-white,
+    .welcome-title-orange {
+        font-family: var(--jojova-font-display) !important;
+    }
+}

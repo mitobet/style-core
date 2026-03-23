@@ -1,0 +1,219 @@
+/* Promosyon Butonları Stil Dosyası */
+.category-grid-wrapper {
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.category-grid {
+    grid-gap: 16px;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+}
+
+.category-tile {
+    align-items: center;
+    background: linear-gradient(135deg, #000000 0%, #111111 50%, #000000 100%);
+    border-bottom: 3px solid transparent;
+    border: 1px solid #333333;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    height: 80px;
+    opacity: 0.8;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.category-tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, rgba(255, 229, 92, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-tile:hover {
+    background: linear-gradient(135deg, #111111 0%, #222222 50%, #111111 100%);
+    border-color: #FFE55C;
+    opacity: 1;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 229, 92, 0.2);
+}
+
+.category-tile:hover::before {
+    opacity: 1;
+}
+
+.category-tile.active {
+    background: linear-gradient(135deg, #111111 0%, #1a1a1a 50%, #111111 100%);
+    border-bottom: 3px solid #FFE55C;
+    border-color: #FFE55C;
+    opacity: 1;
+    box-shadow: 0 0 20px rgba(255, 229, 92, 0.3);
+}
+
+.category-image {
+    flex-shrink: 0;
+    height: 80px;
+    width: 80px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px 0 0 8px;
+}
+
+.category-image img {
+    display: block;
+    height: 100%;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    object-fit: cover;
+    width: 100%;
+    transition: transform 0.3s ease;
+}
+
+.category-tile:hover .category-image img {
+    transform: scale(1.1);
+}
+
+.category-info {
+    align-items: center;
+    display: flex;
+    flex: 1 1;
+    justify-content: space-between;
+    padding: 0 16px;
+}
+
+.category-title {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.category-tile:hover .category-title {
+    color: #FFE55C;
+    text-shadow: 0 0 10px rgba(255, 229, 92, 0.3);
+}
+
+.category-tile.active .category-title {
+    color: #FFE55C;
+    text-shadow: 0 0 10px rgba(255, 229, 92, 0.4);
+}
+
+.category-arrow {
+    color: #888888;
+    flex-shrink: 0;
+    font-size: 28px;
+    margin-left: 8px;
+    transition: all 0.3s ease;
+}
+
+.category-tile.active .category-arrow {
+    color: #FFE55C;
+    text-shadow: 0 0 10px rgba(255, 229, 92, 0.5);
+}
+
+.category-tile:hover .category-arrow {
+    color: #FFE55C;
+    transform: translateX(4px);
+    text-shadow: 0 0 10px rgba(255, 229, 92, 0.5);
+}
+
+/* Mobil Uyumluluk */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    
+    .category-tile {
+        height: 70px;
+        margin: 0 5px;
+    }
+    
+    .category-image {
+        height: 70px;
+        width: 70px;
+    }
+    
+    .category-title {
+        font-size: 18px;
+    }
+    
+    .category-arrow {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-grid-wrapper {
+        padding: 15px 0;
+    }
+    
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+    
+    .category-tile {
+        height: 60px;
+        margin: 0 3px;
+    }
+    
+    .category-image {
+        height: 60px;
+        width: 60px;
+    }
+    
+    .category-info {
+        padding: 0 12px;
+    }
+    
+    .category-title {
+        font-size: 16px;
+    }
+    
+    .category-arrow {
+        font-size: 22px;
+    }
+}
+
+/* Animasyonlar */
+@keyframes promoPulse {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(255, 229, 92, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(255, 229, 92, 0.5);
+    }
+}
+
+.category-tile.active {
+    animation: promoPulse 2s ease-in-out infinite;
+}
+
+/* Özel durumlar için ek stiller */
+.category-tile.premium {
+    border: 2px solid #FFE55C;
+    background: linear-gradient(135deg, #1a1a00 0%, #2a2a00 50%, #1a1a00 100%);
+}
+
+.category-tile.premium::after {
+    content: '★';
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #FFE55C;
+    font-size: 16px;
+    text-shadow: 0 0 10px rgba(255, 229, 92, 0.8);
+} 

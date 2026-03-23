@@ -1,0 +1,102 @@
+/* =====================================================
+   MITOBET - Para Yatır / Para Çek / Kripto Tabları
+   Site renkleri: #CFAE6D, #181818
+   ===================================================== */
+
+/* Ana sayfa tabs (#tabs-nav) */
+#tabs-nav.nav.nav-tabs.tabs-nav,
+ul#tabs-nav.nav.nav-tabs.tabs-nav {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(207, 174, 109, 0.25) !important;
+    gap: 4px !important;
+    padding: 0 !important;
+}
+
+#tabs-nav .nav-link,
+#tabs-nav .nav-item .nav-link,
+#tabs-nav [role="tab"] {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    padding: 10px 16px !important;
+    font-weight: 500 !important;
+    transition: all 0.25s ease !important;
+}
+
+#tabs-nav .nav-link:hover,
+#tabs-nav .nav-item .nav-link:hover {
+    color: #CFAE6D !important;
+    background: rgba(207, 174, 109, 0.08) !important;
+    border-color: rgba(207, 174, 109, 0.3) !important;
+}
+
+#tabs-nav .nav-link.active,
+#tabs-nav .nav-item .nav-link.active,
+#tabs-nav [role="tab"][aria-selected="true"] {
+    color: #CFAE6D !important;
+    background: rgba(207, 174, 109, 0.12) !important;
+    border-color: #CFAE6D !important;
+}
+
+/* Wallet modal içi tablar */
+#wallet-modal .nav.nav-tabs.tabs-nav,
+#wallet-modal .tabs-nav {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(207, 174, 109, 0.25) !important;
+    gap: 4px !important;
+    padding: 0 !important;
+}
+
+#wallet-modal .tabs-nav .nav-link,
+#wallet-modal .tabs-nav .nav-item .nav-link,
+#wallet-modal .tabs-nav [role="tab"] {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    padding: 10px 16px !important;
+    font-weight: 500 !important;
+    transition: all 0.25s ease !important;
+}
+
+#wallet-modal .tabs-nav .nav-link:hover,
+#wallet-modal .tabs-nav .nav-item .nav-link:hover {
+    color: #CFAE6D !important;
+    background: rgba(207, 174, 109, 0.08) !important;
+    border-color: rgba(207, 174, 109, 0.3) !important;
+}
+
+#wallet-modal .tabs-nav .nav-link.active,
+#wallet-modal .tabs-nav .nav-item .nav-link.active,
+#wallet-modal .tabs-nav [role="tab"][aria-selected="true"] {
+    color: #CFAE6D !important;
+    background: rgba(207, 174, 109, 0.12) !important;
+    border-color: #CFAE6D !important;
+}
+
+/* Mobil */
+@media (max-width: 767px) {
+    #tabs-nav.nav.nav-tabs.tabs-nav,
+    ul#tabs-nav {
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        padding: 4px 0 !important;
+    }
+
+    #tabs-nav .nav-link,
+    #tabs-nav .nav-item .nav-link,
+    #tabs-nav [role="tab"] {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+
+    #wallet-modal .tabs-nav .nav-link,
+    #wallet-modal .tabs-nav .nav-item .nav-link,
+    #wallet-modal .tabs-nav [role="tab"] {
+        padding: 8px 12px !important;
+        font-size: 13px !important;
+    }
+}

@@ -1,0 +1,19 @@
+/* Modal Sign Image Düzeltme CSS */
+.modal__sign-img img {
+    object-fit: contain !important; /* none'u deaktif et - kesilmesin */
+    height: auto !important;
+    position: relative !important; /* absolute yerine */
+    margin: 0 auto !important; /* Ortala */
+    display: block !important;
+    left: auto !important;
+    top: auto !important;
+    transform: none !important;
+}
+
+/* Container ortalama */
+.modal__sign-img {
+    text-align: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+} 

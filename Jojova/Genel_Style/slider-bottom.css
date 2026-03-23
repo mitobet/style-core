@@ -1,0 +1,87 @@
+/* Slider Bottom Styles */
+.slider-bottom-container {
+    max-width: 1440px !important;
+    margin: 0 auto;
+  
+}
+
+.slider-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    width: 100%;
+}
+
+.slider-bottom-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    aspect-ratio: 640/251;
+    height: auto;
+    z-index: 1;
+}
+
+.slider-bottom-item:hover {
+    z-index: 10;
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+.slider-bottom-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    object-position: center;
+}
+
+/* Geniş ekranlar için limitler */
+@media (min-width: 1200px) {
+    .slider-bottom-item {
+        max-height: 280px;
+    }
+}
+
+@media (min-width: 1600px) {
+    .slider-bottom-item {
+        max-height: 320px;
+    }
+}
+
+@media (max-width: 768px) {
+    .slider-bottom-container {
+        max-width: 100% !important;
+        padding: 10px;
+    }
+    
+    .slider-bottom-grid {
+        grid-template-columns: 1fr;
+        gap: -10px;
+        width: 100%;
+    }
+    
+    .slider-bottom-item {
+        aspect-ratio: 500/180;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        overflow: visible;
+        position: relative;
+        z-index: 1;
+        margin-bottom: -20px;
+    }
+    
+    /* En alttaki (4. görsel) en üstte görünmesi için */
+    .slider-bottom-item:nth-child(4) {
+        z-index: 10;
+    }
+    
+    .slider-bottom-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+}

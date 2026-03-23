@@ -1,0 +1,55 @@
+/* COMM100 Widget Pozisyon Ayarları - Desktop */
+/* Inline style ile eklenen butonlar için genel kural */
+div[style*="z-index: 2147483642"] {
+    right: 0 !important;
+    bottom: 1% !important;
+}
+div[style*="z-index: 2147483642"] img {
+    transform: scale(0.7) !important; /* %30 küçültme */
+}
+
+@media (min-width: 769px) {
+    /* COMM100 float button container'ını bul ve pozisyonunu ayarla */
+    #comm100-float-button-cf22035f-9040-4c87-aead-e206f7b7bb69-2,
+    [id*="comm100-float-button"] {
+        right: 0 !important;
+        bottom: 1% !important;
+        position: fixed !important;
+        z-index: 2147483642 !important;
+    }
+    
+    /* Inline style'ı override etmek için daha spesifik selector */
+    div[id*="comm100-float-button"] div[style*="position: fixed"] {
+        right: 0 !important;
+    }
+    
+    /* COMM100 chat button'ının kendisi */
+    #comm100-float-button-cf22035f-9040-4c87-aead-e206f7b7bb69-2 a,
+    [id*="comm100-float-button"] a {
+        position: relative !important;
+    }
+    
+    /* COMM100 chat button image */
+    #comm100-float-button-cf22035f-9040-4c87-aead-e206f7b7bb69-2 img,
+    [id*="comm100-float-button"] img,
+    div[style*="position: fixed"][style*="z-index: 2147483642"] img {
+        border: none !important;
+        transform: scale(0.7) !important; /* %30 küçültme */
+    }
+}
+
+/* Mobile'da varsayılan pozisyonu koru */
+@media (max-width: 768px) {
+    #comm100-float-button-cf22035f-9040-4c87-aead-e206f7b7bb69-2,
+    [id*="comm100-float-button"] {
+        right: 0 !important;
+        bottom: 1% !important;
+    }
+    
+    /* Mobile için de %30 küçültme */
+    #comm100-float-button-cf22035f-9040-4c87-aead-e206f7b7bb69-2 img,
+    [id*="comm100-float-button"] img,
+    div[style*="position: fixed"][style*="z-index: 2147483642"] img {
+        transform: scale(0.7) !important; /* %30 küçültme */
+    }
+}

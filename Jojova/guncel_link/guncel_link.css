@@ -1,0 +1,185 @@
+/* Güncel Link Bileşeni CSS */
+.guncel-link-container {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.1) 0%, rgba(255, 193, 0, 0.05) 100%);
+    border: 2px solid rgba(255, 229, 92, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(255, 229, 92, 0.15);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.guncel-link-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(255, 229, 92, 0.25);
+    border-color: rgba(255, 229, 92, 0.4);
+}
+
+/* Shine efekti */
+.guncel-link-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+    transition: transform 0.6s ease;
+    pointer-events: none;
+}
+
+.guncel-link-container:hover::before {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+}
+
+/* İçerik wrapper */
+.guncel-link-content {
+    position: relative;
+    z-index: 2;
+}
+
+/* Başlık */
+.guncel-link-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--tf-tc);
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #FFE55C 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Açıklama */
+.guncel-link-description {
+    font-size: 1.1rem;
+    color: var(--tf-tc2);
+    margin-bottom: 15px;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+/* Link kutusu */
+.guncel-link-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 229, 92, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #FFE55C;
+    text-shadow: 0 0 10px rgba(255, 229, 92, 0.5);
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+.guncel-link-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.1), transparent);
+    animation: linkShine 3s infinite;
+}
+
+@keyframes linkShine {
+    0% { left: -100%; }
+    50% { left: 100%; }
+    100% { left: 100%; }
+}
+
+/* Uyarı ikonu */
+.guncel-link-warning {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: #FFE55C;
+    border-radius: 50%;
+    margin-right: 8px;
+    position: relative;
+    animation: pulse 2s infinite;
+}
+
+.guncel-link-warning::before {
+    content: '!';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+@keyframes pulse {
+    0%, 100% { 
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% { 
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+/* Dark mode uyumluluğu */
+@media (prefers-color-scheme: dark) {
+    .guncel-link-container {
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 193, 0, 0.04) 100%);
+        border-color: rgba(255, 229, 92, 0.3);
+    }
+    
+    .guncel-link-box {
+        background: rgba(0, 0, 0, 0.3);
+        border-color: rgba(255, 229, 92, 0.4);
+    }
+}
+
+/* Mobil responsive */
+@media (max-width: 768px) {
+    .guncel-link-container {
+        margin: 15px auto;
+        padding: 15px;
+        border-radius: 12px;
+    }
+    
+    .guncel-link-title {
+        font-size: 1.5rem;
+    }
+    
+    .guncel-link-description {
+        font-size: 1rem;
+    }
+    
+    .guncel-link-box {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .guncel-link-container {
+        margin: 10px auto;
+        padding: 12px;
+    }
+    
+    .guncel-link-title {
+        font-size: 1.3rem;
+    }
+    
+    .guncel-link-box {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+}

@@ -1,0 +1,188 @@
+/* =====================================================
+   MITOBET - Hide CSS
+   Gizlenecek elementler & Modal Düzeltmeleri
+   ===================================================== */
+
+/* ——— Modal Görsel Gizle (Giriş/Kayıt) ——— */
+.modal__sign-img,
+.modal__content .modal__sign-img,
+#signin-modal .modal__sign-img,
+#signup-modal .modal__sign-img {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    visibility: hidden !important;
+}
+
+/* ——— Giriş Modal - Büyük & Ortalı ——— */
+#signin-modal .modal-dialog {
+    max-width: 500px !important;
+    margin: auto !important;
+}
+
+#signin-modal .modal__content {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 30px 40px !important;
+}
+
+#signin-modal .modal__head {
+    text-align: center !important;
+    justify-content: center !important;
+    margin-bottom: 20px !important;
+}
+
+#signin-modal .modal__title {
+    text-align: center !important;
+    width: 100% !important;
+}
+
+#signin-modal .modal__form {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+#signin-modal .form__group {
+    margin-bottom: 20px !important;
+}
+
+#signin-modal .form__input {
+    width: 100% !important;
+    padding: 14px 16px !important;
+}
+
+#signin-modal .form__btn {
+    width: 100% !important;
+    margin-top: 10px !important;
+}
+
+#signin-modal .form__text {
+    text-align: center !important;
+    margin-top: 15px !important;
+}
+
+/* ——— Kayıt Modal - Büyük & Ortalı ——— */
+#signup-modal .modal-dialog {
+    max-width: 520px !important;
+    margin: auto !important;
+}
+
+#signup-modal .modal__content {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    padding: 25px 35px !important;
+}
+
+#signup-modal .modal__head {
+    text-align: center !important;
+    margin-bottom: 15px !important;
+}
+
+#signup-modal .modal__title {
+    text-align: left !important;
+}
+
+#signup-modal .modal__form {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+#signup-modal .form__group {
+    margin-bottom: 16px !important;
+}
+
+#signup-modal .form__input {
+    width: 100% !important;
+    padding: 12px 14px !important;
+}
+
+#signup-modal .form__btn {
+    width: 100% !important;
+    margin-top: 15px !important;
+}
+
+#signup-modal .form__text {
+    text-align: center !important;
+    margin-top: 12px !important;
+}
+
+/* ——— Her iki modal için ortak ——— */
+#signin-modal .modal__close,
+#signup-modal .modal__close {
+    position: absolute !important;
+    top: 20px !important;
+    right: 20px !important;
+    z-index: 100 !important;
+}
+
+#signin-modal .form__delimiter,
+#signup-modal .form__delimiter {
+    text-align: center !important;
+    margin: 15px 0 !important;
+}
+
+/* ——— Kayıt Modal Row/Col Fix ——— */
+#signup-modal .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+}
+
+#signup-modal [class*="col-"] {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+}
+
+/* Telefon numarası fix */
+#signup-modal .form__group,
+#signup-modal .setting__form,
+#signup-modal [class*="setting"] {
+    width: 100% !important;
+    padding: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+#signup-modal .form__group .row {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 12px !important;
+}
+
+/* Doğum tarihi ve referans kodu yan yana */
+#signup-modal .form__group .row > [class*="col-6"],
+#signup-modal .form__group .row > .col-12.col-xl-6 {
+    flex: 0 0 calc(50% - 6px) !important;
+    max-width: calc(50% - 6px) !important;
+    width: calc(50% - 6px) !important;
+}
+
+/* Modal content position relative + Arka plan rengi */
+#signin-modal .modal-content,
+#signup-modal .modal-content,
+.modal-content {
+    position: relative !important;
+    background: #181818 !important;
+    background-color: #181818 !important;
+}
+
+#signin-modal .modal__content,
+#signup-modal .modal__content,
+.modal__content {
+    background: #181818 !important;
+    background-color: #181818 !important;
+}
+
+/* Modal head flex düzeltme */
+#signup-modal .modal__head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 20px !important;
+    padding-right: 50px !important;
+}

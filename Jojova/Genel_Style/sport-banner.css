@@ -1,0 +1,318 @@
+.banner-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 15px auto;
+    padding: 0 20px 20px 20px;
+    /* overflow: hidden; */
+    background: transparent;
+}
+
+.banner-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    min-height: 280px;
+}
+
+.banner-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 50%;
+}
+
+.banner-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    max-width: 50%;
+}
+
+.players-image {
+    width: 120%;
+    max-width: 750px;
+    height: auto;
+    object-fit: contain;
+    margin-left: -50px;
+}
+
+.banner-text-wrapper {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.banner-background {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: auto;
+    height: 100%;
+}
+
+.blue-effect-image {
+    width: 200px;
+    height: auto;
+    opacity: 0.8;
+}
+
+.banner-text {
+    position: relative;
+    z-index: 1;
+}
+
+.banner-title {
+    color: #FFFFFF;
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    line-height: 1.1;
+}
+
+@media (max-width: 768px) {
+    .banner-title {
+        font-size: 1.8rem;
+    }
+
+    .banner-subtitle {
+        font-size: 1.8rem !important;
+    }
+}
+
+.banner-subtitle {
+    background: linear-gradient(to right,
+            #FFE55C 0%,
+            #FFA500 29%,
+            #FFE55C 68%,
+            #FFDF00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-top: -10px;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+    background-size: 200% auto;
+    animation:
+        pulsatingBetPrompt 2.5s ease-in-out infinite,
+        gradientFlow 2s linear infinite;
+    padding: 0 5px;
+    line-height: 1.1;
+}
+
+@keyframes pulsatingBetPrompt {
+
+    0%,
+    100% {
+        transform: scale(1);
+        text-shadow: 0 2px 10px rgba(255, 229, 92, 0.3);
+    }
+
+    50% {
+        transform: scale(1.03);
+        text-shadow: 0 4px 20px rgba(255, 165, 0, 0.6);
+    }
+}
+
+@keyframes gradientFlow {
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: -200% center;
+    }
+}
+
+.sports-buttons {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 15px;
+    background: linear-gradient(to right,
+            #000000 0%,
+            #111111 29%,
+            #000000 68%,
+            #222222 100%);
+    border-radius: 8px;
+    border: 2px solid #FFE55C;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.sports-buttons:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.sports-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.sports-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 229, 92, 0.3) 0%, transparent 70%);
+    transition: all 0.4s ease;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.sports-button:hover::before {
+    width: 100%;
+    height: 100%;
+}
+
+.sports-button:hover {
+    transform: scale(1.05);
+    color: #FFE55C;
+}
+
+.sports-button:hover .sports-icon {
+    transform: scale(1.1) rotate(5deg);
+    filter: brightness(1.2);
+}
+
+.sports-icon {
+    transition: all 0.3s ease;
+}
+
+.sports-icon {
+    width: 28px;
+    height: 28px;
+}
+
+.separator {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+@media (max-width: 768px) {
+    .banner-container {
+        padding: 15px;
+        max-width: 100%;
+        margin: 0.2rem auto 10px auto;
+        overflow-x: hidden;
+        background: rgba(0, 0, 0, 0.9);
+        border: 1px solid rgba(255, 229, 92, 0.3);
+        box-shadow: 0 4px 15px rgba(255, 229, 92, 0.2);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 12px;
+    }
+
+    .banner-content {
+        flex-direction: column-reverse;
+        gap: 0.8rem;
+        min-height: auto;
+        width: 100%;
+    }
+
+    .banner-title {
+        font-size: 1.6rem;
+        margin-bottom: 0.3rem;
+        line-height: 1.1;
+    }
+
+    .banner-subtitle {
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
+        line-height: 1.1;
+    }
+
+    .banner-right {
+        width: 100%;
+        overflow: hidden;
+        max-width: 100%;
+    }
+
+    .banner-left {
+        width: 100%;
+        text-align: center;
+        padding: 0 5px;
+        max-width: 100%;
+    }
+
+    .sports-buttons {
+        margin: 0 auto;
+        width: calc(100% - 10px);
+        max-width: 100%;
+        padding: 6px 8px;
+        gap: 2px;
+        overflow: visible;
+        border: 0.7px solid #FFE55C !important;
+        background: rgba(0, 0, 0, 0.8) !important;
+        border-radius: 8px;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        display: flex !important;
+    }
+
+    .sports-button {
+        padding: 4px 6px;
+        gap: 3px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        flex: 1 1 auto;
+        min-width: 0;
+        justify-content: center;
+        display: flex !important;
+        align-items: center !important;
+    }
+
+    .sports-button span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 0.75rem;
+        line-height: 1;
+    }
+
+    .sports-icon {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    .separator {
+        margin: 0 1px;
+        flex-shrink: 0;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .players-image {
+        max-height: 150px;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 100%;
+        object-fit: cover;
+    }
+
+    .banner-text-wrapper {
+        width: 100%;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+}

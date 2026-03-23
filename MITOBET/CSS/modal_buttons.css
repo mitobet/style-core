@@ -1,0 +1,52 @@
+/* =====================================================
+   MITOBET - Modal Giriş/Kayıt Butonları
+   İkisi de solid altın gradient
+   ===================================================== */
+
+/* Ortak stil */
+#signin-modal .form__btn,
+#signup-modal .form__btn {
+    background: linear-gradient(135deg, #CFAE6D 0%, #b8973d 100%) !important;
+    background-image: linear-gradient(135deg, #CFAE6D 0%, #b8973d 100%) !important;
+    border: none !important;
+    color: #000 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    border-radius: 8px !important;
+    transition: all 0.25s ease !important;
+    position: relative !important;
+    overflow: hidden !important;
+}
+
+#signin-modal .form__btn:hover,
+#signup-modal .form__btn:hover {
+    background: linear-gradient(135deg, #e9c37a 0%, #CFAE6D 100%) !important;
+    background-image: linear-gradient(135deg, #e9c37a 0%, #CFAE6D 100%) !important;
+    box-shadow: 0 4px 18px rgba(207, 174, 109, 0.35) !important;
+    transform: translateY(-1px) !important;
+    color: #000 !important;
+}
+
+#signin-modal .form__btn:active,
+#signup-modal .form__btn:active {
+    transform: translateY(0) scale(0.98) !important;
+}
+
+/* Sweep efekti */
+#signin-modal .form__btn::before,
+#signup-modal .form__btn::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: -100% !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent) !important;
+    transition: left 0.5s ease !important;
+    pointer-events: none !important;
+}
+
+#signin-modal .form__btn:hover::before,
+#signup-modal .form__btn:hover::before {
+    left: 100% !important;
+}

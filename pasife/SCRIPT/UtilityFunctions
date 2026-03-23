@@ -1,0 +1,60 @@
+<script type="text/javascript">
+// UtilityFunctions.js - Yardımcı Fonksiyonlar
+
+// Mini slider'ı gizle
+function hideMiniSlider() {
+  const el = document.getElementById('mini-slider-wrapper');
+  if (el) el.style.display = 'none';
+}
+
+// Mini slider'ı kopyalayıp #extra-slider2 içine yerleştir
+function SliderMove() {
+  const slider  = document.getElementById('mini-slider-wrapper');
+  const wrapper = document.getElementById('extra-slider2');
+  if (!slider || !wrapper) return;
+
+  slider.style.display = 'none';                // orijinali gizle
+  const clone = slider.cloneNode(true);         // kopya oluştur
+  clone.id = 'mini-slider-wrapper2';
+  clone.style.display = 'block';
+
+  wrapper.classList.add('section');
+  wrapper.innerHTML = '';                       // hedefi temizle
+  wrapper.appendChild(clone);                   // kopyayı ekle
+
+  // İlgili CSS kurallarını kopyala (CORS erişilebilir olanlardan)
+  if (!document.getElementById('mini-slider-style-dup')) {
+    const style = document.createElement('style');
+    style.id = 'mini-slider-style-dup';
+    style.textContent = collectRules('#mini-slider-wrapper').replace(/#mini-slider-wrapper/g, '#mini-slider-wrapper2');
+    document.head.appendChild(style);
+  }
+}
+
+// CSS kurallarını mevcut stillerden topla (CORS engellilerini atlar)
+function collectRules(selector) {
+  let cssText = '';
+  for (const sheet of document.styleSheets) {
+    try {
+      for (const rule of sheet.cssRules) {
+        if (rule.selectorText && rule.selectorText.includes(selector)) cssText += rule.cssText + '\n';
+        else if (rule.cssRules) {
+          for (const sub of rule.cssRules) {
+            if (sub.selectorText && sub.selectorText.includes(selector)) cssText += `@media ${rule.conditionText}{${sub.cssText}}\n`;
+          }
+        }
+      }
+    } catch { /* CORS erişilemeyen stil dosyası */ }
+  }
+  return cssText;
+}
+
+// SPA navigasyon fonksiyonu
+function spaNavigate(path) {
+  try {
+    window.history.pushState('', '', path);
+    window.history.pushState('', '', path);
+    window.history.go(-1);
+  } catch { location.assign(path); }
+}
+</script>

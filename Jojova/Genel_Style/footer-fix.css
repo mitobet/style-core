@@ -1,0 +1,40 @@
+/* Footer Mobil Padding Fix */
+.footer {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+}
+
+.footer__content,
+.footer__nav,
+.footer__currencies,
+.footer__licenses,
+.footer__cellar {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.footer .container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    max-width: 100% !important;
+}
+
+/* Footer Başlıkları Sarı */
+.footer__title {
+    color: #FFE55C !important;
+    font-weight: 700 !important;
+}
+
+@media (min-width: 768px) {
+    .footer {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .footer {
+        padding-left: 60px !important;
+        padding-right: 60px !important;
+    }
+}

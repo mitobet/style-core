@@ -1,0 +1,294 @@
+/* =====================================================
+   MITOBET - Yatırım Uyarı Sistemi CSS
+   Ana Renk: #CFAE6D (Altın/Bej)
+   ===================================================== */
+
+/* CSS Variables - Mito Gold */
+:root {
+    --mito-gold: #CFAE6D;
+    --mito-gold-rgb: 207, 174, 109;
+    --mito-gold-light: #e9c37a;
+    --mito-gold-dark: #b8973d;
+}
+
+/* Form Note Error - Mito Güncelleme */
+#wallet-modal .form__note.error {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    height: 40px !important;
+    margin-top: 20px !important;
+    border: 1px solid #CFAE6D !important;
+    border-radius: 8px !important;
+    padding: 0 12px !important;
+    background-color: transparent !important;
+    color: var(--tf-tc) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    text-align: left !important;
+    cursor: pointer !important;
+}
+
+#wallet-modal .form__note.error::before {
+    content: "!" !important;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 8px !important;
+    background-color: #CFAE6D !important;
+    color: #000000 !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 20px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+    animation: mitoPulse 2s infinite !important;
+}
+
+#wallet-modal .form__note.error:hover {
+    background-color: rgba(207, 174, 109, 0.1) !important;
+    color: #CFAE6D !important;
+}
+
+/* Yeni Sabit Uyarı Kutusu - MITO GOLD AGRESIF */
+.mito-warning-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    min-height: 40px !important;
+    margin: 15px 0 !important;
+    border: 2px solid #CFAE6D !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    background-color: rgba(207, 174, 109, 0.08) !important;
+    color: var(--tf-tc, #FFFFFF) !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    transition: all 0.3s ease !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: pointer !important;
+    box-shadow: 0 0 15px rgba(207, 174, 109, 0.4) !important;
+    animation: mitoBorderBlink 2s infinite, mitoInitialShake 0.8s ease-out !important;
+}
+
+.mito-warning-container::before {
+    content: "⚠" !important;
+    display: inline-block !important;
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 10px !important;
+    margin-top: 1px !important;
+    background-color: #CFAE6D !important;
+    color: #000000 !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 24px !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    flex-shrink: 0 !important;
+    animation: mitoIconPulse 1.5s infinite, mitoIconGlow 2s infinite !important;
+    box-shadow: 0 0 10px rgba(207, 174, 109, 0.6) !important;
+}
+
+/* MITO GOLD ANIMASYONLAR */
+@keyframes mitoPulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes mitoBorderBlink {
+    0%, 50% {
+        border-color: #CFAE6D;
+        box-shadow: 0 0 15px rgba(207, 174, 109, 0.4);
+    }
+    25%, 75% {
+        border-color: #e9c37a;
+        box-shadow: 0 0 20px rgba(233, 195, 122, 0.6);
+    }
+}
+
+@keyframes mitoInitialShake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+    20%, 40%, 60%, 80% { transform: translateX(3px); }
+}
+
+@keyframes mitoIconPulse {
+    0%, 100% { 
+        transform: scale(1); 
+        background-color: #CFAE6D;
+    }
+    50% { 
+        transform: scale(1.2); 
+        background-color: #e9c37a;
+    }
+}
+
+@keyframes mitoIconGlow {
+    0%, 100% { 
+        box-shadow: 0 0 10px rgba(207, 174, 109, 0.6);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(233, 195, 122, 0.8);
+    }
+}
+
+.mito-warning-container:hover {
+    background-color: rgba(207, 174, 109, 0.15) !important;
+    color: #CFAE6D !important;
+    box-shadow: 0 0 25px rgba(207, 174, 109, 0.7) !important;
+    transform: scale(1.02) !important;
+}
+
+.mito-warning-text {
+    display: block;
+    line-height: 1.5;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    font-style: normal !important;
+    flex: 1;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mito-warning-text strong {
+    color: #CFAE6D;
+    font-weight: 700;
+    font-style: normal !important;
+}
+
+/* İkinci sabit uyarı kutusu - INFO */
+.mito-info-container {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    min-height: 40px !important;
+    margin: 10px 0 !important;
+    border: 1px solid #CFAE6D !important;
+    border-radius: 8px !important;
+    padding: 12px !important;
+    background-color: transparent !important;
+    color: var(--tf-tc, #FFFFFF) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    font-style: normal !important;
+    text-transform: none !important;
+    transition: all 0.4s ease !important;
+    position: relative !important;
+    z-index: 1000 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    cursor: default !important;
+}
+
+.mito-info-container::before {
+    content: "i" !important;
+    display: inline-block !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin-right: 10px !important;
+    margin-top: 2px !important;
+    background-color: #CFAE6D !important;
+    color: #000000 !important;
+    border-radius: 50% !important;
+    text-align: center !important;
+    line-height: 20px !important;
+    font-weight: bold !important;
+    font-size: 12px !important;
+    flex-shrink: 0 !important;
+}
+
+.mito-info-container:hover {
+    background-color: rgba(207, 174, 109, 0.1) !important;
+    border-color: #e9c37a !important;
+}
+
+.mito-info-text {
+    display: block;
+    line-height: 1.5;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+    font-style: normal !important;
+    flex: 1;
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+.mito-info-text strong {
+    color: #CFAE6D;
+    font-weight: 600;
+    font-style: normal !important;
+}
+
+/* Mobil uyumluluk */
+@media (max-width: 768px) {
+    #wallet-modal .form__note.error,
+    .mito-warning-container,
+    .mito-info-container {
+        padding: 12px !important;
+        font-size: 12px;
+        margin: 12px 0;
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+        align-items: flex-start !important;
+        flex-wrap: nowrap !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        box-sizing: border-box !important;
+    }
+    
+    .mito-warning-text,
+    .mito-info-text {
+        line-height: 1.5;
+        font-style: normal !important;
+        padding-top: 0px;
+        flex: 1 !important;
+        width: auto !important;
+        max-width: none !important;
+        overflow-wrap: break-word !important;
+        word-wrap: break-word !important;
+        display: block !important;
+    }
+    
+    #wallet-modal .form__note.error::before,
+    .mito-warning-container::before,
+    .mito-info-container::before {
+        width: 16px !important;
+        height: 16px !important;
+        line-height: 16px !important;
+        font-size: 9px !important;
+        margin-right: 10px !important;
+        margin-top: 1px !important;
+        flex-shrink: 0 !important;
+        min-width: 16px !important;
+    }
+}

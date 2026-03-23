@@ -1,0 +1,13 @@
+/* VIP Sayfasında "Ayrıcalıklı VIP Deneyimi" Bölümünü Gizle */
+body[class*="vip"] .vip:has(.vip__title),
+body[data-page*="vip"] .vip:has(.vip__title) {
+    display: none !important;
+}
+
+/* Alternatif selector - URL bazlı */
+@supports selector(:has(*)) {
+    .vip:has(.vip__title):has(.vip__btn) {
+        display: none !important;
+    }
+}
+

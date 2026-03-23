@@ -1,0 +1,358 @@
+/* =====================================================
+   MITOBET - Random Winners Slider (Tepe Winner)
+   Ana Renk: #CFAE6D (Altın/Bej)
+   Kaliteli Tasarım - Sidebar Stilinde
+   ===================================================== */
+
+/* ——— CSS Variables ——— */
+:root {
+    --winner-gold: #CFAE6D;
+    --winner-gold-light: #e9c37a;
+    --winner-gold-dark: #b8973d;
+    --winner-glow: rgba(207, 174, 109, 0.5);
+    --winner-bg: rgba(207, 174, 109, 0.03);
+    --winner-border: rgba(207, 174, 109, 0.2);
+}
+
+/* ——— Ana Container ——— */
+#random-winners-slider {
+    position: relative;
+    z-index: 10;
+}
+
+.RandomSlider-wrapper {
+    background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 100%) !important;
+    border-bottom: 1px solid var(--winner-border) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* ——— Sol Taraftaki Sabit "CANLI" Kısmı - Premium Badge ——— */
+.RandomSlider-fixed-box {
+    /* Solid Koyu Arka Plan */
+    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%) !important;
+    border-right: 2px solid #CFAE6D !important;
+    border-radius: 0 !important;
+    position: relative;
+    overflow: visible !important;
+    z-index: 5;
+    
+    /* İç Padding */
+    padding: 0 16px !important;
+    min-width: 90px !important;
+    
+    /* Alt Glow Çizgisi */
+    box-shadow: 
+        inset 0 -2px 0 #CFAE6D,
+        4px 0 15px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+/* Üst Gold Şerit */
+.RandomSlider-fixed-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #CFAE6D 0%, #e9c37a 50%, #CFAE6D 100%);
+    z-index: 10;
+}
+
+/* Sağ Kenar Gold Glow */
+.RandomSlider-fixed-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -2px;
+    bottom: 0;
+    width: 2px;
+    background: #CFAE6D;
+    box-shadow: 0 0 10px #CFAE6D, 0 0 20px rgba(207, 174, 109, 0.5);
+    z-index: 10;
+}
+
+/* CANLI Yazısı Container */
+.RandomSlider-fixed-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    height: 100% !important;
+}
+
+/* Canlı Nokta Animasyonu */
+.RandomSlider-fixed-icon::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: livePulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 8px #ef4444, 0 0 16px rgba(239, 68, 68, 0.5);
+    flex-shrink: 0;
+}
+
+@keyframes livePulse {
+    0%, 100% { 
+        opacity: 1; 
+        transform: scale(1);
+        box-shadow: 0 0 8px #ef4444, 0 0 16px rgba(239, 68, 68, 0.5);
+    }
+    50% { 
+        opacity: 0.6; 
+        transform: scale(0.85);
+        box-shadow: 0 0 4px #ef4444;
+    }
+}
+
+/* CANLI Yazısı */
+.RandomSlider-fixed-icon span {
+    color: #FFFFFF !important;
+    font-weight: 800 !important;
+    font-size: 13px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+    text-shadow: none !important;
+    position: relative;
+    z-index: 2;
+}
+
+/* Hover Durumu */
+.RandomSlider-fixed-box:hover {
+    background: linear-gradient(145deg, #222222 0%, #141414 100%) !important;
+}
+
+.RandomSlider-fixed-box:hover .RandomSlider-fixed-icon span {
+    color: #CFAE6D !important;
+    text-shadow: 0 0 10px rgba(207, 174, 109, 0.5) !important;
+}
+
+/* İkon Stili (varsa) */
+.RandomSlider-fixed-icon img,
+.RandomSlider-fixed-icon svg {
+    width: 18px !important;
+    height: 18px !important;
+    filter: brightness(0) invert(1) !important;
+    transition: all 0.3s ease !important;
+}
+
+.RandomSlider-fixed-box:hover .RandomSlider-fixed-icon img,
+.RandomSlider-fixed-box:hover .RandomSlider-fixed-icon svg {
+    filter: brightness(0) saturate(100%) invert(83%) sepia(22%) saturate(746%) hue-rotate(358deg) brightness(92%) contrast(88%) !important;
+}
+
+/* ——— Winner Slide Kartları ——— */
+.RandomSlider-slide {
+    background: linear-gradient(135deg, rgba(207, 174, 109, 0.05) 0%, rgba(0,0,0,0.2) 100%) !important;
+    border: 1px solid var(--winner-border) !important;
+    border-radius: 8px !important;
+    margin: 4px !important;
+    padding: 8px 12px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover sweep efekti */
+.RandomSlider-slide::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(207, 174, 109, 0.1), transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.RandomSlider-slide:hover::before {
+    left: 100%;
+}
+
+.RandomSlider-slide:hover {
+    border-color: var(--winner-gold) !important;
+    background: linear-gradient(135deg, rgba(207, 174, 109, 0.15) 0%, rgba(207, 174, 109, 0.05) 100%) !important;
+    box-shadow: 0 4px 20px rgba(207, 174, 109, 0.25), 
+                0 0 30px rgba(207, 174, 109, 0.15),
+                inset 0 1px 0 rgba(255,255,255,0.1) !important;
+    transform: translateY(-2px) scale(1.02) !important;
+}
+
+/* ——— Kullanıcı Adı ——— */
+.RandomSlider-name,
+.RandomSlider-user {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.3px !important;
+    transition: color 0.3s ease !important;
+}
+
+.RandomSlider-slide:hover .RandomSlider-name,
+.RandomSlider-slide:hover .RandomSlider-user {
+    color: #FFFFFF !important;
+}
+
+/* ——— Kazanılan Tutar ——— */
+.RandomSlider-amount {
+    color: var(--winner-gold) !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    text-shadow: 0 1px 3px rgba(207, 174, 109, 0.4) !important;
+    transition: all 0.3s ease !important;
+    position: relative;
+}
+
+.RandomSlider-slide:hover .RandomSlider-amount {
+    color: var(--winner-gold-light) !important;
+    text-shadow: 0 0 10px var(--winner-glow), 0 2px 4px rgba(0,0,0,0.3) !important;
+    transform: scale(1.05) !important;
+}
+
+/* Büyük kazançlar için özel stil */
+.RandomSlider-amount.big-win,
+.RandomSlider-slide[data-amount-high="true"] .RandomSlider-amount {
+    animation: bigWinPulse 1.5s ease-in-out infinite !important;
+}
+
+@keyframes bigWinPulse {
+    0%, 100% { 
+        color: var(--winner-gold);
+        text-shadow: 0 0 5px rgba(207, 174, 109, 0.4);
+    }
+    50% { 
+        color: #ffd700;
+        text-shadow: 0 0 15px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.4);
+    }
+}
+
+/* ——— Oyun İkonu/Görseli ——— */
+.RandomSlider-game-icon,
+.RandomSlider-icon {
+    border-radius: 6px !important;
+    border: 1px solid var(--winner-border) !important;
+    transition: all 0.3s ease !important;
+    overflow: hidden;
+}
+
+.RandomSlider-slide:hover .RandomSlider-game-icon,
+.RandomSlider-slide:hover .RandomSlider-icon {
+    border-color: var(--winner-gold) !important;
+    box-shadow: 0 0 10px rgba(207, 174, 109, 0.3) !important;
+    transform: scale(1.05) !important;
+}
+
+.RandomSlider-game-icon img,
+.RandomSlider-icon img {
+    transition: transform 0.3s ease !important;
+}
+
+.RandomSlider-slide:hover .RandomSlider-game-icon img,
+.RandomSlider-slide:hover .RandomSlider-icon img {
+    transform: scale(1.1) !important;
+}
+
+/* ——— Swiper Navigation (varsa) ——— */
+.RandomSlider-wrapper .swiper-button-next,
+.RandomSlider-wrapper .swiper-button-prev {
+    color: var(--winner-gold) !important;
+    background: rgba(0,0,0,0.5) !important;
+    border: 1px solid var(--winner-border) !important;
+    border-radius: 50% !important;
+    width: 32px !important;
+    height: 32px !important;
+    transition: all 0.3s ease !important;
+}
+
+.RandomSlider-wrapper .swiper-button-next:hover,
+.RandomSlider-wrapper .swiper-button-prev:hover {
+    background: rgba(207, 174, 109, 0.2) !important;
+    border-color: var(--winner-gold) !important;
+    box-shadow: 0 0 15px var(--winner-glow) !important;
+}
+
+.RandomSlider-wrapper .swiper-button-next::after,
+.RandomSlider-wrapper .swiper-button-prev::after {
+    font-size: 14px !important;
+    font-weight: bold !important;
+}
+
+/* ——— Scroll Bar Stilleri ——— */
+.RandomSlider-wrapper::-webkit-scrollbar {
+    height: 4px;
+}
+
+.RandomSlider-wrapper::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.2);
+    border-radius: 2px;
+}
+
+.RandomSlider-wrapper::-webkit-scrollbar-thumb {
+    background: var(--winner-gold);
+    border-radius: 2px;
+}
+
+.RandomSlider-wrapper::-webkit-scrollbar-thumb:hover {
+    background: var(--winner-gold-light);
+}
+
+/* ——— Responsive Ayarlar ——— */
+@media (max-width: 768px) {
+    .RandomSlider-slide {
+        padding: 6px 10px !important;
+        margin: 2px !important;
+        border-radius: 6px !important;
+    }
+    
+    .RandomSlider-name,
+    .RandomSlider-user {
+        font-size: 11px !important;
+    }
+    
+    .RandomSlider-amount {
+        font-size: 12px !important;
+    }
+    
+    /* CANLI Box Mobile */
+.RandomSlider-fixed-box {
+        min-width: 70px !important;
+        padding: 0 10px !important;
+}
+
+.RandomSlider-fixed-icon span {
+        font-size: 10px !important;
+        letter-spacing: 1px !important;
+}
+
+    .RandomSlider-fixed-icon::before {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+/* ——— Dark Mode Uyumu ——— */
+[data-bs-theme="dark"] .RandomSlider-wrapper,
+.dark .RandomSlider-wrapper {
+    background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 100%) !important;
+}
+
+/* ——— Force Override ——— */
+#random-winners-slider .RandomSlider-amount {
+    color: var(--winner-gold) !important;
+}
+
+#random-winners-slider .RandomSlider-slide:hover {
+    border-color: var(--winner-gold) !important;
+}
+
+/* CANLI yazısı beyaz, hover'da gold */
+#random-winners-slider .RandomSlider-fixed-icon span {
+    color: #FFFFFF !important;
+}
+
+#random-winners-slider .RandomSlider-fixed-box:hover .RandomSlider-fixed-icon span {
+    color: #CFAE6D !important;
+}

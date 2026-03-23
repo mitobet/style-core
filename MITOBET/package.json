@@ -1,0 +1,11 @@
+{
+  "name": "mitobet-local-dev",
+  "version": "2.0.0",
+  "description": "MITOBET local dev preview - bookmarklet ile CSS/JS enjeksiyonu",
+  "scripts": {
+    "dev": "node dev-server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

@@ -1,0 +1,1447 @@
+/* =====================================================
+   MITOBET Sidebar Styles
+   Ana Renk: #CFAE6D (Altın/Bej)
+   Animasyonlar: Minimal
+   ===================================================== */
+
+/* ——— Scroll Behavior Fix ——— */
+html, body {
+    scroll-behavior: auto !important;
+}
+
+.sidebar, .sidebar * {
+    scroll-behavior: auto !important;
+}
+
+/* ——— CSS Variables ——— */
+:root {
+    --mito-primary: #CFAE6D !important;
+    --mito-primary-hover: #CFAE6D !important;
+    --mito-primary-border: #CFAE6D !important;
+    --mito-primary-glow: rgba(207, 174, 109, 0.6) !important;
+    --mito-primary-light: rgba(207, 174, 109, 0.18) !important;
+    --mito-primary-dark: rgba(207, 174, 109, 0.12) !important;
+}
+
+/* ——— Site Değişkenlerini Override ——— */
+:root,
+html,
+html.notranslate,
+[data-bs-theme="dark"],
+[data-bs-theme="light"] {
+    --tf-active: #CFAE6D !important;
+    --tf-border: rgba(207, 174, 109, 0.15) !important;
+    --tf-borderhover: rgba(207, 174, 109, 0.4) !important;
+    --tf-border-opacity: rgba(207, 174, 109, 0.5) !important;
+    --tf-btncolor: #CFAE6D !important;
+    --tf-active-opacity: rgba(207, 174, 109, 0.15) !important;
+}
+
+/* ——— Ana Sidebar Container ——— */
+.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 80px;
+    left: 0;
+    bottom: 60px;
+    background-color: var(--tf-bg2);
+    border-right: 1px solid var(--mito-primary-hover);
+    z-index: 99;
+    width: 60vw;
+    max-width: 280px;
+    padding: 0;
+    transform: translate3d(-100%, 0, 0);
+    transition: transform 0.3s ease;
+}
+
+.sidebar.active {
+    transform: translate3d(0, 0, 0);
+}
+
+/* ——— Sidebar Big Container ——— */
+.sidebar__big {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px 8px 12px 12px !important; /* Sol padding geri eklendi */
+}
+
+.sidebar__big::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar__big::-webkit-scrollbar-thumb {
+    background: var(--mito-primary-glow);
+    border-radius: 4px;
+}
+
+.sidebar__big::-webkit-scrollbar-thumb:hover {
+    background: var(--mito-primary);
+}
+
+.sidebar__big::-webkit-scrollbar-track {
+    background: var(--tf-border);
+}
+
+/* ——— Üst Linkler (Casino/Spor) ——— */
+.sidebar__links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+.sidebar__link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(50% - 4px);
+    height: 46px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sidebar__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--mito-primary-glow);
+}
+
+.sidebar__link span {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 2;
+}
+
+/* Casino/Sport özel stiller */
+.sidebar__link--casino {
+    border: 1px solid rgba(207, 174, 109, 0.2);
+}
+
+.sidebar__link--casino:before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.4) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.sidebar__link--casino:hover:before {
+    opacity: 1;
+}
+
+/* Custom Side Links (Promosyonlar, MitoTV) */
+.sidebar__links.custom_side {
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar__links.custom_side .sidebar__link {
+    width: 100%;
+}
+
+.sidebar__link--mitotv {
+    border: 1px solid rgba(207, 174, 109, 0.2);
+}
+
+/* ——— Menü Container ——— */
+.sidebar__menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 16px;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+/* ——— Başlıklar ——— */
+.sidebar__title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #CFAE6D;
+    margin-bottom: 14px;
+    margin-top: 8px;
+    padding-left: 14px;
+    position: relative;
+}
+
+.sidebar__title:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 14px;
+    background: #CFAE6D;
+    border-radius: 2px;
+    box-shadow: 0 0 8px rgba(207, 174, 109, 0.5);
+}
+
+/* ——— Navigasyon ——— */
+.sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.sidebar__nav--border {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--mito-primary-hover);
+}
+
+.sidebar__nav li {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2px;
+    display: block;
+}
+
+/* Nav Linkleri */
+.sidebar__nav a,
+.sidebar__nav button:not(.sidebar__collapsed) {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    padding: 0 14px 0 12px; /* Sol padding azaltıldı */
+    padding-right: 48px; /* Ok butonu için yer bırak */
+    border-radius: 10px;
+    color: var(--tf-tc);
+    background: rgba(207, 174, 109, 0.03);
+    border: 1px solid rgba(207, 174, 109, 0.1);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover sweep efekti */
+.sidebar__nav a:before,
+.sidebar__nav button:not(.sidebar__collapsed):before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(207, 174, 109, 0.15), transparent);
+    transition: left 0.5s ease;
+    pointer-events: none;
+}
+
+.sidebar__nav a:hover:before,
+.sidebar__nav button:not(.sidebar__collapsed):hover:before {
+    left: 100%;
+}
+
+.sidebar__nav a:hover,
+.sidebar__nav button:not(.sidebar__collapsed):hover {
+    background: rgba(207, 174, 109, 0.15) !important;
+    border-color: #CFAE6D !important;
+    transform: translateX(6px);
+    color: #CFAE6D;
+}
+
+/* no-bg sınıfı - dropdown parent linkleri */
+.sidebar__nav a.no-bg {
+    background: var(--tf-bg2);
+    border: 1px solid rgba(207, 174, 109, 0.25);
+}
+
+.sidebar__nav a.no-bg:hover {
+    background: rgba(207, 174, 109, 0.15) !important;
+    border-color: #CFAE6D !important;
+}
+
+/* Active State */
+.sidebar__nav li.active a {
+    background: linear-gradient(135deg, rgba(207, 174, 109, 0.18) 0%, rgba(207, 174, 109, 0.08) 100%);
+    border: 1px solid #CFAE6D;
+    position: relative;
+    transform: translateX(4px);
+    animation: activeGlow 2.5s ease-in-out infinite;
+}
+
+/* Active Arka Plan Glow Animasyonu */
+@keyframes activeGlow {
+    0%, 100% { 
+        box-shadow: 0 0 8px rgba(207, 174, 109, 0.2);
+        background: linear-gradient(135deg, rgba(207, 174, 109, 0.15) 0%, rgba(207, 174, 109, 0.08) 100%);
+    }
+    50% { 
+        box-shadow: 0 0 20px rgba(207, 174, 109, 0.4);
+        background: linear-gradient(135deg, rgba(207, 174, 109, 0.22) 0%, rgba(207, 174, 109, 0.12) 100%);
+    }
+}
+
+.sidebar__nav li.active a:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 70%;
+    background: #CFAE6D;
+    border-radius: 0 3px 3px 0;
+    animation: borderPulse 2s ease-in-out infinite;
+}
+
+/* Sol Kenar Pulse Animasyonu */
+@keyframes borderPulse {
+    0%, 100% { 
+        box-shadow: 0 0 8px rgba(207, 174, 109, 0.5);
+        height: 70%;
+    }
+    50% { 
+        box-shadow: 0 0 18px rgba(207, 174, 109, 0.9);
+        height: 80%;
+    }
+}
+
+.sidebar__nav li.active a svg,
+.sidebar__nav li.active a svg.svg-icon,
+.sidebar__nav li.active a svg use,
+.sidebar__nav li.active a:hover svg,
+.sidebar__nav li.active a:hover svg.svg-icon,
+.sidebar__nav li.active a:hover svg use {
+    stroke: #FFFFFF !important;
+    fill: #FFFFFF !important;
+    color: #FFFFFF !important;
+    animation: iconGlow 2s ease-in-out infinite;
+}
+
+/* Active Icon Glow Animasyonu */
+@keyframes iconGlow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.3));
+    }
+    50% { 
+        filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+    }
+}
+
+/* SVG Icons */
+.sidebar__nav a svg,
+.sidebar__nav button svg {
+    width: 22px;
+    height: 22px;
+    margin-right: 12px;
+    stroke: rgba(207, 174, 109, 0.6);
+    fill: rgba(207, 174, 109, 0.6);
+    transition: all 0.3s ease;
+}
+
+.sidebar__nav a:hover svg,
+.sidebar__nav button:hover svg {
+    stroke: #CFAE6D;
+    fill: #CFAE6D;
+    animation: iconBounce 0.4s ease;
+}
+
+/* Icon Bounce Animasyonu */
+@keyframes iconBounce {
+    0% { transform: scale(1) rotate(0deg); }
+    30% { transform: scale(1.25) rotate(-8deg); }
+    60% { transform: scale(1.1) rotate(4deg); }
+    100% { transform: scale(1.15) rotate(0deg); }
+}
+
+/* IMG Icons (GIF'ler için) */
+.sidebar__nav a img,
+.sidebar__nav button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* Badge (Yeni, vb.) */
+.sidebar__nav a span,
+.sidebar__nav button span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 18px;
+    padding: 0 8px;
+    margin-left: auto;
+    background: #CFAE6D;
+    color: #1a1a1a;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(207, 174, 109, 0.4);
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { box-shadow: 0 2px 8px rgba(207, 174, 109, 0.4); }
+    50% { box-shadow: 0 2px 12px rgba(207, 174, 109, 0.7); }
+}
+
+/* ——— Collapse Buton (Ok Butonu) ——— */
+.sidebar__nav button.sidebar__collapsed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute !important;
+    right: 10px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: rgba(207, 174, 109, 0.08);
+    border: 1px solid rgba(207, 174, 109, 0.25);
+    border-radius: 6px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 10;
+}
+
+.sidebar__nav button.sidebar__collapsed:hover {
+    background: rgba(207, 174, 109, 0.2);
+    border-color: #CFAE6D;
+    transform: translateY(-50%) scale(1.1) !important;
+    box-shadow: 0 0 12px rgba(207, 174, 109, 0.4);
+}
+
+.sidebar__nav button.sidebar__collapsed:active,
+.sidebar__nav button.sidebar__collapsed:focus {
+    transform: translateY(-50%) !important;
+}
+
+.sidebar__nav button.sidebar__collapsed svg {
+    width: 12px;
+    height: 12px;
+    stroke: rgba(207, 174, 109, 0.7);
+    margin-right: 0;
+    transform: rotate(-90deg);
+    transition: all 0.3s ease;
+}
+
+.sidebar__nav button.sidebar__collapsed[aria-expanded="true"] {
+    background: rgba(207, 174, 109, 0.2);
+    border-color: #CFAE6D;
+    box-shadow: 0 0 10px rgba(207, 174, 109, 0.5);
+}
+
+.sidebar__nav button.sidebar__collapsed[aria-expanded="true"] svg {
+    stroke: #CFAE6D;
+    transform: rotate(0deg);
+}
+
+.sidebar__nav button.sidebar__collapsed:hover svg {
+    stroke: #CFAE6D;
+}
+
+/* ——— Collapse Menü (Alt Menü) ——— */
+.sidebar__nav--collapse {
+    display: none;
+    padding: 6px 0;
+    margin-top: 6px;
+    margin-left: 14px;
+    padding-left: 12px;
+    border-left: 2px solid rgba(207, 174, 109, 0.4);
+    width: calc(100% - 24px);
+    background: rgba(207, 174, 109, 0.03);
+    border-radius: 0 8px 8px 0;
+}
+
+.sidebar__nav--collapse.collapse {
+    display: none;
+}
+
+.sidebar__nav--collapse.collapse.show {
+    display: block;
+}
+
+.sidebar__nav--collapse li {
+    margin-bottom: 2px;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.sidebar__nav--collapse li:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar__nav--collapse a {
+    height: 40px;
+    font-size: 13px;
+    padding: 0 12px;
+    padding-right: 12px;
+    border: none;
+    background: transparent;
+}
+
+.sidebar__nav--collapse a:hover {
+    background: rgba(207, 174, 109, 0.12);
+    border-radius: 8px;
+}
+
+.sidebar__nav--collapse a svg,
+.sidebar__nav--collapse a img {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+}
+
+/* Sportsbook submenu özel */
+.sidebar__nav.sportsbook {
+    border: none;
+}
+
+/* ——— Alt Kısım (Actions) ——— */
+.sidebar__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: auto;
+    padding: 12px 0;
+}
+
+/* Theme Switcher */
+.sidebar__scheme {
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: var(--tf-bg);
+    border: 1px solid rgba(207, 174, 109, 0.2);
+    border-radius: 8px;
+}
+
+.sidebar__scheme button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.sidebar__scheme button svg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(207, 174, 109, 0.6);
+    transition: stroke 0.3s ease;
+}
+
+.sidebar__scheme button:hover svg {
+    stroke: var(--mito-primary);
+}
+
+.sidebar__scheme button.active {
+    background: var(--mito-primary-light);
+    border-color: var(--mito-primary);
+}
+
+.sidebar__scheme button.active svg {
+    stroke: var(--mito-primary);
+}
+
+/* ——— Dil Seçici ——— */
+.sidebar__lang {
+    position: relative;
+}
+
+.sidebar__lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 40px;
+    padding: 0 12px;
+    background: var(--tf-bg);
+    border: 1px solid rgba(207, 174, 109, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.sidebar__lang-btn:hover {
+    border-color: rgba(207, 174, 109, 0.4);
+}
+
+.sidebar__lang-btn .svg-icon img {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+
+.sidebar__lang-btn svg {
+    width: 12px;
+    height: 12px;
+    stroke: rgba(207, 174, 109, 0.7);
+    transition: transform 0.3s ease, stroke 0.3s ease;
+}
+
+.sidebar__lang-btn:hover svg {
+    stroke: var(--mito-primary);
+}
+
+.sidebar__lang-btn.show svg {
+    transform: rotate(180deg);
+    stroke: var(--mito-primary);
+}
+
+/* Dil Dropdown */
+.sidebar__lang-menu {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    min-width: 80px;
+    padding: 8px;
+    margin-bottom: 8px;
+    background: var(--tf-bg);
+    border: 1px solid var(--mito-primary-border);
+    border-radius: 8px;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.15);
+    display: none;
+}
+
+.sidebar__lang-menu.show {
+    display: block;
+}
+
+.sidebar__lang-menu li {
+    margin-bottom: 4px;
+}
+
+.sidebar__lang-menu li:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar__lang-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--tf-tc);
+    transition: background 0.3s ease;
+}
+
+.sidebar__lang-menu a:hover {
+    background: var(--mito-primary-light);
+}
+
+.sidebar__lang-menu a .svg-icon img {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+/* ——— Small Sidebar (Collapsed) ——— */
+.sidebar__small {
+    display: none;
+}
+
+/* =====================================================
+   RESPONSIVE STYLES
+   ===================================================== */
+
+/* ——— Tablet (768px+) ——— */
+@media (min-width: 768px) {
+    .sidebar {
+        position: relative;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        width: 80px;
+        max-width: none;
+        height: 100%;
+        transform: translate3d(0, 0, 0);
+        flex-shrink: 0;
+    }
+
+    .sidebar__head {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid var(--mito-primary-border);
+    }
+
+    .sidebar__logo {
+        display: none;
+    }
+
+    .sidebar__btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        background: var(--tf-bg2);
+        border: 1px solid rgba(207, 174, 109, 0.2);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar__btn:hover {
+        border-color: rgba(207, 174, 109, 0.4);
+    }
+
+    .sidebar__btn svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-tc);
+    }
+
+    .sidebar__content {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 80px);
+        width: 80px;
+    }
+
+    /* Big sidebar hidden by default on tablet */
+    .sidebar__big {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 260px;
+        height: 100%;
+        background: var(--tf-bg2);
+        border-right: 1px solid var(--mito-primary-border);
+        padding: 20px 12px;
+        transform: translate3d(-100%, 0, 0);
+        transition: transform 0.3s ease;
+    }
+
+    /* Small sidebar visible */
+    .sidebar__small {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        width: 80px;
+        height: 100%;
+        padding: 20px 0;
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar__small::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .sidebar__small::-webkit-scrollbar-thumb {
+        background: var(--mito-primary-hover);
+        border-radius: 4px;
+    }
+
+    /* Small Links */
+    .sidebar__links-small {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--mito-primary-border);
+    }
+
+    .sidebar__link-small {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+        background: var(--mito-primary-light);
+        border: 1px solid var(--mito-primary-border);
+        transition: all 0.3s ease;
+    }
+
+    .sidebar__link-small:hover {
+        background: var(--mito-primary-hover);
+        border-color: var(--mito-primary);
+    }
+
+    .sidebar__link-small svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--mito-primary);
+    }
+
+    /* Small Nav */
+    .sidebar__menu-small {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .sidebar__nav-small {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .sidebar__nav-small--border {
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--mito-primary-border);
+    }
+
+    .sidebar__nav-small a,
+    .sidebar__nav-small button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+        background: var(--tf-bg);
+        border: 1px solid var(--mito-primary-border);
+        transition: all 0.3s ease;
+    }
+
+    .sidebar__nav-small a:hover,
+    .sidebar__nav-small button:hover {
+        background: var(--mito-primary-light);
+        border-color: var(--mito-primary-hover);
+    }
+
+    .sidebar__nav-small li.active a {
+        background: var(--mito-primary-light);
+        border-color: var(--mito-primary);
+    }
+
+    .sidebar__nav-small li.active a svg,
+    .sidebar__nav-small li.active a:hover svg {
+        stroke: #FFFFFF !important;
+        fill: #FFFFFF !important;
+    }
+
+    .sidebar__nav-small a svg,
+    .sidebar__nav-small button svg {
+        width: 22px;
+        height: 22px;
+        stroke: var(--tf-tc2);
+        transition: stroke 0.3s ease;
+    }
+
+    .sidebar__nav-small a:hover svg,
+    .sidebar__nav-small button:hover svg {
+        stroke: var(--mito-primary);
+    }
+
+    /* Small Actions */
+    .sidebar__actions-small {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+    }
+
+    .sidebar__scheme-small {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        background: var(--tf-bg);
+        border: 1px solid rgba(207, 174, 109, 0.2);
+        border-radius: 8px;
+        position: relative;
+    }
+
+    .sidebar__scheme-small button {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        border-radius: 8px;
+        opacity: 1;
+        z-index: 1;
+    }
+
+    .sidebar__scheme-small button svg {
+        width: 20px;
+        height: 20px;
+        stroke: var(--tf-tc2);
+    }
+
+    .sidebar__scheme-small button.active {
+        opacity: 0;
+        z-index: 0;
+    }
+
+    .sidebar__scheme-small button:hover svg {
+        stroke: var(--mito-primary);
+    }
+
+    /* Small Lang */
+    .sidebar__lang-small {
+        position: relative;
+    }
+
+    .sidebar__lang-small-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        background: var(--tf-bg);
+        border: 1px solid rgba(207, 174, 109, 0.2);
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .sidebar__lang-small-btn:hover {
+        border-color: rgba(207, 174, 109, 0.4);
+    }
+
+    .sidebar__lang-small-btn img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    .sidebar__lang-small-menu {
+        position: absolute;
+        left: 100%;
+        bottom: 0;
+        min-width: 50px;
+        padding: 8px;
+        margin-left: 8px;
+        background: var(--tf-bg);
+        border: 1px solid var(--mito-primary-border);
+        border-radius: 8px;
+        box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+        display: none;
+    }
+
+    .sidebar__lang-small-menu.show {
+        display: block;
+    }
+
+    .sidebar__lang-small-menu li {
+        margin-bottom: 8px;
+    }
+
+    .sidebar__lang-small-menu li:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar__lang-small-menu a {
+        display: flex;
+        justify-content: center;
+        padding: 6px;
+        border-radius: 6px;
+        transition: background 0.3s ease;
+    }
+
+    .sidebar__lang-small-menu a:hover {
+        background: var(--mito-primary-light);
+    }
+
+    .sidebar__lang-small-menu a img {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+    }
+
+    /* Active State Transitions */
+    .sidebar.active .sidebar__big {
+        transform: translate3d(0, 0, 0);
+    }
+
+    .sidebar.active .sidebar__small {
+        transform: translate3d(-80px, 0, 0);
+    }
+}
+
+/* ——— Desktop (1200px+) ——— */
+@media (min-width: 1200px) {
+    .sidebar {
+        width: 260px;
+        transition: width 0.3s ease;
+    }
+
+    .sidebar__head {
+        width: 260px;
+        justify-content: flex-start;
+        padding-left: 17px;
+        border-right: 1px solid var(--tf-bg2);
+        transition: width 0.3s ease;
+    }
+
+    .sidebar__logo {
+        position: fixed;
+        z-index: 100;
+        left: 85px;
+        display: block;
+        width: 132px;
+        height: 40px;
+        background: var(--tf-logo) no-repeat left center;
+        background-size: auto 40px;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar__actions {
+        padding: 0;
+    }
+
+    /* Big sidebar visible by default */
+    .sidebar__big {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Small sidebar hidden by default */
+    .sidebar__small {
+        transform: translate3d(-80px, 0, 0);
+        opacity: 0;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    /* Collapsed State */
+    .sidebar.active {
+        width: 80px;
+    }
+
+    .sidebar.active .sidebar__head {
+        width: 80px;
+    }
+
+    .sidebar.active .sidebar__logo {
+        opacity: 0;
+    }
+
+    .sidebar.active .sidebar__big {
+        transform: translate3d(-260px, 0, 0);
+        opacity: 0;
+    }
+
+    .sidebar.active .sidebar__small {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+    }
+}
+
+/* ——— Mobil Özel (767px ve altı) ——— */
+@media (max-width: 767px) {
+    .sidebar {
+        top: 60px !important; /* Header altından başla */
+        bottom: 60px !important; /* Bottom bar üstünde bitir */
+        width: 70vw;
+        max-width: 300px;
+        min-width: 250px;
+        padding-top: 0 !important;
+    }
+
+    .sidebar__head {
+        display: none;
+    }
+    
+    #sidebar-content {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .sidebar__big {
+        height: 100%;
+        padding: 12px !important;
+        padding-top: 25px !important;
+        padding-bottom: 80px !important;
+        overflow-x: visible;
+        margin-top: 0 !important;
+    }
+
+    /* Mobilde Promo ve MitoTV butonları - TAM FIT */
+    .sidebar__links.custom_side,
+    .sidebar__links.custom_side .sidebar__link,
+    .sidebar__link.w-100[href*="promotions"],
+    .sidebar__link--mitotv {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 5 / 1 !important;
+        background-size: 100% 100% !important;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        border: 1px solid rgba(207, 174, 109, 0.2) !important;
+        border-radius: 8px !important;
+    }
+
+    /* Mobilde dil menüsü yukarı açılsın */
+    .sidebar__lang-menu {
+        bottom: 100%;
+        top: auto;
+        margin-bottom: 8px;
+    }
+
+    /* Menü öğeleri biraz daha kompakt */
+    .sidebar__nav a,
+    .sidebar__nav button:not(.sidebar__collapsed) {
+        height: 44px;
+        font-size: 13px;
+        padding-right: 42px;
+    }
+
+    .sidebar__nav button.sidebar__collapsed {
+        width: 28px;
+        height: 28px;
+        right: 6px !important;
+    }
+
+    .sidebar__nav button.sidebar__collapsed svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .sidebar__title {
+        font-size: 10px;
+    }
+
+    /* Actions overflow visible */
+    .sidebar__actions {
+        overflow: visible !important;
+    }
+
+    .sidebar__lang {
+        overflow: visible !important;
+    }
+}
+
+/* ——— Yatay Mobil ——— */
+@media (min-width: 360px) and (orientation: landscape) {
+    .sidebar--game {
+        display: none;
+    }
+}
+
+/* ——— Utility Classes ——— */
+.w-100 {
+    width: 100% !important;
+}
+
+/* ——— Collapse Bootstrap compatibility ——— */
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block;
+}
+
+/* Collapse açılma hızı - anında açılsın */
+.collapsing {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.05s ease !important;
+}
+
+.sidebar__nav--collapse.collapsing {
+    transition: height 0.05s ease !important;
+}
+
+/* ——— Dropdown Menü Stilleri ——— */
+.dropdown-menu {
+    position: absolute;
+    z-index: 1000;
+    min-width: 120px;
+    padding: 8px;
+    background: var(--tf-bg);
+    border: 1px solid var(--mito-primary-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Sidebar dil menüsü dropdown */
+.sidebar .dropdown-menu.sidebar__lang-menu,
+.sidebar .sidebar__lang-menu {
+    display: none !important;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.sidebar .dropdown-menu.sidebar__lang-menu.show,
+.sidebar .sidebar__lang-menu.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* ——— SVG Icon Genel ——— */
+.svg-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.svg-icon use {
+    pointer-events: none;
+}
+
+/* ——— Pointer Events Fix ——— */
+.sidebar__nav a::before,
+.sidebar__nav a::after,
+.sidebar__nav button::before,
+.sidebar__nav button::after {
+    pointer-events: none !important;
+}
+
+.sidebar__nav a,
+.sidebar__nav button {
+    pointer-events: auto !important;
+    cursor: pointer !important;
+}
+
+/* =====================================================
+   FORCE OVERRIDE - Diğer CSS'leri geçersiz kıl
+   ===================================================== */
+
+/* Hover Override */
+.sidebar .sidebar__nav a:hover,
+.sidebar .sidebar__nav button:hover,
+.sidebar .sidebar__menu .sidebar__nav a:hover,
+.sidebar .sidebar__menu .sidebar__nav li:hover > a {
+    background: rgba(207, 174, 109, 0.15) !important;
+    border-color: #CFAE6D !important;
+    color: var(--tf-tc) !important;
+}
+
+/* Hover SVG Override */
+.sidebar .sidebar__nav a:hover svg,
+.sidebar .sidebar__nav button:hover svg,
+.sidebar .sidebar__nav a:hover .svg-icon,
+.sidebar .sidebar__nav button:hover .svg-icon {
+    stroke: #CFAE6D !important;
+    fill: #CFAE6D !important;
+}
+
+/* Active Override */
+.sidebar .sidebar__nav li.active > a,
+.sidebar .sidebar__menu .sidebar__nav li.active > a {
+    background: rgba(207, 174, 109, 0.18) !important;
+    border-color: #CFAE6D !important;
+}
+
+/* Active SVG Override - Her zaman beyaz kalacak */
+.sidebar .sidebar__nav li.active > a svg,
+.sidebar .sidebar__nav li.active > a svg.svg-icon,
+.sidebar .sidebar__nav li.active > a .svg-icon,
+.sidebar .sidebar__nav li.active > a svg use,
+.sidebar .sidebar__nav li.active > a:hover svg,
+.sidebar .sidebar__nav li.active > a:hover svg.svg-icon,
+.sidebar .sidebar__nav li.active > a:hover .svg-icon,
+.sidebar .sidebar__nav li.active > a:hover svg use,
+.sidebar .sidebar__nav li.active:hover > a svg,
+.sidebar .sidebar__nav li.active:hover > a svg.svg-icon,
+.sidebar .sidebar__nav li.active:hover > a .svg-icon,
+.sidebar .sidebar__nav li.active:hover > a svg use,
+.sidebar__nav li.active a svg,
+.sidebar__nav li.active a svg.svg-icon,
+.sidebar__nav li.active a svg use {
+    stroke: #FFFFFF !important;
+    fill: #FFFFFF !important;
+    color: #FFFFFF !important;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.3)) !important;
+}
+
+/* Collapsed Button Override */
+.sidebar .sidebar__nav button.sidebar__collapsed:hover {
+    background: rgba(207, 174, 109, 0.2) !important;
+    border-color: #CFAE6D !important;
+}
+
+.sidebar .sidebar__nav button.sidebar__collapsed:hover svg {
+    stroke: #CFAE6D !important;
+}
+
+.sidebar .sidebar__nav button.sidebar__collapsed[aria-expanded="true"] {
+    background: rgba(207, 174, 109, 0.2) !important;
+    border-color: #CFAE6D !important;
+}
+
+.sidebar .sidebar__nav button.sidebar__collapsed[aria-expanded="true"] svg {
+    stroke: #CFAE6D !important;
+}
+
+/* =====================================================
+   ACTIVE ICON - BEYAZ ZORLA (En Yüksek Öncelik)
+   ===================================================== */
+li.active > a > svg.svg-icon,
+li.active > a > svg.svg-icon use,
+.sidebar__nav li.active > a > svg,
+.sidebar__nav li.active > a > svg use,
+.sidebar__nav li.active > a > svg.svg-icon,
+.sidebar__nav li.active > a > svg.svg-icon use,
+#sidebar .sidebar__nav li.active a svg,
+#sidebar .sidebar__nav li.active a svg use,
+#sidebar-content .sidebar__nav li.active a svg,
+#sidebar-content .sidebar__nav li.active a svg use {
+    stroke: #FFFFFF !important;
+    fill: #FFFFFF !important;
+    color: #FFFFFF !important;
+}
+
+/* =====================================================
+   BLOG & GÖREVLER GİZLE
+   ===================================================== */
+.sidebar__nav a[href="/tr/blog"],
+.sidebar__nav a[href*="/blog"],
+.sidebar__nav a[href="/tr/challenges"],
+.sidebar__nav a[href*="/challenges"],
+.sidebar__nav li:has(a[href="/tr/blog"]),
+.sidebar__nav li:has(a[href*="/blog"]),
+.sidebar__nav li:has(a[href="/tr/challenges"]),
+.sidebar__nav li:has(a[href*="/challenges"]) {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+}
+
+/* =====================================================
+   LIGHT MODE - SIDEBAR FIX
+   ===================================================== */
+[data-bs-theme="light"] .sidebar,
+[data-bs-theme="light"] #sidebar {
+    background: #FFFFFF !important;
+    border-right: 1px solid rgba(207, 174, 109, 0.3) !important;
+}
+
+[data-bs-theme="light"] .sidebar__big,
+[data-bs-theme="light"] .sidebar__head {
+    background: #FFFFFF !important;
+}
+
+/* Light Mode - Menü Yazıları */
+[data-bs-theme="light"] .sidebar__nav a,
+[data-bs-theme="light"] .sidebar__nav span,
+[data-bs-theme="light"] .sidebar__nav li a {
+    color: #1a1a1a !important;
+}
+
+[data-bs-theme="light"] .sidebar__nav a:hover,
+[data-bs-theme="light"] .sidebar__nav li:hover a {
+    color: #000000 !important;
+    background: rgba(207, 174, 109, 0.15) !important;
+}
+
+/* Light Mode - Aktif Element */
+[data-bs-theme="light"] .sidebar__nav li.active > a,
+[data-bs-theme="light"] .sidebar__nav .active > a {
+    background: linear-gradient(135deg, #CFAE6D 0%, #b8973d 100%) !important;
+    color: #FFFFFF !important;
+    border-radius: 8px !important;
+}
+
+[data-bs-theme="light"] .sidebar__nav li.active > a span,
+[data-bs-theme="light"] .sidebar__nav li.active > a svg {
+    color: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+    fill: #FFFFFF !important;
+}
+
+/* Light Mode - Bölüm Başlıkları */
+[data-bs-theme="light"] .sidebar__title,
+[data-bs-theme="light"] .sidebar__menu-title,
+[data-bs-theme="light"] .sidebar__nav--border::before,
+[data-bs-theme="light"] .sidebar span[class*="title"] {
+    color: #8a7a5a !important;
+    font-weight: 600 !important;
+}
+
+/* Light Mode - İkonlar */
+[data-bs-theme="light"] .sidebar__nav svg,
+[data-bs-theme="light"] .sidebar__nav .svg-icon {
+    stroke: #5a5a5a !important;
+    fill: none !important;
+}
+
+[data-bs-theme="light"] .sidebar__nav a:hover svg,
+[data-bs-theme="light"] .sidebar__nav li:hover svg {
+    stroke: #CFAE6D !important;
+}
+
+/* Light Mode - YENİ Badge */
+[data-bs-theme="light"] .sidebar__nav .badge,
+[data-bs-theme="light"] .sidebar__nav [class*="badge"],
+[data-bs-theme="light"] .sidebar__nav [class*="new"] {
+    background: #CFAE6D !important;
+    color: #000000 !important;
+}
+
+/* Light Mode - Border */
+[data-bs-theme="light"] .sidebar__nav--border {
+    border-color: rgba(207, 174, 109, 0.2) !important;
+}
+
+/* Light Mode - Header */
+[data-bs-theme="light"] .header__content,
+[data-bs-theme="light"] #header {
+    background: #FFFFFF !important;
+}
+
+[data-bs-theme="light"] .header__content a,
+[data-bs-theme="light"] .header__content span {
+    color: #1a1a1a !important;
+}
+
+/* Light Mode - Header Butonlar */
+[data-bs-theme="light"] .header__content .btn,
+[data-bs-theme="light"] .header__content button {
+    color: #1a1a1a !important;
+}
+
+[data-bs-theme="light"] .header__content .btn-primary,
+[data-bs-theme="light"] .header__content [class*="register"],
+[data-bs-theme="light"] .header__content [class*="signup"] {
+    background: linear-gradient(135deg, #CFAE6D 0%, #b8973d 100%) !important;
+    color: #000000 !important;
+    border: none !important;
+}
+

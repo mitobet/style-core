@@ -1,0 +1,2912 @@
+/* CSS Değişkenleri - Light Theme */
+
+
+:root {
+    --tf-bg: #273341;
+    --tf-bg2: #273341;
+    --tf-border: #e6e6e6;
+    --tf-borderhover: rgba(255, 229, 92, 0.5);
+    --tf-tc: #1d2735;
+    --tf-tc2: #596881;
+    scroll-behavior: auto !important;
+}
+
+html {
+    scroll-behavior: auto !important;
+}
+
+:root {
+    --tf-bg: #273341;
+    --tf-bg2: #273341;
+    --tf-btn: #;
+    --tf-btn2: linear-gradient(180deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.1) 100%);
+    --tf-hb-b: rgba(255, 229, 92, 0.3);
+    --tf-hb-p: rgba(154, 38, 173, 0.3);
+    --tf-hb-o: rgba(224, 117, 69, 0.3);
+    --tf-hb-g: rgba(255, 229, 92, 0.3);
+    --tf-hb-r: rgba(235, 87, 87, 0.3);
+    --tf-logo-s: url("../img/logo-l-s.svg");
+    /* --tf-logo: url("../img/logo--light.svg"); */
+    --tf-logo: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/logos/SiWAHVEUT3o0OUInlmMpvuEiFxG7TA1ynn4EE4Zo.png");
+    --tf-logo2: url("https://cdn.ebetlab.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/logos/037JmA7TcevTIUvrLsNPMjFWOorHrTydILoL3zHO.png");
+    --tf-btnhover: #1d2735;
+    --tf-btncolor: #fff;
+    --tf-promobg: rgba(255, 229, 92, 0.1);
+    --tf-promostat1: rgba(255, 229, 92, 0.1);
+    --tf-promostat2: rgba(0, 0, 0, 0.04);
+    --tf-vip: linear-gradient(90deg, rgba(15, 94, 255, 0.12) 0%, rgba(154, 38, 173, 0.12) 33%, rgba(224, 117, 69, 0.12) 66%, rgba(255, 229, 92, 0.12) 100%);
+    --tf-stat: .75;
+    --tf-race: .5;
+    --tf-rankingcopper: rgba(184, 115, 51, 0.3);
+    --tf-rankingbronze: rgba(201, 174, 93, 0.3);
+    --tf-rankingsilver: rgba(192, 192, 192, 0.3);
+    --tf-rankinggold: rgba(255, 229, 92, 0.3);
+    --tf-rankingplatinum: rgba(229, 228, 226, 0.3);
+    --tf-rankingdiamond: rgba(185, 242, 255, 0.3);
+    --tf-rankingobsidian: rgba(113, 98, 122, 0.3);
+    --tf-rankingrose: rgba(183, 110, 121, 0.3);
+    --tf-benefit: .75;
+    --tf-active: #FFE55C;
+}
+
+/* Dark Theme */
+[data-bs-theme="dark"] {
+    --tf-bg: #273341;
+    --tf-bg2: #273341;
+    --tf-border: rgba(255, 229, 92, 0.1);
+    --tf-borderhover: rgba(255, 229, 92, 0.3);
+    --tf-tc: #fff;
+    --tf-tc2: #757788;
+    --tf-btn: linear-gradient(180deg, rgba(255, 229, 92, 0.1) 0%, rgba(255, 229, 92, 0.05) 100%);
+    --tf-btn2: linear-gradient(180deg, rgba(255, 229, 92, 0.1) 0%, rgba(255, 229, 92, 0.05) 100%);
+    --tf-hb-b: rgba(255, 229, 92, 0.2);
+    --tf-hb-p: rgba(154, 38, 173, 0.2);
+    --tf-hb-o: rgba(224, 117, 69, 0.2);
+    --tf-hb-g: rgba(255, 229, 92, 0.1);
+    --tf-hb-r: rgba(235, 87, 87, 0.14);
+    --tf-logo-s: url("../img/logo-d-s.svg");
+    /* --tf-logo: url("../img/logo--dark.svg"); */
+    --tf-logo: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/logos/SiWAHVEUT3o0OUInlmMpvuEiFxG7TA1ynn4EE4Zo.png");
+    --tf-logo2: url("https://cdn.ebetlab.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/logos/037JmA7TcevTIUvrLsNPMjFWOorHrTydILoL3zHO.png");
+    /* --tf-logo2: url("../img/logo--white.svg"); */
+    --tf-btnhover: #fff;
+    --tf-btncolor: var(--tf-active);
+    --tf-promobg: #1a191f;
+    --tf-promostat1: rgba(255, 229, 92, 0.05);
+    --tf-promostat2: rgba(255, 255, 255, 0.02);
+    --tf-vip: linear-gradient(90deg, rgba(15, 94, 255, 0.06) 0%, rgba(154, 38, 173, 0.06) 33%, rgba(224, 117, 69, 0.06) 66%, rgba(255, 229, 92, 0.06) 100%);
+    --tf-stat: .2;
+    --tf-race: .2;
+    --tf-rankingcopper: rgba(184, 115, 51, 0.1);
+    --tf-rankingbronze: rgba(201, 174, 93, 0.1);
+    --tf-rankingsilver: rgba(192, 192, 192, 0.1);
+    --tf-rankinggold: rgba(255, 229, 92, 0.1);
+    --tf-rankingplatinum: rgba(229, 228, 226, 0.1);
+    --tf-rankingdiamond: rgba(185, 242, 255, 0.1);
+    --tf-rankingobsidian: rgba(113, 98, 122, 0.1);
+    --tf-rankingrose: rgba(183, 110, 121, 0.1);
+    --tf-benefit: .2;
+}
+
+/* Light Theme */
+[data-bs-theme="light"] {
+    --tf-bg: #ffffff;
+    --tf-bg2: #f8f9fa;
+    --tf-border: rgba(0, 0, 0, 0.1);
+    --tf-borderhover: rgba(255, 229, 92, 0.3);
+    --tf-tc: #1d2735;
+    --tf-tc2: #596881;
+    --tf-btn: linear-gradient(180deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.1) 100%);
+    --tf-btn2: linear-gradient(180deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.1) 100%);
+    --tf-hb-b: rgba(255, 229, 92, 0.2);
+    --tf-hb-p: rgba(154, 38, 173, 0.2);
+    --tf-hb-o: rgba(224, 117, 69, 0.2);
+    --tf-hb-g: rgba(255, 229, 92, 0.15);
+    --tf-hb-r: rgba(235, 87, 87, 0.2);
+    --tf-logo-s: url("../img/logo-l-s.svg");
+    --tf-logo: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/logos/SiWAHVEUT3o0OUInlmMpvuEiFxG7TA1ynn4EE4Zo.png");
+    --tf-logo2: url("https://cdn.ebetlab.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/logos/037JmA7TcevTIUvrLsNPMjFWOorHrTydILoL3zHO.png");
+    --tf-btnhover: #1d2735;
+    --tf-btncolor: #fff;
+    --tf-promobg: #ffffff;
+    --tf-promostat1: rgba(255, 229, 92, 0.1);
+    --tf-promostat2: rgba(0, 0, 0, 0.04);
+    --tf-vip: linear-gradient(90deg, rgba(15, 94, 255, 0.12) 0%, rgba(154, 38, 173, 0.12) 33%, rgba(224, 117, 69, 0.12) 66%, rgba(255, 229, 92, 0.12) 100%);
+    --tf-stat: .75;
+    --tf-race: .5;
+    --tf-rankingcopper: rgba(184, 115, 51, 0.3);
+    --tf-rankingbronze: rgba(201, 174, 93, 0.3);
+    --tf-rankingsilver: rgba(192, 192, 192, 0.3);
+    --tf-rankinggold: rgba(255, 229, 92, 0.3);
+    --tf-rankingplatinum: rgba(229, 228, 226, 0.3);
+    --tf-rankingdiamond: rgba(185, 242, 255, 0.3);
+    --tf-rankingobsidian: rgba(113, 98, 122, 0.3);
+    --tf-rankingrose: rgba(183, 110, 121, 0.3);
+    --tf-benefit: .75;
+}
+
+/* Font Tanımları - fonts.css'den yüklenir */
+
+
+/* Genel Stiller */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family fonts.css'den yüklenir */
+}
+
+
+
+.section {
+    background-color: var(--tf-bg2);
+}
+
+
+body {
+    /* font-family fonts.css'den yüklenir */
+    background-color: #273341;
+    background-color: var(--tf-bg);
+    color: var(--tf-tc);
+    font-weight: 400;
+    margin: 0;
+    overflow-x: hidden;
+    scroll-behavior: auto !important;
+}
+
+button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    transition: .4s ease;
+    transition-property: color, background, background-color, border-color, box-shadow, opacity;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
+
+a {
+    text-decoration: none;
+    transition: .4s ease;
+    transition-property: color, background, background-color, border-color, box-shadow, opacity;
+}
+
+a:hover, a:active, a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+svg {
+    transition: stroke .4s ease;
+}
+
+/* Scrollbar Stili */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-button {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 229, 92, 0.5);
+    outline: 0 solid #fff;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--tf-active);
+}
+
+::-webkit-scrollbar-track {
+    background: var(--tf-bg2);
+}
+
+/* Sidebar Ana Stiller */
+.sidebar {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: var(--tf-bg2);
+    border-right: 1px solid var(--tf-border);
+    box-shadow: 4px 0 20px rgba(255, 229, 92, 0.05);
+    z-index: 99;
+    width: 100vw;
+    padding: 0;
+    transform: translate3d(-100vw, 0, 0);
+    transition: transform .4s ease;
+}
+
+/* Light mode için sidebar stilleri */
+[data-bs-theme="light"] .sidebar {
+    background: #ffffff;
+    border-right: 2px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.sidebar:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 229, 92, 0.3) 30%, rgba(255, 229, 92, 0.1) 70%, transparent 100%);
+}
+
+.sidebar.active {
+    transform: translate3d(0, 0, 0);
+}
+
+.sidebar__head {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 80px;
+    border-bottom: 1px solid var(--tf-border);
+    padding: 0 15px;
+}
+
+.sidebar__logo {
+    width: 160px;
+    height: 60px;
+    background: var(--tf-logo) no-repeat center center;
+    background-size: contain;
+    cursor: pointer;
+}
+
+.sidebar__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+/* Crypto Links */
+.sidebar__crypto-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-bottom: 12px;
+    padding: 0 8px;
+}
+
+.crypto-link {
+    display: block;
+    position: relative;
+    height: 60px;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    border: 1px solid rgba(255, 229, 92, 0.25);
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.03) 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-link:hover {
+    border-color: rgba(255, 229, 92, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 229, 92, 0.2);
+}
+
+.crypto-link__bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.crypto-link:hover .crypto-link__bg {
+    opacity: 1;
+}
+
+.crypto-link__content {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 16px;
+    position: relative;
+    z-index: 2;
+}
+
+.crypto-link__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.25) 0%, rgba(255, 229, 92, 0.15) 100%);
+    margin-right: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.crypto-link__icon:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 229, 92, 0.3) 0%, transparent 70%);
+    animation: pulse-icon 3s infinite ease-in-out;
+}
+
+@keyframes pulse-icon {
+    0%, 100% { transform: scale(0.8); opacity: 0.3; }
+    50% { transform: scale(1.2); opacity: 0.6; }
+}
+
+.crypto-link:hover .crypto-link__icon {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.35) 0%, rgba(255, 229, 92, 0.25) 100%);
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15), 0 0 12px rgba(255, 229, 92, 0.3);
+}
+
+.crypto-link:hover .crypto-link__icon:before {
+    animation: pulse-icon 1.5s infinite ease-in-out;
+}
+
+.crypto-link__text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.crypto-link__title {
+    /* font-family fonts.css'den yüklenir */
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--tf-tc);
+    line-height: 1.2;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.crypto-link__subtitle {
+    /* font-family fonts.css'den yüklenir */
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--tf-tc2);
+    opacity: 0.8;
+}
+
+.crypto-link__arrow {
+    font-size: 18px;
+    font-weight: 700;
+    color: rgba(255, 229, 92, 0.7);
+    transition: all 0.3s ease;
+    margin-left: 5px;
+}
+
+.crypto-link:hover .crypto-link__arrow {
+    color: #FFE55C;
+    transform: translateX(4px);
+    text-shadow: 0 0 6px rgba(255, 229, 92, 0.5);
+}
+
+/* Casino variant */
+.crypto-link--casino {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.12) 0%, rgba(255, 140, 0, 0.05) 100%);
+}
+
+.crypto-link--casino .crypto-link__icon {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.3) 0%, rgba(255, 229, 92, 0.2) 100%);
+}
+
+.crypto-link--casino:hover .crypto-link__icon {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.4) 0%, rgba(255, 229, 92, 0.3) 100%);
+}
+
+/* Sports variant */
+.crypto-link--sports {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.12) 0%, rgba(255, 229, 92, 0.05) 100%);
+}
+
+.crypto-link--sports .crypto-link__icon {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.3) 0%, rgba(255, 229, 92, 0.2) 100%);
+}
+
+.crypto-link--sports:hover .crypto-link__icon {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.4) 0%, rgba(255, 229, 92, 0.3) 100%);
+}
+
+.sidebar__links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    position: relative;
+    padding: 12px;
+}
+
+/* Casino ve Spor butonları için wrapper */
+.sidebar__links-row {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+}
+
+.sidebar__links-row .sidebar__link {
+    flex: 1;
+    width: calc(50% - 4px);
+}
+
+.sidebar__link {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    position: relative;
+}
+
+.sidebar__link:hover:before {
+    opacity: 1;
+}
+
+.sidebar__link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 229, 92, 0.2);
+    border-color: rgba(255, 229, 92, 0.5);
+}
+
+/* SPA navigation + smooth transition optimizasyonları */
+.sidebar__link,
+.sidebar__nav a,
+.sidebar__nav button {
+    will-change: transform;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    touch-action: manipulation;
+    cursor: pointer;
+}
+
+/* Safari'de tıklama gecikme problemini çöz */
+@supports (-webkit-touch-callout: none) {
+    .sidebar__link,
+    .sidebar__nav a,
+    .sidebar__nav button {
+        -webkit-appearance: none;
+        appearance: none;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
+    }
+}
+
+.sidebar__link span {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Light mode için text rengi */
+[data-bs-theme="light"] .sidebar__link span {
+    color: #1d2735;
+}
+
+
+
+
+
+/* Arrow için flex element - SADECE normal linkler (casino, spor, wheel hariç) */
+.sidebar__link:not(.sidebar__link--bonus):not(.sidebar__link--casino):not(.sidebar__link--sport):not(.sidebar__link--wheel):after {
+    content: '→' !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    color: #FFE55C !important;
+    transition: transform 0.3s ease !important;
+    width: 28px !important;
+    height: 28px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(255, 229, 92, 0.2) !important;
+    border-radius: 6px !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    transform: none !important;
+    z-index: 0 !important;
+}
+
+/* Light mode için arrow rengi */
+[data-bs-theme="light"] .sidebar__link:not(.sidebar__link--bonus):not(.sidebar__link--casino):not(.sidebar__link--sport):not(.sidebar__link--wheel):after {
+    color: #FFE55C !important;
+    background: rgba(255, 229, 92, 0.15) !important;
+}
+
+.sidebar__link:not(.sidebar__link--bonus):not(.sidebar__link--casino):not(.sidebar__link--sport):not(.sidebar__link--wheel):hover:after {
+    transform: translateX(3px);
+}
+
+.sidebar__link svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--tf-active);
+}
+
+.sidebar__link--purple {
+    background-color: rgba(154, 38, 173, 0.15);
+    border-color: rgba(154, 38, 173, 0.12);
+}
+
+.sidebar__link--purple svg {
+    stroke: #9a26ad;
+}
+
+.sidebar__link--purple:hover {
+    background-color: rgba(154, 38, 173, 0.2);
+    border-color: rgba(154, 38, 173, 0.22);
+}
+
+.sidebar__link--orange {
+    background-color: rgba(224, 117, 69, 0.15);
+    border-color: rgba(224, 117, 69, 0.12);
+}
+
+.sidebar__link--orange svg {
+    stroke: #e07545;
+}
+
+.sidebar__link--orange:hover {
+    background-color: rgba(224, 117, 69, 0.2);
+    border-color: rgba(224, 117, 69, 0.22);
+}
+
+.sidebar__link--casino {
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #FFE55C 0%, #FFD24D 100%);
+    box-shadow: 0 4px 15px rgba(255, 229, 92, 0.3);
+    border: 0.5px solid rgba(255, 229, 92, 0.6);
+}
+
+.sidebar__link--casino[href*="casino"] {
+    background: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/styles/kKuifkYMDDSyVvVGBVkV51YmyZUoO1Qv1ecX8b11.jpg") left center / cover no-repeat !important;
+}
+
+.sidebar__link--casino[href*="sportsbook"] {
+    background: url("https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/styles/Jmq4wR9D0Soz35pDspztsca2uUS1bclUSknFVQAj.jpg") left center / cover no-repeat !important;
+}
+
+.sidebar__link--casino:hover {
+    background: linear-gradient(135deg, #FFD24D 0%, #FFE55C 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 229, 92, 0.5);
+}
+
+.sidebar__link--casino span {
+    position: relative;
+    z-index: 2;
+    color: #1d2735;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.sidebar__link--casino:after {
+    display: none !important;
+}
+
+.sidebar__link--casino:hover:before {
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+    transition: transform 0.3s ease !important;
+}
+
+.sidebar__link--sport {
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #FFE55C 0%, #FFD24D 100%);
+    box-shadow: 0 4px 15px rgba(255, 229, 92, 0.3);
+    border: 0.5px solid rgba(255, 229, 92, 0.6);
+}
+
+.sidebar__link--sport:hover {
+    background: linear-gradient(135deg, #FFD24D 0%, #FFE55C 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 229, 92, 0.5);
+}
+
+.sidebar__link--sport span {
+    position: relative;
+    z-index: 2;
+    color: #1d2735;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.sidebar__link--sport:after {
+    display: none !important;
+}
+
+/* Şans Çarkı butonu - sarı/altın stili */
+.sidebar__link--wheel {
+    overflow: hidden;
+    position: relative;
+    background: transparent !important;
+    box-shadow: 0 4px 15px rgba(255, 229, 92, 0.3);
+    border: 0.5px solid rgba(255, 229, 92, 0.6);
+    padding: 0 !important;
+    display: block !important;
+}
+
+.sidebar__link--wheel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 229, 92, 0.5);
+    filter: brightness(1.05);
+}
+
+.sidebar__link--wheel span {
+    position: relative;
+    z-index: 2;
+    color: #1d2735;
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.sidebar__link--wheel:after {
+    display: none !important;
+}
+
+.sidebar__link--wheel:before {
+    display: none !important;
+}
+
+/* Telegram icon stilleri */
+.telegram-link .telegram-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(76%) saturate(450%) hue-rotate(359deg) brightness(104%) contrast(101%);
+}
+
+.telegram-link:hover .telegram-icon {
+    transform: scale(1.1) rotate(5deg);
+    filter: brightness(0) saturate(100%) invert(90%) sepia(100%) saturate(450%) hue-rotate(359deg) brightness(110%) contrast(101%);
+}
+
+[data-bs-theme="light"] .telegram-link .telegram-icon {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(450%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+[data-bs-theme="light"] .telegram-link:hover .telegram-icon {
+    filter: brightness(0) saturate(100%) invert(10%) sepia(30%) saturate(450%) hue-rotate(180deg) brightness(85%) contrast(95%);
+}
+
+/* Turnuva icon stilleri */
+.tournament-link .tournament-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(76%) saturate(450%) hue-rotate(359deg) brightness(104%) contrast(101%);
+}
+
+.tournament-link:hover .tournament-icon {
+    transform: scale(1.1) rotate(-5deg);
+    filter: brightness(0) saturate(100%) invert(90%) sepia(100%) saturate(450%) hue-rotate(359deg) brightness(110%) contrast(101%);
+}
+
+[data-bs-theme="light"] .tournament-link .tournament-icon {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(450%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+[data-bs-theme="light"] .tournament-link:hover .tournament-icon {
+    filter: brightness(0) saturate(100%) invert(10%) sepia(30%) saturate(450%) hue-rotate(180deg) brightness(85%) contrast(95%);
+}
+
+/* Bonus Talep (küçük link) icon stilleri */
+.bonus-request-link .bonus-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    filter: brightness(0) saturate(100%) invert(79%) sepia(76%) saturate(450%) hue-rotate(359deg) brightness(104%) contrast(101%);
+    pointer-events: none; /* Tıklamayı engelleme - parent'a geçsin */
+}
+
+.bonus-request-link:hover .bonus-icon {
+    transform: scale(1.1) rotate(10deg);
+    filter: brightness(0) saturate(100%) invert(90%) sepia(100%) saturate(450%) hue-rotate(359deg) brightness(110%) contrast(101%);
+}
+
+[data-bs-theme="light"] .bonus-request-link .bonus-icon {
+    filter: brightness(0) saturate(100%) invert(15%) sepia(20%) saturate(450%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+[data-bs-theme="light"] .bonus-request-link:hover .bonus-icon {
+    filter: brightness(0) saturate(100%) invert(10%) sepia(30%) saturate(450%) hue-rotate(180deg) brightness(85%) contrast(95%);
+}
+
+.sidebar__link--casino svg, .sidebar__link--sport svg {
+    display: none;
+}
+
+.sidebar__link--casino span, .sidebar__link--sport span {
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px #000;
+    color: #fff;
+}
+
+/* Light mode için casino link stilleri */
+[data-bs-theme="light"] .sidebar__link--casino span {
+    text-shadow: none;
+    color: #2c3e50;
+    font-weight: 800;
+}
+
+[data-bs-theme="light"] .sidebar__link--casino {
+    background: linear-gradient(135deg, #e8f4fd 0%, #d1ecf1 50%, #bee5eb 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="light"] .sidebar__link--casino:hover {
+    background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 50%, #a8d8e8 100%);
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Light mode için sportsbook link stilleri */
+[data-bs-theme="light"] .sidebar__link--casino[href*="sportsbook"] {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="light"] .sidebar__link--casino[href*="sportsbook"]:hover {
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 50%, #ced4da 100%);
+    border-color: rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar__link--casino span:first-child, .sidebar__link--sport span:first-child {
+    margin-left: 0;
+}
+
+/* ——— FORCE VISIBLE Bonus Talep Butonu ——— */
+.sidebar a.sidebar__link--bonus,
+a.sidebar__link--bonus,
+.sidebar__link--bonus {
+    position: relative !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    padding: 14px 16px !important;
+    margin: 8px 0 !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 48px !important;
+    background: linear-gradient(135deg, #FFE55C 0%, #FFC107 50%, #FFB300 100%) !important;
+    border: none !important;
+    border-radius: 12px !important;
+    box-shadow: 
+        0 4px 12px rgba(255, 229, 92, 0.3),
+        0 2px 6px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.3s ease !important;
+    overflow: visible !important;
+    cursor: pointer !important;
+    gap: 12px !important;
+    z-index: 1000 !important;
+    transform: none !important;
+    /* TIKLANABILIRLIK GARANTİSİ */
+    pointer-events: auto !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: rgba(255, 229, 92, 0.3) !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.sidebar a.sidebar__link--bonus:hover,
+a.sidebar__link--bonus:hover,
+.sidebar__link--bonus:hover {
+    transform: translateY(-2px) scale(1.02) !important;
+    background: linear-gradient(135deg, #FFC107 0%, #FFB300 50%, #FF9800 100%) !important;
+    box-shadow: 
+        0 6px 20px rgba(255, 229, 92, 0.4),
+        0 3px 10px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* FORCE VISIBLE icon - sol tarafta (SVG ile) */
+.sidebar a.sidebar__link--bonus::before,
+a.sidebar__link--bonus::before,
+.sidebar__link--bonus::before {
+    content: '' !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    background: rgba(255, 255, 255, 0.2) url('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/ep3YGM2vykm19eefqTFkF0LvamjEEULx/mini-sliders/fgQ0BrRTxckTxXYtq0Dsy5LuxHdOecr80zIZ74YH.svg') center center / 22px 22px no-repeat !important;
+    border-radius: 10px !important;
+    transition: all 0.3s ease !important;
+    flex-shrink: 0 !important;
+    z-index: 100 !important;
+    filter: brightness(0) invert(1);
+    pointer-events: none !important; /* Tıklamayı engelleme - parent'a geçsin */
+}
+
+.sidebar a.sidebar__link--bonus:hover::before,
+a.sidebar__link--bonus:hover::before,
+.sidebar__link--bonus:hover::before {
+    transform: rotate(-10deg) scale(1.1) !important;
+    background-color: rgba(255, 255, 255, 0.4) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* FORCE TEXT STYLING - Zıt renkler */
+.sidebar a.sidebar__link--bonus span,
+a.sidebar__link--bonus span,
+.sidebar__link--bonus span {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #1a1a1a !important; /* Normal: Koyu text (sarı arka plan) */
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3) !important;
+    transition: all 0.3s ease !important;
+    flex: 1 !important;
+    z-index: 50 !important;
+}
+
+/* HOVER - ZIT RENKLER */
+.sidebar a.sidebar__link--bonus:hover span,
+a.sidebar__link--bonus:hover span,
+.sidebar__link--bonus:hover span {
+    color: #ffffff !important; /* Hover: Beyaz text (turuncu arka plan) */
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important; /* Güçlü gölge */
+}
+
+/* BONUS BUTTON'DA OK YOK + TIKLAMAYI ENGELLEME */
+.sidebar a.sidebar__link--bonus::after,
+a.sidebar__link--bonus::after,
+.sidebar__link--bonus::after {
+    display: none !important;
+    content: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* BONUS BUTONUNUN TÜM CHILD ELEMENTLERI TIKLAMAYI GEÇİRSİN */
+.sidebar__link--bonus * {
+    pointer-events: none !important;
+}
+
+
+
+/* ——— Light Mode Premium Bonus Button ——— */
+[data-bs-theme="light"] .sidebar__link--bonus {
+    background: linear-gradient(135deg, #FFF8DC 0%, #FFE135 50%, #FFCC02 100%) !important;
+    box-shadow: 
+        0 4px 12px rgba(255, 204, 2, 0.2),
+        0 2px 6px rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover {
+    background: linear-gradient(135deg, #FFE135 0%, #FFCC02 50%, #FF9800 100%) !important;
+    box-shadow: 
+        0 6px 20px rgba(255, 204, 2, 0.3),
+        0 3px 10px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus span {
+    color: #1a1a1a !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover span {
+    color: #000000 !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus::before {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover::before {
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+[data-bs-theme="light"] .sidebar__link--bonus:hover span {
+    color: #000000 !important;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8) !important;
+}
+
+/* ——— Premium Responsive Bonus Button ——— */
+@media (max-width: 768px) {
+    .sidebar__link--bonus {
+        padding: 12px 14px !important;
+        margin: 6px 0 !important;
+        border-radius: 10px !important;
+        gap: 10px !important;
+    }
+    
+    .sidebar__link--bonus span {
+        font-size: 14px !important;
+        letter-spacing: 0.5px;
+    }
+    
+    .sidebar__link--bonus::before {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 20px !important;
+        border-radius: 8px !important;
+    }
+    
+    .sidebar__link--bonus:hover {
+        transform: translateY(-1px) scale(1.01) !important;
+    }
+}
+
+/* ——— Extra küçük ekranlar ——— */
+@media (max-width: 480px) {
+    .sidebar__link--bonus {
+        padding: 10px 12px !important;
+        margin: 4px 0 !important;
+        gap: 8px !important;
+    }
+    
+    .sidebar__link--bonus span {
+        font-size: 13px !important;
+    }
+    
+    .sidebar__link--bonus::before {
+        width: 28px !important;
+        height: 28px !important;
+        font-size: 18px !important;
+        border-radius: 6px !important;
+    }
+}
+
+.sidebar__big {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px;
+    padding-bottom: 80px;
+}
+
+.sidebar__big::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+
+.sidebar__big::-webkit-scrollbar-button {
+    display: none;
+}
+
+    .sidebar__big::-webkit-scrollbar-thumb {
+        background: rgba(255, 229, 92, 0.3);
+        outline: 0 solid #fff;
+        border-radius: 4px;
+    }
+
+.sidebar__big::-webkit-scrollbar-thumb:hover {
+    background: var(--tf-active);
+}
+
+.sidebar__big::-webkit-scrollbar-track {
+    background: var(--tf-border);
+    border-radius: 0;
+}
+
+.sidebar__menu, .sidebar__nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: relative;
+    width: 100%;
+}
+
+.sidebar__menu--collapse, .sidebar__nav--collapse {
+    border-radius: 0;
+    padding: 4px 0;
+    background: var(--tf-bg);
+    border: none;
+    margin-top: 4px;
+    box-shadow: none;
+    position: relative;
+    margin-left: 12px;
+    border-left: 2px solid rgba(255, 229, 92, 0.3);
+    padding-left: 8px;
+    width: calc(100% - 20px);
+}
+
+.sidebar__nav--collapse a {
+    border: none;
+    background: var(--tf-bg);
+    margin-bottom: 2px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    padding: 8px 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sidebar__nav--collapse a:hover {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border: none;
+    border-radius: 6px;
+}
+
+.sidebar__nav--collapse a svg {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+/* Collapse animation fix */
+.sidebar__nav--collapse {
+    height: auto !important;
+    overflow: visible !important;
+}
+
+.sidebar__nav--collapse.collapse {
+    display: none;
+}
+
+.sidebar__nav--collapse.collapse.show {
+    display: block;
+}
+
+/* Stagger animation for submenu items - Sadece bir kez çalışacak */
+.sidebar__nav--collapse.collapse.show li {
+    opacity: 1;
+    transform: translateX(0);
+    transition: all 0.3s ease;
+}
+
+.sidebar__nav--collapse.collapse.show li:nth-child(1) { transition-delay: 0.05s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(2) { transition-delay: 0.1s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(3) { transition-delay: 0.15s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(4) { transition-delay: 0.2s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(5) { transition-delay: 0.25s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(6) { transition-delay: 0.3s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(7) { transition-delay: 0.35s; }
+.sidebar__nav--collapse.collapse.show li:nth-child(8) { transition-delay: 0.4s; }
+
+.sidebar__nav--collapse.collapse li {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+/* Prevent scroll behavior */
+.sidebar__collapsed svg {
+    transition: transform 0.2s ease;
+}
+
+/* Prevent any scroll jump behavior */
+* {
+    scroll-behavior: auto !important;
+}
+
+.sidebar, .sidebar * {
+    scroll-behavior: auto !important;
+}
+
+.sidebar__menu {
+    margin-bottom: 12px;
+}
+
+.sidebar__nav--border {
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 229, 92, 0.3) !important;
+}
+
+.sidebar__nav li {
+    position: relative;
+    margin-bottom: 0;
+    width: 100%;
+    display: block;
+}
+
+.sidebar__nav li.has-submenu {
+    display: block;
+}
+
+.menu-item-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+/* Floating icon animation - disabled */
+/* .menu-item-wrapper img,
+.menu-item-wrapper svg,
+.crypto-link__icon svg,
+.svg-icon {
+    animation: float 4s ease-in-out infinite;
+} */
+
+/* Farklı animasyon süreleri ekleyerek daha doğal görünüm sağlıyoruz */
+.sidebar__nav li:nth-child(odd) .svg-icon {
+    animation-duration: 3.5s;
+}
+
+.sidebar__nav li:nth-child(even) .svg-icon {
+    animation-duration: 4.5s;
+}
+
+.sidebar__nav-small li:nth-child(odd) .svg-icon {
+    animation-duration: 4.2s;
+}
+
+.sidebar__nav-small li:nth-child(even) .svg-icon {
+    animation-duration: 3.8s;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    25% { transform: translateY(-3px) rotate(-2deg); }
+    50% { transform: translateY(-5px) rotate(0deg); }
+    75% { transform: translateY(-3px) rotate(2deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.sidebar__nav li:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar__nav li.active a {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.4);
+    box-shadow: 0 4px 20px rgba(255, 229, 92, 0.2);
+    transform: translateX(6px);
+    position: relative;
+}
+
+.sidebar__nav li.active a:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: linear-gradient(180deg, #FFE55C, rgba(255, 229, 92, 0.5));
+    border-radius: 0 3px 3px 0;
+}
+
+.sidebar__nav li.active a svg {
+    stroke: var(--tf-active);
+}
+
+.sidebar__nav a, .sidebar__nav button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 0 15px;
+    height: 50px;
+    border-radius: 12px;
+    color: var(--tf-tc);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.01) 100%);
+    border: 1px solid rgba(255, 229, 92, 0.1);
+    /* font-family fonts.css'den yüklenir */
+    font-weight: 500;
+    font-size: 14px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 6px;
+    overflow: hidden;
+}
+
+.sidebar__nav a.no-bg {
+    background: #273341; 
+    border: 1px solid rgba(255, 229, 92, 0.15) !important; 
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+
+.test-deneme {
+    background: #273341; 
+    border: 1px solid rgba(255, 229, 92, 0.15) !important; 
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}   
+
+/* Light mode için no-bg stilleri */
+[data-bs-theme="light"] .sidebar__nav a.no-bg {
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    color: #1d2735;
+}
+
+[data-bs-theme="light"] .sidebar__nav a.no-bg:hover {
+    background: #e9ecef;
+    border-color: rgba(0, 0, 0, 0.25);
+    color: #1d2735;
+}
+
+/* Hover glow effect */
+.sidebar__nav a.no-bg:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255, 229, 92, 0.2) 0%, rgba(255, 229, 92, 0) 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Hover efektlerinde tıklanmayı engellemeyi önle - dekoratif katmanlar tıklamayı yakalamasın */
+.sidebar__nav a::before,
+.sidebar__nav a::after,
+.sidebar__nav button::before,
+.sidebar__nav button::after,
+.sidebar__link::before,
+.sidebar__link::after,
+.sidebar__link-small::before,
+.sidebar__link-small::after {
+    pointer-events: none !important;
+}
+
+/* Asıl buton/bağlantı her zaman tıklanabilir kalsın - BLACK SCREEN ÖNLEYİCİ */
+.sidebar__nav a,
+.sidebar__nav button,
+.sidebar__link,
+.sidebar__link-small {
+    pointer-events: auto !important;
+    position: relative !important;
+    z-index: 10 !important; /* Her zaman üstte ol */
+    cursor: pointer !important;
+}
+
+/* Link içindeki tüm elemanlar da tıklanabilir - click event bubbling */
+.sidebar__nav a *,
+.sidebar__nav button *,
+.sidebar__link *,
+.sidebar__link-small * {
+    pointer-events: auto !important;
+}
+
+/* Safari mobil black screen fix - force hardware acceleration */
+@supports (-webkit-touch-callout: none) {
+    .sidebar__nav a,
+    .sidebar__nav button,
+    .sidebar__link,
+    .sidebar__link-small {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        -webkit-perspective: 1000;
+        perspective: 1000;
+    }
+}
+
+/* Collapsed (ok) butonunun konumu her durumda sabit kalsın */
+.sidebar__nav button.sidebar__collapsed,
+.sidebar__nav button.sidebar__collapsed:hover,
+.sidebar__nav button.sidebar__collapsed:active,
+.sidebar__nav button.sidebar__collapsed:focus {
+    transform: translateY(-50%) !important;
+}
+
+/* Stabil tıklama için elemanı sabitle */
+.sidebar__nav a,
+.sidebar__nav button,
+.sidebar__link,
+.sidebar__link-small {
+    will-change: auto !important;
+    transform: translateZ(0); /* paint layer sabitleme */
+    transition: background-color .25s ease, box-shadow .25s ease, border-color .25s ease, color .25s ease !important;
+}
+
+.sidebar__nav a.no-bg:hover:before {
+    opacity: 1;
+    animation: pulse-glow 2s infinite;
+}
+
+/* Border slide animation */
+.sidebar__nav a.no-bg:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--tf-active);
+    transition: width 0.3s ease;
+}
+/* .sidebar__nav a.no-bg:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--tf-active);
+    transition: width 0.3s ease;
+} */
+
+.sidebar__nav a.no-bg:hover:after {
+    width: 100%;
+}
+
+/* Tüm sidebar linkleri için border animation - sadece büyük menüde */
+.sidebar .sidebar__big .sidebar__nav a:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--tf-active);
+    transition: width 0.3s ease;
+}
+
+.sidebar .sidebar__big .sidebar__nav a:hover:after {
+    width: 100%;
+}
+
+/* Light mode için border animation - sadece büyük menüde */
+[data-bs-theme="light"] .sidebar .sidebar__big .sidebar__nav a:after {
+    background: #1d2735;
+}
+
+[data-bs-theme="light"] .sidebar .sidebar__big .sidebar__nav a:hover:after {
+    background: #1d2735;
+}
+
+/* Pulse animation */
+@keyframes pulse-glow {
+    0% { opacity: 0.2; }
+    50% { opacity: 0.5; }
+    100% { opacity: 0.2; }
+}
+
+.sidebar__nav a:before, .sidebar__nav button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.sidebar__nav a:hover:before, .sidebar__nav button:hover:before {
+    left: 100%;
+}
+
+.sidebar__nav a:hover, .sidebar__nav button:hover {
+    border-color: rgba(255, 229, 92, 0.3);
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.05) 0%, rgba(255, 229, 92, 0.02) 100%);
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(255, 229, 92, 0.1);
+}
+
+/* Light mode için hover stilleri */
+[data-bs-theme="light"] .sidebar__nav a:hover, 
+[data-bs-theme="light"] .sidebar__nav button:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    background: #e9ecef;
+    transform: translateX(4px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar__nav a span, .sidebar__nav button span {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFE55C;
+    width: auto;
+    height: 16px;
+    padding: 0 4px;
+    border-radius: 4px;
+    color: #000000;
+    font-size: 10px;
+    line-height: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-left: 8px;
+}
+
+/* Light mode için text renkleri */
+[data-bs-theme="light"] .sidebar__nav a, 
+[data-bs-theme="light"] .sidebar__nav button {
+    color: #1d2735;
+    background: #f8f9fa;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+[data-bs-theme="light"] .sidebar__nav a:hover, 
+[data-bs-theme="light"] .sidebar__nav button:hover {
+    background: #e9ecef;
+    border-color: rgba(0, 0, 0, 0.25);
+    color: #1d2735;
+}
+
+[data-bs-theme="light"] .sidebar__nav a svg, 
+[data-bs-theme="light"] .sidebar__nav button svg {
+    stroke: #596881;
+    fill: #596881;
+}
+
+[data-bs-theme="light"] .sidebar__nav a:hover svg, 
+[data-bs-theme="light"] .sidebar__nav button:hover svg {
+    stroke: #1d2735;
+    fill: #1d2735;
+}
+
+.sidebar__nav a svg, .sidebar__nav button svg,
+.sidebar__nav a img, .sidebar__nav button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    stroke: var(--tf-tc2);
+    fill: var(--tf-tc2);
+    transition: stroke 0.3s ease, fill 0.3s ease;
+}
+
+.sidebar__nav a:hover svg {
+    stroke: var(--tf-active);
+    fill: var(--tf-active);
+}
+
+.menu-item-wrapper .sidebar__collapsed,
+.sidebar__nav button.sidebar__collapsed {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.08) 0%, rgba(255, 229, 92, 0.03) 100%);
+    border: 1px solid rgba(255, 229, 92, 0.15);
+    border-radius: 8px;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    z-index: 10;
+}
+
+.sidebar__nav button.sidebar__collapsed:hover {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.3);
+    transform: translateY(-50%);
+    box-shadow: 0 0 15px rgba(255, 229, 92, 0.4);
+    animation: pulse-button 1s infinite;
+}
+
+@keyframes pulse-button {
+    0% { box-shadow: 0 0 0 0 rgba(255, 229, 92, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(255, 229, 92, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 229, 92, 0); }
+}
+
+.sidebar__nav button.sidebar__collapsed svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--tf-tc2);
+    margin-right: 0;
+    transform: rotate(-90deg);
+    transition: .4s ease;
+    transition-property: transform, stroke;
+}
+
+
+
+.sidebar__nav button.sidebar__collapsed[aria-expanded="true"] {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.2) 0%, rgba(255, 229, 92, 0.1) 100%);
+    border-color: rgba(255, 229, 92, 0.4);
+    box-shadow: 0 2px 8px rgba(255, 229, 92, 0.15);
+}
+
+.sidebar__nav button.sidebar__collapsed[aria-expanded="true"] svg {
+    stroke: var(--tf-active);
+    transform: rotate(0deg);
+}
+
+.sidebar__nav button.sidebar__collapsed:hover svg {
+    stroke: var(--tf-active);
+}
+
+/* Light mode için collapsed buton stilleri */
+[data-bs-theme="light"] .menu-item-wrapper .sidebar__collapsed,
+[data-bs-theme="light"] .sidebar__nav button.sidebar__collapsed {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.05) 0%, rgba(0, 0, 0, 0.02) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+[data-bs-theme="light"] .sidebar__nav button.sidebar__collapsed:hover {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+    border-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-bs-theme="light"] .sidebar__nav button.sidebar__collapsed[aria-expanded="true"] {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.08) 100%);
+    border-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="light"] .sidebar__nav button.sidebar__collapsed svg {
+    stroke: #596881;
+}
+
+[data-bs-theme="light"] .sidebar__nav button.sidebar__collapsed[aria-expanded="true"] svg {
+    stroke: #1d2735;
+}
+
+[data-bs-theme="light"] .sidebar__nav button.sidebar__collapsed:hover svg {
+    stroke: #1d2735;
+}
+
+.sidebar__title {
+    /* font-family fonts.css'den yüklenir */
+    font-size: 13px;
+    line-height: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--tf-tc2);
+    margin-bottom: 10px;
+    padding: 6px 15px;
+    position: relative;
+    letter-spacing: 0.5px;
+}
+
+.sidebar__title:before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    bottom: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #FFE55C, rgba(255, 229, 92, 0.3));
+    border-radius: 1px;
+}
+
+.sidebar__actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    margin-top: auto;
+    margin-bottom: 20px;
+    padding: 0 15px;
+}
+
+.sidebar__scheme {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: auto;
+    border: 1px solid var(--tf-border);
+    background-color: var(--tf-bg);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.sidebar__scheme button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    margin-right: 4px;
+}
+
+.sidebar__scheme button svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--tf-tc2);
+}
+
+.sidebar__scheme button:last-child {
+    margin-right: 0;
+}
+
+.sidebar__scheme button:hover svg {
+    stroke: var(--tf-active);
+}
+
+.sidebar__scheme button.active {
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+    border-color: rgba(255, 229, 92, 0.4);
+    box-shadow: 0 2px 8px rgba(255, 229, 92, 0.2);
+}
+
+.sidebar__scheme button.active svg {
+    stroke: var(--tf-active);
+}
+
+.sidebar__lang {
+    position: relative;
+}
+
+.sidebar__lang-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 80px;
+    height: 38px;
+    padding-left: 10px;
+    border-radius: 8px;
+    background: var(--tf-bg);
+    border: 1px solid var(--tf-border);
+    /* MOBİL TIKLANABILIRLIK */
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 229, 92, 0.2);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Dil butonu child elementleri tıklamayı engellemesin */
+.sidebar__lang-btn * {
+    pointer-events: none;
+}
+
+.sidebar__lang-btn img {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.sidebar__lang-btn span {
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--tf-tc);
+    margin-right: 4px;
+}
+
+.sidebar__lang-btn svg {
+    width: 12px;
+    height: 12px;
+    stroke: var(--tf-tc2);
+    transition: .2s ease;
+}
+
+.sidebar__lang-btn:hover svg {
+    stroke: var(--tf-tc);
+}
+
+.sidebar__lang-btn.show svg {
+    transform: rotate(180deg);
+    stroke: var(--tf-tc);
+}
+
+/* Dil menüsü - Dropdown system ile kontrol ediliyor */
+.dropdown-menu.sidebar__lang-menu {
+    max-width: 90px;
+    min-width: 90px;
+    background: var(--tf-bg);
+    border: 1px solid rgba(255, 229, 92, 0.15);
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 8px 25px rgba(255, 229, 92, 0.1);
+    position: absolute;
+    z-index: 9999;
+    margin-top: 4px;
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.dropdown-menu.sidebar__lang-menu.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar__small {
+    display: none;
+}
+
+/* Mobil için sidebar genişlik sınırlaması */
+@media (max-width: 767px) {
+    .sidebar {
+        width: 75vw !important; /* Ekranın %75'i */
+        max-width: 280px !important; /* Maksimum 280px */
+        min-width: 250px !important; /* Minimum 250px */
+    }
+    
+    /* Mobilde dil dropdown düzeltmeleri */
+    .sidebar__lang-menu {
+        max-width: 120px;
+        min-width: 120px;
+        right: 0;
+        left: auto;
+        bottom: 100% !important; /* Yukarı açılsın */
+        top: auto !important;
+        margin-bottom: 8px; /* Butondan biraz boşluk */
+        max-height: 200px; /* Maksimum yükseklik */
+        overflow-y: auto; /* Scroll olabilsin */
+    }
+    
+    .sidebar__lang-menu a {
+        font-size: 12px;
+        padding: 10px 8px;
+    }
+    
+    .sidebar__lang-menu a img {
+        width: 20px;
+        height: 20px;
+    }
+    
+    /* Mobilde logo görünsün - EN ÜST KISIM */
+    .sidebar__head {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 70px !important;
+        padding: 10px 15px !important;
+        flex-shrink: 0 !important;
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        background: var(--tf-bg2) !important;
+        border-bottom: 2px solid rgba(255, 229, 92, 0.3) !important;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .sidebar__head .sidebar__btn {
+        display: none !important;
+        visibility: hidden !important;
+    }
+    
+    .sidebar__logo {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        width: 160px !important;
+        height: 60px !important;
+        background: var(--tf-logo) no-repeat center center !important;
+        background-size: contain !important;
+        cursor: pointer !important;
+        position: relative !important;
+        z-index: 1001 !important;
+    }
+    
+    /* Light mode için logo */
+    [data-bs-theme="light"] .sidebar__logo {
+        background: var(--tf-logo) no-repeat center center !important;
+        background-size: contain !important;
+    }
+    
+    .sidebar__big {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: calc(100vh - 70px) !important;
+        padding: 12px !important;
+        padding-bottom: 180px !important;
+        overflow-y: auto !important;
+        overflow-x: visible !important; /* Dropdown menüleri için visible */
+    }
+    
+    /* Dil menüsü için özel overflow ayarı */
+    .sidebar__actions {
+        overflow: visible !important;
+    }
+    
+    .sidebar__lang {
+        overflow: visible !important;
+    }
+    
+    .sidebar__lang-menu {
+        overflow: visible !important;
+    }
+    
+    /* Büyük ekranlarda çok yer kaplamaması için */
+    .sidebar__links {
+        margin-bottom: 15px;
+    }
+    
+    .sidebar__link {
+        height: 48px; /* Biraz daha küçük */
+        font-size: 14px;
+    }
+    
+    .sidebar__nav a, .sidebar__nav button {
+        height: 45px; /* Biraz daha küçük */
+        font-size: 13px;
+    }
+    
+    .sidebar__title {
+        font-size: 12px;
+        margin-bottom: 8px;
+    }
+}
+
+/* Tablet ve Desktop için Responsive Stiller */
+@media (min-width: 768px) {
+    .sidebar {
+        position: relative;
+        top: auto;
+        left: auto;
+        bottom: auto;
+        width: 80px;
+        transform: translate3d(0, 0, 0);
+        height: 100vh;
+        flex-shrink: 0;
+    }
+
+    .sidebar__head {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        width: 100%;
+        height: 80px;
+        border-bottom: 1px solid var(--tf-border);
+    }
+
+    .sidebar__logo {
+        display: none;
+    }
+
+    .sidebar__btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: 8px;
+    background-color: var(--tf-bg2);
+    border: 1px solid var(--tf-border);
+    overflow: hidden;
+}
+
+    .dots-menu {
+        /* font-family fonts.css'den yüklenir */
+        font-weight: 700;
+        font-size: 24px;
+        color: rgba(255, 229, 92, 0.8);
+        line-height: 0.5;
+        animation: dotPulse 1.5s infinite ease-in-out;
+        display: inline-block;
+        text-shadow: 0 0 8px rgba(255, 229, 92, 0.3);
+        transform: translateY(-4px);
+    }
+
+    .sidebar__btn:hover .dots-menu {
+        color: #FFE55C;
+        text-shadow: 0 0 12px rgba(255, 229, 92, 0.5);
+        animation: dotPulse 0.8s infinite ease-in-out;
+    }
+
+    .sidebar__btn svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-tc);
+    }
+
+    .sidebar__content {
+        height: calc(100% - 80px);
+        width: 80px;
+    }
+
+    .sidebar__big {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        width: 260px;
+        background-color: var(--tf-bg2);
+        border-right: 1px solid var(--tf-border);
+        padding: 40px 16px;
+        transform: translate3d(-100%, 0, 0);
+        transition: transform .4s ease;
+        transition-delay: 0s;
+    }
+
+    .sidebar__small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        position: relative;
+        z-index: 1;
+        padding: 40px 0 40px 17px;
+        width: 80px;
+        height: 100%;
+        overflow-y: auto;
+        transition: transform .4s ease;
+        transition-delay: .2s;
+    }
+
+    .sidebar__small::-webkit-scrollbar {
+        width: 4px;
+        height: 4px;
+    }
+
+    .sidebar__small::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    .sidebar__small::-webkit-scrollbar-thumb {
+        background: rgba(255, 229, 92, 0.3);
+        outline: 0 solid #fff;
+        border-radius: 4px;
+    }
+
+    .sidebar__small::-webkit-scrollbar-thumb:hover {
+        background: var(--tf-active);
+    }
+
+    .sidebar__small::-webkit-scrollbar-track {
+        background: var(--tf-border);
+        border-radius: 0;
+    }
+
+    .sidebar__crypto-links-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid rgba(255, 229, 92, 0.1);
+    }
+
+    .crypto-link-small {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.1) 0%, rgba(255, 229, 92, 0.05) 100%);
+        border: 1px solid rgba(255, 229, 92, 0.2);
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        animation: borderPulse 3s infinite;
+    }
+    
+    @keyframes borderPulse {
+        0%, 100% { border-color: rgba(255, 229, 92, 0.2); }
+        50% { border-color: rgba(255, 229, 92, 0.6); }
+    }
+    
+    .crypto-link-small:before {
+        content: '';
+        position: absolute;
+        top: -150%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255, 229, 92, 0.1), transparent);
+        transform: rotate(45deg);
+        animation: shineEffect 4s infinite;
+    }
+    
+    @keyframes shineEffect {
+        0% { top: -150%; }
+        50% { top: 150%; }
+        100% { top: -150%; }
+    }
+    
+    .crypto-link-small svg {
+        position: relative;
+        z-index: 2;
+        animation: cryptoIconAnim 3s infinite ease-in-out;
+    }
+    
+    @keyframes cryptoIconAnim {
+        0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 3px rgba(255, 229, 92, 0.4)); }
+        25% { transform: scale(1.15) rotate(5deg); filter: drop-shadow(0 0 8px rgba(255, 229, 92, 0.6)); }
+        50% { transform: scale(1.1) rotate(0deg); filter: drop-shadow(0 0 5px rgba(255, 229, 92, 0.5)); }
+        75% { transform: scale(1.15) rotate(-5deg); filter: drop-shadow(0 0 8px rgba(255, 229, 92, 0.6)); }
+    }
+
+    .crypto-link-small:hover {
+        transform: translateY(-2px) scale(1.05);
+        border-color: rgba(255, 229, 92, 0.8);
+        box-shadow: 0 8px 20px rgba(255, 229, 92, 0.4), 0 0 15px rgba(255, 229, 92, 0.3);
+        animation: none;
+    }
+    
+    .crypto-link-small:hover:before {
+        animation: shineEffect 2s infinite;
+    }
+    
+    .crypto-link-small:hover svg {
+        animation: cryptoIconAnimHover 1s infinite ease-in-out;
+    }
+    
+    @keyframes cryptoIconAnimHover {
+        0%, 100% { transform: scale(1.15) rotate(0deg); filter: drop-shadow(0 0 8px rgba(255, 229, 92, 0.7)); }
+        50% { transform: scale(1.25) rotate(0deg); filter: drop-shadow(0 0 15px rgba(255, 229, 92, 0.9)); }
+    }
+
+    .crypto-link-small__glow {
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255, 229, 92, 0.4) 0%, transparent 70%);
+        opacity: 0.3;
+        transition: opacity 0.3s ease;
+        animation: glowPulse 3s infinite ease-in-out;
+    }
+    
+    @keyframes glowPulse {
+        0%, 100% { transform: scale(0.9); opacity: 0.3; }
+        50% { transform: scale(1.1); opacity: 0.5; }
+    }
+
+    .crypto-link-small:hover .crypto-link-small__glow {
+        opacity: 0.8;
+        animation: glowPulseHover 1s infinite;
+    }
+    
+    @keyframes glowPulseHover {
+        0%, 100% { transform: scale(1); opacity: 0.6; }
+        50% { transform: scale(1.2); opacity: 0.9; }
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); opacity: 0.3; }
+        50% { transform: scale(1.1); opacity: 0.6; }
+    }
+
+    .sidebar__link-small {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 46px;
+        border-radius: 8px;
+        background-color: rgba(255, 229, 92, 0.1);
+        border: 1px solid rgba(255, 229, 92, 0.1);
+        margin-bottom: 10px;
+    }
+
+    .sidebar__link-small svg {
+        width: 24px;
+        height: 24px;
+        stroke: var(--tf-active);
+    }
+
+    .sidebar__link-small:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar__link-small--purple {
+        background-color: rgba(154, 38, 173, 0.15);
+        border-color: rgba(154, 38, 173, 0.12);
+    }
+
+    .sidebar__link-small--purple svg {
+        stroke: #9a26ad;
+    }
+
+    .sidebar__link-small--purple:hover {
+        background-color: rgba(154, 38, 173, 0.2);
+        border-color: rgba(154, 38, 173, 0.22);
+    }
+
+    .sidebar__link-small--orange {
+        background-color: rgba(224, 117, 69, 0.15);
+        border-color: rgba(224, 117, 69, 0.12);
+    }
+
+    .sidebar__link-small--orange svg {
+        stroke: #e07545;
+    }
+
+    .sidebar__link-small--orange:hover {
+        background-color: rgba(224, 117, 69, 0.2);
+        border-color: rgba(224, 117, 69, 0.22);
+    }
+
+    .sidebar__nav-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    .sidebar__nav-small--border {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid rgba(255, 229, 92, 0.1);
+    }
+
+    .sidebar__nav-small li {
+        margin-top: 10px;
+    }
+
+    .sidebar__nav-small li:first-child {
+        margin-top: 0;
+    }
+
+    .sidebar__nav-small li.active a {
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+        border-color: rgba(255, 229, 92, 0.25);
+        box-shadow: 0 4px 8px rgba(255, 229, 92, 0.15);
+    }
+
+    .sidebar__nav-small li.active a svg {
+        stroke: var(--tf-active);
+        filter: drop-shadow(0 0 2px rgba(255, 229, 92, 0.3));
+    }
+
+    .sidebar__nav-small a, .sidebar__nav-small button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        width: 46px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.05) 0%, rgba(255, 229, 92, 0.02) 100%);
+        border: 1px solid rgba(255, 229, 92, 0.1);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .sidebar__nav-small a:before, .sidebar__nav-small button:before {
+        content: '';
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        width: 300%;
+        height: 300%;
+        background: radial-gradient(circle at center, rgba(255, 229, 92, 0.2) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        animation: navItemGlow 4s infinite;
+    }
+    
+    @keyframes navItemGlow {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 0.3; }
+    }
+
+    .sidebar__nav-small a svg, .sidebar__nav-small button svg,
+    .sidebar__nav-small a img, .sidebar__nav-small button img,
+    .crypto-link-small svg {
+        width: 24px;
+        height: 24px;
+        stroke: rgba(255, 229, 92, 0.6);
+        animation: iconPulse 2s infinite alternate, iconSpin 8s infinite linear;
+        transform-origin: center;
+    }
+    
+    @keyframes iconPulse {
+        0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255, 229, 92, 0.2)); }
+        100% { transform: scale(1.15); filter: drop-shadow(0 0 5px rgba(255, 229, 92, 0.5)); }
+    }
+    
+    @keyframes iconSpin {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(5deg); }
+        50% { transform: rotate(0deg); }
+        75% { transform: rotate(-5deg); }
+        100% { transform: rotate(0deg); }
+    }
+
+    .sidebar__nav-small a:hover, .sidebar__nav-small button:hover, .sidebar__nav-small a[aria-expanded="true"], .sidebar__nav-small button[aria-expanded="true"] {
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.15) 0%, rgba(255, 229, 92, 0.08) 100%);
+        border-color: rgba(255, 229, 92, 0.4);
+        box-shadow: 0 4px 12px rgba(255, 229, 92, 0.3), 0 0 15px rgba(255, 229, 92, 0.2);
+        transform: translateY(-3px) scale(1.08);
+    }
+    
+    .sidebar__nav-small a:hover:before, .sidebar__nav-small button:hover:before, 
+    .sidebar__nav-small a[aria-expanded="true"]:before, .sidebar__nav-small button[aria-expanded="true"]:before {
+        animation: navItemGlowHover 1.5s infinite;
+    }
+    
+    @keyframes navItemGlowHover {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.7; }
+    }
+
+    .sidebar__nav-small a:hover svg, .sidebar__nav-small button:hover svg, .sidebar__nav-small a[aria-expanded="true"] svg, .sidebar__nav-small button[aria-expanded="true"] svg {
+        stroke: var(--tf-active);
+        filter: drop-shadow(0 0 8px rgba(255, 229, 92, 0.7));
+        animation: iconPulseHover 0.8s infinite alternate, iconSpinHover 3s infinite linear;
+    }
+    
+    @keyframes iconPulseHover {
+        0% { transform: scale(1.1); filter: drop-shadow(0 0 5px rgba(255, 229, 92, 0.6)); }
+        100% { transform: scale(1.25); filter: drop-shadow(0 0 10px rgba(255, 229, 92, 0.9)); }
+    }
+    
+    @keyframes iconSpinHover {
+        0% { transform: rotate(0deg); }
+        25% { transform: rotate(10deg); }
+        50% { transform: rotate(0deg); }
+        75% { transform: rotate(-10deg); }
+        100% { transform: rotate(0deg); }
+    }
+
+    .sidebar__actions-small {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: auto;
+    }
+
+    /* Küçük menüde dil butonu GİZLİ - sadece büyük menüde dil değiştirme var */
+    .sidebar__lang-small {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .sidebar__lang-small-btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 46px;
+        width: 46px;
+        border-radius: 8px;
+        color: var(--tf-tc);
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.05) 0%, rgba(255, 229, 92, 0.02) 100%);
+        border: 1px solid rgba(255, 229, 92, 0.1);
+        transition: all 0.3s ease;
+        /* MOBİL TIKLANABILIRLIK */
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(255, 229, 92, 0.2);
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    
+    .sidebar__lang-small-btn * {
+        pointer-events: none;
+    }
+    
+    .sidebar__lang-small-btn:hover {
+        background: linear-gradient(135deg, rgba(255, 229, 92, 0.1) 0%, rgba(255, 229, 92, 0.05) 100%);
+        border-color: rgba(255, 229, 92, 0.2);
+        box-shadow: 0 4px 8px rgba(255, 229, 92, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .sidebar__lang-small-btn img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .sidebar__lang-small-menu {
+        max-width: 50px;
+        min-width: 50px;
+        background: var(--tf-bg);
+        border: 1px solid rgba(255, 229, 92, 0.15);
+        border-radius: 8px;
+        padding: 8px 0;
+        box-shadow: 0 8px 15px rgba(255, 229, 92, 0.1);
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    
+    .sidebar__lang-small-menu.show {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .sidebar__lang-small-menu li {
+        margin-bottom: 15px;
+    }
+
+    .sidebar__lang-small-menu li:last-child {
+        margin-bottom: 0;
+    }
+
+    .sidebar__lang-small-menu a {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 46px;
+        height: 44px; /* Mobil dokunma alanı artırıldı */
+        transition: all 0.3s ease;
+        /* MOBİL TIKLANABILIRLIK */
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: rgba(255, 229, 92, 0.3);
+    }
+    
+    .sidebar__lang-small-menu a img {
+        pointer-events: none;
+    }
+    
+    .sidebar__lang-small-menu a:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 2px rgba(255, 229, 92, 0.3));
+    }
+
+    .sidebar__lang-small-menu a img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .sidebar.active .sidebar__big {
+        transform: translate3d(0, 0, 0);
+        transition-delay: .2s;
+    }
+
+    .sidebar.active .sidebar__small {
+        transform: translate3d(-80px, 0, 0);
+        transition-delay: 0s;
+    }
+}
+
+/* Desktop için Genişletilmiş Sidebar */
+@media (min-width: 1200px) {
+    .sidebar {
+        width: 260px;
+        transition: width .4s ease;
+        transition-delay: .2s;
+    }
+
+    .sidebar__head {
+        width: 260px;
+        justify-content: flex-start;
+        padding-left: 17px;
+        border-right: 1px solid var(--tf-bg2);
+        transition: width .4s ease;
+        overflow: visible;
+        transition-delay: .2s;
+    }
+
+    .sidebar__logo {
+        position: fixed;
+        z-index: 100;
+        left: 85px;
+        display: block;
+        width: 264px;  /* %100 büyük: 132px * 2 = 264px */
+        height: 80px;  /* %100 büyük: 40px * 2 = 80px */
+        background: var(--tf-logo) no-repeat left center;
+        background-size: auto 80px;  /* %100 büyük: 40px * 2 = 80px */
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .sidebar__logo:hover {
+        transform: scale(1.05);
+        filter: drop-shadow(0 4px 12px rgba(255, 229, 92, 0.3));
+    }
+
+    .sidebar__actions {
+        padding: 0;
+    }
+
+    .sidebar__big {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition: .4s ease;
+        transition-property: opacity, transform;
+        transition-delay: .2s;
+    }
+
+    .sidebar__small {
+        transform: translate3d(-80px, 0, 0);
+        opacity: 0;
+        transition-property: opacity, transform;
+        transition-delay: 0s;
+    }
+
+    .sidebar.active {
+        width: 80px;
+        transition-delay: 0s;
+    }
+
+    .sidebar.active .sidebar__head {
+        width: 80px;
+        transition-delay: 0s;
+    }
+
+    .sidebar.active .sidebar__big {
+        transform: translate3d(-260px, 0, 0);
+        opacity: 0;
+        transition-delay: 0s;
+    }
+
+    .sidebar.active .sidebar__small {
+        transform: translate3d(0, 0, 0);
+        opacity: 1;
+        transition-delay: .2s;
+    }
+}
+
+/* Dropdown Menu Stilleri */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    float: left;
+    min-width: 160px;
+    padding: 8px;
+    margin: 8px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background: var(--tf-bg);
+    border: 1px solid rgba(255, 229, 92, 0.15);
+    border-radius: 0;
+    box-shadow: 0 8px 25px rgba(255, 229, 92, 0.1), 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Sidebar lang menüsü için özel gösterim - SADECE SIDEBAR */
+.sidebar .dropdown-menu.sidebar__lang-menu,
+.sidebar .sidebar__lang-menu,
+.sidebar .sidebar__lang-small-menu {
+    display: none !important;
+}
+
+.sidebar .dropdown-menu.sidebar__lang-menu.show,
+.sidebar .sidebar__lang-menu.show,
+.sidebar .sidebar__lang-small-menu.show {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Header ve diğer dropdown'lar için normal Bootstrap davranışı */
+.dropdown-menu {
+    display: none;
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+/* Collapse Animasyonu */
+.collapse {
+    display: none;
+}
+
+.collapse.show {
+    display: block;
+}
+
+/* SVG Icon Stilleri */
+.svg-icon {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+}
+
+.svg-icon use {
+    pointer-events: none;
+}
+
+/* Menü kapandığında casino ve spor iconları için */
+.sidebar__link-small {
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar__link-small:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+}
+
+/* Casino icon için */
+.sidebar__link-small[href*="casino"]:before {
+    content: '🎰';
+    font-size: 20px;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sportsbook icon için */
+.sidebar__link-small[href*="sportsbook"]:before {
+    content: '⚽';
+    font-size: 20px;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Menü kapandığında background image'ları gizle */
+.sidebar__link-small {
+    background: none !important;
+}
+
+/* Hover durumunda da background image'ları gizle */
+.sidebar__link-small:hover {
+    background: none !important;
+}
+
+/* Light modda fill sorununu çözmek için */
+[data-bs-theme="light"] .sidebar .svg-icon {
+    fill: #596881 !important;
+
+}
+
+[data-bs-theme="light"] .sidebar .svg-icon:hover {
+    fill: #1d2735 !important;
+}
+
+[data-bs-theme="light"] .sidebar .svg-icon use {
+    fill: #596881 !important;
+}
+
+[data-bs-theme="light"] .sidebar .svg-icon:hover use {
+    fill: #1d2735 !important;
+}
+
+/* Dark modda fill kontrolü */
+[data-bs-theme="dark"] .sidebar .svg-icon {
+    fill: var(--tf-tc2) !important;
+}
+
+[data-bs-theme="dark"] .sidebar .svg-icon:hover {
+    fill: var(--tf-active) !important;
+}
+
+[data-bs-theme="dark"] .sidebar .svg-icon use {
+    fill: var(--tf-tc2) !important;
+}
+
+[data-bs-theme="dark"] .sidebar .svg-icon:hover use {
+    fill: var(--tf-active) !important;
+}
+
+/* Genel SVG fill kontrolü - diğer CSS'leri override etmek için */
+.sidebar .active .svg-icon, 
+.sidebar a:hover .svg-icon, 
+.sidebar button:hover .svg-icon {
+    fill: var(--tf-active) !important;
+    color: var(--tf-active) !important;
+}
+
+/* Light modda özel kontrol */
+[data-bs-theme="light"] .sidebar .active .svg-icon, 
+[data-bs-theme="light"] .sidebar a:hover .svg-icon, 
+[data-bs-theme="light"] .sidebar button:hover .svg-icon {
+    fill: #1d2735 !important;
+    color: #1d2735 !important;
+}
+
+/* —— Ok butonu sabit kalsın (hover'da milim oynamasın) —— */
+.menu-item-wrapper { position: relative; }
+.menu-item-wrapper .sidebar__collapsed,
+.sidebar .sidebar__nav button.sidebar__collapsed {
+  position: absolute !important;
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  transition: none !important; /* konum/ölçek animasyonu yok */
+}
+
+/* Hover'da da sabit kal */
+.menu-item-wrapper:hover .sidebar__collapsed,
+.sidebar .sidebar__nav li:hover .sidebar__collapsed,
+.sidebar .sidebar__nav a:hover + .sidebar__collapsed {
+  right: 8px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
+/* Ok butonunda ölçek/atlama etkilerini kapat */
+.sidebar .sidebar__nav button.sidebar__collapsed:hover,
+.sidebar .sidebar__nav button.sidebar__collapsed:active,
+.sidebar .sidebar__nav button.sidebar__collapsed:focus {
+  transform: translateY(-50%) !important;
+  box-shadow: none !important;
+  animation: none !important;
+}
+
+/* —— Büyük menüde (sidebar__big) alt çizgi hover efektini geri getir —— */
+.sidebar .sidebar__big .sidebar__nav a {
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar .sidebar__big .sidebar__nav a::after {
+  display: block !important;
+  content: '' !important;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--tf-active) !important;
+  transition: width 0.3s ease !important;
+}
+
+.sidebar .sidebar__big .sidebar__nav a:hover::after {
+  width: 100% !important;
+}
+
+/* Normal öğelerde hover efekti - aktif olmayanlarda */
+.sidebar .sidebar__big .sidebar__nav li:not(.active) a:hover::after {
+  width: 100% !important;
+  height: 2px !important;
+  bottom: 0 !important;
+  top: auto !important;
+  transform: none !important;
+  border-radius: 0 !important;
+}
+
+/* Aktif öğede sol kenar çizgisi kalsın, alt çizgi görünmesin */
+.sidebar .sidebar__big .sidebar__nav li.active a::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 3px !important;
+  height: 60% !important;
+  background: linear-gradient(180deg, #FFE55C, rgba(255, 229, 92, 0.5)) !important;
+  border-radius: 0 3px 3px 0 !important;
+}
+
+/* Aktif öğede hover efekti - güzel sweeper */
+.sidebar .sidebar__big .sidebar__nav li.active a:hover::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.15), transparent) !important;
+  animation: sweepEffect 0.6s ease-out !important;
+  pointer-events: none !important;
+}
+
+@keyframes sweepEffect {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+[data-bs-theme="light"] .sidebar .sidebar__big .sidebar__nav a::after {
+  background: #1d2735 !important;
+}
+
+/* ——— Swipe Light Hover Effects ——— */
+/* Ana container'lara swipe light efekti */
+.sidebar__nav a,
+.sidebar__nav button,
+.sidebar__link,
+.sidebar__link-small,
+.sidebar__nav-small a,
+.sidebar__nav-small button {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Swipe light for nav (underline ::after ile çakışmaması için ::before kullan) */
+.sidebar__nav a::before,
+.sidebar__nav button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.3), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.sidebar__nav a:hover::before,
+.sidebar__nav button:hover::before {
+    left: 100%;
+}
+
+/* Swipe light for link & mini items (mini icon ::before ile çakışmaması için ::after kullan) */
+.sidebar__link::after,
+.sidebar__link-small::after,
+.sidebar__nav-small a::after,
+.sidebar__nav-small button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 229, 92, 0.3), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+}
+
+.sidebar__link:hover::after,
+.sidebar__link-small:hover::after,
+.sidebar__nav-small a:hover::after,
+.sidebar__nav-small button:hover::after {
+    left: 100%;
+}
+
+.dropdown-menu.sidebar__lang-menu.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+.sidebar__lang-menu li {
+    margin-bottom: 8px;
+}
+
+.sidebar__lang-menu li:last-child {
+    margin-bottom: 0;
+}
+
+.sidebar__lang-menu a {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: var(--tf-tc);
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    white-space: nowrap;
+    /* MOBİL TIKLANABILIRLIK */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255, 229, 92, 0.3);
+    user-select: none;
+    -webkit-user-select: none;
+    min-height: 44px; /* Mobil dokunma alanı */
+}
+
+/* Dil seçeneği img tıklamayı engellemesin */
+.sidebar__lang-menu a img {
+    pointer-events: none;
+}
+
+.sidebar__lang-menu a:hover {
+    color: var(--tf-active);
+    background: linear-gradient(135deg, rgba(255, 229, 92, 0.05) 0%, rgba(255, 229, 92, 0.02) 100%);
+    border-color: rgba(255, 229, 92, 0.2);
+    transform: translateX(2px);
+}
+
+/* ——— Blog Linkini Gizle (Web & Mobil) ——— */
+.sidebar li:has(a[href*="/blog"]),
+.sidebar a[href*="/blog"],
+.sidebar__nav a[href*="/blog"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* ——— Blog Linkini Gizle (Web & Mobil) ——— */
+.sidebar li:has(a[href*="/blog"]),
+.sidebar a[href*="/blog"],
+.sidebar__nav a[href*="/blog"],
+.sidebar__nav li:has(a[href*="/blog"]) {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
