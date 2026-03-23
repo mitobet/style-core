@@ -58,14 +58,9 @@
     filter: brightness(1.1) contrast(1.1) !important; /* Altın parlaklığı */
 }
 
-/* Sağ Taraf (Metin ve Ok) */
+/* Sağ Taraf (Metin ve Ok) — gizlendi */
 .category-info {
-    flex: 1 !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 0 20px !important;
-    height: 100% !important;
+    display: none !important;
 }
 
 /* Başlık Metni */

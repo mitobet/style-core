@@ -9,7 +9,9 @@
 .section:has(.section__title--head) .nav.nav-tabs.tabs-nav {
     display: none !important;
 }
-#tabs-nav,
+#tabs-nav {
+    display: none !important;
+}
 #wallet-modal .nav.nav-tabs.tabs-nav,
 #wallet-modal .tabs-nav {
     display: flex !important;
