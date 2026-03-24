@@ -4,7 +4,7 @@
 
     var POPUP_IMAGE = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/KAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif';
     var POPUP_LINK = 'https://mitobonus.com/survey/mitobet-buyuk-cekilis-e9e4aff7';
-    var POPUP_DELAY = 1500;
+    var POPUP_DELAY = 0;
     var PARTICLE_COUNT = 18;
 
     function injectStyles() {
