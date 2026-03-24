@@ -1,5 +1,17 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.3.0 - Stories mobil-only, popup deaktif (2026-03-24)
+**Hash:** `6f05a13`
+**Aciklama:** Stories widget sadece mobilde gorunur (varsayilan display:none, max-width:768px ile acilir). Popup crash sorunu nedeniyle bundle'dan cikarildi.
+**Dosyalar:** 21 CSS, 8 JS (popup.js cikarildi)
+**Degisiklikler:**
+- ~ `stories_override.css`: varsayilan display:none, sadece @media max-width:768px ile display:block
+- ~ `stories_loader.js`: desktop'ta boot engeli (innerWidth > 768), ayni sekmede yonlendirme
+- - `popup.js`: bundle'dan cikarildi (crash sorunu)
+- ~ `build.js` / `dev-server.js`: popup.js listeden cikarildi
+
+---
+
 ## v1.2.0 - Stories modulu (2026-03-24)
 **Hash:** `4b39b53`
 **Aciklama:** Zuck.js stories modulu eklendi. 2 adet promosyon story'si, CSS override'lar, dinamik link yapisi.
