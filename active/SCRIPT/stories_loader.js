@@ -262,6 +262,8 @@
     function boot() {
         if (booted) return;
         if (window.innerWidth > 768) return;
+        var path = window.location.pathname.replace(/\/$/, '');
+        if (path !== '' && !/^\/[a-z]{2}$/.test(path)) return;
         booted = true;
         renderWidget();
         renderModal();
