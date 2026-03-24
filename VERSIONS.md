@@ -1,5 +1,14 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.4.1 - Popup GIF animasyon duzeltmesi (2026-03-24)
+**Hash:** `dcdedaf`
+**Aciklama:** Popup GIF animasyonu korundu. wsrv.nl output=webp yerine n=-1 parametresi kullanildi (tum frame'ler islenir, animasyon kaybolmaz).
+**Dosyalar:** 21 CSS, 9 JS
+**Degisiklikler:**
+- ~ `popup.js`: wsrv.nl URL'de output=webp -> n=-1 (animasyon korunuyor, boyut optimize)
+
+---
+
 ## v1.4.0 - Popup optimize, stories mobil-only (2026-03-24)
 **Hash:** `af5fa90`
 **Aciklama:** Popup ve stories birlikte crash-free calisiyor. GIF wsrv.nl ile WebP'ye donusturuldu, backdrop-filter kaldirildi, particle azaltildi. Stories sadece mobilde gorunur.
