@@ -259,14 +259,43 @@
         }
     }
 
+    function isHomePath() {
+        var path = window.location.pathname.replace(/\/$/, '');
+        return path === '' || /^\/[a-z]{2}$/.test(path);
+    }
+
+    function handleNav() {
+        setTimeout(function() {
+            if (window.innerWidth > 768) return;
+            var widget = document.getElementById('mito-stories');
+            if (isHomePath()) {
+                if (!widget) renderWidget();
+            } else {
+                if (widget && widget.parentNode) widget.parentNode.removeChild(widget);
+            }
+        }, 200);
+    }
+
     function boot() {
         if (booted) return;
         if (window.innerWidth > 768) return;
-        var path = window.location.pathname.replace(/\/$/, '');
-        if (path !== '' && !/^\/[a-z]{2}$/.test(path)) return;
+        if (!isHomePath()) return;
         booted = true;
         renderWidget();
         renderModal();
+
+        window.addEventListener('popstate', handleNav);
+
+        var origPush = history.pushState;
+        history.pushState = function() {
+            origPush.apply(this, arguments);
+            handleNav();
+        };
+        var origReplace = history.replaceState;
+        history.replaceState = function() {
+            origReplace.apply(this, arguments);
+            handleNav();
+        };
     }
 
     if (document.readyState === 'loading') {
