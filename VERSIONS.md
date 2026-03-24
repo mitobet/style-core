@@ -1,15 +1,14 @@
 # Mitobet Versiyon Gecmisi
 
-## v1.6.0 - Performans optimizasyonlari (2026-03-24)
-**Hash:** `ea48452`
-**Aciklama:** Bundle boyutlari minify edilerek azaltildi, Zuck.js dis CDN bagimliligi kaldirildi ve loader/font yukleme akisi hizlandirildi.
-**Dosyalar:** 23 CSS, 10 JS (vendor dahil, minified output)
-**Degisiklikler:**
-- ~ `build.js`: `csso` + `terser` minification, Zuck.js vendor dosyalari bundle'a dahil edildi
-- ~ `stories_loader.js`: unpkg bagimliliklari kaldirildi, bundle icindeki Zuck ile direkt init
-- ~ `css_blocker.js`: `setInterval` kaldirildi (MutationObserver + lifecycle hooks yeterli)
-- ~ `font_loader.js`: preconnect/preload + non-blocking font CSS yukleme
-- ~ `dist/loader.js`: preload + async yukleme akisi
+## Not - Yarim Kalan / Unstable Calisma (2026-03-24)
+**Hash:** `8d3cea9`
+**Durum:** Aktif degil (referans kaydi)
+**Not:** Bu surum optimize edilmemis story akisiyla test edildi ve sahada crash raporu alindi. Stabil hat olarak `8bca4fc` tercih edildi.
+**CMS (referans):**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@8d3cea9/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@8d3cea9/dist/v1/bundle.js"></script>
+```
 
 ---
 
