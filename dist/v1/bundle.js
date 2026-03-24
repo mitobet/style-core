@@ -1641,345 +1641,270 @@ input, select, textarea,
 (function() {
     'use strict';
 
-    var ZUCK_CSS = 'https://unpkg.com/zuck.js@2.1.1/dist/zuck.min.css';
-    var ZUCK_SKIN = 'https://unpkg.com/zuck.js@2.1.1/dist/skins/snapgram.min.css';
-    var ZUCK_JS = 'https://unpkg.com/zuck.js@2.1.1/dist/zuck.min.js';
-
     var PROXY = 'https://wsrv.nl/?url=';
-    var RAW_IMG = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
-    var STORY_URL = PROXY + encodeURIComponent(RAW_IMG) + '&w=720&q=75&output=webp';
-    var AVATAR_URL = PROXY + encodeURIComponent(RAW_IMG) + '&w=200&h=200&fit=cover&a=top';
 
+    var RAW_IMG_1 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
     var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/tv9PveV1lEVjh7bOlwkRmjcWL3aB30w9QzIH3ysP.jpg';
-    var STORY_URL_2 = PROXY + encodeURIComponent(RAW_IMG_2) + '&w=720&q=75&output=webp';
-    var AVATAR_URL_2 = PROXY + encodeURIComponent(RAW_IMG_2) + '&w=200&h=200&fit=cover&a=top';
 
-    var STORIES_DATA = [
+    var STORIES = [
         {
-            id: 'promo-1',
-            photo: AVATAR_URL,
-            name: '',
-            link: '',
-            lastUpdated: Math.floor(Date.now() / 1000),
-            items: [
-                {
-                    id: 'promo-1-item',
-                    type: 'photo',
-                    src: STORY_URL,
-                    length: 5,
-                    link: window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus',
-                    linkText: 'Detaylar',
-                    time: Math.floor(Date.now() / 1000)
-                }
-            ]
+            avatar: PROXY + encodeURIComponent(RAW_IMG_1) + '&w=120&h=120&fit=cover&output=webp',
+            src:    PROXY + encodeURIComponent(RAW_IMG_1) + '&w=720&q=80&output=webp',
+            link:   window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus',
+            linkText: 'Detaylar',
+            duration: 5000
         },
         {
-            id: 'promo-2',
-            photo: AVATAR_URL_2,
-            name: '',
-            link: '',
-            lastUpdated: Math.floor(Date.now() / 1000),
-            items: [
-                {
-                    id: 'promo-2-item',
-                    type: 'photo',
-                    src: STORY_URL_2,
-                    length: 5,
-                    link: window.location.origin + '/tr/promotion/15-yatirim-bonusu-10-kayip-bonusu',
-                    linkText: 'Detaylar',
-                    time: Math.floor(Date.now() / 1000)
-                }
-            ]
+            avatar: PROXY + encodeURIComponent(RAW_IMG_2) + '&w=120&h=120&fit=cover&output=webp',
+            src:    PROXY + encodeURIComponent(RAW_IMG_2) + '&w=720&q=80&output=webp',
+            link:   window.location.origin + '/tr/promotion/15-yatirim-bonusu-10-kayip-bonusu',
+            linkText: 'Detaylar',
+            duration: 5000
         }
     ];
 
-    var modalObserverStarted = false;
-    var linkHandlerBound = false;
-    var modalSyncTimer = null;
-    var storyInitDeferCount = 0;
-    var zuckBooted = false;
+    var currentIdx = 0;
+    var storyTimer = null;
+    var isOpen = false;
+    var booted = false;
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var mouseStartX = 0;
+    var mouseStartY = 0;
+    var swipeGuard = false;
 
-    function loadCSS(href, cb) {
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        var done = false;
-        function finish() {
-            if (done) return;
-            done = true;
-            if (cb) cb();
+    var elModal = null;
+    var elImg = null;
+    var elBar = null;
+    var elLink = null;
+
+    function clearTimer() {
+        if (storyTimer !== null) {
+            clearTimeout(storyTimer);
+            storyTimer = null;
         }
-        link.onload = finish;
-        link.onerror = finish;
-        setTimeout(finish, 5000);
-        document.head.appendChild(link);
     }
 
-    function loadJS(src, cb) {
-        var script = document.createElement('script');
-        script.src = src;
-        var done = false;
-        function finish() {
-            if (done) return;
-            done = true;
-            if (cb) cb();
-        }
-        script.onload = finish;
-        script.onerror = finish;
-        setTimeout(finish, 5000);
-        document.body.appendChild(script);
+    function resetBar() {
+        if (!elBar) return;
+        elBar.style.transition = 'none';
+        elBar.style.width = '0%';
+        elBar.offsetWidth;
     }
 
-    function createContainer() {
-        var existing = document.getElementById('mito-stories');
-        if (existing) return existing;
+    function startBar(duration) {
+        resetBar();
+        setTimeout(function() {
+            if (!elBar) return;
+            elBar.style.transition = 'width ' + (duration / 1000) + 's linear';
+            elBar.style.width = '100%';
+        }, 30);
+    }
+
+    function openStory(idx) {
+        if (!elModal) return;
+        clearTimer();
+        currentIdx = idx;
+        var story = STORIES[idx];
+
+        elImg.src = story.src;
+        elLink.href = story.link;
+
+        if (!isOpen) {
+            isOpen = true;
+            document.body.style.overflow = 'hidden';
+            elModal.style.display = 'flex';
+            setTimeout(function() {
+                elModal.classList.add('ms-open');
+            }, 10);
+        }
+
+        startBar(story.duration);
+        storyTimer = setTimeout(function() {
+            nextStory();
+        }, story.duration);
+    }
+
+    function closeStory() {
+        if (!elModal) return;
+        clearTimer();
+        resetBar();
+        isOpen = false;
+        elModal.classList.remove('ms-open');
+        document.body.style.overflow = '';
+        setTimeout(function() {
+            if (!isOpen) {
+                elModal.style.display = 'none';
+                if (elImg) elImg.src = '';
+            }
+        }, 300);
+    }
+
+    function nextStory() {
+        clearTimer();
+        if (currentIdx < STORIES.length - 1) {
+            openStory(currentIdx + 1);
+        } else {
+            closeStory();
+        }
+    }
+
+    function prevStory() {
+        clearTimer();
+        if (currentIdx > 0) {
+            openStory(currentIdx - 1);
+        } else {
+            openStory(0);
+        }
+    }
+
+    function renderModal() {
+        if (document.getElementById('ms-modal')) return;
+
+        elModal = document.createElement('div');
+        elModal.id = 'ms-modal';
+        elModal.style.display = 'none';
+
+        var progress = document.createElement('div');
+        progress.className = 'ms-progress';
+        elBar = document.createElement('div');
+        elBar.className = 'ms-bar';
+        progress.appendChild(elBar);
+
+        elImg = document.createElement('img');
+        elImg.className = 'ms-img';
+        elImg.alt = '';
+
+        var tapLeft = document.createElement('div');
+        tapLeft.className = 'ms-tap-left';
+        tapLeft.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (swipeGuard) { swipeGuard = false; return; }
+            prevStory();
+        });
+
+        var tapRight = document.createElement('div');
+        tapRight.className = 'ms-tap-right';
+        tapRight.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (swipeGuard) { swipeGuard = false; return; }
+            nextStory();
+        });
+
+        var closeBtn = document.createElement('button');
+        closeBtn.className = 'ms-close';
+        closeBtn.type = 'button';
+        closeBtn.innerHTML = '&#10005;';
+        closeBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeStory();
+        });
+
+        elLink = document.createElement('a');
+        elLink.className = 'ms-link';
+        elLink.target = '_self';
+        elLink.innerHTML =
+            '<svg class="ms-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' +
+            '<polyline points="18 15 12 9 6 15"></polyline>' +
+            '</svg>' +
+            '<span>Detaylar</span>';
+        elLink.addEventListener('click', function(e) {
+            e.stopPropagation();
+            clearTimer();
+            var href = elLink.href;
+            closeStory();
+            if (href) window.location.href = href;
+        });
+
+        elModal.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        elModal.addEventListener('touchend', function(e) {
+            var dx = e.changedTouches[0].clientX - touchStartX;
+            var dy = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+            if (dx < 0) nextStory();
+            else prevStory();
+        }, { passive: true });
+
+        elModal.addEventListener('mousedown', function(e) {
+            mouseStartX = e.clientX;
+            mouseStartY = e.clientY;
+            swipeGuard = false;
+        });
+
+        elModal.addEventListener('mouseup', function(e) {
+            var dx = e.clientX - mouseStartX;
+            var dy = e.clientY - mouseStartY;
+            if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+            swipeGuard = true;
+            if (dx < 0) nextStory();
+            else prevStory();
+        });
+
+        elModal.appendChild(progress);
+        elModal.appendChild(elImg);
+        elModal.appendChild(tapLeft);
+        elModal.appendChild(tapRight);
+        elModal.appendChild(closeBtn);
+        elModal.appendChild(elLink);
+
+        document.body.appendChild(elModal);
+    }
+
+    function renderWidget() {
+        if (document.getElementById('mito-stories')) return;
 
         var container = document.createElement('div');
         container.id = 'mito-stories';
 
-        var storiesDiv = document.createElement('div');
-        storiesDiv.id = 'mito-stories-timeline';
-        container.appendChild(storiesDiv);
+        for (var i = 0; i < STORIES.length; i++) {
+            (function(idx) {
+                var btn = document.createElement('button');
+                btn.className = 'ms-avatar';
+                btn.type = 'button';
+
+                var img = document.createElement('img');
+                img.src = STORIES[idx].avatar;
+                img.alt = '';
+                img.draggable = false;
+
+                btn.appendChild(img);
+                btn.addEventListener('click', function() {
+                    openStory(idx);
+                });
+                container.appendChild(btn);
+            })(i);
+        }
 
         var slider = document.querySelector('.swiper')
-            || document.querySelector('.slider')
-            || document.querySelector('[class*="slider"]')
             || document.querySelector('[class*="swiper"]')
+            || document.querySelector('[class*="slider"]')
             || document.querySelector('[class*="carousel"]')
             || document.querySelector('[class*="banner"]');
 
-        if (slider) {
+        if (slider && slider.parentNode) {
             slider.parentNode.insertBefore(container, slider);
-            return container;
-        }
-
-        var mainContent = document.getElementById('main__content')
-            || document.getElementById('main')
-            || document.querySelector('main');
-
-        if (mainContent) {
-            if (mainContent.firstChild) {
-                mainContent.insertBefore(container, mainContent.firstChild);
-            } else {
-                mainContent.appendChild(container);
-            }
-            return container;
-        }
-
-        document.body.appendChild(container);
-        return container;
-    }
-
-    function cleanupBodyState() {
-        document.body.classList.remove('zuck-modal-open');
-        document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-        document.body.style.height = '';
-    }
-
-    function softHideModal(modal) {
-        if (!modal) return;
-        modal.classList.remove('show');
-        modal.style.display = 'none';
-        modal.style.visibility = 'hidden';
-        modal.style.pointerEvents = 'none';
-    }
-
-    function removeMitoCloseButtons(modal) {
-        if (!modal) return;
-        var btns = modal.querySelectorAll('.mito-close-btn');
-        for (var i = 0; i < btns.length; i++) {
-            if (btns[i].parentNode) btns[i].parentNode.removeChild(btns[i]);
-        }
-    }
-
-    function closeStoryModal() {
-        var modal = document.getElementById('zuck-modal');
-        if (!modal) {
-            cleanupBodyState();
-            return;
-        }
-
-        var closeEl = modal.querySelector('.story-viewer .head .right .close')
-            || modal.querySelector('.story-viewer .close')
-            || modal.querySelector('.close');
-
-        if (closeEl) {
-            closeEl.click();
-        }
-
-        setTimeout(function() {
-            var m = document.getElementById('zuck-modal');
-            if (!m) {
-                cleanupBodyState();
-                return;
-            }
-            if (m.classList.contains('show')) {
-                softHideModal(m);
-            }
-            removeMitoCloseButtons(m);
-            cleanupBodyState();
-        }, 280);
-    }
-
-    function hideTimeElements(root) {
-        var times = root.querySelectorAll('.time');
-        for (var i = 0; i < times.length; i++) {
-            times[i].style.display = 'none';
-            times[i].style.visibility = 'hidden';
-        }
-    }
-
-    function injectCloseBtn(modal) {
-        if (modal.querySelector('.mito-close-btn')) return;
-        var btn = document.createElement('button');
-        btn.className = 'mito-close-btn';
-        btn.type = 'button';
-        btn.textContent = 'Kapat';
-        btn.onclick = function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeStoryModal();
-        };
-        modal.appendChild(btn);
-    }
-
-    function syncModalUi() {
-        var modal = document.getElementById('zuck-modal');
-        var open = modal && modal.classList.contains('show');
-        if (open) {
-            document.body.classList.add('zuck-modal-open');
-            injectCloseBtn(modal);
-            hideTimeElements(modal);
         } else {
-            if (modal) removeMitoCloseButtons(modal);
-            cleanupBodyState();
-        }
-    }
-
-    function scheduleModalSync() {
-        if (modalSyncTimer) return;
-        modalSyncTimer = setTimeout(function() {
-            modalSyncTimer = null;
-            syncModalUi();
-        }, 48);
-    }
-
-    function watchModal() {
-        if (modalObserverStarted) return;
-        modalObserverStarted = true;
-
-        var observer = new MutationObserver(scheduleModalSync);
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true,
-            attributes: true,
-            attributeFilter: ['class']
-        });
-        scheduleModalSync();
-    }
-
-    function bindModalLinkHandler() {
-        if (linkHandlerBound) return;
-        linkHandlerBound = true;
-
-        document.addEventListener('click', function(e) {
-            var link = e.target.closest('#zuck-modal .tip.link');
-            if (!link) return;
-            e.preventDefault();
-            e.stopPropagation();
-            var href = link.getAttribute('href');
-            closeStoryModal();
-            if (href) window.location.href = href;
-        }, true);
-    }
-
-    function initStories() {
-        if (zuckBooted) return;
-
-        if (document.getElementById('mito-popup-overlay')) {
-            if (storyInitDeferCount < 80) {
-                storyInitDeferCount++;
-                setTimeout(initStories, 400);
+            var main = document.getElementById('main__content')
+                || document.getElementById('main')
+                || document.querySelector('main');
+            if (main) {
+                main.insertBefore(container, main.firstChild);
+            } else {
+                document.body.appendChild(container);
             }
-            return;
-        }
-        storyInitDeferCount = 0;
-
-        var container = createContainer();
-        if (!container) return;
-
-        var timeline = document.getElementById('mito-stories-timeline');
-        if (!timeline) return;
-
-        watchModal();
-        bindModalLinkHandler();
-
-        var lastStoryId = STORIES_DATA[STORIES_DATA.length - 1].id;
-
-        try {
-            zuckBooted = true;
-
-            new Zuck(timeline, {
-                backNative: true,
-                previousTap: true,
-                skin: 'snapgram',
-                autoFullScreen: false,
-                avatars: true,
-                paginationArrows: false,
-                list: false,
-                cubeEffect: false,
-                localStorage: true,
-                stories: STORIES_DATA,
-                callbacks: {
-                    onEnd: function(storyId, cb) {
-                        if (storyId === lastStoryId) {
-                            setTimeout(closeStoryModal, 300);
-                        }
-                        if (typeof cb === 'function') cb();
-                    },
-                    onClose: function(storyId, cb) {
-                        cleanupBodyState();
-                        if (typeof cb === 'function') cb();
-                    }
-                },
-                language: {
-                    unmute: 'Sesi Ac',
-                    keyboardTip: 'Navigasyon icin ok tuslarini kullan',
-                    visitLink: 'Ziyaret Et',
-                    time: {
-                        ago: 'once',
-                        hour: 'saat',
-                        hours: 'saat',
-                        minute: 'dakika',
-                        minutes: 'dakika',
-                        fromnow: 'simdi',
-                        seconds: 'saniye',
-                        yesterday: 'dun',
-                        tomorrow: 'yarin',
-                        days: 'gun'
-                    }
-                }
-            });
-        } catch (err) {
-            zuckBooted = false;
         }
     }
 
     function boot() {
+        if (booted) return;
         if (window.innerWidth > 768) return;
-
-        loadCSS(ZUCK_CSS, function() {
-            loadCSS(ZUCK_SKIN, function() {
-                loadJS(ZUCK_JS, function() {
-                    if (typeof Zuck !== 'undefined') {
-                        initStories();
-                    }
-                });
-            });
-        });
+        booted = true;
+        renderWidget();
+        renderModal();
     }
 
     if (document.readyState === 'loading') {
