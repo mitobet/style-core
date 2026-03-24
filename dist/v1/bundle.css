@@ -3493,6 +3493,201 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     }
 }
 
+/* ===== active/CSS/stories_override.css ===== */
+/* =====================================================
+   MITOBET - Stories Override (Zuck.js)
+   Mobil alt menurun ustune Instagram stories bileseni
+   Tema: #181818 arka plan, #CFAE6D altin accent
+   ===================================================== */
+
+/* --- Ana container --- */
+#mito-stories {
+    display: block !important;
+    width: 100% !important;
+    padding: 4px 0 2px !important;
+    background: #181818 !important;
+    border: none !important;
+    overflow: hidden !important;
+    position: relative !important;
+    z-index: 10 !important;
+    max-height: 68px !important;
+}
+
+/* --- Zuck.js varsayilan yukseklik override --- */
+#mito-stories .stories,
+#mito-stories .stories.carousel,
+#mito-stories #mito-stories-timeline {
+    background: #181818 !important;
+    padding: 0 8px !important;
+    margin: 0 !important;
+    height: auto !important;
+    max-height: 62px !important;
+    min-height: unset !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    width: 100% !important;
+    position: relative !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+#mito-stories .stories::-webkit-scrollbar {
+    display: none !important;
+}
+
+/* Zuck.js full-height override */
+#mito-stories .stories.carousel .story,
+#mito-stories .stories .story {
+    width: 58px !important;
+    min-width: 58px !important;
+    height: 58px !important;
+    max-height: 58px !important;
+    margin: 0 5px !important;
+    flex-shrink: 0 !important;
+    display: inline-block !important;
+    vertical-align: top !important;
+}
+
+/* --- Avatar dairesi --- */
+#mito-stories .stories .story > .item-link > .item-preview {
+    width: 54px !important;
+    height: 54px !important;
+    border-radius: 50% !important;
+    background: #181818 !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    transition: transform 0.2s ease !important;
+}
+
+#mito-stories .stories .story > .item-link > .item-preview:active {
+    transform: scale(0.93) !important;
+}
+
+#mito-stories .stories .story > .item-link > .item-preview img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 50% !important;
+}
+
+/* Gorulmemis story: altin gradient ring */
+#mito-stories .stories .story:not(.seen) > .item-link > .item-preview {
+    border: 2.5px solid transparent !important;
+    background-image: linear-gradient(#181818, #181818), linear-gradient(135deg, #CFAE6D, #e9c37a, #CFAE6D) !important;
+    background-origin: border-box !important;
+    background-clip: padding-box, border-box !important;
+    box-shadow: none !important;
+}
+
+/* Gorulmus story: ince soluk border */
+#mito-stories .stories .story.seen > .item-link > .item-preview {
+    border: 1.5px solid rgba(207, 174, 109, 0.2) !important;
+    box-shadow: none !important;
+}
+
+/* --- Isim etiketini gizle --- */
+#mito-stories .stories .story > .item-link > .info {
+    display: none !important;
+}
+
+/* Zuck.js item-link duzeltme */
+#mito-stories .stories .story > .item-link {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-decoration: none !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* --- Modal (fullscreen story goruntuleyici) --- */
+#zuck-modal {
+    background: rgba(0, 0, 0, 0.95) !important;
+    position: fixed !important;
+    z-index: 999999 !important;
+}
+
+#zuck-modal .story-viewer .head .left .back {
+    color: #CFAE6D !important;
+}
+
+#zuck-modal .story-viewer .head .left .info .name {
+    color: #fff !important;
+}
+
+#zuck-modal .story-viewer .head .left .info .time {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+#zuck-modal .story-viewer .head .right .close {
+    color: #CFAE6D !important;
+}
+
+/* Progress bar: altin */
+#zuck-modal .story-viewer .slides-pointers .header .progress {
+    background: rgba(207, 174, 109, 0.3) !important;
+}
+
+#zuck-modal .story-viewer .slides-pointers .header .progress .bar {
+    background: #CFAE6D !important;
+}
+
+/* Story link butonu */
+#zuck-modal .story-viewer .slides .item .tip {
+    background: #CFAE6D !important;
+    color: #181818 !important;
+    font-weight: 600 !important;
+    border-radius: 20px !important;
+    padding: 8px 20px !important;
+}
+
+/* --- Modal gorsel tam gorunum duzeltmesi --- */
+#zuck-modal .story-viewer .slides .item img,
+#zuck-modal .story-viewer .slides .item video {
+    object-fit: contain !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100vh !important;
+    max-width: 100vw !important;
+}
+
+#zuck-modal .story-viewer .slides .item {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #000 !important;
+}
+
+#zuck-modal .story-viewer {
+    height: 100vh !important;
+    height: 100dvh !important;
+    max-height: 100vh !important;
+    max-height: 100dvh !important;
+}
+
+/* --- Canli destek widget gizleme (story modal acikken) --- */
+body.zuck-modal-open #livechat-compact-container,
+body.zuck-modal-open #livechat-full,
+body.zuck-modal-open [id*="livechat"],
+body.zuck-modal-open [id*="chat-widget"],
+body.zuck-modal-open [id*="tawk"],
+body.zuck-modal-open [class*="livechat"],
+body.zuck-modal-open [class*="chat-widget"],
+body.zuck-modal-open .crisp-client,
+body.zuck-modal-open iframe[title*="chat"],
+body.zuck-modal-open iframe[title*="Chat"],
+body.zuck-modal-open iframe[id*="chat"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    z-index: -1 !important;
+}
+
+
 /* ===== active/CSS/EK ===== */
 .blog__cover {
     width: 100%;

@@ -1616,3 +1616,186 @@ input, select, textarea,
         setTimeout(guardAll, 500);
     };
 })();
+
+
+/* ===== active/SCRIPT/stories_loader.js ===== */
+(function() {
+    'use strict';
+
+    var ZUCK_CSS = 'https://unpkg.com/zuck.js@2.1.1/dist/zuck.min.css';
+    var ZUCK_SKIN = 'https://unpkg.com/zuck.js@2.1.1/dist/skins/snapgram.min.css';
+    var ZUCK_JS = 'https://unpkg.com/zuck.js@2.1.1/dist/zuck.min.js';
+
+    var PROXY = 'https://wsrv.nl/?url=';
+    var RAW_IMG = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
+    var STORY_URL = PROXY + encodeURIComponent(RAW_IMG);
+    var AVATAR_URL = PROXY + encodeURIComponent(RAW_IMG) + '&w=200&h=200&fit=cover&a=top';
+
+    var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/tv9PveV1lEVjh7bOlwkRmjcWL3aB30w9QzIH3ysP.jpg';
+    var STORY_URL_2 = PROXY + encodeURIComponent(RAW_IMG_2);
+    var AVATAR_URL_2 = PROXY + encodeURIComponent(RAW_IMG_2) + '&w=200&h=200&fit=cover&a=top';
+
+    var STORIES_DATA = [
+        {
+            id: 'promo-1',
+            photo: AVATAR_URL,
+            name: '',
+            link: '',
+            lastUpdated: Math.floor(Date.now() / 1000),
+            items: [
+                {
+                    id: 'promo-1-item',
+                    type: 'photo',
+                    src: STORY_URL,
+                    length: 5,
+                    link: window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus',
+                    linkText: 'Detaylar',
+                    time: Math.floor(Date.now() / 1000)
+                }
+            ]
+        },
+        {
+            id: 'promo-2',
+            photo: AVATAR_URL_2,
+            name: '',
+            link: '',
+            lastUpdated: Math.floor(Date.now() / 1000),
+            items: [
+                {
+                    id: 'promo-2-item',
+                    type: 'photo',
+                    src: STORY_URL_2,
+                    length: 5,
+                    link: window.location.origin + '/tr/promotion/15-yatirim-bonusu-10-kayip-bonusu',
+                    linkText: 'Detaylar',
+                    time: Math.floor(Date.now() / 1000)
+                }
+            ]
+        }
+    ];
+
+    function loadCSS(href, cb) {
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        if (cb) link.onload = cb;
+        document.head.appendChild(link);
+    }
+
+    function loadJS(src, cb) {
+        var script = document.createElement('script');
+        script.src = src;
+        if (cb) script.onload = cb;
+        document.body.appendChild(script);
+    }
+
+    function createContainer() {
+        var existing = document.getElementById('mito-stories');
+        if (existing) return existing;
+
+        var container = document.createElement('div');
+        container.id = 'mito-stories';
+
+        var storiesDiv = document.createElement('div');
+        storiesDiv.id = 'mito-stories-timeline';
+        container.appendChild(storiesDiv);
+
+        var slider = document.querySelector('.swiper')
+            || document.querySelector('.slider')
+            || document.querySelector('[class*="slider"]')
+            || document.querySelector('[class*="swiper"]')
+            || document.querySelector('[class*="carousel"]')
+            || document.querySelector('[class*="banner"]');
+
+        if (slider) {
+            slider.parentNode.insertBefore(container, slider);
+            return container;
+        }
+
+        var mainContent = document.getElementById('main__content')
+            || document.getElementById('main')
+            || document.querySelector('main');
+
+        if (mainContent) {
+            if (mainContent.firstChild) {
+                mainContent.insertBefore(container, mainContent.firstChild);
+            } else {
+                mainContent.appendChild(container);
+            }
+            return container;
+        }
+
+        document.body.appendChild(container);
+        return container;
+    }
+
+    function watchModal() {
+        var observer = new MutationObserver(function(mutations) {
+            var modal = document.getElementById('zuck-modal');
+            if (modal && modal.classList.contains('show')) {
+                document.body.classList.add('zuck-modal-open');
+            } else {
+                document.body.classList.remove('zuck-modal-open');
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+    }
+
+    function initStories() {
+        var container = createContainer();
+        if (!container) return;
+
+        var timeline = document.getElementById('mito-stories-timeline');
+        if (!timeline) return;
+
+        watchModal();
+
+        var stories = new Zuck(timeline, {
+            backNative: true,
+            previousTap: true,
+            skin: 'snapgram',
+            autoFullScreen: false,
+            avatars: true,
+            paginationArrows: false,
+            list: false,
+            cubeEffect: true,
+            localStorage: true,
+            stories: STORIES_DATA,
+            language: {
+                unmute: 'Sesi Ac',
+                keyboardTip: 'Navigasyon icin ok tuslarini kullan',
+                visitLink: 'Ziyaret Et',
+                time: {
+                    ago: 'once',
+                    hour: 'saat',
+                    hours: 'saat',
+                    minute: 'dakika',
+                    minutes: 'dakika',
+                    fromnow: 'simdi',
+                    seconds: 'saniye',
+                    yesterday: 'dun',
+                    tomorrow: 'yarin',
+                    days: 'gun'
+                }
+            }
+        });
+    }
+
+    function boot() {
+        loadCSS(ZUCK_CSS, function() {
+            loadCSS(ZUCK_SKIN, function() {
+                loadJS(ZUCK_JS, function() {
+                    if (typeof Zuck !== 'undefined') {
+                        initStories();
+                    }
+                });
+            });
+        });
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', boot);
+    } else {
+        boot();
+    }
+})();

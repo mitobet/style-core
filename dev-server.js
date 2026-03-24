@@ -41,6 +41,7 @@ const CSS_FILES = [
   'active/slot_oncesi_css/mito_slot_unavailable.css',
   'active/slot_oncesi_css/slot_unavailable.css',
   'active/yatirim_uyari_sistemi/yatirim_uyari.css',
+  'active/CSS/stories_override.css',
   'active/CSS/EK',
   'active/CSS/Kingo',
   'active/CSS/Logo',
@@ -55,6 +56,8 @@ const JS_FILES_WITH_EXT = [
   'active/SCRIPT/header_extra_buttons.js',
   'active/SCRIPT/footer_marquee.js',
   'active/SCRIPT/popup.js',
+  'active/SCRIPT/sticky_menu_guard.js',
+  'active/SCRIPT/stories_loader.js',
 ];
 
 const JS_FILES_NO_EXT = [

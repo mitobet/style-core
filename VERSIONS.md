@@ -1,14 +1,14 @@
 # Mitobet Versiyon Gecmisi
 
 ## v1.1.0 - Bundle guncellemeleri (2026-03-24)
-**Hash:** `065c54a`
-**Aciklama:** Mobil tabbar sticky menu, popup, promosyon UI ve performans iyilestirmeleri.
+**Hash:** `8bca4fc`
+**Aciklama:** Mobil tabbar sticky menu, popup, promosyon UI ve performans iyilestirmeleri. Promosyon sayfasi CSS rollback (9cc5ceb'ye geri donuldu).
 **Dosyalar:** 20 CSS, 8 JS (`sticky_menu_guard.js` eklendi)
 **Degisiklikler:**
 - + `sticky_menu_guard.js`: SPA route sonrasi `inner-menu` inline style (fixed, translateX) temizligi
 - + `mobile_navbar.css`: `li.center` / sticky-menu override (opacity, transition, background-image)
-- + `promopage.css`: `#tabs-nav` gizleme; cuzdan modal tablari korundu
-- + `Promo_up_button.css`: `.category-info` gizleme
+- ~ `promopage.css`: 9cc5ceb versiyonuna rollback (tabs-nav gizleme geri alindi)
+- ~ `Promo_up_button.css`: 9cc5ceb versiyonuna rollback (category-info gizleme geri alindi)
 - + `popup.js`: bundle aktif, `POPUP_DELAY` 0ms
 - + `mito_tv_button.js`: wsrv.nl proxy + fallback
 - + Tum scriptlerden `console.log` kaldirildi
