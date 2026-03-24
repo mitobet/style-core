@@ -1,5 +1,14 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.5.0 - Popup statik JPG + dinamik link (2026-03-24)
+**Hash:** `05e417b`
+**Aciklama:** Popup gorseli statik JPG ile degistirildi (crash onleme). Link dinamik hale getirildi (window.location.origin). Ayni sekmede yonlendirme.
+**Dosyalar:** 21 CSS, 9 JS
+**Degisiklikler:**
+- ~ `popup.js`: POPUP_IMAGE statik JPG (wsrv.nl optimize), POPUP_LINK dinamik origin + path, target _self
+
+---
+
 ## v1.4.1 - Popup GIF animasyon duzeltmesi (2026-03-24)
 **Hash:** `dcdedaf`
 **Aciklama:** Popup GIF animasyonu korundu. wsrv.nl output=webp yerine n=-1 parametresi kullanildi (tum frame'ler islenir, animasyon kaybolmaz).
