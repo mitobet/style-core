@@ -4,8 +4,15 @@
 
     var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FMivlnfie1wguKW11uHXofqv7dka9oFUKudZ16GDt.jpg&w=800&q=80';
     var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
-    var POPUP_DELAY = 0;
+    var POPUP_DELAY = 3000;
     var PARTICLE_COUNT = 8;
+    var POPUP_STORY_WAIT_MAX = 120;
+    var popupStoryWaitCount = 0;
+
+    function isZuckStoryOpen() {
+        var m = document.getElementById('zuck-modal');
+        return !!(m && m.classList.contains('show'));
+    }
 
     function injectStyles() {
         if (document.getElementById('mito-popup-css')) return;
@@ -23,7 +30,7 @@
 
             '#mito-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;' +
                 'background:rgba(0,0,0,.88);' +
-                'display:flex;justify-content:center;align-items:center;z-index:99999;' +
+                'display:flex;justify-content:center;align-items:center;z-index:999998;' +
                 'animation:mpFadeIn .35s ease-out forwards;' +
                 '}' +
             '#mito-popup-overlay.mp-closing{animation:mpFadeOut .3s ease-in forwards}' +
@@ -88,8 +95,17 @@
     }
 
     function showPopup() {
-        if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
-        injectStyles();
+        try {
+            if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
+            if (isZuckStoryOpen()) {
+                if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {
+                    popupStoryWaitCount++;
+                    setTimeout(showPopup, 450);
+                }
+                return;
+            }
+            popupStoryWaitCount = 0;
+            injectStyles();
 
         var overlay = document.createElement('div');
         overlay.id = 'mito-popup-overlay';
@@ -154,6 +170,10 @@
         box.appendChild(closeBtn);
         overlay.appendChild(box);
         document.body.appendChild(overlay);
+        } catch(e) {
+            console.warn('Mitobet popup error:', e);
+            return;
+        }
     }
 
     if (document.readyState === 'loading') {

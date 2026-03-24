@@ -1361,8 +1361,15 @@ input, select, textarea,
 
     var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FMivlnfie1wguKW11uHXofqv7dka9oFUKudZ16GDt.jpg&w=800&q=80';
     var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
-    var POPUP_DELAY = 0;
+    var POPUP_DELAY = 3000;
     var PARTICLE_COUNT = 8;
+    var POPUP_STORY_WAIT_MAX = 120;
+    var popupStoryWaitCount = 0;
+
+    function isZuckStoryOpen() {
+        var m = document.getElementById('zuck-modal');
+        return !!(m && m.classList.contains('show'));
+    }
 
     function injectStyles() {
         if (document.getElementById('mito-popup-css')) return;
@@ -1380,7 +1387,7 @@ input, select, textarea,
 
             '#mito-popup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;' +
                 'background:rgba(0,0,0,.88);' +
-                'display:flex;justify-content:center;align-items:center;z-index:99999;' +
+                'display:flex;justify-content:center;align-items:center;z-index:999998;' +
                 'animation:mpFadeIn .35s ease-out forwards;' +
                 '}' +
             '#mito-popup-overlay.mp-closing{animation:mpFadeOut .3s ease-in forwards}' +
@@ -1445,8 +1452,17 @@ input, select, textarea,
     }
 
     function showPopup() {
-        if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
-        injectStyles();
+        try {
+            if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
+            if (isZuckStoryOpen()) {
+                if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {
+                    popupStoryWaitCount++;
+                    setTimeout(showPopup, 450);
+                }
+                return;
+            }
+            popupStoryWaitCount = 0;
+            injectStyles();
 
         var overlay = document.createElement('div');
         overlay.id = 'mito-popup-overlay';
@@ -1511,6 +1527,10 @@ input, select, textarea,
         box.appendChild(closeBtn);
         overlay.appendChild(box);
         document.body.appendChild(overlay);
+        } catch(e) {
+            console.warn('Mitobet popup error:', e);
+            return;
+        }
     }
 
     if (document.readyState === 'loading') {
@@ -1673,18 +1693,40 @@ input, select, textarea,
         }
     ];
 
+    var modalObserverStarted = false;
+    var linkHandlerBound = false;
+    var modalSyncTimer = null;
+    var storyInitDeferCount = 0;
+    var zuckBooted = false;
+
     function loadCSS(href, cb) {
         var link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = href;
-        if (cb) link.onload = cb;
+        var done = false;
+        function finish() {
+            if (done) return;
+            done = true;
+            if (cb) cb();
+        }
+        link.onload = finish;
+        link.onerror = finish;
+        setTimeout(finish, 5000);
         document.head.appendChild(link);
     }
 
     function loadJS(src, cb) {
         var script = document.createElement('script');
         script.src = src;
-        if (cb) script.onload = cb;
+        var done = false;
+        function finish() {
+            if (done) return;
+            done = true;
+            if (cb) cb();
+        }
+        script.onload = finish;
+        script.onerror = finish;
+        setTimeout(finish, 5000);
         document.body.appendChild(script);
     }
 
@@ -1728,18 +1770,57 @@ input, select, textarea,
         return container;
     }
 
+    function cleanupBodyState() {
+        document.body.classList.remove('zuck-modal-open');
+        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
+        document.body.style.height = '';
+    }
+
+    function softHideModal(modal) {
+        if (!modal) return;
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+        modal.style.pointerEvents = 'none';
+    }
+
+    function removeMitoCloseButtons(modal) {
+        if (!modal) return;
+        var btns = modal.querySelectorAll('.mito-close-btn');
+        for (var i = 0; i < btns.length; i++) {
+            if (btns[i].parentNode) btns[i].parentNode.removeChild(btns[i]);
+        }
+    }
+
     function closeStoryModal() {
         var modal = document.getElementById('zuck-modal');
-        if (!modal) return;
+        if (!modal) {
+            cleanupBodyState();
+            return;
+        }
+
         var closeEl = modal.querySelector('.story-viewer .head .right .close')
             || modal.querySelector('.story-viewer .close')
             || modal.querySelector('.close');
+
         if (closeEl) {
             closeEl.click();
-        } else {
-            modal.classList.remove('show');
-            document.body.classList.remove('zuck-modal-open');
         }
+
+        setTimeout(function() {
+            var m = document.getElementById('zuck-modal');
+            if (!m) {
+                cleanupBodyState();
+                return;
+            }
+            if (m.classList.contains('show')) {
+                softHideModal(m);
+            }
+            removeMitoCloseButtons(m);
+            cleanupBodyState();
+        }, 280);
     }
 
     function hideTimeElements(root) {
@@ -1752,33 +1833,81 @@ input, select, textarea,
 
     function injectCloseBtn(modal) {
         if (modal.querySelector('.mito-close-btn')) return;
-
         var btn = document.createElement('button');
         btn.className = 'mito-close-btn';
         btn.type = 'button';
         btn.textContent = 'Kapat';
         btn.onclick = function(e) {
+            e.preventDefault();
             e.stopPropagation();
             closeStoryModal();
         };
         modal.appendChild(btn);
     }
 
+    function syncModalUi() {
+        var modal = document.getElementById('zuck-modal');
+        var open = modal && modal.classList.contains('show');
+        if (open) {
+            document.body.classList.add('zuck-modal-open');
+            injectCloseBtn(modal);
+            hideTimeElements(modal);
+        } else {
+            if (modal) removeMitoCloseButtons(modal);
+            cleanupBodyState();
+        }
+    }
+
+    function scheduleModalSync() {
+        if (modalSyncTimer) return;
+        modalSyncTimer = setTimeout(function() {
+            modalSyncTimer = null;
+            syncModalUi();
+        }, 48);
+    }
+
     function watchModal() {
-        var observer = new MutationObserver(function() {
-            var modal = document.getElementById('zuck-modal');
-            if (modal && modal.classList.contains('show')) {
-                document.body.classList.add('zuck-modal-open');
-                injectCloseBtn(modal);
-                hideTimeElements(modal);
-            } else {
-                document.body.classList.remove('zuck-modal-open');
-            }
+        if (modalObserverStarted) return;
+        modalObserverStarted = true;
+
+        var observer = new MutationObserver(scheduleModalSync);
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class']
         });
-        observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+        scheduleModalSync();
+    }
+
+    function bindModalLinkHandler() {
+        if (linkHandlerBound) return;
+        linkHandlerBound = true;
+
+        document.addEventListener('click', function(e) {
+            var link = e.target.closest('#zuck-modal .tip.link');
+            if (!link) return;
+            e.preventDefault();
+            e.stopPropagation();
+            var href = link.getAttribute('href');
+            closeStoryModal();
+            if (href) window.location.href = href;
+        }, true);
     }
 
     function initStories() {
+        if (zuckBooted) return;
+
+        if (document.getElementById('mito-popup-overlay')) {
+            if (storyInitDeferCount < 80) {
+                storyInitDeferCount++;
+                setTimeout(initStories, 400);
+            }
+            return;
+        }
+        storyInitDeferCount = 0;
+
         var container = createContainer();
         if (!container) return;
 
@@ -1786,59 +1915,57 @@ input, select, textarea,
         if (!timeline) return;
 
         watchModal();
+        bindModalLinkHandler();
 
         var lastStoryId = STORIES_DATA[STORIES_DATA.length - 1].id;
 
-        var stories = new Zuck(timeline, {
-            backNative: true,
-            previousTap: true,
-            skin: 'snapgram',
-            autoFullScreen: false,
-            avatars: true,
-            paginationArrows: false,
-            list: false,
-            cubeEffect: true,
-            localStorage: true,
-            stories: STORIES_DATA,
-            callbacks: {
-                onEnd: function(storyId, cb) {
-                    if (storyId === lastStoryId) {
-                        setTimeout(closeStoryModal, 300);
-                    }
-                    if (typeof cb === 'function') cb();
-                },
-                onClose: function(storyId, cb) {
-                    document.body.classList.remove('zuck-modal-open');
-                    if (typeof cb === 'function') cb();
-                }
-            },
-            language: {
-                unmute: 'Sesi Ac',
-                keyboardTip: 'Navigasyon icin ok tuslarini kullan',
-                visitLink: 'Ziyaret Et',
-                time: {
-                    ago: 'once',
-                    hour: 'saat',
-                    hours: 'saat',
-                    minute: 'dakika',
-                    minutes: 'dakika',
-                    fromnow: 'simdi',
-                    seconds: 'saniye',
-                    yesterday: 'dun',
-                    tomorrow: 'yarin',
-                    days: 'gun'
-                }
-            }
-        });
+        try {
+            zuckBooted = true;
 
-        document.addEventListener('click', function(e) {
-            var link = e.target.closest('#zuck-modal .tip.link');
-            if (link) {
-                e.preventDefault();
-                e.stopPropagation();
-                window.location.href = link.getAttribute('href');
-            }
-        }, true);
+            new Zuck(timeline, {
+                backNative: true,
+                previousTap: true,
+                skin: 'snapgram',
+                autoFullScreen: false,
+                avatars: true,
+                paginationArrows: false,
+                list: false,
+                cubeEffect: false,
+                localStorage: true,
+                stories: STORIES_DATA,
+                callbacks: {
+                    onEnd: function(storyId, cb) {
+                        if (storyId === lastStoryId) {
+                            setTimeout(closeStoryModal, 300);
+                        }
+                        if (typeof cb === 'function') cb();
+                    },
+                    onClose: function(storyId, cb) {
+                        cleanupBodyState();
+                        if (typeof cb === 'function') cb();
+                    }
+                },
+                language: {
+                    unmute: 'Sesi Ac',
+                    keyboardTip: 'Navigasyon icin ok tuslarini kullan',
+                    visitLink: 'Ziyaret Et',
+                    time: {
+                        ago: 'once',
+                        hour: 'saat',
+                        hours: 'saat',
+                        minute: 'dakika',
+                        minutes: 'dakika',
+                        fromnow: 'simdi',
+                        seconds: 'saniye',
+                        yesterday: 'dun',
+                        tomorrow: 'yarin',
+                        days: 'gun'
+                    }
+                }
+            });
+        } catch (err) {
+            zuckBooted = false;
+        }
     }
 
     function boot() {
