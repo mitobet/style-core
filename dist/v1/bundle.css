@@ -3620,7 +3620,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
 }
 
 #zuck-modal .story-viewer .head .left .info .time {
-    color: rgba(255, 255, 255, 0.5) !important;
+    display: none !important;
 }
 
 #zuck-modal .story-viewer .head .right .close {

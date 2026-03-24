@@ -1418,7 +1418,7 @@ input, select, textarea,
 
             '@media(max-width:768px){' +
                 '.mp-box{width:95vw;max-width:800px}' +
-                '.mp-close{top:-9px;right:-9px;width:26px;height:26px;font-size:12px}' +
+                '.mp-close{top:-14px;right:-14px;width:36px;height:36px;font-size:18px}' +
             '}' +
             '@media(min-width:769px){.mp-box{width:800px}}';
         document.head.appendChild(s);
@@ -1728,11 +1728,35 @@ input, select, textarea,
         return container;
     }
 
+    function injectCloseBtn(viewer) {
+        if (viewer.querySelector('.mito-close-btn')) return;
+        var head = viewer.querySelector('.head .right');
+        if (!head) return;
+
+        var btn = document.createElement('button');
+        btn.className = 'mito-close-btn';
+        btn.type = 'button';
+        btn.textContent = 'Kapat';
+        btn.style.cssText =
+            'background:#CFAE6D;color:#181818;border:none;border-radius:16px;' +
+            'padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;' +
+            'margin-right:4px;line-height:1;z-index:10;';
+        btn.onclick = function() {
+            var orig = viewer.querySelector('.head .right .close');
+            if (orig) orig.click();
+        };
+        head.insertBefore(btn, head.firstChild);
+    }
+
     function watchModal() {
-        var observer = new MutationObserver(function(mutations) {
+        var observer = new MutationObserver(function() {
             var modal = document.getElementById('zuck-modal');
             if (modal && modal.classList.contains('show')) {
                 document.body.classList.add('zuck-modal-open');
+                var viewers = modal.querySelectorAll('.story-viewer');
+                for (var i = 0; i < viewers.length; i++) {
+                    injectCloseBtn(viewers[i]);
+                }
             } else {
                 document.body.classList.remove('zuck-modal-open');
             }

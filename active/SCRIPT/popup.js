@@ -61,7 +61,7 @@
 
             '@media(max-width:768px){' +
                 '.mp-box{width:95vw;max-width:800px}' +
-                '.mp-close{top:-9px;right:-9px;width:26px;height:26px;font-size:12px}' +
+                '.mp-close{top:-14px;right:-14px;width:36px;height:36px;font-size:18px}' +
             '}' +
             '@media(min-width:769px){.mp-box{width:800px}}';
         document.head.appendChild(s);
