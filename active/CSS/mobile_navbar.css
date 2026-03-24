@@ -52,10 +52,10 @@
 }
 
 /* Ortadaki sticky-menu — sitenin toggle mekanizmasına dokunma */
-#tabbar nav > .center,
-#tabbar nav > .center *,
-.lowbar nav > .center,
-.lowbar nav > .center *,
+#tabbar li.center,
+#tabbar li.center *,
+.lowbar li.center,
+.lowbar li.center *,
 #tabbar .sticky-menu-container,
 #tabbar .sticky-menu-container *,
 .lowbar .sticky-menu-container,
