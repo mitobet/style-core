@@ -6,6 +6,11 @@
     "dev": "node dev-server.js"
   },
   "dependencies": {
-    "express": "^4.22.1"
+    "express": "^4.22.1",
+    "zuck.js": "^2.1.1"
+  },
+  "devDependencies": {
+    "csso": "^5.0.5",
+    "terser": "^5.46.1"
   }
 }

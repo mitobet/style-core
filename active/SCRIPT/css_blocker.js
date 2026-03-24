@@ -81,13 +81,8 @@
 
     obs.observe(document.documentElement, { childList: true, subtree: true });
 
-    // Hemen çalıştır
     killCSS();
-    // DOM hazır olunca tekrar
     document.addEventListener('DOMContentLoaded', killCSS);
-    // Sayfa yüklenince tekrar
     window.addEventListener('load', killCSS);
-    // Periyodik kontrol
-    setInterval(killCSS, 1000);
 
 })();

@@ -10,6 +10,8 @@
 
 const fs = require('fs');
 const path = require('path');
+const csso = require('csso');
+const { minify: terserMinify } = require('terser');
 
 const BASE = __dirname;
 const DIST = path.join(BASE, 'dist');
@@ -92,19 +94,40 @@ function getTargetVersion() {
 }
 
 // ============================================================
+// VENDOR DOSYALARI (Zuck.js — bundle'a dahil)
+// ============================================================
+
+const VENDOR_CSS = [
+    'node_modules/zuck.js/dist/zuck.min.css',
+    'node_modules/zuck.js/dist/skins/snapgram.min.css',
+];
+
+const VENDOR_JS = [
+    'node_modules/zuck.js/dist/zuck.min.js',
+];
+
+// ============================================================
 // BUILD
 // ============================================================
 
-function build(version) {
+async function build(version) {
     var versionDir = path.join(DIST, version);
 
-    // Klasör oluştur
     if (!fs.existsSync(DIST)) fs.mkdirSync(DIST);
     if (!fs.existsSync(versionDir)) fs.mkdirSync(versionDir);
 
-    // CSS bundle
+    // --- CSS bundle ---
     var cssContent = '';
     var cssCount = 0;
+
+    VENDOR_CSS.forEach(function(file) {
+        var filePath = path.join(BASE, file);
+        if (fs.existsSync(filePath)) {
+            cssContent += '\n/* ===== vendor: ' + file + ' ===== */\n' + fs.readFileSync(filePath, 'utf-8') + '\n';
+            cssCount++;
+        }
+    });
+
     CSS_FILES.forEach(function(file) {
         var filePath = path.join(BASE, file);
         if (fs.existsSync(filePath)) {
@@ -112,13 +135,22 @@ function build(version) {
             cssContent += '\n/* ===== ' + file + ' ===== */\n' + content + '\n';
             cssCount++;
         } else {
-            console.warn('  [!] CSS bulunamadı: ' + file);
+            console.warn('  [!] CSS bulunamadi: ' + file);
         }
     });
 
-    // JS bundle
+    // --- JS bundle ---
     var jsContent = '';
     var jsCount = 0;
+
+    VENDOR_JS.forEach(function(file) {
+        var filePath = path.join(BASE, file);
+        if (fs.existsSync(filePath)) {
+            jsContent += '\n/* ===== vendor: ' + file + ' ===== */\n' + fs.readFileSync(filePath, 'utf-8') + '\n';
+            jsCount++;
+        }
+    });
+
     JS_FILES.forEach(function(file) {
         var filePath = path.join(BASE, file);
         if (fs.existsSync(filePath)) {
@@ -126,17 +158,28 @@ function build(version) {
             jsContent += '\n/* ===== ' + file + ' ===== */\n' + content + '\n';
             jsCount++;
         } else {
-            console.warn('  [!] JS bulunamadı: ' + file);
+            console.warn('  [!] JS bulunamadi: ' + file);
         }
     });
 
-    // Yaz
+    // --- Minify ---
+    var rawCssSize = Buffer.byteLength(cssContent, 'utf-8');
+    var rawJsSize = Buffer.byteLength(jsContent, 'utf-8');
+
+    var minCss = csso.minify(cssContent).css;
+    var minJsResult = await terserMinify(jsContent, { compress: true, mangle: true });
+    var minJs = minJsResult.code;
+
+    var minCssSize = Buffer.byteLength(minCss, 'utf-8');
+    var minJsSize = Buffer.byteLength(minJs, 'utf-8');
+
+    // --- Yaz ---
     var cssBundlePath = path.join(versionDir, 'bundle.css');
     var jsBundlePath = path.join(versionDir, 'bundle.js');
-    fs.writeFileSync(cssBundlePath, cssContent.trim());
-    fs.writeFileSync(jsBundlePath, jsContent.trim());
+    fs.writeFileSync(cssBundlePath, minCss);
+    fs.writeFileSync(jsBundlePath, minJs);
 
-    // Config güncelle
+    // Config guncelle
     var config = getConfig();
     if (!config.versions.includes(version)) {
         config.versions.push(version);
@@ -146,18 +189,21 @@ function build(version) {
     config.lastBuild = new Date().toISOString();
     saveConfig(config);
 
-    // Loader güncelle
     buildLoader(version);
 
+    var fmtKB = function(b) { return (b / 1024).toFixed(1) + ' KB'; };
+
     console.log('');
-    console.log('  MITOBET Build - ' + version);
+    console.log('  MITOBET Build - ' + version + ' (minified)');
     console.log('  ─────────────────────────────');
     console.log('  CSS: ' + cssCount + ' dosya → ' + cssBundlePath);
+    console.log('       ' + fmtKB(rawCssSize) + ' → ' + fmtKB(minCssSize) + ' (-%' + Math.round((1 - minCssSize / rawCssSize) * 100) + ')');
     console.log('  JS:  ' + jsCount + ' dosya  → ' + jsBundlePath);
+    console.log('       ' + fmtKB(rawJsSize) + ' → ' + fmtKB(minJsSize) + ' (-%' + Math.round((1 - minJsSize / rawJsSize) * 100) + ')');
     console.log('  Aktif versiyon: ' + version);
     console.log('  Versiyonlar: ' + config.versions.join(', '));
     console.log('');
-    console.log('  CDN URL\'leri (push sonrası):');
+    console.log('  CDN URL\'leri (push sonrasi):');
     console.log('  CSS: https://cdn.jsdelivr.net/gh/mitobet/style-core@main/dist/' + version + '/bundle.css');
     console.log('  JS:  https://cdn.jsdelivr.net/gh/mitobet/style-core@main/dist/' + version + '/bundle.js');
     console.log('  Loader: https://cdn.jsdelivr.net/gh/mitobet/style-core@main/dist/loader.js');
@@ -173,25 +219,27 @@ function buildLoader(activeVersion) {
         '(function() {\n' +
         '    var V = "' + activeVersion + '";\n' +
         '    var BASE = "https://cdn.jsdelivr.net/gh/mitobet/style-core@main/dist/" + V;\n' +
+        '    var cssUrl = BASE + "/bundle.css";\n' +
+        '    var jsUrl = BASE + "/bundle.js";\n' +
         '\n' +
-        '    // CSS yukle\n' +
+        '    var pl = document.createElement("link");\n' +
+        '    pl.rel = "preload"; pl.as = "style"; pl.href = cssUrl;\n' +
+        '    document.head.appendChild(pl);\n' +
+        '    var pj = document.createElement("link");\n' +
+        '    pj.rel = "preload"; pj.as = "script"; pj.href = jsUrl;\n' +
+        '    document.head.appendChild(pj);\n' +
+        '\n' +
         '    var link = document.createElement("link");\n' +
-        '    link.rel = "stylesheet";\n' +
-        '    link.href = BASE + "/bundle.css";\n' +
+        '    link.rel = "stylesheet"; link.href = cssUrl;\n' +
         '    document.head.appendChild(link);\n' +
         '\n' +
-        '    // JS yukle\n' +
         '    function loadJS() {\n' +
-        '        var script = document.createElement("script");\n' +
-        '        script.src = BASE + "/bundle.js";\n' +
-        '        (document.body || document.head).appendChild(script);\n' +
+        '        var s = document.createElement("script");\n' +
+        '        s.src = jsUrl; s.async = true;\n' +
+        '        (document.body || document.head).appendChild(s);\n' +
         '    }\n' +
-        '\n' +
-        '    if (document.body) {\n' +
-        '        loadJS();\n' +
-        '    } else {\n' +
-        '        document.addEventListener("DOMContentLoaded", loadJS);\n' +
-        '    }\n' +
+        '    if (document.body) loadJS();\n' +
+        '    else document.addEventListener("DOMContentLoaded", loadJS);\n' +
         '})();\n';
 
     fs.writeFileSync(path.join(DIST, 'loader.js'), loaderContent);
@@ -202,4 +250,7 @@ function buildLoader(activeVersion) {
 // ============================================================
 
 var version = getTargetVersion();
-build(version);
+build(version).catch(function(err) {
+    console.error('Build hatasi:', err);
+    process.exit(1);
+});
