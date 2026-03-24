@@ -50,6 +50,7 @@ const JS_FILES = [
     'active/SCRIPT/header_extra_buttons.js',
     'active/SCRIPT/footer_marquee.js',
     'active/SCRIPT/popup.js',
+    'active/SCRIPT/sticky_menu_guard.js',
 ];
 
 // ============================================================

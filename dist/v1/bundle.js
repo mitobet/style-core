@@ -1520,3 +1520,99 @@ input, select, textarea,
         setTimeout(showPopup, POPUP_DELAY);
     }
 })();
+
+
+/* ===== active/SCRIPT/sticky_menu_guard.js ===== */
+(function() {
+    'use strict';
+
+    var BROKEN_INDICATORS = ['fixed', 'absolute'];
+    var BROKEN_TRANSFORM = 'translateX(-100%)';
+
+    function isBroken(el) {
+        if (!el || !el.style) return false;
+        var s = el.style;
+        if (BROKEN_INDICATORS.indexOf(s.position) > -1) return true;
+        if (s.transform && s.transform.indexOf('translateX') > -1) return true;
+        if (s.width === '280px' || s.height === '100%') return true;
+        return false;
+    }
+
+    function cleanInlineStyle(el) {
+        if (!el) return;
+        var props = [
+            'position', 'top', 'left', 'right', 'bottom',
+            'width', 'height', 'max-width', 'max-height',
+            'transform', 'transition',
+            'z-index', 'overflow', 'overflow-y', 'overflow-x',
+            'box-shadow', 'background-color', 'background'
+        ];
+        for (var i = 0; i < props.length; i++) {
+            el.style.removeProperty(props[i]);
+        }
+    }
+
+    function guardAll() {
+        var menus = document.querySelectorAll('#tabbar .inner-menu, .lowbar .inner-menu');
+        for (var i = 0; i < menus.length; i++) {
+            if (isBroken(menus[i])) {
+                cleanInlineStyle(menus[i]);
+            }
+        }
+    }
+
+    function startObserver() {
+        var tabbar = document.getElementById('tabbar');
+        if (!tabbar) return;
+
+        var obs = new MutationObserver(function(muts) {
+            for (var i = 0; i < muts.length; i++) {
+                var m = muts[i];
+                if (m.type === 'attributes') {
+                    var t = m.target;
+                    if (t.classList && t.classList.contains('inner-menu') && isBroken(t)) {
+                        cleanInlineStyle(t);
+                    }
+                }
+                if (m.type === 'childList') {
+                    guardAll();
+                }
+            }
+        });
+
+        obs.observe(tabbar, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['style', 'class']
+        });
+    }
+
+    function init() {
+        guardAll();
+        startObserver();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    var guardInterval = setInterval(guardAll, 1000);
+    setTimeout(function() { clearInterval(guardInterval); }, 30000);
+
+    window.addEventListener('popstate', function() { setTimeout(guardAll, 100); });
+    var origPush = history.pushState;
+    var origReplace = history.replaceState;
+    history.pushState = function() {
+        origPush.apply(this, arguments);
+        setTimeout(guardAll, 100);
+        setTimeout(guardAll, 500);
+    };
+    history.replaceState = function() {
+        origReplace.apply(this, arguments);
+        setTimeout(guardAll, 100);
+        setTimeout(guardAll, 500);
+    };
+})();
