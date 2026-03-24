@@ -1,5 +1,17 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.4.0 - Popup optimize, stories mobil-only (2026-03-24)
+**Hash:** `af5fa90`
+**Aciklama:** Popup ve stories birlikte crash-free calisiyor. GIF wsrv.nl ile WebP'ye donusturuldu, backdrop-filter kaldirildi, particle azaltildi. Stories sadece mobilde gorunur.
+**Dosyalar:** 21 CSS, 9 JS
+**Degisiklikler:**
+- ~ `popup.js`: GIF -> wsrv.nl WebP proxy (w=800, q=80), backdrop-filter kaldirildi, PARTICLE_COUNT 18->8
+- ~ `stories_override.css`: varsayilan display:none, sadece @media max-width:768px ile display:block
+- ~ `stories_loader.js`: desktop'ta boot engeli, ayni sekmede yonlendirme
+- ~ `build.js` / `dev-server.js`: popup.js geri eklendi
+
+---
+
 ## v1.3.0 - Stories mobil-only, popup deaktif (2026-03-24)
 **Hash:** `6f05a13`
 **Aciklama:** Stories widget sadece mobilde gorunur (varsayilan display:none, max-width:768px ile acilir). Popup crash sorunu nedeniyle bundle'dan cikarildi.
