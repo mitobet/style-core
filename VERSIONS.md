@@ -12,6 +12,19 @@
 
 ---
 
+## v1.8.2 - SPA navigasyon sonrasi stories (2026-03-24)
+**Hash:** `f268ae0`
+**Aciklama:** SPA'da sayfa degisince stories widget'i kayboluyordu. history.pushState/replaceState override + popstate ile her navigasyonda anasayfaya donerken widget yeniden insert ediliyor.
+**Degisiklikler:**
+- ~ `stories_loader.js`: handleNav() + history override eklendi
+**CMS:**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@f268ae0/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@f268ae0/dist/v1/bundle.js"></script>
+```
+
+---
+
 ## v1.8.1 - Stories sadece anasayfa (2026-03-24)
 **Hash:** `e035ebe`
 **Aciklama:** Stories widget sadece mobil anasayfada gorunur. Diger sayfalarda (promosyon, casino, vb.) yuklenmez.
