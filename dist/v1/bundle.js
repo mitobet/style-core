@@ -1359,8 +1359,8 @@ input, select, textarea,
 (function() {
     'use strict';
 
-    var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FKAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif&w=800&n=-1&q=80';
-    var POPUP_LINK = 'https://mitobonus.com/survey/mitobet-buyuk-cekilis-e9e4aff7';
+    var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FMivlnfie1wguKW11uHXofqv7dka9oFUKudZ16GDt.jpg&w=800&q=80';
+    var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
     var POPUP_DELAY = 0;
     var PARTICLE_COUNT = 8;
 
@@ -1467,8 +1467,7 @@ input, select, textarea,
         var imgWrap = document.createElement('a');
         imgWrap.className = 'mp-img-wrap';
         imgWrap.href = POPUP_LINK;
-        imgWrap.target = '_blank';
-        imgWrap.rel = 'noopener';
+        imgWrap.target = '_self';
 
         var img = document.createElement('img');
         img.className = 'mp-img';
