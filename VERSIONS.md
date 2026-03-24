@@ -1,5 +1,18 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.2.0 - Stories modulu (2026-03-24)
+**Hash:** `4b39b53`
+**Aciklama:** Zuck.js stories modulu eklendi. 2 adet promosyon story'si, CSS override'lar, dinamik link yapisi.
+**Dosyalar:** 21 CSS (stories_override.css eklendi), 9 JS (stories_loader.js, zuck.min.js eklendi)
+**Degisiklikler:**
+- + `stories_loader.js`: Zuck.js stories yukleyici — 2 promosyon story'si, dinamik domain link yapisi
+- + `stories_override.css`: Zuck.js modal/container override (object-fit, spacing, live-chat gizleme)
+- + `zuck.min.js`: Zuck.js kutuphanesi bundle'a dahil
+- ~ `build.js`: stories dosyalari eklendi
+- ~ Container padding/max-height azaltildi (ust bosluk duzeltmesi)
+
+---
+
 ## v1.1.0 - Bundle guncellemeleri (2026-03-24)
 **Hash:** `8bca4fc`
 **Aciklama:** Mobil tabbar sticky menu, popup, promosyon UI ve performans iyilestirmeleri. Promosyon sayfasi CSS rollback (9cc5ceb'ye geri donuldu).

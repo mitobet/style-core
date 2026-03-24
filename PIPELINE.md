@@ -6,13 +6,13 @@
 - **Repo**: `mitobet/style-core` — https://github.com/mitobet/style-core.git
 - **CDN**: jsDelivr — `cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/...`
 - **Calisma dizini**: `/Users/talha/Documents/GitHub/allmito/`
-- **Son aktif CDN hash**: `8bca4fc`
+- **Son aktif CDN hash**: `4b39b53`
 
 ### CMS'deki Aktif Kod
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@8bca4fc/dist/v1/bundle.css">
-<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@8bca4fc/dist/v1/bundle.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@4b39b53/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@4b39b53/dist/v1/bundle.js"></script>
 ```
 
 ---
