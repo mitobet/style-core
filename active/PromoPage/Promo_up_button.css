@@ -1,53 +1,87 @@
-/* Promo Up Button - Elit MitoBet Style */
+/* =====================================================
+   MITOBET - Promosyon Kategori Butonlari Redesign
+   Hedef: .category-grid-wrapper, .category-tile
+   Tema: Koyu zemin, altin aksan (#CFAE6D / #FFD700)
+   ===================================================== */
 
 /* Grid Wrapper */
 .category-grid-wrapper {
-    padding: 10px 0 !important;
+    padding: 8px 0 16px !important;
     background: transparent !important;
 }
 
 .category-grid {
     display: flex !important;
-    justify-content: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
     width: 100% !important;
+    flex-wrap: wrap !important;
 }
 
-/* Ana Buton (Tile) Tasarımı */
+/* =====================================================
+   CATEGORY TILE - Ana Buton
+   ===================================================== */
 .category-tile {
     display: flex !important;
     align-items: center !important;
-    width: 100% !important;
-    height: 60px !important; /* Yükseklik sabitlendi */
-    background: linear-gradient(145deg, #1a1a1a 0%, #0b0b0b 100%) !important; /* Koyu elit zemin */
-    border: 1px solid rgba(233, 195, 122, 0.3) !important; /* Hafif altın çerçeve */
+    flex: 1 1 280px !important;
+    max-width: 100% !important;
+    height: 64px !important;
+    background: linear-gradient(135deg, #141414 0%, #0d0d0d 100%) !important;
+    border: 1px solid rgba(207, 174, 109, 0.15) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
     cursor: pointer !important;
-    transition: all 0.3s ease !important;
     position: relative !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Hover Efekti */
 .category-tile:hover {
-    transform: translateY(-2px) !important;
-    border-color: rgba(233, 195, 122, 0.8) !important;
-    box-shadow: 0 8px 25px rgba(233, 195, 122, 0.15) !important;
+    transform: translateY(-3px) !important;
+    border-color: rgba(207, 174, 109, 0.5) !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.4),
+                0 0 16px rgba(207, 174, 109, 0.1) !important;
+    background: linear-gradient(135deg, #1a1a1a 0%, #111111 100%) !important;
 }
 
-/* Aktif Durum (Varsa) */
+/* Aktif Durum */
 .category-tile.active {
-    border-color: #e9c37a !important;
-    background: linear-gradient(145deg, #222 0%, #111 100%) !important;
+    border-color: rgba(207, 174, 109, 0.4) !important;
+    background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                0 0 12px rgba(207, 174, 109, 0.08) !important;
 }
 
-/* Sol Taraftaki Görsel (Altın Doku) */
+/* Hover isik sizmasi */
+.category-tile::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(45deg, transparent, rgba(207, 174, 109, 0.06), transparent) !important;
+    opacity: 0 !important;
+    transition: opacity 0.3s ease !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+.category-tile:hover::before {
+    opacity: 1 !important;
+}
+
+/* =====================================================
+   CATEGORY IMAGE - Sol Gorsel
+   ===================================================== */
 .category-image {
-    width: 80px !important; /* Genişlik ayarı */
+    width: 64px !important;
     height: 100% !important;
     flex-shrink: 0 !important;
     position: relative !important;
-    border-right: 1px solid rgba(233, 195, 122, 0.2) !important;
+    overflow: hidden !important;
+    border-right: 1px solid rgba(207, 174, 109, 0.1) !important;
 }
 
 .category-image img {
@@ -55,51 +89,138 @@
     height: 100% !important;
     object-fit: cover !important;
     display: block !important;
-    filter: brightness(1.1) contrast(1.1) !important; /* Altın parlaklığı */
+    transition: transform 0.4s ease, filter 0.4s ease !important;
+    filter: brightness(1.05) saturate(1.1) !important;
 }
 
-/* Sağ Taraf (Metin ve Ok) — gizlendi */
+.category-tile:hover .category-image img {
+    transform: scale(1.1) !important;
+    filter: brightness(1.15) saturate(1.2) !important;
+}
+
+/* =====================================================
+   CATEGORY INFO - Sag Taraf (Baslik + Ok)
+   ===================================================== */
 .category-info {
-    display: none !important;
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0 18px !important;
+    height: 100% !important;
+    position: relative !important;
+    z-index: 2 !important;
 }
 
-/* Başlık Metni */
+/* =====================================================
+   CATEGORY TITLE
+   ===================================================== */
 .category-title {
-    font-size: 16px !important;
-    font-weight: 700 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
     color: #ffffff !important;
     text-transform: uppercase !important;
-    letter-spacing: 1px !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+    letter-spacing: 0.8px !important;
+    transition: color 0.3s ease, text-shadow 0.3s ease !important;
 }
 
-/* Ok İşareti */
+.category-tile:hover .category-title {
+    color: #CFAE6D !important;
+    text-shadow: 0 0 8px rgba(207, 174, 109, 0.2) !important;
+}
+
+.category-tile.active .category-title {
+    color: #CFAE6D !important;
+}
+
+/* =====================================================
+   CATEGORY ARROW - Ok Isareti
+   ===================================================== */
 .category-arrow {
-    font-size: 24px !important;
-    color: #e9c37a !important; /* Altın rengi ok */
+    font-size: 22px !important;
+    color: rgba(255, 255, 255, 0.3) !important;
     font-weight: 300 !important;
-    transition: transform 0.3s ease !important;
-    margin-top: -2px !important; /* Dikey hizalama fix */
+    transition: transform 0.3s ease, color 0.3s ease !important;
+    flex-shrink: 0 !important;
 }
 
 .category-tile:hover .category-arrow {
-    transform: translateX(5px) !important;
-    color: #fff !important;
+    transform: translateX(4px) !important;
+    color: #CFAE6D !important;
 }
 
-/* Mobilde biraz daha kompakt olabilir */
+.category-tile.active .category-arrow {
+    color: rgba(207, 174, 109, 0.6) !important;
+}
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
 @media (max-width: 768px) {
+    .category-grid {
+        gap: 8px !important;
+    }
+
     .category-tile {
-        height: 50px !important;
+        height: 56px !important;
+        flex: 1 1 100% !important;
         border-radius: 10px !important;
     }
-    
+
     .category-image {
-        width: 60px !important;
+        width: 56px !important;
     }
-    
+
     .category-title {
         font-size: 14px !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .category-info {
+        padding: 0 14px !important;
+    }
+
+    .category-arrow {
+        font-size: 20px !important;
     }
 }
 
+@media (max-width: 480px) {
+    .category-grid-wrapper {
+        padding: 6px 0 12px !important;
+    }
+
+    .category-tile {
+        height: 52px !important;
+    }
+
+    .category-image {
+        width: 52px !important;
+    }
+
+    .category-title {
+        font-size: 13px !important;
+    }
+}
+
+/* =====================================================
+   PULSE ANIMASYONU - Aktif Buton
+   ===================================================== */
+@keyframes tilePulse {
+    0%, 100% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                    0 0 12px rgba(207, 174, 109, 0.08);
+    }
+    50% {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3),
+                    0 0 20px rgba(207, 174, 109, 0.15);
+    }
+}
+
+.category-tile.active {
+    animation: tilePulse 3s ease-in-out infinite !important;
+}
+
+.category-tile:hover {
+    animation: none !important;
+}
