@@ -3502,7 +3502,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
 
 /* --- Ana container --- */
 #mito-stories {
-    display: block !important;
+    display: none !important;
     width: 100% !important;
     padding: 4px 0 2px !important;
     background: #181818 !important;
@@ -3685,6 +3685,13 @@ body.zuck-modal-open iframe[id*="chat"] {
     visibility: hidden !important;
     opacity: 0 !important;
     z-index: -1 !important;
+}
+
+/* --- Sadece mobilde gorunur --- */
+@media (max-width: 768px) {
+    #mito-stories {
+        display: block !important;
+    }
 }
 
 
