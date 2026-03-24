@@ -12,6 +12,22 @@
 
 ---
 
+## v1.7.0 - Code 5 crash stabilization (2026-03-24)
+**Hash:** `055f11f`
+**Aciklama:** Renderer crash (Hata kodu 5) riskini azaltmak icin story kapanisi yumusatildi, observer debounce, popup/story mutual exclusion, kapali zuck-modal pointer-events kapali, cubeEffect kapali.
+**Dosyalar:** 21 CSS, 9 JS (bundle; `stories_loader.js` / `stories_override.css` yerelde .gitignore)
+**Degisiklikler:**
+- ~ `stories_loader.js` (bundle): native close + soft hide (removeChild yok), debounced `syncModalUi`, tek Zuck boot, popup overlay varken init erteleme
+- ~ `popup.js`: story acikken popup bekleme (retry cap)
+- ~ `stories_override.css` (bundle): `#zuck-modal:not(.show)` pointer-events none
+**CMS:**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@055f11f/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@055f11f/dist/v1/bundle.js"></script>
+```
+
+---
+
 ## v1.5.0 - Popup statik JPG + dinamik link (2026-03-24)
 **Hash:** `05e417b`
 **Aciklama:** Popup gorseli statik JPG ile degistirildi (crash onleme). Link dinamik hale getirildi (window.location.origin). Ayni sekmede yonlendirme.
