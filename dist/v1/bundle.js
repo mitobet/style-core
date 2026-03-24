@@ -1728,24 +1728,40 @@ input, select, textarea,
         return container;
     }
 
-    function injectCloseBtn(viewer) {
-        if (viewer.querySelector('.mito-close-btn')) return;
-        var head = viewer.querySelector('.head .right');
-        if (!head) return;
+    function closeStoryModal() {
+        var modal = document.getElementById('zuck-modal');
+        if (!modal) return;
+        var closeEl = modal.querySelector('.story-viewer .head .right .close')
+            || modal.querySelector('.story-viewer .close')
+            || modal.querySelector('.close');
+        if (closeEl) {
+            closeEl.click();
+        } else {
+            modal.classList.remove('show');
+            document.body.classList.remove('zuck-modal-open');
+        }
+    }
+
+    function hideTimeElements(root) {
+        var times = root.querySelectorAll('.time');
+        for (var i = 0; i < times.length; i++) {
+            times[i].style.display = 'none';
+            times[i].style.visibility = 'hidden';
+        }
+    }
+
+    function injectCloseBtn(modal) {
+        if (modal.querySelector('.mito-close-btn')) return;
 
         var btn = document.createElement('button');
         btn.className = 'mito-close-btn';
         btn.type = 'button';
         btn.textContent = 'Kapat';
-        btn.style.cssText =
-            'background:#CFAE6D;color:#181818;border:none;border-radius:16px;' +
-            'padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;' +
-            'margin-right:4px;line-height:1;z-index:10;';
-        btn.onclick = function() {
-            var orig = viewer.querySelector('.head .right .close');
-            if (orig) orig.click();
+        btn.onclick = function(e) {
+            e.stopPropagation();
+            closeStoryModal();
         };
-        head.insertBefore(btn, head.firstChild);
+        modal.appendChild(btn);
     }
 
     function watchModal() {
@@ -1753,10 +1769,8 @@ input, select, textarea,
             var modal = document.getElementById('zuck-modal');
             if (modal && modal.classList.contains('show')) {
                 document.body.classList.add('zuck-modal-open');
-                var viewers = modal.querySelectorAll('.story-viewer');
-                for (var i = 0; i < viewers.length; i++) {
-                    injectCloseBtn(viewers[i]);
-                }
+                injectCloseBtn(modal);
+                hideTimeElements(modal);
             } else {
                 document.body.classList.remove('zuck-modal-open');
             }
@@ -1773,6 +1787,8 @@ input, select, textarea,
 
         watchModal();
 
+        var lastStoryId = STORIES_DATA[STORIES_DATA.length - 1].id;
+
         var stories = new Zuck(timeline, {
             backNative: true,
             previousTap: true,
@@ -1784,6 +1800,18 @@ input, select, textarea,
             cubeEffect: true,
             localStorage: true,
             stories: STORIES_DATA,
+            callbacks: {
+                onEnd: function(storyId, cb) {
+                    if (storyId === lastStoryId) {
+                        setTimeout(closeStoryModal, 300);
+                    }
+                    if (typeof cb === 'function') cb();
+                },
+                onClose: function(storyId, cb) {
+                    document.body.classList.remove('zuck-modal-open');
+                    if (typeof cb === 'function') cb();
+                }
+            },
             language: {
                 unmute: 'Sesi Ac',
                 keyboardTip: 'Navigasyon icin ok tuslarini kullan',
