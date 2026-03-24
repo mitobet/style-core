@@ -2,7 +2,7 @@
 (function() {
     'use strict';
 
-    var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FKAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif&w=800&output=webp&q=80';
+    var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FKAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif&w=800&n=-1&q=80';
     var POPUP_LINK = 'https://mitobonus.com/survey/mitobet-buyuk-cekilis-e9e4aff7';
     var POPUP_DELAY = 0;
     var PARTICLE_COUNT = 8;
