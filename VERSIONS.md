@@ -1,5 +1,18 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.6.0 - Performans optimizasyonlari (2026-03-24)
+**Hash:** `ea48452`
+**Aciklama:** Bundle boyutlari minify edilerek azaltildi, Zuck.js dis CDN bagimliligi kaldirildi ve loader/font yukleme akisi hizlandirildi.
+**Dosyalar:** 23 CSS, 10 JS (vendor dahil, minified output)
+**Degisiklikler:**
+- ~ `build.js`: `csso` + `terser` minification, Zuck.js vendor dosyalari bundle'a dahil edildi
+- ~ `stories_loader.js`: unpkg bagimliliklari kaldirildi, bundle icindeki Zuck ile direkt init
+- ~ `css_blocker.js`: `setInterval` kaldirildi (MutationObserver + lifecycle hooks yeterli)
+- ~ `font_loader.js`: preconnect/preload + non-blocking font CSS yukleme
+- ~ `dist/loader.js`: preload + async yukleme akisi
+
+---
+
 ## v1.5.0 - Popup statik JPG + dinamik link (2026-03-24)
 **Hash:** `05e417b`
 **Aciklama:** Popup gorseli statik JPG ile degistirildi (crash onleme). Link dinamik hale getirildi (window.location.origin). Ayni sekmede yonlendirme.
