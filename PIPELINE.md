@@ -6,7 +6,7 @@
 - **Repo**: `mitobet/style-core` — https://github.com/mitobet/style-core.git
 - **CDN**: jsDelivr — `cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/...`
 - **Calisma dizini**: `/Users/talha/Documents/GitHub/allmito/`
-- **Son aktif CDN hash**: `5f3b29c`
+- **Son aktif CDN hash**: `e035ebe`
 
 ### CMS'deki Aktif Kod
 

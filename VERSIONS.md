@@ -12,6 +12,19 @@
 
 ---
 
+## v1.8.1 - Stories sadece anasayfa (2026-03-24)
+**Hash:** `e035ebe`
+**Aciklama:** Stories widget sadece mobil anasayfada gorunur. Diger sayfalarda (promosyon, casino, vb.) yuklenmez.
+**Degisiklikler:**
+- ~ `stories_loader.js`: boot() fonksiyonuna path kontrolu eklendi — `/`, `/tr`, `/en` disindaki sayfalarda erken return
+**CMS:**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@e035ebe/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@e035ebe/dist/v1/bundle.js"></script>
+```
+
+---
+
 ## v1.8.0 - Custom stories engine (2026-03-24)
 **Hash:** `5f3b29c`
 **Aciklama:** Zuck.js tamamen kaldirildi. Sifirdan saf JS + CSS stories motoru yazildi. Hicbir harici CDN, history API veya MutationObserver yok. Touch + mouse swipe destegi, gold gradient Detaylar butonu, pulse animasyon, progress bar.
