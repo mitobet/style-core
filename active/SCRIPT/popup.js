@@ -2,10 +2,10 @@
 (function() {
     'use strict';
 
-    var POPUP_IMAGE = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/KAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif';
+    var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FKAgXuYzzLkDen3U2fdJI3hHie8DlTNtJoWv27xCQ.gif&w=800&output=webp&q=80';
     var POPUP_LINK = 'https://mitobonus.com/survey/mitobet-buyuk-cekilis-e9e4aff7';
     var POPUP_DELAY = 0;
-    var PARTICLE_COUNT = 18;
+    var PARTICLE_COUNT = 8;
 
     function injectStyles() {
         if (document.getElementById('mito-popup-css')) return;
@@ -25,7 +25,7 @@
                 'background:rgba(0,0,0,.88);' +
                 'display:flex;justify-content:center;align-items:center;z-index:99999;' +
                 'animation:mpFadeIn .35s ease-out forwards;' +
-                'backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}' +
+                '}' +
             '#mito-popup-overlay.mp-closing{animation:mpFadeOut .3s ease-in forwards}' +
 
             '.mp-box{position:relative;overflow:visible;' +
@@ -50,7 +50,7 @@
                 'font-size:14px;line-height:1;border-radius:50%;cursor:pointer;' +
                 'display:flex;justify-content:center;align-items:center;z-index:10;' +
                 'transition:all .3s ease;animation:mpCloseIn .35s ease .45s both;' +
-                'backdrop-filter:blur(4px)}' +
+                '}' +
             '.mp-close:hover{background:#cfae6d;color:#0a0a14;border-color:#cfae6d;' +
                 'transform:rotate(90deg) scale(1.1)}' +
 
