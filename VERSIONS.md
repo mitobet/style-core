@@ -12,6 +12,23 @@
 
 ---
 
+## v1.8.0 - Custom stories engine (2026-03-24)
+**Hash:** `5f3b29c`
+**Aciklama:** Zuck.js tamamen kaldirildi. Sifirdan saf JS + CSS stories motoru yazildi. Hicbir harici CDN, history API veya MutationObserver yok. Touch + mouse swipe destegi, gold gradient Detaylar butonu, pulse animasyon, progress bar.
+**Dosyalar:** stories_loader.js, stories_override.css, dist/v1/bundle.js, bundle.css
+**Degisiklikler:**
+- - Zuck.js (unpkg CDN, backNative history hook, external CSS): tamamen kaldirildi
+- + Custom stories IIFE: avatar thumbnails, fullscreen modal, progress bar, tap zones, swipe (touch + mouse), auto-advance
+- + Detaylar butonu: gold gradient + yukari ok SVG + pulse animasyon
+- + swipeGuard: drag sonrasi tap zone click bastirma
+**CMS:**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@5f3b29c/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@5f3b29c/dist/v1/bundle.js"></script>
+```
+
+---
+
 ## v1.7.0 - Code 5 crash stabilization (2026-03-24)
 **Hash:** `055f11f`
 **Aciklama:** Renderer crash (Hata kodu 5) riskini azaltmak icin story kapanisi yumusatildi, observer debounce, popup/story mutual exclusion, kapali zuck-modal pointer-events kapali, cubeEffect kapali.
