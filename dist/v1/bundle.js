@@ -1948,26 +1948,73 @@ input, select, textarea,
 
 /* ===== active/SCRIPT/spor_css_replacer.js ===== */
 (function() {
-    var OLD_CSS_NAME = 'HAdao1T5VR8KAu8WaPPXiIDtmFpxZuzu';
-    var NEW_CSS_NAME = 'M69KD1LR8yC42b637plVw99HANf52MbW';
-    var oldPattern = new RegExp(OLD_CSS_NAME, 'g');
+    var REPLACEMENTS = [
+        ['217 100% 51.6%', '43 100% 70%'],
+        ['217 100% 95%',   '43 100% 95%'],
+        ['217 100% 90%',   '43 100% 90%'],
+        ['217 100% 80%',   '43 100% 80%'],
+        ['217 100% 70%',   '43 100% 70%'],
+        ['217 100% 60%',   '43 100% 60%'],
+        ['217 100% 50%',   '43 100% 50%'],
+        ['217 100% 40%',   '43 100% 40%'],
+        ['217 100% 30%',   '43 100% 30%'],
+        ['217 100% 20%',   '43 100% 20%'],
+        ['217 100% 10%',   '43 100% 10%'],
+        ['217 100% 5%',    '43 100% 5%'],
+        ['212 58.3% 9.4%', '35 50% 15%'],
+        ['240 14.3% 91.8%','220 20% 6%'],
+        ['240 14.3% 95%',  '220 20% 5%'],
+        ['240 14.3% 90%',  '220 20% 10%'],
+        ['240 14.3% 80%',  '220 20% 16%'],
+        ['240 14.3% 70%',  '220 20% 24%'],
+        ['240 14.3% 60%',  '220 20% 32%'],
+        ['240 14.3% 50%',  '220 20% 40%'],
+        ['240 14.3% 40%',  '220 20% 50%'],
+        ['240 14.3% 30%',  '220 20% 60%'],
+        ['240 14.3% 20%',  '220 20% 70%'],
+        ['240 14.3% 10%',  '220 20% 80%'],
+        ['240 14.3% 5%',   '220 20% 90%'],
+        ['212 58.3% 5%',   '220 20% 5%'],
+        ['212 58.3% 10%',  '220 20% 10%'],
+        ['212 58.3% 20%',  '220 20% 16%'],
+        ['212 58.3% 30%',  '220 20% 24%'],
+        ['212 58.3% 40%',  '220 20% 32%'],
+        ['212 58.3% 50%',  '220 20% 40%'],
+        ['212 58.3% 60%',  '220 20% 50%'],
+        ['212 58.3% 70%',  '220 20% 60%'],
+        ['212 58.3% 80%',  '220 20% 70%'],
+        ['212 58.3% 90%',  '220 20% 80%'],
+        ['212 58.3% 95%',  '220 20% 90%']
+    ];
 
-    function replaceCSSLinks() {
-        var links = document.querySelectorAll('link[rel="stylesheet"]');
-        var replaced = 0;
-        for (var i = 0; i < links.length; i++) {
-            var href = links[i].getAttribute('href') || '';
-            if (oldPattern.test(href)) {
-                oldPattern.lastIndex = 0;
-                links[i].setAttribute('href', href.replace(oldPattern, NEW_CSS_NAME));
-                replaced++;
+    function replaceInText(text) {
+        var changed = false;
+        for (var i = 0; i < REPLACEMENTS.length; i++) {
+            if (text.indexOf(REPLACEMENTS[i][0]) !== -1) {
+                text = text.split(REPLACEMENTS[i][0]).join(REPLACEMENTS[i][1]);
+                changed = true;
             }
-            oldPattern.lastIndex = 0;
         }
-        return replaced;
+        return changed ? text : null;
     }
 
-    function observeNewLinks() {
+    function processStyleTags() {
+        var styles = document.querySelectorAll('style');
+        var count = 0;
+        for (var i = 0; i < styles.length; i++) {
+            var original = styles[i].textContent;
+            if (original.indexOf('217 100%') !== -1 || original.indexOf('212 58') !== -1 || original.indexOf('240 14') !== -1) {
+                var result = replaceInText(original);
+                if (result !== null) {
+                    styles[i].textContent = result;
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    function observeStyleTags() {
         var observer = new MutationObserver(function(mutations) {
             for (var m = 0; m < mutations.length; m++) {
                 var added = mutations[m].addedNodes;
@@ -1975,21 +2022,14 @@ input, select, textarea,
                     var node = added[n];
                     if (node.nodeType !== 1) continue;
 
-                    if (node.tagName === 'LINK' && node.rel === 'stylesheet') {
-                        var href = node.getAttribute('href') || '';
-                        if (href.indexOf(OLD_CSS_NAME) !== -1) {
-                            node.setAttribute('href', href.replace(oldPattern, NEW_CSS_NAME));
-                            oldPattern.lastIndex = 0;
+                    if (node.tagName === 'STYLE') {
+                        var txt = node.textContent;
+                        if (txt.indexOf('217 100%') !== -1 || txt.indexOf('212 58') !== -1 || txt.indexOf('240 14') !== -1) {
+                            var result = replaceInText(txt);
+                            if (result !== null) {
+                                node.textContent = result;
+                            }
                         }
-                    }
-
-                    var innerLinks = node.querySelectorAll
-                        ? node.querySelectorAll('link[rel="stylesheet"][href*="' + OLD_CSS_NAME + '"]')
-                        : [];
-                    for (var k = 0; k < innerLinks.length; k++) {
-                        var h = innerLinks[k].getAttribute('href') || '';
-                        innerLinks[k].setAttribute('href', h.replace(oldPattern, NEW_CSS_NAME));
-                        oldPattern.lastIndex = 0;
                     }
                 }
             }
@@ -2002,12 +2042,9 @@ input, select, textarea,
     }
 
     function run() {
-        replaceCSSLinks();
-        observeNewLinks();
-
-        setInterval(function() {
-            replaceCSSLinks();
-        }, 3000);
+        processStyleTags();
+        observeStyleTags();
+        setInterval(processStyleTags, 3000);
     }
 
     if (document.readyState === 'loading') {
@@ -2017,6 +2054,6 @@ input, select, textarea,
     }
 
     window.addEventListener('load', function() {
-        setTimeout(replaceCSSLinks, 500);
+        setTimeout(processStyleTags, 500);
     });
 })();
