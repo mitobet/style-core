@@ -3668,6 +3668,231 @@ body[data-page*="vip"] .vip:has(.vip__title) {
 }
 
 
+/* ===== active/CSS/section_titles.css ===== */
+/* =====================================================
+   MITOBET - Section Titles & Big Wins
+   ===================================================== */
+
+/* ——— Section Başlık Wrapper ——— */
+#main__content .section__title-wrap,
+#main__content [class*="title-wrap"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding-left: 12px !important;
+    border-left: 3px solid #CFAE6D !important;
+    margin-bottom: 14px !important;
+}
+
+/* ——— Section Başlık Text ——— */
+#main__content h2.section__title,
+#main__content .section__title,
+body h2.section__title {
+    color: #CFAE6D !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.8px !important;
+    text-transform: uppercase !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+}
+
+/* ——— Başlık İkonu (img & svg) ——— */
+#main__content .section__title-wrap img.svg-icon,
+#main__content .section__title-wrap svg.svg-icon,
+#main__content [class*="title-wrap"] img.svg-icon,
+#main__content [class*="title-wrap"] svg.svg-icon {
+    filter: brightness(0) saturate(100%) invert(78%) sepia(30%) saturate(600%) hue-rotate(5deg) !important;
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0 !important;
+}
+
+/* ——— SON BÜYÜK KAZANÇLAR Wrapper ——— */
+#big-wins-wrapper {
+    background: rgba(10, 10, 14, 0.6) !important;
+    border: 1px solid rgba(207, 174, 109, 0.15) !important;
+    border-radius: 14px !important;
+    padding: 20px 0 18px !important;
+    margin: 0 0 20px !important;
+}
+
+/* ——— Kush Kartları ——— */
+#big-wins-wrapper .kush--carousel {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(207, 174, 109, 0.1) !important;
+    border-radius: 10px !important;
+    overflow: hidden !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease !important;
+    position: relative !important;
+}
+
+#big-wins-wrapper .kush--carousel:hover {
+    border-color: rgba(207, 174, 109, 0.35) !important;
+    box-shadow: 0 4px 20px rgba(207, 174, 109, 0.12) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ——— Resimler — overlay YOK ——— */
+#big-wins-wrapper .kush--carousel img {
+    display: block !important;
+    width: 100% !important;
+    border-radius: 0 !important;
+    filter: none !important;
+}
+
+/* ——— Kazanç Miktarı ——— */
+#big-wins-wrapper .kush--carousel [class*="amount"],
+#big-wins-wrapper .kush--carousel [class*="price"],
+#big-wins-wrapper .kush--carousel [class*="win"],
+#big-wins-wrapper .kush--carousel span,
+#big-wins-wrapper .kush--carousel p {
+    color: #CFAE6D !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+}
+
+/* ——— Mobil ——— */
+@media (max-width: 767px) {
+    #main__content .section__title-wrap,
+    #main__content [class*="title-wrap"] {
+        padding-left: 10px !important;
+        gap: 8px !important;
+        margin-bottom: 10px !important;
+    }
+
+    #main__content h2.section__title,
+    #main__content .section__title,
+    body h2.section__title {
+        font-size: 12px !important;
+        letter-spacing: 1.4px !important;
+    }
+
+    #main__content .section__title-wrap img.svg-icon,
+    #main__content .section__title-wrap svg.svg-icon,
+    #main__content [class*="title-wrap"] img.svg-icon,
+    #main__content [class*="title-wrap"] svg.svg-icon {
+        width: 15px !important;
+        height: 15px !important;
+    }
+
+    #big-wins-wrapper {
+        border-radius: 10px !important;
+        padding: 14px 0 12px !important;
+        margin: 0 0 14px !important;
+    }
+
+    #big-wins-wrapper .kush--carousel {
+        border-radius: 8px !important;
+    }
+}
+
+
+/* ===== active/CSS/sportsbook_override.css ===== */
+/* ===== Sportsbook Gold/Dark Theme Override ===== */
+/* Overrides ebetlab sportsbook blue (hue 217) CSS custom properties
+   with gold (hue 43) / dark background theme.
+   All utility classes (bg-primary-*, text-primary-*, border-primary-* etc.)
+   reference these vars via hsl(var(--primary-*)), so overriding the vars
+   is sufficient to retheme the entire sportsbook component. */
+
+:root {
+    --primary: 43 100% 70% !important;
+    --primary-foreground: 35 50% 15% !important;
+    --primary-50: 43 100% 95% !important;
+    --primary-100: 43 100% 90% !important;
+    --primary-200: 43 100% 80% !important;
+    --primary-300: 43 100% 70% !important;
+    --primary-400: 43 100% 60% !important;
+    --primary-500: 43 100% 50% !important;
+    --primary-600: 43 100% 40% !important;
+    --primary-700: 43 100% 30% !important;
+    --primary-800: 43 100% 20% !important;
+    --primary-900: 43 100% 10% !important;
+    --primary-950: 43 100% 5% !important;
+
+    --secondary: 43 100% 70% !important;
+    --secondary-foreground: 35 50% 15% !important;
+    --secondary-50: 43 100% 95% !important;
+    --secondary-100: 43 100% 90% !important;
+    --secondary-200: 43 100% 80% !important;
+    --secondary-300: 43 100% 70% !important;
+    --secondary-400: 43 100% 60% !important;
+    --secondary-500: 43 100% 50% !important;
+    --secondary-600: 43 100% 40% !important;
+    --secondary-700: 43 100% 30% !important;
+    --secondary-800: 43 100% 20% !important;
+    --secondary-900: 43 100% 10% !important;
+    --secondary-950: 43 100% 5% !important;
+
+    --tertiary: 220 20% 6% !important;
+    --tertiary-foreground: 0 0% 100% !important;
+    --tertiary-50: 220 20% 5% !important;
+    --tertiary-100: 220 20% 10% !important;
+    --tertiary-200: 220 20% 16% !important;
+    --tertiary-300: 220 20% 24% !important;
+    --tertiary-400: 220 20% 32% !important;
+    --tertiary-500: 220 20% 40% !important;
+    --tertiary-600: 220 20% 50% !important;
+    --tertiary-700: 220 20% 60% !important;
+    --tertiary-800: 220 20% 70% !important;
+    --tertiary-900: 220 20% 80% !important;
+    --tertiary-950: 220 20% 90% !important;
+
+    --body-bg: hsl(220 20% 6% / 1) !important;
+}
+
+.dark {
+    --primary: 43 100% 70% !important;
+    --primary-foreground: 35 50% 15% !important;
+    --primary-50: 43 100% 5% !important;
+    --primary-100: 43 100% 10% !important;
+    --primary-200: 43 100% 20% !important;
+    --primary-300: 43 100% 30% !important;
+    --primary-400: 43 100% 40% !important;
+    --primary-500: 43 100% 50% !important;
+    --primary-600: 43 100% 60% !important;
+    --primary-700: 43 100% 70% !important;
+    --primary-800: 43 100% 80% !important;
+    --primary-900: 43 100% 90% !important;
+    --primary-950: 43 100% 95% !important;
+
+    --secondary: 43 100% 70% !important;
+    --secondary-foreground: 35 50% 15% !important;
+    --secondary-50: 43 100% 5% !important;
+    --secondary-100: 43 100% 10% !important;
+    --secondary-200: 43 100% 20% !important;
+    --secondary-300: 43 100% 30% !important;
+    --secondary-400: 43 100% 40% !important;
+    --secondary-500: 43 100% 50% !important;
+    --secondary-600: 43 100% 60% !important;
+    --secondary-700: 43 100% 70% !important;
+    --secondary-800: 43 100% 80% !important;
+    --secondary-900: 43 100% 90% !important;
+    --secondary-950: 43 100% 95% !important;
+
+    --tertiary: 220 20% 6% !important;
+    --tertiary-foreground: 0 0% 100% !important;
+    --tertiary-50: 220 20% 5% !important;
+    --tertiary-100: 220 20% 10% !important;
+    --tertiary-200: 220 20% 16% !important;
+    --tertiary-300: 220 20% 24% !important;
+    --tertiary-400: 220 20% 32% !important;
+    --tertiary-500: 220 20% 40% !important;
+    --tertiary-600: 220 20% 50% !important;
+    --tertiary-700: 220 20% 60% !important;
+    --tertiary-800: 220 20% 70% !important;
+    --tertiary-900: 220 20% 80% !important;
+    --tertiary-950: 220 20% 90% !important;
+
+    --body-bg: hsl(220 20% 6% / 1) !important;
+}
+
+body {
+    background-color: hsl(220 20% 6%) !important;
+}
+
+
 /* ===== active/CSS/EK ===== */
 .blog__cover {
     width: 100%;

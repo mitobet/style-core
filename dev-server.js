@@ -42,6 +42,8 @@ const CSS_FILES = [
   'active/slot_oncesi_css/slot_unavailable.css',
   'active/yatirim_uyari_sistemi/yatirim_uyari.css',
   'active/CSS/stories_override.css',
+  'active/CSS/section_titles.css',
+  'active/CSS/sportsbook_override.css',
   'active/CSS/EK',
   'active/CSS/Kingo',
   'active/CSS/Logo',
@@ -58,6 +60,7 @@ const JS_FILES_WITH_EXT = [
   'active/SCRIPT/popup.js',
   'active/SCRIPT/sticky_menu_guard.js',
   'active/SCRIPT/stories_loader.js',
+  'active/SCRIPT/spor_css_replacer.js',
 ];
 
 const JS_FILES_NO_EXT = [
