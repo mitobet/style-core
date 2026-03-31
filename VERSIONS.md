@@ -1,5 +1,10 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.9.1 - Kampanya bitis tarihi 2027 sonuna uzatildi (2026-03-31)
+**Aciklama:** v1.9.0’da bitis `2026-03-31T20:00+03:00` idi; sure dolunca popup hic acilmiyordu. Varsayilan bitis `2027-12-31T23:59:59+03:00` yapildi; gercek kampanya icin `CAMPAIGN_PROMO_END_MS` iki dosyada guncellenmeli.
+
+---
+
 ## v1.9.0 - Kampanya TRT bitis (popup + ilk story) (2026-03-31)
 **Hash:** `6b39499`
 **Aciklama:** PNG popup ve en bastaki story (`RAW_IMG_FIRST`) 31 Mart 2026 TRT 20:00 (`+03:00`) sonrasi otomatik kaldirilir. Acik popup sure dolunca kapanir; story cubugundan ilk avatar DOM'dan silinir, modal aciksa indeks uyumu. Bitis zamani `CAMPAIGN_PROMO_END_MS` — `popup.js` ve `stories_loader.js` senkron tutulmali.

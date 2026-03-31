@@ -1,8 +1,8 @@
 (function() {
     'use strict';
 
-    // Keep in sync with popup.js (CAMPAIGN_PROMO_END_MS)
-    var CAMPAIGN_PROMO_END_MS = Date.parse('2026-03-31T20:00:00+03:00');
+    // Keep in sync with popup.js (CAMPAIGN_PROMO_END_MS). After this instant (TRT +03:00) first story is removed.
+    var CAMPAIGN_PROMO_END_MS = Date.parse('2027-12-31T23:59:59+03:00');
     function isCampaignPromoActive() {
         return Date.now() < CAMPAIGN_PROMO_END_MS;
     }
