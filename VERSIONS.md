@@ -1,5 +1,19 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.9.0 - Kampanya TRT bitis (popup + ilk story) (2026-03-31)
+**Hash:** `6b39499`
+**Aciklama:** PNG popup ve en bastaki story (`RAW_IMG_FIRST`) 31 Mart 2026 TRT 20:00 (`+03:00`) sonrasi otomatik kaldirilir. Acik popup sure dolunca kapanir; story cubugundan ilk avatar DOM'dan silinir, modal aciksa indeks uyumu. Bitis zamani `CAMPAIGN_PROMO_END_MS` — `popup.js` ve `stories_loader.js` senkron tutulmali.
+**Degisiklikler:**
+- ~ `popup.js`: `isCampaignPromoActive`, `showPopup` guard, acik popup icin `setTimeout(closePopup)`
+- ~ `stories_loader.js`: `STORIES_FULL`, `rebuildStoriesArray`, `scheduleCampaignPromoEnd`, `onCampaignPromoEnd`
+**CMS:**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@6b39499/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@6b39499/dist/v1/bundle.js"></script>
+```
+
+---
+
 ## Not - Yarim Kalan / Unstable Calisma (2026-03-24)
 **Hash:** `8d3cea9`
 **Durum:** Aktif degil (referans kaydi)
