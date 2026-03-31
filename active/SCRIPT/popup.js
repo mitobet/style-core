@@ -2,6 +2,12 @@
 (function() {
     'use strict';
 
+    // Keep in sync with stories_loader.js (CAMPAIGN_PROMO_END_MS)
+    var CAMPAIGN_PROMO_END_MS = Date.parse('2026-03-31T20:00:00+03:00');
+    function isCampaignPromoActive() {
+        return Date.now() < CAMPAIGN_PROMO_END_MS;
+    }
+
     var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/qog3BWOSyrydrTpZMeqss9NVlr2dCqIk2KBwiCbT.png') + '&w=800&q=80';
     var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
     var POPUP_DELAY = 3000;
@@ -96,6 +102,7 @@
 
     function showPopup() {
         try {
+            if (!isCampaignPromoActive()) return;
             if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
             if (isZuckStoryOpen()) {
                 if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {
@@ -170,6 +177,13 @@
         box.appendChild(closeBtn);
         overlay.appendChild(box);
         document.body.appendChild(overlay);
+
+            var untilEnd = CAMPAIGN_PROMO_END_MS - Date.now();
+            if (untilEnd > 0) {
+                setTimeout(function() {
+                    closePopup();
+                }, untilEnd);
+            }
         } catch(e) {
             console.warn('Mitobet popup error:', e);
             return;

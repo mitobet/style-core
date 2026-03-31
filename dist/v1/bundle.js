@@ -1359,6 +1359,12 @@ input, select, textarea,
 (function() {
     'use strict';
 
+    // Keep in sync with stories_loader.js (CAMPAIGN_PROMO_END_MS)
+    var CAMPAIGN_PROMO_END_MS = Date.parse('2026-03-31T20:00:00+03:00');
+    function isCampaignPromoActive() {
+        return Date.now() < CAMPAIGN_PROMO_END_MS;
+    }
+
     var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/qog3BWOSyrydrTpZMeqss9NVlr2dCqIk2KBwiCbT.png') + '&w=800&q=80';
     var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
     var POPUP_DELAY = 3000;
@@ -1453,6 +1459,7 @@ input, select, textarea,
 
     function showPopup() {
         try {
+            if (!isCampaignPromoActive()) return;
             if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
             if (isZuckStoryOpen()) {
                 if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {
@@ -1527,6 +1534,13 @@ input, select, textarea,
         box.appendChild(closeBtn);
         overlay.appendChild(box);
         document.body.appendChild(overlay);
+
+            var untilEnd = CAMPAIGN_PROMO_END_MS - Date.now();
+            if (untilEnd > 0) {
+                setTimeout(function() {
+                    closePopup();
+                }, untilEnd);
+            }
         } catch(e) {
             console.warn('Mitobet popup error:', e);
             return;
@@ -1641,13 +1655,19 @@ input, select, textarea,
 (function() {
     'use strict';
 
+    // Keep in sync with popup.js (CAMPAIGN_PROMO_END_MS)
+    var CAMPAIGN_PROMO_END_MS = Date.parse('2026-03-31T20:00:00+03:00');
+    function isCampaignPromoActive() {
+        return Date.now() < CAMPAIGN_PROMO_END_MS;
+    }
+
     var PROXY = 'https://wsrv.nl/?url=';
 
     var RAW_IMG_FIRST = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/t12Ka8jsT3Fa0xpT9wDY7acuBoY7bHnehmFjJgpu.jpg';
     var RAW_IMG_1 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
     var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/tv9PveV1lEVjh7bOlwkRmjcWL3aB30w9QzIH3ysP.jpg';
 
-    var STORIES = [
+    var STORIES_FULL = [
         {
             avatar: PROXY + encodeURIComponent(RAW_IMG_FIRST) + '&w=120&h=120&fit=cover&output=webp',
             src:    PROXY + encodeURIComponent(RAW_IMG_FIRST) + '&w=720&q=80&output=webp',
@@ -1670,6 +1690,16 @@ input, select, textarea,
             duration: 5000
         }
     ];
+
+    var STORIES = [];
+
+    function rebuildStoriesArray() {
+        STORIES.length = 0;
+        var src = isCampaignPromoActive() ? STORIES_FULL : STORIES_FULL.slice(1);
+        for (var i = 0; i < src.length; i++) {
+            STORIES.push(src[i]);
+        }
+    }
 
     var currentIdx = 0;
     var storyTimer = null;
@@ -1862,8 +1892,37 @@ input, select, textarea,
         document.body.appendChild(elModal);
     }
 
+    function onCampaignPromoEnd() {
+        if (Date.now() < CAMPAIGN_PROMO_END_MS) return;
+        rebuildStoriesArray();
+        var w = document.getElementById('mito-stories');
+        if (w && w.firstElementChild) {
+            w.removeChild(w.firstElementChild);
+        }
+        if (isOpen && elModal && STORIES.length > 0) {
+            var newIdx = currentIdx === 0 ? 0 : (currentIdx - 1);
+            if (newIdx >= STORIES.length) {
+                closeStory();
+            } else {
+                openStory(newIdx);
+            }
+        } else if (isOpen && STORIES.length === 0) {
+            closeStory();
+        }
+    }
+
+    function scheduleCampaignPromoEnd() {
+        var ms = CAMPAIGN_PROMO_END_MS - Date.now();
+        if (ms <= 0 || !isCampaignPromoActive()) return;
+        setTimeout(function() {
+            onCampaignPromoEnd();
+        }, ms);
+    }
+
     function renderWidget() {
         if (document.getElementById('mito-stories')) return;
+
+        rebuildStoriesArray();
 
         var container = document.createElement('div');
         container.id = 'mito-stories';
@@ -1929,8 +1988,10 @@ input, select, textarea,
         if (window.innerWidth > 768) return;
         if (!isHomePath()) return;
         booted = true;
+        rebuildStoriesArray();
         renderWidget();
         renderModal();
+        scheduleCampaignPromoEnd();
 
         window.addEventListener('popstate', handleNav);
 
