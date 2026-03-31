@@ -3,10 +3,18 @@
 
     var PROXY = 'https://wsrv.nl/?url=';
 
+    var RAW_IMG_FIRST = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/t12Ka8jsT3Fa0xpT9wDY7acuBoY7bHnehmFjJgpu.jpg';
     var RAW_IMG_1 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
     var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/tv9PveV1lEVjh7bOlwkRmjcWL3aB30w9QzIH3ysP.jpg';
 
     var STORIES = [
+        {
+            avatar: PROXY + encodeURIComponent(RAW_IMG_FIRST) + '&w=120&h=120&fit=cover&output=webp',
+            src:    PROXY + encodeURIComponent(RAW_IMG_FIRST) + '&w=720&q=80&output=webp',
+            link:   window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus',
+            linkText: 'Detaylar',
+            duration: 5000
+        },
         {
             avatar: PROXY + encodeURIComponent(RAW_IMG_1) + '&w=120&h=120&fit=cover&output=webp',
             src:    PROXY + encodeURIComponent(RAW_IMG_1) + '&w=720&q=80&output=webp',
