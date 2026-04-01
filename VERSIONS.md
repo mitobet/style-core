@@ -1,5 +1,19 @@
 # Mitobet Versiyon Gecmisi
 
+## v1.9.2 - Kampanya zamanlayicisi ve son story kaldirildi (2026-03-31)
+**Hash:** `BEKLIYOR`
+**Aciklama:** v1.9.0 ile eklenen kampanya bitis zamanlayicisi (`CAMPAIGN_PROMO_END_MS`, `isCampaignPromoActive`) popup.js ve stories_loader.js dosyalarindan tamamen kaldirildi. Son eklenen story (`RAW_IMG_FIRST` / t12Ka8...) cikarildi; stories tekrar iki oge. Popup gorseli eski JPG'ye (`Mivlnfie...`) dondu.
+**Degisiklikler:**
+- ~ `popup.js`: kampanya kodu kaldirildi, POPUP_IMAGE eski JPG
+- ~ `stories_loader.js`: kampanya kodu + STORIES_FULL + RAW_IMG_FIRST kaldirildi, STORIES 2 oge
+**CMS:**
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js"></script>
+```
+
+---
+
 ## v1.9.1 - Kampanya bitis tarihi 2027 sonuna uzatildi (2026-03-31)
 **Hash:** `9c5614d`
 **Aciklama:** v1.9.0’da bitis `2026-03-31T20:00+03:00` idi; sure dolunca popup hic acilmiyordu. Varsayilan bitis `2027-12-31T23:59:59+03:00` yapildi; gercek kampanya icin `CAMPAIGN_PROMO_END_MS` iki dosyada guncellenmeli.

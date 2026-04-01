@@ -60,7 +60,6 @@ const JS_FILES_WITH_EXT = [
   'active/SCRIPT/popup.js',
   'active/SCRIPT/sticky_menu_guard.js',
   'active/SCRIPT/stories_loader.js',
-  'active/SCRIPT/spor_css_replacer.js',
 ];
 
 const JS_FILES_NO_EXT = [

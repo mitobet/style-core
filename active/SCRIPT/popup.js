@@ -2,13 +2,7 @@
 (function() {
     'use strict';
 
-    // Keep in sync with stories_loader.js (CAMPAIGN_PROMO_END_MS). After this instant (TRT +03:00) PNG popup stops.
-    var CAMPAIGN_PROMO_END_MS = Date.parse('2027-12-31T23:59:59+03:00');
-    function isCampaignPromoActive() {
-        return Date.now() < CAMPAIGN_PROMO_END_MS;
-    }
-
-    var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/qog3BWOSyrydrTpZMeqss9NVlr2dCqIk2KBwiCbT.png') + '&w=800&q=80';
+    var POPUP_IMAGE = 'https://wsrv.nl/?url=https%3A%2F%2Fvendor-provider.fra1.cdn.digitaloceanspaces.com%2Febetlab%2FGakckagaakasdqGVAEgA%2Fstatics%2FMivlnfie1wguKW11uHXofqv7dka9oFUKudZ16GDt.jpg&w=800&q=80';
     var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
     var POPUP_DELAY = 3000;
     var PARTICLE_COUNT = 8;
@@ -102,7 +96,6 @@
 
     function showPopup() {
         try {
-            if (!isCampaignPromoActive()) return;
             if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
             if (isZuckStoryOpen()) {
                 if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {
@@ -177,13 +170,6 @@
         box.appendChild(closeBtn);
         overlay.appendChild(box);
         document.body.appendChild(overlay);
-
-            var untilEnd = CAMPAIGN_PROMO_END_MS - Date.now();
-            if (untilEnd > 0) {
-                setTimeout(function() {
-                    closePopup();
-                }, untilEnd);
-            }
         } catch(e) {
             console.warn('Mitobet popup error:', e);
             return;

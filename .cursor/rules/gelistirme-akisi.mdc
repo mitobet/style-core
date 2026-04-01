@@ -1,0 +1,85 @@
+---
+description: Mitobet gelistirme dongusu, test akisi ve deployment kurallari
+alwaysApply: true
+---
+
+# Gelistirme Akisi
+
+## Proje Bilgileri
+- **Repo**: `mitobet/style-core` — https://github.com/mitobet/style-core.git
+- **CDN**: jsDelivr — `cdn.jsdelivr.net/gh/mitobet/style-core@<HASH>/...`
+- **Calisma dizini**: `/Users/talha/Documents/GitHub/allmito/`
+- **Son aktif CDN hash**: `f268ae0`
+- **CMS'deki aktif hash**: `05e417b`
+
+## Sorumluluk Dagitimi
+
+| Gorev | Kim |
+|-------|-----|
+| Kod yazma / duzenleme | AI |
+| `node build.js` calistirma | AI |
+| `node dev-server.js` baslatma | AI |
+| Lokal test kodu verme | AI |
+| Lokal konsol testi (siteye yapistirma) | Kullanici |
+| Lokal test onayi | Kullanici |
+| `git add + commit + push` (onay sonrasi) | AI |
+| Hash alma + CDN test kodu + CMS kodu verme | AI |
+| CMS hash guncellemesi | Kullanici |
+| VERSIONS.md guncelleme | AI |
+
+## Dongü
+1. Kod degisikligi yap (`active/` altinda)
+2. `node build.js` calistir
+3. `node dev-server.js` baslat (zaten calisiyorsa tekrar baslatma)
+4. Kullaniciya LOKAL test kodu ver
+5. Kullanici lokal test yapar, onaylarsa:
+6. `git add -A && git commit -m "aciklama" && git push origin main`
+7. `git rev-parse --short HEAD` ile hash al
+8. Kullaniciya CDN test kodu + CMS kodu ver
+9. VERSIONS.md guncelle
+10. CMS hash guncellemesini KULLANICI yapar
+
+## Lokal Test Kodu
+```
+(function(){var s=document.createElement('script');s.src='http://localhost:3000/injector.js?t='+Date.now();document.body.appendChild(s)})();
+```
+
+## CDN Test Kodu (push sonrasi, HASH doldurulmus)
+```
+(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js';document.body.appendChild(s);var l=document.createElement('link');l.rel='stylesheet';l.href='https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css';document.head.appendChild(l)})();
+```
+
+## CMS Kodu (push sonrasi)
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js"></script>
+```
+
+## Kesin Kurallar
+- **ONCE LOKAL TEST** — push SADECE kullanici onayladiktan sonra yapilir
+- dist/ repo'ya DAHIL (gitignore'da DEGIL) — CDN buradan okur
+- "Test kodu ver" = lokal injector IIFE, bundle icerigi DEGIL
+- Uzun kod blogu chat'e ASLA yazilmaz — test kodu max 3 satir
+- Her guncelleme VERSIONS.md'ye kaydedilir
+- dev-server.js zorunlu — lokal test icin kullanilir
+- Git commit mesajlari aciklayici olur: ne degisti, neden degisti
+- Her push sonrasi kullaniciya hazir CMS kodu verilir
+
+## VERSIONS.md Kayit Formati
+
+En yeni en ustte:
+```
+## vX.X.X - Kisa Isim (YYYY-MM-DD)
+**Hash:** `abc1234`
+**Aciklama:** Ne degisti, neden degisti.
+**Degisiklikler:**
+- + eklenen dosya/ozellik
+- - cikarilan dosya/ozellik
+- ~ degistirilen dosya/ozellik
+**CMS:**
+<link> + <script> satiri (hash doldurulmus)
+---
+```
+
+## CMS Hash Guncelleme
+CMS'deki eski hash yeni hash ile degistirilir. Her push'ta hash degisir; eski hash ile CDN'deki dosya asla degismez (cache-busting).

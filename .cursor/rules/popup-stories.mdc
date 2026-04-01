@@ -1,0 +1,27 @@
+---
+description: Popup ve stories modulu kurallari — gorsel proxy, kampanya zamanlayici
+globs: active/SCRIPT/popup.js,active/SCRIPT/stories_loader.js
+alwaysApply: false
+---
+
+# Popup ve Stories
+
+## Gorsel Proxy
+- Tum gorseller `wsrv.nl` proxy uzerinden yuklenir.
+- Popup: `https://wsrv.nl/?url=<encodeURIComponent(URL)>&w=800&q=80`
+- Story avatar: `PROXY + encodeURIComponent(RAW) + '&w=120&h=120&fit=cover&output=webp'`
+- Story tam gorsel: `PROXY + encodeURIComponent(RAW) + '&w=720&q=80&output=webp'`
+- Gorsel degistirirken sadece URL'yi degistir, wsrv.nl formatini koru.
+
+## Kampanya Zamanlayici
+- Zamanlayici eklerken `CAMPAIGN_PROMO_END_MS` sabiti **her iki dosyada** (popup.js + stories_loader.js) senkron tutulmali.
+- `Date.parse('YYYY-MM-DDTHH:MM:SS+03:00')` formati kullan (TRT = UTC+3).
+- `isCampaignPromoActive()` fonksiyonu her iki dosyada tanimlanir.
+
+## Stories Dizisi
+- `STORIES` dizisi dogrudan tanimlanir; her eleman `avatar`, `src`, `link`, `linkText`, `duration` icermeli.
+- Yeni story eklerken dizinin dogru sirasina koy (bas = ilk gosterilen).
+
+## Genel
+- Popup ve story beraber degistiriliyorsa ayni commit'te guncelle.
+- Her iki dosya da IIFE icinde olmali.

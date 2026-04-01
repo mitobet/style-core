@@ -1,0 +1,110 @@
+---
+description: build.js / dev-server.js dosya listeleri senkron tutma ve active/inactive yonetimi
+globs: active/**,build.js,dev-server.js
+alwaysApply: false
+---
+
+# Dosya Yonetimi
+
+## Senkronizasyon
+- `build.js` icindeki `CSS_FILES` / `JS_FILES` ve `dev-server.js` icindeki `CSS_FILES` / `JS_FILES_WITH_EXT` **her zaman senkron** tutulmali.
+- Yeni dosya eklerken veya cikarirken her iki dosyada da guncelle.
+
+## Klasor Yapisi
+```
+allmito/
+  VERSIONS.md              — Versiyon gecmisi
+  build.js                 — Bundle uretici
+  dev-server.js            — Lokal test sunucusu (localhost:3000)
+  package.json
+  .gitignore
+  .cursor/rules/           — AI kurallari
+  .cursor/agents/          — AI subagent'lari
+  active/                  — AKTIF dosyalar (bundle'a dahil)
+    CSS/
+    SCRIPT/
+    PromoPage/
+    Slider_Alt_CSS/
+    giris_gorseli/
+    slot_oncesi_css/
+    yatirim_uyari_sistemi/
+  inactive/                — PASIF dosyalar (bundle'a dahil DEGIL)
+    CSS/
+    pasife/
+    root_from_root/
+  dist/                    — Build ciktisi (repo'ya DAHIL, CDN buradan okur)
+    v1/bundle.css
+    v1/bundle.js
+```
+
+## Aktif CSS Dosyalari
+- `active/CSS/header_buttons.css`
+- `active/CSS/mobile_navbar.css`
+- `active/CSS/section_buttons.css`
+- `active/CSS/modal_buttons.css`
+- `active/CSS/main.css`
+- `active/CSS/hide.css`
+- `active/CSS/vip_hide.css`
+- `active/CSS/slider_bg/slider_border.css`
+- `active/CSS/stories_override.css`
+- `active/CSS/section_titles.css`
+- `active/CSS/sportsbook_override.css`
+- `active/CSS/EK`
+- `active/CSS/Kingo`
+- `active/CSS/Logo`
+- `active/CSS/sidebar`
+- `active/PromoPage/promopage.css`
+- `active/PromoPage/Promo_up_button.css`
+- `active/Slider_Alt_CSS/Slider_Alt_CSS.css`
+- `active/giris_gorseli/mito_giris_gorseli.css`
+- `active/slot_oncesi_css/mito_slot_oncesi.css`
+- `active/slot_oncesi_css/mito_slot_unavailable.css`
+- `active/slot_oncesi_css/slot_unavailable.css`
+- `active/yatirim_uyari_sistemi/yatirim_uyari.css`
+
+## Aktif JS Dosyalari
+- `active/SCRIPT/css_blocker.js`
+- `active/SCRIPT/font_loader.js`
+- `active/SCRIPT/promo_image_replacer.js`
+- `active/SCRIPT/mito_tv_button.js`
+- `active/SCRIPT/header_extra_buttons.js`
+- `active/SCRIPT/footer_marquee.js`
+- `active/SCRIPT/popup.js`
+- `active/SCRIPT/sticky_menu_guard.js`
+- `active/SCRIPT/stories_loader.js`
+
+## Inaktif Dosyalar
+- `inactive/CSS/tabs_wallet.css`
+- `inactive/pasife/Background/background.css`
+- `inactive/pasife/CSS/header_wallet.css`
+- `inactive/pasife/CSS/section_view_buttons.css`
+- `inactive/pasife/Giris_Ekrani/signup-modal`
+- `inactive/pasife/SCRIPT/BannerFunctions`
+- `inactive/pasife/SCRIPT/Main`
+- `inactive/pasife/SCRIPT/PromosyonButton`
+- `inactive/pasife/SCRIPT/SportPopupFunction`
+- `inactive/pasife/SCRIPT/UIFunctions`
+- `inactive/pasife/SCRIPT/UtilityFunctions`
+- `inactive/pasife/SCRIPT/font_loader.js`
+- `inactive/pasife/SCRIPT/snow_effect.js`
+- `inactive/pasife/SCRIPT/theme_toggle.js`
+- `inactive/pasife/TEPE_WINNER/tepe_winner.css`
+- `inactive/pasife/sidebar/promo_image_replacer.js`
+- `inactive/pasife/sidebar/sidebar.css`
+- `inactive/pasife/yatirim_uyari_sistemi/yatirim_uyari.js`
+
+## Yeni Dosya Ekleme
+1. Dosyayi `active/` altindaki dogru klasore koy
+2. `build.js` listesine ekle
+3. `dev-server.js` listesine ekle
+4. Build al, test et, VERSIONS.md'ye kaydet
+
+## Dosya Cikarma / Pasife Alma
+1. Dosyayi `active/` -> `inactive/` tasi
+2. Her iki build dosyasindan listeden cikar
+3. Build al, test et, VERSIONS.md'ye neden cikarildigini yaz
+
+## Dizin Kurallari
+- `active/` — bundle'a dahil olan dosyalar
+- `inactive/` — pasife alinan dosyalar (referans icin saklanir)
+- `dist/` — build ciktisi, repo'ya DAHIL, `.gitignore`'a EKLENMEZ

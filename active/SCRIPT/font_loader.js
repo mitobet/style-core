@@ -60,49 +60,55 @@ input, select, textarea,
 }
 `;
 
+    // Google Fonts Preconnect
     function addPreconnect() {
         if (document.querySelector('link[href="https://fonts.googleapis.com"]')) return;
-
-        var l1 = document.createElement('link');
+        
+        const l1 = document.createElement('link');
         l1.rel = 'preconnect';
         l1.href = 'https://fonts.googleapis.com';
-
-        var l2 = document.createElement('link');
+        
+        const l2 = document.createElement('link');
         l2.rel = 'preconnect';
         l2.href = 'https://fonts.gstatic.com';
         l2.crossOrigin = 'anonymous';
-
-        document.head.insertBefore(l2, document.head.firstChild);
-        document.head.insertBefore(l1, document.head.firstChild);
+        
+        document.head.appendChild(l1);
+        document.head.appendChild(l2);
     }
-
+    
+    // Google Fonts Linki
     function addGoogleFonts() {
-        var baseUrl = GOOGLE_FONTS_URL.split('?')[0];
-        if (document.querySelector('link[href^="' + baseUrl + '"]')) return;
-
-        var preload = document.createElement('link');
-        preload.rel = 'preload';
-        preload.as = 'style';
-        preload.href = GOOGLE_FONTS_URL;
-        document.head.appendChild(preload);
-
-        var link = document.createElement('link');
+        // Ana URL'in query parametreleri olmadan kontrolü
+        const baseUrl = GOOGLE_FONTS_URL.split('?')[0];
+        if (document.querySelector(`link[href^="${baseUrl}"]`)) return;
+        
+        const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = GOOGLE_FONTS_URL;
-        link.media = 'print';
-        link.onload = function() { this.media = 'all'; };
         document.head.appendChild(link);
     }
 
+    // Style Injection
     function injectStyles() {
+        // Zaten eklenmiş mi kontrol et
         if (document.getElementById('mito-font-styles')) return;
-        var style = document.createElement('style');
+
+        const style = document.createElement('style');
         style.id = 'mito-font-styles';
         style.textContent = FONT_STYLES;
         document.head.appendChild(style);
     }
-
-    addPreconnect();
-    addGoogleFonts();
-    injectStyles();
+    
+    function init() {
+        addPreconnect();
+        addGoogleFonts();
+        injectStyles();
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
