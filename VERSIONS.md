@@ -1,15 +1,17 @@
 # Mitobet Versiyon Gecmisi
 
-## v1.9.2 - Kampanya zamanlayicisi ve son story kaldirildi (2026-03-31)
-**Hash:** `BEKLIYOR`
-**Aciklama:** v1.9.0 ile eklenen kampanya bitis zamanlayicisi (`CAMPAIGN_PROMO_END_MS`, `isCampaignPromoActive`) popup.js ve stories_loader.js dosyalarindan tamamen kaldirildi. Son eklenen story (`RAW_IMG_FIRST` / t12Ka8...) cikarildi; stories tekrar iki oge. Popup gorseli eski JPG'ye (`Mivlnfie...`) dondu.
+## v1.9.2 - Kampanya zamanlayicisi ve son story kaldirildi (2026-04-01)
+**Hash:** `dc8b87a`
+**Aciklama:** v1.9.0 ile eklenen kampanya bitis zamanlayicisi (`CAMPAIGN_PROMO_END_MS`, `isCampaignPromoActive`) popup.js ve stories_loader.js dosyalarindan tamamen kaldirildi. Son eklenen story (`RAW_IMG_FIRST` / t12Ka8...) cikarildi; stories tekrar iki oge. Popup gorseli eski JPG'ye (`Mivlnfie...`) dondu. Kurallar ve subagentlar eklendi, PIPELINE.md kurallara tasindi.
 **Degisiklikler:**
 - ~ `popup.js`: kampanya kodu kaldirildi, POPUP_IMAGE eski JPG
 - ~ `stories_loader.js`: kampanya kodu + STORIES_FULL + RAW_IMG_FIRST kaldirildi, STORIES 2 oge
+- + `.cursor/rules/` ve `.cursor/agents/` eklendi
+- - `PIPELINE.md` silindi (icerik kurallara tasindi)
 **CMS:**
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.css">
-<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@HASH/dist/v1/bundle.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mitobet/style-core@dc8b87a/dist/v1/bundle.css">
+<script src="https://cdn.jsdelivr.net/gh/mitobet/style-core@dc8b87a/dist/v1/bundle.js"></script>
 ```
 
 ---
