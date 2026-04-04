@@ -3503,7 +3503,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     display: none;
     width: 100%;
     padding: 6px 0 4px;
-    background: #181818;
+    background: transparent;
     overflow: hidden;
     position: relative;
     z-index: 10;
@@ -3531,7 +3531,7 @@ body[data-page*="vip"] .vip:has(.vip__title) {
     height: 58px;
     border-radius: 50%;
     border: 2px solid #cfae6d;
-    background: #181818;
+    background: transparent;
     padding: 2px;
     cursor: pointer;
     outline: none;
