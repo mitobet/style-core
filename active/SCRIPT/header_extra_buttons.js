@@ -277,7 +277,7 @@
 
         var labelNext = lang === 'en' ? 'Next address:' : 'Sıradaki adresimiz:';
         var labelLogin = lang === 'en' ? 'Current login:' : 'Güncel Giriş:';
-        var linkHref = 'https://mito.ws/giris';
+        var linkHref = 'https://mitogir.com/mito';
 
         if (nextDomain) {
             topbar.innerHTML = '<span>' + labelNext + '</span> <a href="' + linkHref + '" target="_blank">' + nextDomain + '</a>';
