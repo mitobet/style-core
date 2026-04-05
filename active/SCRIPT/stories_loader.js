@@ -3,9 +3,9 @@
 
     var PROXY = 'https://wsrv.nl/?url=';
 
-    var RAW_IMG_FIRST = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/2K1MZnfYBI8jyGDIjfnuxCWzLnDmD9XJpGzRr0i3.png';
+    var RAW_IMG_FIRST = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/h538dzAsLntt2yKFzLOhNELZ1Kd5O5KAmAXgdwac.png';
     var RAW_IMG_1 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
-    var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/h538dzAsLntt2yKFzLOhNELZ1Kd5O5KAmAXgdwac.png';
+    var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/tv9PveV1lEVjh7bOlwkRmjcWL3aB30w9QzIH3ysP.jpg';
 
     var STORIES = [
         {
