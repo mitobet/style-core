@@ -96,6 +96,7 @@
 
     function showPopup() {
         try {
+            if (window.innerWidth <= 768) return;
             if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
             if (isZuckStoryOpen()) {
                 if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {

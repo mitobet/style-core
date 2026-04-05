@@ -1453,6 +1453,7 @@ input, select, textarea,
 
     function showPopup() {
         try {
+            if (window.innerWidth <= 768) return;
             if (document.body.dataset.mitoPopupShown === '1' || document.getElementById('mito-popup-overlay')) return;
             if (isZuckStoryOpen()) {
                 if (popupStoryWaitCount < POPUP_STORY_WAIT_MAX) {
@@ -1530,6 +1531,168 @@ input, select, textarea,
         } catch(e) {
             console.warn('Mitobet popup error:', e);
             return;
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(showPopup, POPUP_DELAY); });
+    } else {
+        setTimeout(showPopup, POPUP_DELAY);
+    }
+})();
+
+
+/* ===== active/SCRIPT/popup_mobile.js ===== */
+// MITOBET - Mobil Popup
+(function() {
+    'use strict';
+
+    var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/2K1MZnfYBI8jyGDIjfnuxCWzLnDmD9XJpGzRr0i3.png') + '&w=800&q=80';
+    var POPUP_LINK = 'https://mitogir.com/mito';
+    var POPUP_DELAY = 3000;
+
+    function showPopup() {
+        try {
+            if (window.innerWidth > 768) return;
+            if (document.body.dataset.mitoMobilePopupShown === '1' || document.getElementById('mito-mpopup-overlay')) return;
+
+            injectStyles();
+
+            var overlay = document.createElement('div');
+            overlay.id = 'mito-mpopup-overlay';
+
+            var box = document.createElement('div');
+            box.className = 'mmp-box';
+
+            var particles = document.createElement('div');
+            particles.className = 'mmp-particles';
+            createParticles(particles);
+
+            var border = document.createElement('div');
+            border.className = 'mmp-border';
+
+            var content = document.createElement('div');
+            content.className = 'mmp-content';
+
+            var imgWrap = document.createElement('a');
+            imgWrap.className = 'mmp-img-wrap';
+            imgWrap.href = POPUP_LINK;
+            imgWrap.target = '_blank';
+
+            var img = document.createElement('img');
+            img.className = 'mmp-img';
+            img.src = POPUP_IMAGE;
+            img.alt = 'Mitobet';
+            img.draggable = false;
+
+            var closeBtn = document.createElement('button');
+            closeBtn.className = 'mmp-close';
+            closeBtn.type = 'button';
+            closeBtn.setAttribute('aria-label', 'Kapat');
+            closeBtn.innerHTML = '&#10005;';
+
+            var closed = false;
+            function closePopup() {
+                if (closed) return;
+                closed = true;
+                overlay.classList.add('mmp-closing');
+                box.classList.add('mmp-closing');
+                setTimeout(function() {
+                    if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+                }, 320);
+                document.body.dataset.mitoMobilePopupShown = '1';
+            }
+
+            closeBtn.onclick = function(e) { e.stopPropagation(); closePopup(); };
+            overlay.onclick = function(e) { if (e.target === overlay) closePopup(); };
+
+            document.addEventListener('keydown', function onEsc(e) {
+                if (e.key === 'Escape' || e.keyCode === 27) {
+                    closePopup();
+                    document.removeEventListener('keydown', onEsc);
+                }
+            });
+
+            imgWrap.appendChild(img);
+            content.appendChild(imgWrap);
+            box.appendChild(particles);
+            box.appendChild(border);
+            box.appendChild(content);
+            box.appendChild(closeBtn);
+            overlay.appendChild(box);
+            document.body.appendChild(overlay);
+        } catch(e) {
+            return;
+        }
+    }
+
+    function injectStyles() {
+        if (document.getElementById('mito-mpopup-css')) return;
+        var s = document.createElement('style');
+        s.id = 'mito-mpopup-css';
+        s.textContent =
+            '@keyframes mmpFadeIn{0%{opacity:0}100%{opacity:1}}' +
+            '@keyframes mmpSlideIn{0%{transform:scale(.92) translateY(18px);opacity:0}100%{transform:scale(1) translateY(0);opacity:1}}' +
+            '@keyframes mmpFadeOut{0%{opacity:1}100%{opacity:0}}' +
+            '@keyframes mmpSlideOut{0%{transform:scale(1) translateY(0);opacity:1}100%{transform:scale(.92) translateY(18px);opacity:0}}' +
+            '@keyframes mmpBorder{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}' +
+            '@keyframes mmpShine{0%{left:-120%}100%{left:120%}}' +
+            '@keyframes mmpFloat{0%{transform:translateY(0) scale(1);opacity:.6}100%{transform:translateY(-100px) scale(0);opacity:0}}' +
+            '@keyframes mmpCloseIn{0%{transform:scale(0) rotate(-90deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}' +
+
+            '#mito-mpopup-overlay{position:fixed;top:0;left:0;width:100%;height:100%;' +
+                'background:rgba(0,0,0,.88);' +
+                'display:flex;justify-content:center;align-items:center;z-index:999998;' +
+                'animation:mmpFadeIn .35s ease-out forwards}' +
+            '#mito-mpopup-overlay.mmp-closing{animation:mmpFadeOut .3s ease-in forwards}' +
+
+            '.mmp-box{position:relative;overflow:visible;width:95vw;max-width:420px;' +
+                'animation:mmpSlideIn .45s cubic-bezier(.22,.9,.36,1) .08s both}' +
+            '.mmp-box.mmp-closing{animation:mmpSlideOut .3s ease-in forwards}' +
+
+            '.mmp-border{position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;border-radius:13px;' +
+                'background:linear-gradient(135deg,#cfae6d,#f5d98a,#8a6d2f,#cfae6d,#f5d98a);' +
+                'background-size:400% 400%;animation:mmpBorder 6s linear infinite;z-index:0}' +
+
+            '.mmp-content{position:relative;z-index:1;border-radius:12px;overflow:hidden;line-height:0}' +
+
+            '.mmp-img-wrap{display:block;position:relative;overflow:hidden;cursor:pointer;line-height:0}' +
+            '.mmp-img-wrap::after{content:"";position:absolute;top:0;left:-120%;width:60%;height:100%;' +
+                'background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);' +
+                'transform:skewX(-18deg);pointer-events:none;animation:mmpShine 5s ease-in-out 2s infinite}' +
+            '.mmp-img{width:100%;height:auto;display:block}' +
+
+            '.mmp-close{position:absolute;top:-14px;right:-14px;width:36px;height:36px;' +
+                'border:1px solid rgba(207,174,109,.5);background:rgba(10,10,20,.9);color:rgba(207,174,109,.8);' +
+                'font-size:18px;line-height:1;border-radius:50%;cursor:pointer;' +
+                'display:flex;justify-content:center;align-items:center;z-index:10;' +
+                'transition:all .3s ease;animation:mmpCloseIn .35s ease .45s both}' +
+            '.mmp-close:hover{background:#cfae6d;color:#0a0a14;border-color:#cfae6d;transform:rotate(90deg) scale(1.1)}' +
+
+            '.mmp-particles{position:absolute;top:0;left:0;width:100%;height:100%;' +
+                'pointer-events:none;overflow:hidden;z-index:0;border-radius:13px}' +
+            '.mmp-dot{position:absolute;bottom:-6px;border-radius:50%;' +
+                'animation:mmpFloat linear infinite;opacity:.6}';
+        document.head.appendChild(s);
+    }
+
+    function createParticles(container) {
+        for (var i = 0; i < 8; i++) {
+            var dot = document.createElement('span');
+            dot.className = 'mmp-dot';
+            var size = 1.5 + Math.random() * 2.5;
+            var left = Math.random() * 100;
+            var dur = 3 + Math.random() * 5;
+            var delay = Math.random() * 6;
+            var alpha = (0.3 + Math.random() * 0.4).toFixed(2);
+            dot.style.cssText =
+                'left:' + left + '%;' +
+                'width:' + size + 'px;height:' + size + 'px;' +
+                'background:rgba(207,174,109,' + alpha + ');' +
+                'box-shadow:0 0 ' + (size + 1) + 'px rgba(207,174,109,.2);' +
+                'animation-duration:' + dur + 's;' +
+                'animation-delay:' + delay + 's;';
+            container.appendChild(dot);
         }
     }
 
