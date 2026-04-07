@@ -1360,7 +1360,7 @@ input, select, textarea,
     'use strict';
 
     var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/Fdya0LCGCbzVyw9LIRdZRwf2V8pRGeUDt79MoN5T.png') + '&w=800&q=80';
-    var POPUP_LINK = window.location.origin + '/tr/promotion/1000-tlye-1000-tl-nakit-bonus';
+    var POPUP_LINK = window.location.origin + '/tr/promotion/her-yatiriminiza-free-spin-hediyesi';
     var POPUP_DELAY = 3000;
     var PARTICLE_COUNT = 8;
     var POPUP_STORY_WAIT_MAX = 120;
