@@ -1359,8 +1359,8 @@ input, select, textarea,
 (function() {
     'use strict';
 
-    var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/Fdya0LCGCbzVyw9LIRdZRwf2V8pRGeUDt79MoN5T.png') + '&w=800&q=80';
-    var POPUP_LINK = window.location.origin + '/tr/promotion/her-yatiriminiza-free-spin-hediyesi';
+    var POPUP_IMAGE = 'https://wsrv.nl/?url=' + encodeURIComponent('https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/4CXbSRX9yTvj8Env7zEmwsaBxSVPrhIWBXDuZYt6.jpg') + '&w=800&q=80';
+    var POPUP_LINK = window.location.origin + '/tr/deposit';
     var POPUP_DELAY = 3000;
     var PARTICLE_COUNT = 8;
     var POPUP_STORY_WAIT_MAX = 120;
@@ -1643,11 +1643,19 @@ input, select, textarea,
 
     var PROXY = 'https://wsrv.nl/?url=';
 
+    var RAW_IMG_NEW = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/10iSmfraYWeRYwkmX0PDXZSS4ljqWEFZ1fSdLEbe.jpg';
     var RAW_IMG_FIRST = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/h538dzAsLntt2yKFzLOhNELZ1Kd5O5KAmAXgdwac.png';
     var RAW_IMG_1 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/74Lny8THQCnRaGYc6dLs2Zx1wiig7UgMg4dpH5Zw.jpg';
     var RAW_IMG_2 = 'https://vendor-provider.fra1.cdn.digitaloceanspaces.com/ebetlab/GakckagaakasdqGVAEgA/statics/tv9PveV1lEVjh7bOlwkRmjcWL3aB30w9QzIH3ysP.jpg';
 
     var STORIES = [
+        {
+            avatar: PROXY + encodeURIComponent(RAW_IMG_NEW) + '&w=120&h=120&fit=cover&output=webp',
+            src:    PROXY + encodeURIComponent(RAW_IMG_NEW) + '&w=720&q=80&output=webp',
+            link:   window.location.origin + '/tr/deposit',
+            linkText: 'Detaylar',
+            duration: 5000
+        },
         {
             avatar: PROXY + encodeURIComponent(RAW_IMG_FIRST) + '&w=120&h=120&fit=cover&output=webp',
             src:    PROXY + encodeURIComponent(RAW_IMG_FIRST) + '&w=720&q=80&output=webp',
